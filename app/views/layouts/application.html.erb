@@ -1,14 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Escrit</title>
+  <meta charset="utf-8">
+  <title><%= page_title %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <%= favicon_link_tag 'favicon.png' %>
 </head>
 <body>
+  <div class="container">
+    <nav class="navbar">
+      <div class="container">
+        <ul class="navbar-list">
+          <li class="navbar-item">
+          	<%= image_tag "logo.png", :class => "navbar-logo" %>
+          </li>
+          <li class="navbar-item"><a class="navbar-link" href="#">escrit</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="#">Texts</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="#">Statistics</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="#">Settings</a></li>
+          <li class="navbar-item" style="float: right;"><a class="navbar-link" href="#">Logout</a></li>
+        </ul>
+      </div>
+    </nav>
 
-<%= yield %>
-
+    <div class="docs-section" id="intro">
+	  <%= yield %>
+	</div>
+  </div>
 </body>
 </html>
