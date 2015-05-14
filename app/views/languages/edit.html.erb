@@ -1,0 +1,35 @@
+<h4>Languages - Edit Name</h4>
+
+<% if @language.errors.any? %>
+  <div id="error_explanation">
+    <h6>
+      <%= pluralize(@language.errors.count, "error") %> prohibited
+      this article from being saved:
+    </h6>
+    <ul>
+      <% @language.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<div class="row">
+  <div class="one-half column">
+<%= form_for :language, :url => language_path(@language), method: :patch do |f| %>
+  <p>
+    <%= f.label :name, 'Language Name:' %><br>
+    <%= f.text_field :name, :class => 'u-full-width' %>
+  </p>
+
+  <p>
+    <%= f.submit 'Save New Name', :class => 'button-primary' %>
+    <%= link_to 'Abort', languages_path, class: 'button', title: 'Go back to overview' %>
+  </p>
+<% end %>
+
+  </div>
+  <div class="one-half column">
+    <p>With this form you can add a new language to the system to be used to classify texts and words.</p>
+  </div>
+</div>

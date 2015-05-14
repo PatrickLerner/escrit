@@ -1,0 +1,27 @@
+<h4>Languages - List</h4>
+
+<%= link_to 'Add New', new_language_path, class: 'button', title: 'Add a new language' %>
+
+<div class="row">
+  <div class="one-half column">
+    <table class="u-full-width">
+      <tr>
+        <th>Name</th>
+        <th style="text-align: right">Actions</th>
+      </tr>
+     
+      <% @languages.each do |language| %>
+        <tr>
+          <td><%= language.name %></td>
+          <td style="text-align: right">
+            <%= link_to fa_icon("times") + " Delete", language_path(language), method: :delete, data: { confirm: 'Are you absolutely certain?' }, title: 'Delete' %>
+            <%= link_to fa_icon("pencil") + " Edit", edit_language_path(language), title: 'Edit Language Name' %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+  <div class="one-half column">
+    <p>Here you can see a list of all languages which are available in the system. Users can asign those languages to their texts to keep vocabulary separate between different languages.</p>
+  </div>
+</div>
