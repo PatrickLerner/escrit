@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150514203721) do
+ActiveRecord::Schema.define(version: 20150514220816) do
 
   create_table "languages", force: true do |t|
     t.string   "name"
@@ -31,5 +31,14 @@ ActiveRecord::Schema.define(version: 20150514203721) do
   end
 
   add_index "texts", ["language_id"], name: "index_texts_on_language_id"
+
+  create_table "words", force: true do |t|
+    t.string   "value"
+    t.string   "note"
+    t.integer  "rating"
+    t.integer  "language_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

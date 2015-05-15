@@ -1,0 +1,40 @@
+<h4>Texts</h4>
+
+<%= link_to 'Add New', new_text_path, class: 'button', title: 'Add a new text' %>
+
+<div class="row">
+  <div class="two-thirds column">
+    <table class="u-full-width">
+      <thead>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Word Count</th>
+      </thead>
+      <tbody>
+        <% @texts.each do |text| %>
+          <tr>
+            <td><%= link_to text.title, text_path(text) %></td>
+            <td><%= text.category %></td>
+            <td>
+              <%= number_with_precision text.word_count, precision: 0, delimiter: ',' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="one-third column">
+    <% known_word_count = Word.where('rating >= 3 and rating < 6').count %>
+
+    <p>You currently have a total of <%= number_with_precision Word.where('rating != 6').count, precision: 0, delimiter: ',' %> words saved of which you marked <%= number_with_precision known_word_count, precision: 0, delimiter: ',' %> as known (level three or higher).
+
+    <% if known_word_count >= 500 %>
+    Good Work!
+    <% elsif known_word_count == 0 %>
+
+    <% else %>
+    Keep it up!
+    <% end %>
+
+    <p>Currently there <%= if @texts.count == 1 then "is" else "are" end %> <%= pluralize(@texts.count, "text") %> available in the system. Feel free to add <%= link_to 'add a new one', new_text_path %> if you want.</p>
+</div>

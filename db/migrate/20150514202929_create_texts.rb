@@ -3,7 +3,7 @@ class CreateTexts < ActiveRecord::Migration
     create_table :texts do |t|
       t.string :title
       t.text :content
-      t.text :category
+      t.string :category
       t.boolean :completed
       t.integer :word_count
 

@@ -1,0 +1,50 @@
+<h4>Add a new Text</h4>
+
+<% if @text.errors.any? %>
+  <div id="error_explanation">
+    <h6>
+      <%= pluralize(@text.errors.count, "error") %> prohibited
+      this article from being saved:
+    </h6>
+    <ul>
+      <% @text.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<div class="row">
+  <div class="two-thirds column">
+    <%= form_for :text, url: texts_path do |f| %>
+      <%= f.label :language_id %>
+      <%= f.select :language_id, options_for_select(@language_options), {}, :class => 'u-full-width' %>
+
+      <%= f.label :category %>
+      <%= f.text_field :category, placeholder: "Category", autocomplete: :off, :class => 'u-full-width' %>
+
+      <%= f.label :title %>
+      <%= f.text_field :title, placeholder: "Title", autocomplete: :off, :class => 'u-full-width' %>
+
+      <%= f.label :content %>
+      <%= f.text_area :content, placeholder: "Content", style: 'height: 15em;', :class => 'u-full-width' %>
+
+      <%= f.submit 'Save new text', :class => 'button-primary' %>
+
+      <% if @text.errors.any? %>
+        <div id="error_explanation">
+          <h3><%= pluralize(@text.errors.count, "error") %> prohibited
+            this article from being saved:</h3>
+          <ul>
+          <% @text.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="one-third column">
+    <p>With this form you can add a new language to the system to be used to classify texts and words.</p>
+  </div>
+</div>
