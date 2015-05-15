@@ -8,6 +8,7 @@
       <thead>
         <th>Title</th>
         <th>Category</th>
+        <th>Language</th>
         <th>Word Count</th>
       </thead>
       <tbody>
@@ -15,6 +16,7 @@
           <tr>
             <td><%= link_to text.title, text_path(text) %></td>
             <td><%= text.category %></td>
+            <td><%= text.language.name %></td>
             <td>
               <%= number_with_precision text.word_count, precision: 0, delimiter: ',' %>
             </td>
