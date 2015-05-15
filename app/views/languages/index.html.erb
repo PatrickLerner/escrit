@@ -6,16 +6,12 @@
   <div class="one-half column">
     <table class="u-full-width">
       <tr>
-        <th>Name</th>
-        <th style="text-align: right">Actions</th>
+        <th></th>
       </tr>
      
       <% @languages.each do |language| %>
         <tr>
-          <td><%= language.name %></td>
-          <td style="text-align: right">
-            <%= link_to fa_icon("times") + " Delete", language_path(language), method: :delete, data: { confirm: 'Are you absolutely certain?' }, title: 'Delete' %>
-            <%= link_to fa_icon("pencil") + " Edit", edit_language_path(language), title: 'Edit Language Name' %>
+          <td><%= link_to language.name, edit_language_path(language), title: 'Edit Language Name' %><%=  %></td>
           </td>
         </tr>
       <% end %>

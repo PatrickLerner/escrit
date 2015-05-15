@@ -1,8 +1,8 @@
 class TextsController < ApplicationController
+  include TextsHelper
+
   def create
     @text = Text.new(text_params)
-    @language_options = Language.all.map { |l| [l.name, l.id] }
-    @language_options = [] if @language_options == nil
 
     if @text.save
       @text.update_word_count
@@ -15,8 +15,6 @@ class TextsController < ApplicationController
 
   def edit
     @text = Text.find_by :id => params[:id]
-    @language_options = Language.all.map { |l| [l.name, l.id] }
-    @language_options = [] if @language_options == nil
   end
 
   def destroy
@@ -27,14 +25,38 @@ class TextsController < ApplicationController
   end
 
   def index
-    @texts = Text.all
-    @texts = [] if @texts == nil
+    @selected_language = nil
+    if params[:language] == nil
+      my_texts = []
+    else
+      lang = Language.where("lower(name) LIKE ?", params[:language])[0]
+      @selected_language = lang.id
+      my_texts = Text.where :language_id => lang.id
+    end
+    my_texts = [] if my_texts == nil
+
+    @texts = {}
+    my_texts.each do |t|
+      @texts[t.category] = [] if not @texts.has_key? t.category
+      @texts[t.category] += [t]
+    end
+
+    @texts.each { |category, texts|
+      texts.sort! do |a, b|
+        if a.title == b.title
+          0
+        elsif [a.title, b.title].natural_sort[0] == a.title
+          -1
+        else
+          1
+        end
+      end
+      @texts[category] = texts
+    }
   end
 
   def new
     @text = Text.new
-    @language_options = Language.all.map { |l| [l.name, l.id] }
-    @language_options = [] if @language_options == nil
   end
 
   def show

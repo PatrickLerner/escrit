@@ -1,5 +1,6 @@
 class Text < ActiveRecord::Base
   belongs_to :language
+  default_scope { order('category asc, title asc') }
   validates :category, presence: true, length: { minimum: 5 }
   validates :title, presence: true, length: { minimum: 5 }
   validates :content, presence: true, length: { minimum: 5 }

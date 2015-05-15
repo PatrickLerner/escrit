@@ -2,28 +2,42 @@
 
 <%= link_to 'Add New', new_text_path, class: 'button', title: 'Add a new text' %>
 
+<%= select_tag :language, options_for_select(['Filter Language'] + language_options, selected: @selected_language) %>
+
 <div class="row">
   <div class="two-thirds column">
-    <table class="u-full-width">
-      <thead>
-        <th>Title</th>
-        <th>Category</th>
-        <th>Language</th>
-        <th>Word Count</th>
-      </thead>
-      <tbody>
-        <% @texts.each do |text| %>
-          <tr>
-            <td><%= link_to text.title, text_path(text) %></td>
-            <td><%= text.category %></td>
-            <td><%= text.language.name %></td>
-            <td>
-              <%= number_with_precision text.word_count, precision: 0, delimiter: ',' %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <% if @selected_language == nil %>
+      <p>Please select a language above.</p>
+    <% else %>
+      <% if @texts == {} %>
+        <p>Sadly there are currently no texts in this language. Feel free to add one if you want.</p>
+      <% end %>
+      <%
+        last_category = nil
+        @texts.each do |category, texts|
+          total_words = 0
+          texts.each { |t|
+            total_words += t.word_count
+          }
+      %>
+        <table class="u-full-width">
+          <thead>
+            <th><%= category %></th>
+            <th style="text-align: right"><%= total_words %></th>
+          </thead>
+          <tbody>
+            <% texts.each do |text| %>
+              <tr>
+                <td><%= link_to text.title, text_path(text) %></td>
+                <td style="text-align: right">
+                  <%= number_with_precision text.word_count, precision: 0, delimiter: ',' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    <% end %>
   </div>
   <div class="one-third column">
     <% known_word_count = Word.where('rating >= 3 and rating < 6').count %>

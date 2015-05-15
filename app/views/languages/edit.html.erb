@@ -15,7 +15,7 @@
 <% end %>
 
 <div class="row">
-  <div class="one-half column">
+  <div class="two-thirds column">
     <%= form_for :language, :url => language_path(@language), method: :patch do |f| %>
       <p>
         <%= f.label :name, 'Language Name:' %><br>
@@ -24,11 +24,12 @@
 
       <p>
         <%= f.submit 'Save New Name', :class => 'button-primary' %>
+        <%= link_to fa_icon("times") + " Delete", language_path(@language), method: :delete, data: { confirm: 'Are you absolutely certain?' }, title: 'Delete', class: 'button' %>
         <%= link_to 'Abort', languages_path, class: 'button', title: 'Go back to overview' %>
       </p>
     <% end %>
   </div>
-  <div class="one-half column">
-    <p>With this form you can add a new language to the system to be used to classify texts and words.</p>
+  <div class="one-third column">
+    <p>Here you can edit or delete a language from the system. Please be very careful with deleting them as it will currently break references to it in the database if it was used by somebody to classify their texts, probably breaking the system.</p>
   </div>
 </div>

@@ -39,3 +39,5 @@ gem 'spring',        group: :development
 # gem 'debugger', group: [:development, :test]
 
 gem "font-awesome-rails"
+gem 'naturalsort', :require => 'natural_sort_kernel'
+gem 'jquery-turbolinks'
