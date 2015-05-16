@@ -35,7 +35,7 @@
 
       <%= f.submit 'Save new text', :class => 'button-primary' %>
       <% if selected_language %>
-        <%= link_to 'Abort', texts_path + "?language=" + selected_language.name, class: 'button', title: 'Go back to overview' %>
+        <%= link_to 'Abort', "/texts/" + selected_language.name.downcase, class: 'button', title: 'Go back to overview' %>
       <% else %>
         <%= link_to 'Abort', texts_path, class: 'button', title: 'Go back to overview' %>
       <% end %>

@@ -1,7 +1,7 @@
 <h4>Texts</h4>
 
 <% if selected_language %>
-  <%= link_to 'Add New', new_text_path + "?language=" + selected_language.name, class: 'button', title: 'Add a new text' %>
+  <%= link_to 'Add New', "/texts/" + selected_language.name.downcase + "/new", class: 'button', title: 'Add a new text' %>
   <%= select_tag :language, options_for_select(['Filter Language'] + language_options.map { |k| k[0] }, selected: selected_language.name) %>
 <% else %>
   <%= link_to 'Add New', new_text_path, class: 'button', title: 'Add a new text' %>

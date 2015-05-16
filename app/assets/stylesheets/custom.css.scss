@@ -1,3 +1,78 @@
+.lookup {
+  position: fixed;
+  background-color: #fff;
+  padding: 0 0.5em;
+  margin-top: 1em;
+  display: none;
+  overflow: overflow;
+  text-align: center;
+
+  input {
+    margin-bottom: 1em;
+    width: 100%;
+    border: 0;
+    font-size: 16px;
+    border-bottom: 1px dashed gray;
+
+    &:focus {
+      -webkit-box-shadow: 0;
+      -moz-box-shadow: 0;
+      box-shadow: 0;
+      outline: none;
+    }
+  }
+
+  #description {
+    margin-top: 0.5em;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  #buttons {
+    text-align: center;
+
+    span {
+      width: 25px;
+      display: inline-block;
+      text-align: center;
+      border: 1px solid black;
+    }
+
+    span.s6 {
+      background-color: #CFD2D9;
+    }
+  }
+
+  #links {
+    text-align: right;
+    font-size: 12px;
+    margin-top: 0.5em;
+
+    a {
+      display: inline-block;
+      cursor: pointer;
+      border-color: gray;
+
+      &:hover {
+        border-color: black;
+      }
+    }
+  }
+
+  h4 {
+    font-size: 1.5em;
+    margin-bottom: 0;
+  }
+}
+
+span.s0 { background-color: #FB5A5D; }
+span.s1 { background-color: #F7A175; }
+span.s2 { background-color: #FDE499; }
+span.s3 { background-color: #D3F2BC; }
+span.s4 { background-color: #DFF2FA; }
+span.s5 { background-color: inherit; }
+span.s6 { background-color: inherit; }
+
 .container {
   max-width: 800px; }
 .docs-section {

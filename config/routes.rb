@@ -8,7 +8,13 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   resources :languages
+  get '/texts/:id', to: 'texts#show', :constraints => { :id => /[0-9]+/ }
+  get '/texts/new', to: 'texts#new'
+  get '/texts/:language/new', to: 'texts#new', :constraints => { :language => /.+/ }
+  get '/texts/:language', to: 'texts#index', :constraints => { :language => /.+/ }
   resources :texts
+  get '/words/:language/:id', to: 'words#show'
+  resources :words
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

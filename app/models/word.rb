@@ -19,8 +19,8 @@ class Word < ActiveRecord::Base
 
     list = Word.where value: words, language: language
     list.each do |res|
-      remaining.delete res.origin
-      word = res.origin.mb_chars.downcase.to_s
+      remaining.delete res.value
+      word = res.value.mb_chars.downcase.to_s
       result[word] = res
     end
 

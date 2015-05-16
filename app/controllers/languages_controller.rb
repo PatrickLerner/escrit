@@ -10,7 +10,7 @@ class LanguagesController < ApplicationController
   end
 
   def edit
-    @language = Language.find(params[:id])
+    @language = Language.where("lower(name) LIKE ?", params[:id])[0]
   end
 
   def destroy

@@ -6,6 +6,6 @@ $ ->
 	$('#language').change ->
 		selected = $('#language option').filter(':selected').text()
 		if selected is $('#language option').filter(':first').text()
-			window.location.href = "texts"
+			window.location.href = "/texts"
 		else
-			window.location.href = "texts?language=" + selected
+			window.location.href = "/texts/" + selected.toLowerCase()

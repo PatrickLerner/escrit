@@ -25,8 +25,7 @@ class TextsController < ApplicationController
   end
 
   def index
-    @selected_language = nil
-    if params[:language] == nil
+    if selected_language == nil
       my_texts = []
     else
       my_texts = Text.where :language_id => selected_language.id
@@ -66,16 +65,18 @@ class TextsController < ApplicationController
       uniq_words = @text.raw_words.sort.uniq
       words = Word.find_create_bulk @text.language_id, uniq_words
 
-      @processed = ''
+      processed = ''
       @text.split_words.each do |wstr|
         wstrlow = wstr.mb_chars.downcase.to_s
         if words.keys.include? wstrlow
           w = words[wstrlow]
-          @processed += '<span class="word s' + w.rating.to_s + '">' + wstr + '</span>';
+          processed += '<span class="word s' + w.rating.to_s + '">' + wstr + '</span>';
         else
-          @processed += wstr
+          processed += wstr
         end
       end
+      paragraphs = processed.split /[\r\n]+/
+      @processed = "<p>" + paragraphs.join("</p><p>") + "</p>"
     end
   end
 
@@ -93,6 +94,6 @@ class TextsController < ApplicationController
 
   private
     def text_params
-      params.require(:text).permit(:category, :title, :content, :language_id)
+      params.require(:text).permit(:category, :title, :content, :language_id, :completed)
     end
 end
