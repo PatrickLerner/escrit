@@ -18,7 +18,11 @@
   <div class="two-thirds column">
     <%= form_for :text, url: texts_path do |f| %>
       <%= f.label :language_id %>
-      <%= f.select :language_id, options_for_select(language_options), {}, :class => 'u-full-width' %>
+      <% if selected_language %>
+        <%= f.select :language_id, options_for_select(language_options, selected_language.id), {}, :class => 'u-full-width' %>
+      <% else %>
+        <%= f.select :language_id, options_for_select(language_options), {}, :class => 'u-full-width' %>
+      <% end %>
 
       <%= f.label :category %>
       <%= f.text_field :category, placeholder: "Category", autocomplete: :off, :class => 'u-full-width' %>
@@ -30,10 +34,15 @@
       <%= f.text_area :content, placeholder: "Content", style: 'height: 15em;', :class => 'u-full-width' %>
 
       <%= f.submit 'Save new text', :class => 'button-primary' %>
-      <%= link_to 'Abort', texts_path, class: 'button', title: 'Go back to overview' %>
+      <% if selected_language %>
+        <%= link_to 'Abort', texts_path + "?language=" + selected_language.name, class: 'button', title: 'Go back to overview' %>
+      <% else %>
+        <%= link_to 'Abort', texts_path, class: 'button', title: 'Go back to overview' %>
+      <% end %>
     <% end %>
   </div>
   <div class="one-third column">
-    <p>With this form you can add a new language to the system to be used to classify texts and words.</p>
+    <p>Here you can add a new text to the website that you can then read. Don't worry, texts are not public and will only be visible to you.</p>
+    <p>Texts with the same category will be grouped together, and is useful when handling for instance multiple chapters from a book.</p>
   </div>
 </div>

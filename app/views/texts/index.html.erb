@@ -1,12 +1,16 @@
 <h4>Texts</h4>
 
-<%= link_to 'Add New', new_text_path, class: 'button', title: 'Add a new text' %>
-
-<%= select_tag :language, options_for_select(['Filter Language'] + language_options, selected: @selected_language) %>
+<% if selected_language %>
+  <%= link_to 'Add New', new_text_path + "?language=" + selected_language.name, class: 'button', title: 'Add a new text' %>
+  <%= select_tag :language, options_for_select(['Filter Language'] + language_options.map { |k| k[0] }, selected: selected_language.name) %>
+<% else %>
+  <%= link_to 'Add New', new_text_path, class: 'button', title: 'Add a new text' %>
+  <%= select_tag :language, options_for_select(['Filter Language'] + language_options.map { |k| k[0] }) %>
+<% end %>
 
 <div class="row">
   <div class="two-thirds column">
-    <% if @selected_language == nil %>
+    <% if selected_language == nil %>
       <p>Please select a language above.</p>
     <% else %>
       <% if @texts == {} %>
@@ -15,10 +19,7 @@
       <%
         last_category = nil
         @texts.each do |category, texts|
-          total_words = 0
-          texts.each { |t|
-            total_words += t.word_count
-          }
+          total_words = texts.map { |t| t.word_count }.inject(:+)
       %>
         <table class="u-full-width">
           <thead>
@@ -41,16 +42,28 @@
   </div>
   <div class="one-third column">
     <% known_word_count = Word.where('rating >= 3 and rating < 6').count %>
+    <% word_count = Word.where('rating != 6').count %>
 
-    <p>You currently have a total of <%= number_with_precision Word.where('rating != 6').count, precision: 0, delimiter: ',' %> words saved of which you marked <%= number_with_precision known_word_count, precision: 0, delimiter: ',' %> as known (level three or higher).
+    <% if selected_language != nil %>
+      <% if word_count == 0 %>
+        <p>You have no words marked as known (level three or higher) in <%= selected_language.name %> yet, but why not get it started right away and fix that?</p>
+      <% else %>
+         <p>You have already marked <%= number_with_precision word_count, precision: 0, delimiter: ',' %> <%= selected_language.name %> words as known <%= number_with_precision known_word_count, precision: 0, delimiter: ',' %> (level three or higher).</p>
+      <% end %>
 
-    <% if known_word_count >= 500 %>
-    Good Work!
-    <% elsif known_word_count == 0 %>
+      <% if known_word_count >= 500 %>
+        Good Work!
+      <% elsif known_word_count != 0 %>
+        Keep it up!
+      <% end %>
 
-    <% else %>
-    Keep it up!
+      <% total_text_count = @texts.map { |c, t| t.count }.inject(:+) %>
+
+      <% if total_text_count == nil %>
+        <p>You have not added any <%= selected_language.name %> texts to the website yet, but feel free to add <%= link_to 'add one', new_text_path %> if you want.</p>
+      <% else %>
+        <p>You have already added <%= pluralize(total_text_count, selected_language.name + " text") %> to the website, but feel free to add <%= link_to 'add a new one', new_text_path %> if you want.</p>
+      <% end %>
     <% end %>
-
-    <p>Currently there <%= if @texts.count == 1 then "is" else "are" end %> <%= pluralize(@texts.count, "text") %> available in the system. Feel free to add <%= link_to 'add a new one', new_text_path %> if you want.</p>
+  </div>
 </div>

@@ -4,4 +4,10 @@ module TextsHelper
     options = [] if options == nil
     options
   end
+
+  def selected_language
+    if params[:language]
+      Language.where("lower(name) LIKE ?", params[:language])[0]
+    end
+  end
 end

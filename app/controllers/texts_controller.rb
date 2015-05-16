@@ -29,9 +29,7 @@ class TextsController < ApplicationController
     if params[:language] == nil
       my_texts = []
     else
-      lang = Language.where("lower(name) LIKE ?", params[:language])[0]
-      @selected_language = lang.id
-      my_texts = Text.where :language_id => lang.id
+      my_texts = Text.where :language_id => selected_language.id
     end
     my_texts = [] if my_texts == nil
 
