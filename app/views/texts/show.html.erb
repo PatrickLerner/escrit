@@ -1,14 +1,21 @@
 <% content_for :title, '%s (%s)' % [@text.title, @text.category] %>
 
+<h4><%= @text.title %></h4>
+
 <div class="row">
   <div class="two-thirds column">
-    <h4><%= @text.title %></h4>
-    <p><i><%= @text.category %></i></p>
     <%= @processed.html_safe %>
   </div>
   <div class="one-third column">
-    <%= link_to fa_icon("chevron-left") + " Back", texts_path + "/" + @text.language.name.downcase, class: 'button', title: 'Back to Overview' %>
-    <%= link_to fa_icon("pencil") + " Edit", edit_text_path(@text), class: 'button', title: 'Edit the Text' %>
+    <div class="row">
+      <div class="one-half column">
+        <%= link_to fa_icon("chevron-left") + " Back", texts_path + "/" + @text.language.name.downcase, class: 'button button-primary u-full-width', title: 'Back to Overview' %>
+      </div>
+      <div class="one-half column">
+        <%= link_to fa_icon("pencil") + " Edit", edit_text_path(@text), class: 'button u-full-width', title: 'Edit the Text' %>
+      </div>
+    </div>
+    <strong>Category:</strong> <i><%= @text.category %></i>
     <div id="stats"></div>
 
     <section class="lookup">

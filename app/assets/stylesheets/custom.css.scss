@@ -36,6 +36,7 @@
       display: inline-block;
       text-align: center;
       border: 1px solid black;
+      cursor: pointer;
     }
 
     span.s6 {
@@ -72,6 +73,8 @@ span.s3 { background-color: #D3F2BC; }
 span.s4 { background-color: #DFF2FA; }
 span.s5 { background-color: inherit; }
 span.s6 { background-color: inherit; }
+
+.word { cursor: pointer; }
 
 .container {
   max-width: 800px; }

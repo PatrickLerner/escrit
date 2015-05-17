@@ -55,7 +55,7 @@ function updateCounter() {
 		sum += i * $('.s' + i + '.word').map (function () { return this.innerHTML }).get().filter(onlyUnique).length;
 	var count = $('.word').map (function () { return this.innerHTML }).get().filter(onlyUnique).length;
 	var rating = (sum / count).toFixed(1);
-	$('#stats').html('<b>Unknown Words:</b> ' + nl + ' – <b>Rating:</b> ' + rating);
+	$('#stats').html('<b>Unrated Words:</b> ' + nl + ' – <b>Rating:</b> ' + rating);
 }
 
 function onRatingsButton(rating) {

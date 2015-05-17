@@ -21,7 +21,7 @@ class TextsController < ApplicationController
     @text = Text.find_by :id => params[:id]
     @text.destroy
 
-    redirect_to texts_path
+    redirect_to '/texts/' + @text.language.name
   end
 
   def index

@@ -1,4 +1,4 @@
-<h4>Add a new Text</h4>
+<h4>Edit Text</h4>
 
 <% if @text.errors.any? %>
   <div id="error_explanation">
@@ -14,16 +14,11 @@
   </div>
 <% end %>
 
-<%= form_for :text, url: texts_path do |f| %>
+<%= form_for :text, url: text_path(@text), method: :patch do |f| %>
   <div class="row">
     <div class="two-thirds column">
       <%= f.label :language_id %>
-      <% if selected_language %>
-        <%= f.select :language_id, options_for_select(language_options, selected_language.id), {}, :class => 'u-full-width' %>
-      <% else %>
-        <%= f.select :language_id, options_for_select(language_options), {}, :class => 'u-full-width' %>
-      <% end %>
-
+      <%= f.select :language_id, options_for_select(language_options, @text.language_id), {}, :class => 'u-full-width' %>
       <%= f.label :category %>
       <%= f.text_field :category, placeholder: "Category", autocomplete: :off, :class => 'u-full-width' %>
 
@@ -34,12 +29,15 @@
       <%= f.text_area :content, placeholder: "Content", style: 'height: 15em;', :class => 'u-full-width' %>
     </div>
     <div class="one-third column">
-      <%= f.submit 'Add Text', :class => 'button-primary' %>
-      <% if selected_language %>
-        <%= link_to 'Abort', "/texts/" + selected_language.name.downcase, class: 'button', title: 'Go back to overview' %>
-      <% else %>
-        <%= link_to 'Abort', texts_path, class: 'button', title: 'Go back to overview' %>
-      <% end %>
+      <div class="row">
+        <div class="one-half column">
+          <%= f.submit 'Save', :class => 'button-primary u-full-width' %>
+        </div>
+        <div class="one-half column">
+          <%= link_to 'Abort', text_path(@text), class: 'button u-full-width', title: 'Go back to overview' %>
+        </div>
+      </div>
+      <%= link_to fa_icon("times") + " Delete", text_path(@text), method: :delete, data: { confirm: 'Are you absolutely certain?' }, title: 'Delete', class: 'button u-full-width' %>
 
       <p>Here you can add a new text to the website that you can then read. Don't worry, texts are not public and will only be visible to you.</p>
       <p>Texts with the same category will be grouped together, and is useful when handling for instance multiple chapters from a book.</p>

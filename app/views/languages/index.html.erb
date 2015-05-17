@@ -1,9 +1,7 @@
 <h4>Languages - List</h4>
 
-<%= link_to 'Add New', new_language_path, class: 'button', title: 'Add a new language' %>
-
 <div class="row">
-  <div class="one-half column">
+  <div class="two-thirds column">
     <table class="u-full-width">
       <tr>
         <th></th>
@@ -11,13 +9,14 @@
      
       <% @languages.each do |language| %>
         <tr>
-          <td><%= link_to language.name, edit_language_path(language), title: 'Edit Language Name' %><%=  %></td>
+          <td><%= link_to language.name, '/languages/' + language.name.downcase + '/edit', title: 'Edit Language Name' %><%=  %></td>
           </td>
         </tr>
       <% end %>
     </table>
   </div>
-  <div class="one-half column">
+  <div class="one-third column">
+    <%= link_to 'Add New', new_language_path, class: 'button button-primary u-full-width', title: 'Add a new language' %>
     <p>Here you can see a list of all languages which are available in the system. Users can asign those languages to their texts to keep vocabulary separate between different languages.</p>
   </div>
 </div>

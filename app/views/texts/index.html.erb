@@ -1,20 +1,12 @@
 <h4>Texts</h4>
 
-<% if selected_language %>
-  <%= link_to 'Add New', "/texts/" + selected_language.name.downcase + "/new", class: 'button', title: 'Add a new text' %>
-  <%= select_tag :language, options_for_select(['Filter Language'] + language_options.map { |k| k[0] }, selected: selected_language.name) %>
-<% else %>
-  <%= link_to 'Add New', new_text_path, class: 'button', title: 'Add a new text' %>
-  <%= select_tag :language, options_for_select(['Filter Language'] + language_options.map { |k| k[0] }) %>
-<% end %>
-
 <div class="row">
   <div class="two-thirds column">
     <% if selected_language == nil %>
-      <p>Please select a language above.</p>
+      <p>Here you can see all the texts you added for reading purposes. Note that texts are filtered by language, so please select your language in the sidebar to see the texts.</p>
     <% else %>
       <% if @texts == {} %>
-        <p>Sadly there are currently no texts in this language. Feel free to add one if you want.</p>
+        <p>It seems like you have not yet added any texts in <%= selected_language.name %>. Please feel free to add some that interest you. If you need inspiration, try looking online for newspapers, short stories, song lyrics or other media.</p>
       <% end %>
       <%
         last_category = nil
@@ -29,7 +21,14 @@
           <tbody>
             <% texts.each do |text| %>
               <tr>
-                <td><%= link_to text.title, text_path(text) %></td>
+                <td>
+                  <% if not text.completed %>
+                    <alias title="Not all words in this text have been rated yet."><%= fa_icon("square-o") %></alias>
+                  <% else %>
+                    <alias title="You have worked through this text and rated all the words within it."><%= fa_icon("check-square-o") %></alias>
+                  <% end %>
+                  <%= link_to text.title, text_path(text) %>
+                </td>
                 <td style="text-align: right">
                   <%= number_with_precision text.word_count, precision: 0, delimiter: ',' %>
                 </td>
@@ -41,20 +40,25 @@
     <% end %>
   </div>
   <div class="one-third column">
-    <% known_word_count = Word.where('rating >= 3 and rating < 6').count %>
-    <% word_count = Word.where('rating != 6').count %>
+    <% new_url = if selected_language then "/texts/" + selected_language.name.downcase + "/new" else new_text_path end %>
+    <% selection = if selected_language then selected_language.name else nil end %>
+    <%= link_to 'Add New', new_url, class: 'button button-primary u-full-width', title: 'Add a new text' %>
+    <%= select_tag :language, options_for_select(['Filter Language'] + language_options.map { |k| k[0] }, selected: selection), class: 'u-full-width' %>
 
     <% if selected_language != nil %>
+      <% known_word_count = Word.where('rating >= 3 and rating < 6 and language_id = ?', selected_language.id).count %>
+      <% word_count = Word.where('rating != 6 and language_id = ?', selected_language.id).count %>
       <% if word_count == 0 %>
-        <p>You have no words marked as known (level three or higher) in <%= selected_language.name %> yet, but why not get it started right away and fix that?</p>
+        <p>You have no words marked as known (level three or higher) in <%= selected_language.name %> yet, but why not get it started right away and try to work on that?</p>
       <% else %>
-         <p>You have already marked <%= number_with_precision word_count, precision: 0, delimiter: ',' %> <%= selected_language.name %> words as known <%= number_with_precision known_word_count, precision: 0, delimiter: ',' %> (level three or higher).</p>
-      <% end %>
-
-      <% if known_word_count >= 500 %>
-        Good Work!
-      <% elsif known_word_count != 0 %>
-        Keep it up!
+         <p>
+          You have rated <%= number_with_precision word_count, precision: 0, delimiter: ',' %> <%= selected_language.name %> words, with <%= number_with_precision known_word_count, precision: 0, delimiter: ',' %> marked as known (level three or higher).
+          <% if known_word_count >= 500 %>
+            Congratulations on your good work thus far!
+          <% elsif known_word_count != 0 %>
+            Keep it up, you are doing well!
+          <% end %>
+         </p>
       <% end %>
 
       <% total_text_count = @texts.map { |c, t| t.count }.inject(:+) %>

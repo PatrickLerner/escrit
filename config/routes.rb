@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get '/texts/:id', to: 'texts#show', :constraints => { :id => /[0-9]+/ }
   get '/texts/new', to: 'texts#new'
   get '/texts/:language/new', to: 'texts#new', :constraints => { :language => /.+/ }
+  get '/texts/:id/edit', to: 'texts#edit', :constraints => { :id => /.+/ }
   get '/texts/:language', to: 'texts#index', :constraints => { :language => /.+/ }
   resources :texts
   get '/words/:language/:id', to: 'words#show'
