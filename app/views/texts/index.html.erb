@@ -3,10 +3,15 @@
 <div class="row">
   <div class="two-thirds column">
     <% if selected_language == nil %>
-      <p>Here you can see all the texts you added for reading purposes. Note that texts are filtered by language, so please select your language in the sidebar to see the texts.</p>
+      <p>In this section of the website you can add and read texts which you are interested in reading.</p>
+      <% if language_options(true).count > 0 %>
+        <p>Note that texts are filtered by language, so please select your language in the sidebar to see all the texts you added for that language.</p>
+      <% else %>
+        <p>It seems like you have not yet added any texts at all yet. If you need inspiration, try looking online for newspapers, short stories, song lyrics or other media.</p>
+      <% end %>
     <% else %>
       <% if @texts == {} %>
-        <p>It seems like you have not yet added any texts in <%= selected_language.name %>. Please feel free to add some that interest you. If you need inspiration, try looking online for newspapers, short stories, song lyrics or other media.</p>
+        <p>It seems like you have not yet added any texts in <%= selected_language.name %> yet. Please feel free to add some that interest you. If you need inspiration, try looking online for newspapers, short stories, song lyrics or other media.</p>
       <% end %>
       <%
         last_category = nil
@@ -43,8 +48,9 @@
     <% new_url = if selected_language then "/texts/" + selected_language.name.downcase + "/new" else new_text_path end %>
     <% selection = if selected_language then selected_language.name else nil end %>
     <%= link_to 'Add New', new_url, class: 'button button-primary u-full-width', title: 'Add a new text' %>
-    <%= select_tag :language, options_for_select(['Filter Language'] + language_options.map { |k| k[0] }, selected: selection), class: 'u-full-width' %>
-
+    <% if language_options(true).count > 0 %>
+     <%= select_tag :language, options_for_select(['Filter Language'] + language_options(true).map { |k| k[0] }, selected: selection), class: 'u-full-width' %>
+    <% end %>
     <% if selected_language != nil %>
       <% known_word_count = Word.where('rating >= 3 and rating < 6 and language_id = ?', selected_language.id).count %>
       <% word_count = Word.where('rating != 6 and language_id = ?', selected_language.id).count %>

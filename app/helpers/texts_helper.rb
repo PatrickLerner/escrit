@@ -1,6 +1,10 @@
 module TextsHelper
-  def language_options
-    options = Language.order(:name).map { |l| [l.name, l.id] }
+  def language_options filter_unused = false
+    if filter_unused
+      options = Language.order(:name).select { |l| l.texts.count > 0 }.map { |l| [l.name, l.id] }
+    else
+      options = Language.order(:name).map { |l| [l.name, l.id] }
+    end
     options = [] if options == nil
     options
   end

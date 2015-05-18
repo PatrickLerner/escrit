@@ -79,7 +79,7 @@ $(document).ready(function() {
 		last_word = event.target.innerHTML;
 		$.getJSON("/words/" + text_language + '/' + last_word, function(data) {
 			$('.lookup').fadeIn(400);
-			$('.lookup #rword').html(data["value"]);
+			$('.lookup #rword').html(last_word);
 			$('.lookup #lword').val(data["note"]);
 			refreshCurrentWordRating(data["rating"]);
 			$('.lookup #lword').focus();
