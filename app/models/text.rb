@@ -21,7 +21,7 @@ class Text < ActiveRecord::Base
   end
 
   def self.seperators
-    " \\t\\.\\?!:,\\-–\#\\n\\r\\(\\)\\{\\}\"\\\\/1234567890%><„,“;"
+    " \\t\\.\\?!:,\\-–\#\\n\\r\\(\\)\\[\\]\\{\\}\"\\\\/1234567890%><„,“;"
   end
 
   def raw_words

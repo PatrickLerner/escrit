@@ -68,15 +68,16 @@ class TextsController < ApplicationController
       processed = ''
       @text.split_words.each do |wstr|
         wstrlow = wstr.mb_chars.downcase.to_s
-        if words.keys.include? wstrlow
+        if words.keys.include? wstrlow and not /https?:\/\/[\S]+/.match wstrlow
           w = words[wstrlow]
           processed += '<span class="word s' + w.rating.to_s + '">' + wstr + '</span>';
         else
           processed += wstr
         end
       end
-      paragraphs = processed.split /[\r\n]+/
-      @processed = "<p>" + paragraphs.join("</p><p>") + "</p>"
+      @processed = Kramdown::Document.new(processed).to_html.html_safe
+      #paragraphs = processed.split /[\r\n]+/
+      #@processed = "<p>" + paragraphs.join("</p><p>") + "</p>"
     end
   end
 
