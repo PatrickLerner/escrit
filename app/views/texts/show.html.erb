@@ -31,6 +31,13 @@
         <span class="s5">5</span>
       </div>
       <div id="description"></div>
+      <div id="links">
+        <%=
+          @services.map { |service|
+            "<a t_href='%s' target='%s' title='%s'>%s</a>" % [service.url, (0...10).map { ('a'..'z').to_a[rand(26)] }.join, service.name, service.short_name]
+          }.join(' – ').html_safe
+        %>
+      </div>
     </section>
   </div>
 </div>

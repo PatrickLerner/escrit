@@ -9,8 +9,7 @@
      
       <% @languages.each do |language| %>
         <tr>
-          <td><%= link_to language.name, '/languages/' + language.name.downcase + '/edit', title: 'Edit Language Name' %><%=  %></td>
-          </td>
+          <td><%= link_to language.name, '/languages/' + language.name.downcase + '/edit', title: 'Edit Language Name' %></td>
         </tr>
       <% end %>
     </table>

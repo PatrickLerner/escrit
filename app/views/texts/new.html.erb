@@ -34,13 +34,19 @@
       <%= f.text_area :content, placeholder: "Content", style: 'height: 15em;', :class => 'u-full-width' %>
     </div>
     <div class="one-third column">
-      <%= f.submit 'Add Text', :class => 'button-primary' %>
-      <% if selected_language %>
-        <%= link_to 'Abort', "/texts/" + selected_language.name.downcase, class: 'button', title: 'Go back to overview' %>
-      <% else %>
-        <%= link_to 'Abort', texts_path, class: 'button', title: 'Go back to overview' %>
-      <% end %>
-
+      <div class="row">
+        <div class="one-half column">
+          <%= f.submit 'Add', :class => 'button-primary u-full-width' %>
+        </div>
+        <div class="one-half column">
+          <% if selected_language %>
+            <%= link_to 'Abort', "/texts/" + selected_language.name.downcase, class: 'button u-full-width', title: 'Go back to overview' %>
+          <% else %>
+            <%= link_to 'Abort', texts_path, class: 'button u-full-width', title: 'Go back to overview' %>
+          <% end %>
+        </div>
+      </div>
+      
       <p>Here you can add a new text to the website that you can then read. Don't worry, texts are not public and will only be visible to you.</p>
       <p>Texts with the same category will be grouped together, and is useful when handling for instance multiple chapters from a book.</p>
     </div>

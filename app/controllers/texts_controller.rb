@@ -78,6 +78,9 @@ class TextsController < ApplicationController
       @processed = Kramdown::Document.new(processed).to_html.html_safe
       #paragraphs = processed.split /[\r\n]+/
       #@processed = "<p>" + paragraphs.join("</p><p>") + "</p>"
+
+      @services = Service.where('language_id=? OR language_id=0', @text.language_id)
+      @services = [] if @services == nil
     end
   end
 
