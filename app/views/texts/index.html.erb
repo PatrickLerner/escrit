@@ -1,3 +1,9 @@
+<% if selected_language == nil %>
+  <% content_for :title, 'Texts' %>
+<% else %>
+  <% content_for :title, '%s Texts' % [selected_language.name] %>
+<% end %>
+
 <h4>Texts</h4>
 
 <div class="row">
