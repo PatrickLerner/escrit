@@ -91,6 +91,7 @@ $(document).ready(function() {
 		if (rating == '/')
 			rating = 6;
 		onRatingsButton(rating);
+		$('.lookup #lword').focus();
 	});
 
 	$(".lookup #lword").keyup(function(event) {
