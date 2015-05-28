@@ -48,7 +48,7 @@
           <%= link_to 'Abort', services_path, class: 'button u-full-width', title: 'Go back to overview' %>
         </div>
       </div>
-      <%= link_to fa_icon("times") + " Delete", service_path(@service), method: :delete, data: { confirm: 'Are you absolutely certain?' }, title: 'Delete', class: 'button u-full-width' %>
+      <%= link_to fa_icon("times") + " Delete", service_path(@service), method: :delete, data: { confirm: 'Are you absolutely certain?' }, title: 'Delete', class: 'button u-full-width button-delete' %>
 
       <p>Here you can add the details of the new service you want to add.</p>
       <p>The URL mask must contain a placeholder where the word is inserted into, specify where this placeholder goes with '{query}'.</p>
