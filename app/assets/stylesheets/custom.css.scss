@@ -1,4 +1,4 @@
-.two-thirds {
+.one-third, .two-thirds {
   img {
     max-width: 100%;
     border: 1px solid #EAEAEA;
@@ -9,11 +9,19 @@
 .lookup {
   position: fixed;
   background-color: #fff;
-  padding: 0 0.5em;
+  padding: 0;
   margin-top: 1em;
   display: none;
   overflow: overflow;
   text-align: center;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #eee;
+
+  #close-btn {
+    display: block;
+  }
 
   input {
     margin-bottom: 1em;
@@ -56,6 +64,7 @@
     text-align: right;
     font-size: 12px;
     margin-top: 0.5em;
+    padding-right: 2em;
 
     a {
       display: inline-block;
@@ -103,6 +112,18 @@ span.s6 { background-color: inherit; }
 @media (min-width: 550px) {
   .docs-section {
     padding: 6rem 0; }
+
+  .lookup {
+    left: auto;
+    bottom: auto;
+    width: auto;
+    padding: 0 0.5em;
+    border-top: 0;
+
+    #close-btn {
+      display: none;
+    }
+  }
 }
 
 /* Larger than tablet */

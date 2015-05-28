@@ -55,7 +55,7 @@ function updateCounter() {
 		sum += i * $('.s' + i + '.word').map (function () { return this.innerHTML }).get().filter(onlyUnique).length;
 	var count = $('.word').map (function () { return this.innerHTML }).get().filter(onlyUnique).length;
 	var rating = (sum / count).toFixed(1);
-	$('#stats').html('<b>Unrated Words:</b> ' + nl + ' – <b>Rating:</b> ' + rating);
+	$('#stats').html('<b>Unrated Words:</b> ' + nl + ' – <alias title="The text\'s rating is the average rating across all words. It therefore is ranked from 0 (knowing no words at all) to 5 (knowing all words perfectly)."><b>Rating:</b> ' + rating + '</alias>');
 }
 
 function onRatingsButton(rating) {
@@ -135,8 +135,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$('body').bind('click', function (evt) {
-		if(evt.target == $('body')[0])
-			$('.lookup').fadeOut(400);
+	$('#close-btn').bind('click', function (evt) {
+		$('.lookup').fadeOut(400);
 	});
 });
