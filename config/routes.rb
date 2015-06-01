@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'statistics/index'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -16,6 +18,7 @@ Rails.application.routes.draw do
   resources :words
   resources :services
   get '/settings', to: 'settings#index'
+  get '/statistics', to: 'statistics#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

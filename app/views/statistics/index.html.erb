@@ -1,0 +1,35 @@
+<% content_for :title, 'Statistics' %>
+
+<h4>Statistics</h4>
+
+<div class="row">
+  <div class="two-thirds column">
+    <h5>Number of New Words Added (Last Two Weeks)</h5>
+
+    <canvas id="newWords" width="500" height="400"></canvas>
+  </div>
+  <div class="one-third column">
+  </div>
+</div>
+
+<script type="text/javascript">
+    var data = {
+        labels: [<%= @new_words_labels.map{|i| '"' + i + '"'}.join(',').html_safe %>],
+        datasets: [
+            {
+                label: "My Second dataset",
+                fillColor: "rgba(151,187,205,0.2)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+                data: [<%= @new_words_data.join ',' %>]
+            }
+        ]
+    };
+    var ctx = $("#newWords").get(0).getContext("2d");
+    var myLineChart = new Chart(ctx).Bar(data, {
+        barStrokeWidth : 0,
+    });
+</script>
