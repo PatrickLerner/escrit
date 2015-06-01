@@ -1,4 +1,6 @@
 class Text < ActiveRecord::Base
+  include WordsHelper
+
   belongs_to :language
   default_scope { order('category asc, title asc') }
   validates :category, presence: true, length: { minimum: 4 }
@@ -20,17 +22,19 @@ class Text < ActiveRecord::Base
     write_attribute 'word_count', self.raw_words.count
   end
 
-  def self.seperators
-    " \\t\\.\\?!:,\\-–\#\\n\\r\\(\\)\\[\\]\\{\\}\"\\\\/1234567890%><„,“;…«»"
-  end
-
   def raw_words
-    content = read_attribute(:content).mb_chars.downcase.to_s
-    content.scan /[^#{Text.seperators}]+[^ \n\t]*[^#{Text.seperators}]+|[^#{Text.seperators}]+/
+    WordsHelper.raw_words read_attribute(:content)
   end
 
   def split_words
-    content = read_attribute(:content)
-    content.scan /[#{Text.seperators}]+|[^#{Text.seperators}]+[^ \n\t]*[^#{Text.seperators}]+|[^#{Text.seperators}]+/
+    WordsHelper.split_words read_attribute(:content)
+  end
+
+  def raw_words_title
+    WordsHelper.raw_words read_attribute(:title)
+  end
+
+  def split_words_title
+    WordsHelper.split_words read_attribute(:title)
   end
 end

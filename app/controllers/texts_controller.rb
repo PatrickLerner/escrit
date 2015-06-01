@@ -63,25 +63,11 @@ class TextsController < ApplicationController
     if @text == nil
       redirect_to texts_path
     else
-      uniq_words = @text.raw_words.sort.uniq
+      uniq_words = (@text.raw_words + @text.raw_words_title).sort.uniq
       words = Word.find_create_bulk @text.language_id, uniq_words
 
-      processed = ''
-      @text.split_words.each do |wstr|
-        wstrlow = wstr.mb_chars.downcase.to_s
-        if words.keys.include? wstrlow and not /https?:\/\/[\S]+/.match wstrlow
-          w = words[wstrlow]
-          processed += '<span class="word s' + w.rating.to_s + '">' + wstr + '</span>';
-        else
-          processed += wstr
-        end
-      end
-      # @processed = Kramdown::Document.new(processed).to_html.html_safe
-      processed = processed.gsub /\r/, ''
-      paragraphs = processed.split /[\n]{2,}/
-      @processed = ("<p>" + paragraphs.join("</p><p>") + "</p>")
-      @processed = @processed.gsub /\n/, "<br />"
-      @processed = @processed.html_safe
+      @processed_text = process_text @text.split_words, words
+      @processed_title = process_text @text.split_words_title, words
 
       @services = Service.where('language_id=? OR language_id=0', @text.language_id)
       @services = [] if @services == nil
