@@ -3,9 +3,9 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
-	$('#language').change ->
-		selected = $('#language option').filter(':selected').text()
-		if selected is $('#language option').filter(':first').text()
+	$('#language_text').change ->
+		selected = $('#language_text option').filter(':selected').text()
+		if selected is $('#language_text option').filter(':first').text()
 			window.location.href = "/texts"
 		else
 			window.location.href = "/texts/" + selected.toLowerCase()

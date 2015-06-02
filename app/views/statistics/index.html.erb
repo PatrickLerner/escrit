@@ -4,11 +4,15 @@
 
 <div class="row">
   <div class="two-thirds column">
-    <h5>Number of New Words Added (Last Two Weeks)</h5>
+    <h5>New Words Added (Per Week)</h5>
 
     <canvas id="newWords" width="500" height="400"></canvas>
   </div>
   <div class="one-third column">
+    <% selection = if selected_language then selected_language.name else nil end %>
+    <% if language_options(true).count > 0 %>
+     <%= select_tag :language_statistics, options_for_select(['Filter Language'] + language_options(true).map { |k| k[0] }, selected: selection), class: 'u-full-width' %>
+    <% end %>
   </div>
 </div>
 
@@ -17,7 +21,7 @@
         labels: [<%= @new_words_labels.map{|i| '"' + i + '"'}.join(',').html_safe %>],
         datasets: [
             {
-                label: "My Second dataset",
+                label: "Number of Words",
                 fillColor: "rgba(151,187,205,0.2)",
                 strokeColor: "rgba(151,187,205,1)",
                 pointColor: "rgba(151,187,205,1)",

@@ -55,7 +55,7 @@
     <% selection = if selected_language then selected_language.name else nil end %>
     <%= link_to 'Add New', new_url, class: 'button button-primary u-full-width', title: 'Add a new text' %>
     <% if language_options(true).count > 0 %>
-     <%= select_tag :language, options_for_select(['Filter Language'] + language_options(true).map { |k| k[0] }, selected: selection), class: 'u-full-width' %>
+     <%= select_tag :language_text, options_for_select(['Filter Language'] + language_options(true).map { |k| k[0] }, selected: selection), class: 'u-full-width' %>
     <% end %>
     <% if selected_language != nil %>
       <% known_word_count = Word.where('rating >= 3 and rating < 6 and language_id = ?', selected_language.id).count %>

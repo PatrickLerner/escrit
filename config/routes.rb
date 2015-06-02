@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :services
   get '/settings', to: 'settings#index'
   get '/statistics', to: 'statistics#index'
+  get '/statistics/:language', to: 'statistics#index', :constraints => { :language => /.+/ }
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
