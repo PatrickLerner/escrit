@@ -27,7 +27,7 @@
         <table class="u-full-width">
           <thead>
             <th><%= category %></th>
-            <th style="text-align: right"><%= total_words %></th>
+            <th style="text-align: right"><%= number_with_precision total_words, precision: 0, delimiter: ',' %></th>
           </thead>
           <tbody>
             <% texts.each do |text| %>
