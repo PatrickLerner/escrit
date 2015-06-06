@@ -30,9 +30,11 @@ module TextsHelper
     end
     processed = processed.gsub /\r/, ''
     paragraphs = processed.split /[\n]{2,}/
+    paragraphs = paragraphs.map { |p|
+      p.sub /^#[ \t]*(.*)$/, '<h5>\1</h5>'
+    }
     processed = ("<p>" + paragraphs.join("</p><p>") + "</p>")
     processed = processed.gsub /\n/, "<br />"
-    
     processed.html_safe
   end
 end
