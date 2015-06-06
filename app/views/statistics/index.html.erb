@@ -6,12 +6,13 @@
   <div class="two-thirds column">
     <h5>New Words Added (Per Week)</h5>
 
-    <canvas id="newWords" width="500" height="400"></canvas>
+    <canvas id="newWords"></canvas>
   </div>
   <div class="one-third column">
     <% selection = if selected_language then selected_language.name else nil end %>
     <% if language_options(true).count > 0 %>
-     <%= select_tag :language_statistics, options_for_select(['Filter Language'] + language_options(true).map { |k| k[0] }, selected: selection), class: 'u-full-width' %>
+     <label for="language_statistics">Filter by Language:</label>
+     <%= select_tag :language_statistics, options_for_select(['All'] + language_options(true).map { |k| k[0] }, selected: selection), class: 'u-full-width' %>
     <% end %>
   </div>
 </div>
@@ -33,7 +34,30 @@
         ]
     };
     var ctx = $("#newWords").get(0).getContext("2d");
-    var myLineChart = new Chart(ctx).Bar(data, {
-        barStrokeWidth : 0,
+
+    $(document).ready(function() {
+        var htmlCanvas = document.getElementById('newWords'),
+            context = htmlCanvas.getContext('2d');
+
+        initialize();
+
+        function initialize() {
+            window.addEventListener('resize', resizeCanvas, false);
+            resizeCanvas();
+        }
+
+        function resizeCanvas() {
+            var w = $('.two-thirds').innerWidth(),
+                h = w / 3 * 2;
+            htmlCanvas.width = w;
+            htmlCanvas.height = h;
+            $("#image").css({"width" : w, "height": h});
+
+            var myLineChart = new Chart(ctx).Bar(data, {
+                barStrokeWidth : 0,
+                responsive: true,
+                maintainAspectRatio: false
+            });
+        }
     });
 </script>
