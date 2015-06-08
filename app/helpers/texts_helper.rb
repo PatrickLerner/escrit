@@ -23,7 +23,9 @@ module TextsHelper
       wstrlow = wstr.mb_chars.downcase.to_s
       if words.keys.include? wstrlow and not /https?:\/\/[\S]+/.match wstrlow
         w = words[wstrlow]
-        processed += '<span class="word s' + w.rating.to_s + '">' + wstr + '</span>';
+        processed += '<span class="word s' + w.rating.to_s + '">' + wstr + '</span>'
+      elsif /https?:\/\/[\S]+/.match wstrlow and wstrlow[-4..-1] == '.jpg'
+        processed += '<img src="' + wstrlow + '" />'
       else
         processed += wstr
       end
