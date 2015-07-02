@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150520131329) do
+ActiveRecord::Schema.define(version: 20150702093447) do
+
+  create_table "categories", force: true do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "language_id"
+  end
+
+  add_index "categories", ["language_id"], name: "index_categories_on_language_id"
 
   create_table "languages", force: true do |t|
     t.string   "name"
@@ -39,8 +48,11 @@ ActiveRecord::Schema.define(version: 20150520131329) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "language_id"
+    t.integer  "category_id"
+    t.boolean  "hidden"
   end
 
+  add_index "texts", ["category_id"], name: "index_texts_on_category_id"
   add_index "texts", ["language_id"], name: "index_texts_on_language_id"
 
   create_table "words", force: true do |t|

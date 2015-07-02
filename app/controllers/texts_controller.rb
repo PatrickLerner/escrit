@@ -5,6 +5,7 @@ class TextsController < ApplicationController
     @text = Text.new(text_params)
 
     if @text.save
+      @text.hidden = false
       @text.update_word_count
       @text.save
       redirect_to @text
@@ -29,7 +30,7 @@ class TextsController < ApplicationController
     if selected_language == nil
       my_texts = []
     else
-      my_texts = Text.where :language_id => selected_language.id
+      my_texts = Text.where :language_id => selected_language.id, :hidden => false
     end
     my_texts = [] if my_texts == nil
 
@@ -88,6 +89,6 @@ class TextsController < ApplicationController
 
   private
     def text_params
-      params.require(:text).permit(:category, :title, :content, :language_id, :completed)
+      params.require(:text).permit(:category, :title, :content, :language_id, :completed, :hidden)
     end
 end
