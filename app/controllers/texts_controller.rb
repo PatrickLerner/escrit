@@ -26,13 +26,14 @@ class TextsController < ApplicationController
     redirect_to '/texts/' + @text.language.name
   end
 
-  def index
+  def index hidden = false
     if selected_language == nil
       my_texts = []
     else
-      my_texts = Text.where :language_id => selected_language.id, :hidden => false
+      my_texts = Text.where :language_id => selected_language.id, :hidden => hidden
     end
     my_texts = [] if my_texts == nil
+    @hidden = hidden
 
     @texts = {}
     my_texts.each do |t|
@@ -52,6 +53,11 @@ class TextsController < ApplicationController
       end
       @texts[category] = texts
     }
+  end
+
+  def index_hidden
+    index true
+    render 'index'
   end
 
   def new
