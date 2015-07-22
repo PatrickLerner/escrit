@@ -4,7 +4,7 @@
   <% content_for :title, '%s Texts' % [selected_language.name] %>
 <% end %>
 
-<h4>Texts</h4>
+<h4>Texts<%= if @hidden then " (Hidden)" else "" end %></h4>
 
 <div class="row">
   <div class="two-thirds column">
@@ -54,6 +54,11 @@
     <% new_url = if selected_language then "/texts/" + selected_language.name.downcase + "/new" else new_text_path end %>
     <% selection = if selected_language then selected_language.name else nil end %>
     <%= link_to 'Add New', new_url, class: 'button button-primary u-full-width', title: 'Add a new text' %>
+    <% if selected_language and not @hidden %>
+      <%= link_to 'Show Hidden Texts', "/texts/" + selected_language.name.downcase + "/hidden", class: 'button u-full-width', title: 'Show all the texts that were hidden' %>
+    <% elsif selected_language and @hidden %>
+      <%= link_to 'Hide Hidden Texts', "/texts/" + selected_language.name.downcase, class: 'button u-full-width', title: 'Show only text that were not hidden' %>
+    <% end %>
     <% if language_options(true).count > 0 %>
      <%= select_tag :language_text, options_for_select(['Filter Language'] + language_options(true).map { |k| k[0] }, selected: selection), class: 'u-full-width' %>
     <% end %>
@@ -73,12 +78,10 @@
          </p>
       <% end %>
 
-      <% total_text_count = @texts.map { |c, t| t.count }.inject(:+) %>
-
-      <% if total_text_count == nil %>
+      <% if @total_text_count == 0 %>
         <p>You have not added any <%= selected_language.name %> texts to the website yet, but feel free to add <%= link_to 'add one', new_text_path %> if you want.</p>
       <% else %>
-        <p>You have already added <%= pluralize(total_text_count, selected_language.name + " text") %> to the website, but feel free to add <%= link_to 'add a new one', new_text_path %> if you want.</p>
+        <p>You have already added <%= pluralize(@total_text_count, selected_language.name + " text") %> to the website, but feel free to add <%= link_to 'add a new one', new_text_path %> if you want.</p>
       <% end %>
     <% end %>
   </div>

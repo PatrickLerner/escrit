@@ -29,8 +29,10 @@ class TextsController < ApplicationController
   def index hidden = false
     if selected_language == nil
       my_texts = []
+      @total_text_count = 0
     else
       my_texts = Text.where :language_id => selected_language.id, :hidden => hidden
+      @total_text_count = Text.where(:language_id => selected_language.id).count
     end
     my_texts = [] if my_texts == nil
     @hidden = hidden
