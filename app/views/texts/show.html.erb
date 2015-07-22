@@ -34,8 +34,8 @@
       <div id="description"></div>
       <div id="links">
         <%=
-          @services.map { |service|
-            "<a t_href='%s' target='%s' title='%s'>%s</a>" % [service.url, (0...10).map { ('a'..'z').to_a[rand(26)] }.join, service.name, service.short_name]
+          @services.each_with_index.map { |service, i|
+            "<a t_href='%s' target='%s' title='%s'>%s</a>" % [service.url, service.short_name + '_' + i.to_s, service.name, service.short_name]
           }.join(' – ').html_safe
         %>
       </div>
