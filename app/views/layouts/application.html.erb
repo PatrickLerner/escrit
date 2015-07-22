@@ -16,7 +16,7 @@
       <div class="container">
         <ul class="navbar-list">
           <li class="navbar-item">
-          	<%= image_tag "logo.png", :class => "navbar-logo" %>
+          	<a href="/"><%= image_tag "logo.png", :class => "navbar-logo" %></a>
           </li>
           <% lang = if selected_language then "/" + selected_language.name.downcase else "" end%>
           <li class="navbar-item"><a class="navbar-link" href="/">escrit</a></li>
