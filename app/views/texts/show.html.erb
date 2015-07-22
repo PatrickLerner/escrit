@@ -9,7 +9,11 @@
   <div class="one-third column">
     <div class="row">
       <div class="one-half column">
-        <%= link_to fa_icon("chevron-left") + " Back", texts_path + "/" + @text.language.name.downcase, class: 'button button-primary u-full-width', title: 'Back to Overview' %>
+        <% if not @text.hidden %>
+          <%= link_to fa_icon("chevron-left") + " Back", texts_path + "/" + @text.language.name.downcase, class: 'button button-primary u-full-width', title: 'Back to Overview' %>
+        <% else %>
+          <%= link_to fa_icon("chevron-left") + " Back", texts_path + "/" + @text.language.name.downcase + "/hidden", class: 'button button-primary u-full-width', title: 'Back to Overview' %>
+        <% end %>
       </div>
       <div class="one-half column">
         <%= link_to fa_icon("pencil") + " Edit", edit_text_path(@text), class: 'button u-full-width', title: 'Edit the Text' %>
