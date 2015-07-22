@@ -9,6 +9,9 @@
 
     <h5>New Texts Added (Per Week)</h5>
     <canvas id="newTexts"></canvas>
+
+    <h5>Words (by Rating)</h5>
+    <canvas id="words"></canvas>
   </div>
   <div class="one-third column">
     <% selection = if selected_language then selected_language.name else nil end %>
@@ -54,6 +57,23 @@
     };
     var newTextsCtx = $("#newTexts").get(0).getContext("2d");
 
+    var wordsData = {
+        labels: [<%= @words_labels.map{|i| '"' + i + '"'}.join(',').html_safe %>],
+        datasets: [
+            {
+                label: "Number of Texts",
+                fillColor: "rgba(33, 47, 63,0.9)",
+                strokeColor: "rgba(33, 47, 63,1)",
+                pointColor: "rgba(33, 47, 63,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+                data: [<%= @words_data.join ',' %>]
+            }
+        ]
+    };
+    var wordsCtx = $("#words").get(0).getContext("2d");
+
     $(document).ready(function() {
         var htmlCanvas = document.getElementById('newWords'),
             context = htmlCanvas.getContext('2d');
@@ -79,6 +99,12 @@
             });
 
             var newTextsChart = new Chart(newTextsCtx).Bar(newTextsData, {
+                barStrokeWidth : 0,
+                responsive: true,
+                maintainAspectRatio: false
+            });
+
+            var wordsChart = new Chart(wordsCtx).Bar(wordsData, {
                 barStrokeWidth : 0,
                 responsive: true,
                 maintainAspectRatio: false

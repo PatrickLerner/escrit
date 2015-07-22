@@ -25,5 +25,17 @@ class StatisticsController < ApplicationController
       end
       @new_texts_labels = @new_words_labels
     }
+    @words_data = []
+    @words_labels = []
+    5.times { |i|
+      rating = i + 1
+      if selected_language == nil
+        word_count = Word.where('rating == ?', rating).count
+      else
+        word_count = Word.where('rating == ? and language_id = ?', rating, selected_language.id).count
+      end
+      @words_data += [word_count.to_s]
+      @words_labels += [rating.to_s]
+    }
   end
 end
