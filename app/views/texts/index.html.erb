@@ -17,7 +17,11 @@
       <% end %>
     <% else %>
       <% if @texts == {} %>
-        <p>It seems like you have not yet added any texts in <%= selected_language.name %> yet. Please feel free to add some that interest you. If you need inspiration, try looking online for newspapers, short stories, song lyrics or other media.</p>
+        <% if not @hidden %>
+          <p>It seems like you have not yet added any texts in <%= selected_language.name %> yet. Please feel free to add some that interest you. If you need inspiration, try looking online for newspapers, short stories, song lyrics or other media.</p>
+        <% else %>
+          <p>You seem to not have any hidden texts. If you want to hide a text from the overview, please go to the text's page, select edit and then check the checkbox at the bottom to move it into this category, out of view.</p>
+        <% end %>
       <% end %>
       <%
         last_category = nil
