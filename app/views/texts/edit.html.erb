@@ -37,7 +37,7 @@
     <div class="one-third column">
       <div class="row">
         <div class="one-half column">
-          <%= link_to fa_icon("floppy-o") + ' Save', '', :class => 'button button-primary u-full-width', :onclick => "$('.text_form').submit()" %>
+          <%= link_to fa_icon("floppy-o") + ' Save', '', :class => 'button button-primary u-full-width', :onclick => "$('.text_form').submit(); return false;" %>
         </div>
         <div class="one-half column">
           <%= link_to fa_icon("ban") + ' Abort', text_path(@text), class: 'button u-full-width', title: 'Go back to overview' %>
