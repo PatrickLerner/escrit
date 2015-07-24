@@ -33,8 +33,7 @@ module TextsHelper
     processed = processed.gsub /\r/, ''
     paragraphs = processed.split /[\n]{2,}/
     paragraphs = paragraphs.map { |p|
-      p.sub /^#[ \t]*(.*)\n/, '<h5>\1</h5>'
-      p.sub /^#[ \t]*(.*)$/, '<h5>\1</h5>'
+      p.sub /^#[ \t]*(.*)[\n]*/, '<h5>\1</h5>'
     }
     if paragraphs.count > 1
       processed = ("<p>" + paragraphs.join("</p><p>") + "</p>")
