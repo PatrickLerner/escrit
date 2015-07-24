@@ -63,12 +63,15 @@
   <div class="one-third column">
     <% new_url = if selected_language then "/texts/" + selected_language.name.downcase + "/new" else new_text_path end %>
     <% selection = if selected_language then selected_language.name else nil end %>
-    <%= link_to 'Add New', new_url, class: 'button button-primary u-full-width', title: 'Add a new text' %>
+
+    <%= link_to fa_icon("plus") + ' Add New', new_url, class: 'button button-primary u-full-width', title: 'Add a new text' %>
+
     <% if selected_language and not @hidden %>
-      <%= link_to 'Show Archived Texts', "/texts/" + selected_language.name.downcase + "/archive", class: 'button u-full-width', title: 'Show archived texts.' %>
+      <%= link_to fa_icon("folder-open-o") + ' Show Archived Texts', "/texts/" + selected_language.name.downcase + "/archive", class: 'button u-full-width', title: 'Show archived texts.' %>
     <% elsif selected_language and @hidden %>
-      <%= link_to 'Show Active Texts', "/texts/" + selected_language.name.downcase, class: 'button u-full-width', title: 'Show currently active texts.' %>
+      <%= link_to fa_icon("folder-open-o") + ' Show Active Texts', "/texts/" + selected_language.name.downcase, class: 'button u-full-width', title: 'Show currently active texts.' %>
     <% end %>
+
     <% if language_options(true).count > 0 %>
      <%= select_tag :language_text, options_for_select(['Filter Language'] + language_options(true).map { |k| k[0] }, selected: selection), class: 'u-full-width' %>
     <% end %>

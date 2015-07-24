@@ -16,7 +16,7 @@
   </div>
 <% end %>
 
-<%= form_for :text, url: text_path(@text), method: :patch do |f| %>
+<%= form_for :text, url: text_path(@text), html: { method: :patch, class: 'text_form' } do |f| %>
   <div class="row">
     <div class="two-thirds column">
       <%= f.label :language_id %>
@@ -37,10 +37,10 @@
     <div class="one-third column">
       <div class="row">
         <div class="one-half column">
-          <%= f.submit 'Save', :class => 'button-primary u-full-width' %>
+          <%= link_to fa_icon("floppy-o") + ' Save', '', :class => 'button button-primary u-full-width', :onclick => "$('.text_form').submit()" %>
         </div>
         <div class="one-half column">
-          <%= link_to 'Abort', text_path(@text), class: 'button u-full-width', title: 'Go back to overview' %>
+          <%= link_to fa_icon("ban") + ' Abort', text_path(@text), class: 'button u-full-width', title: 'Go back to overview' %>
         </div>
       </div>
       <%= link_to fa_icon("times") + " Delete", text_path(@text), method: :delete, data: { confirm: 'Are you absolutely certain?' }, title: 'Delete', class: 'button u-full-width button-delete' %>
