@@ -45,7 +45,7 @@ function updateCounter() {
 			data: {
 				'text[completed]': nl == 0
 			},
-			async: false
+			async: true
 		});
 	old_nl = nl;
 

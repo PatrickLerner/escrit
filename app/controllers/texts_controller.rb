@@ -89,7 +89,11 @@ class TextsController < ApplicationController
     if @text.update(text_params)
       @text.update_word_count
       @text.save
-      redirect_to @text
+      if text_params[:completed]
+        render plain: "ok"
+      else
+        redirect_to @text
+      end
     else
       render 'edit'
     end
