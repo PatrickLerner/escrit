@@ -10,7 +10,9 @@ class TextsController < ApplicationController
       @text.save
       redirect_to @text
     else
-      params[:language] = @text.language.name
+      if @text.language
+        params[:language] = @text.language.name
+      end
       render 'new'
     end
   end

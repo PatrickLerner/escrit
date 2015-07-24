@@ -6,6 +6,7 @@ class Text < ActiveRecord::Base
   validates :category, presence: true, length: { minimum: 4 }
   validates :title, presence: true, length: { minimum: 4 }
   validates :content, presence: true, length: { minimum: 4 }
+  validates :language_id, presence: true
 
   def difficulty
     raw = self.raw_words
