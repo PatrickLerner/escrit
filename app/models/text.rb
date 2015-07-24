@@ -38,4 +38,12 @@ class Text < ActiveRecord::Base
   def split_words_title
     WordsHelper.split_words read_attribute(:title)
   end
+
+  def raw_words_category
+    WordsHelper.raw_words read_attribute(:category)
+  end
+
+  def split_words_category
+    WordsHelper.split_words read_attribute(:category)
+  end
 end

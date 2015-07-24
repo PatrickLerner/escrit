@@ -74,11 +74,12 @@ class TextsController < ApplicationController
     if @text == nil
       redirect_to texts_path
     else
-      uniq_words = (@text.raw_words + @text.raw_words_title).sort.uniq
+      uniq_words = (@text.raw_words + @text.raw_words_title + @text.raw_words_category).sort.uniq
       words = Word.find_create_bulk @text.language_id, uniq_words
 
       @processed_text = process_text @text.split_words, words
       @processed_title = process_text @text.split_words_title, words
+      @processed_category = process_text @text.split_words_category, words
 
       @services = Service.where('language_id=? OR language_id=0', @text.language_id)
       @services = [] if @services == nil

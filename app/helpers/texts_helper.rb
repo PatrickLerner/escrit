@@ -36,7 +36,11 @@ module TextsHelper
       p.sub /^#[ \t]*(.*)\n/, '<h5>\1</h5>'
       p.sub /^#[ \t]*(.*)$/, '<h5>\1</h5>'
     }
-    processed = ("<p>" + paragraphs.join("</p><p>") + "</p>")
+    if paragraphs.count > 1
+      processed = ("<p>" + paragraphs.join("</p><p>") + "</p>")
+    else
+      processed = paragraphs[0]
+    end
     processed = processed.gsub /\n/, "<br />"
     processed.html_safe
   end
