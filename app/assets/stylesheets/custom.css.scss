@@ -6,6 +6,14 @@
   }
 }
 
+.image-link, .lb-close {
+  border: 0;
+  
+  &:hover {
+    border: 0;
+  }
+}
+
 td, th {
   padding: 6px 15px;
 }

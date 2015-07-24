@@ -25,7 +25,7 @@ module TextsHelper
         w = words[wstrlow]
         processed += '<span class="word s' + w.rating.to_s + '">' + wstr + '</span>'
       elsif /https?:\/\/[\S]+/.match wstrlow and (wstrlow[-4..-1] == '.jpg' or wstrlow[-4..-1] == '.png')
-        processed += '<div style="text-align: center;"><img src="' + wstrlow + '" /></div>'
+        processed += '<div style="text-align: center;"><a href="' + wstrlow + '" data-lightbox="images" class="image-link"><img src="' + wstrlow + '" /></a></div>'
       else
         processed += wstr
       end
