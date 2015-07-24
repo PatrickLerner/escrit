@@ -78,36 +78,33 @@
         var htmlCanvas = document.getElementById('newWords'),
             context = htmlCanvas.getContext('2d');
 
-        initialize();
-
-        function initialize() {
-            window.addEventListener('resize', resizeCanvas, false);
-            resizeCanvas();
-        }
+        window.addEventListener('resize', resizeCanvas, false);
+        resizeCanvas();
 
         function resizeCanvas() {
             var w = $('.two-thirds').innerWidth(),
-                h = w / 3 * 2;
-            htmlCanvas.width = w;
-            htmlCanvas.height = h;
-            $("#image").css({"width" : w, "height": h});
+                h = Math.round(w / 3 * 2);
 
+            $("#newWords").css({"width" : w, "height": h});   
+            $("#newTexts").css({"width" : w, "height": h});   
+            $("#words").css({"width" : w, "height": h});   
+            
             var newWordsChart = new Chart(newWordsCtx).Bar(newWordsData, {
                 barStrokeWidth : 0,
                 responsive: true,
-                maintainAspectRatio: false
+                maintainAspectRatio: true
             });
 
             var newTextsChart = new Chart(newTextsCtx).Bar(newTextsData, {
                 barStrokeWidth : 0,
                 responsive: true,
-                maintainAspectRatio: false
+                maintainAspectRatio: true
             });
 
             var wordsChart = new Chart(wordsCtx).Bar(wordsData, {
                 barStrokeWidth : 0,
                 responsive: true,
-                maintainAspectRatio: false
+                maintainAspectRatio: true
             });
         }
     });
