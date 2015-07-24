@@ -6,6 +6,19 @@
   }
 }
 
+td {
+  padding: 6px 15px;
+}
+
+table, tr, td {
+  border-color: #E9E9E9 !important;
+}
+
+td > alias > i {
+  margin-right: .7rem;
+  margin-left: .65rem;
+}
+
 .lookup {
   position: fixed;
   background-color: #fff;
@@ -68,11 +81,6 @@
     a {
       display: inline-block;
       cursor: pointer;
-      border-color: gray;
-
-      &:hover {
-        border-color: black;
-      }
     }
   }
 
@@ -166,7 +174,10 @@ span.s4 {
   margin-right: 35px;
   text-decoration: none;
   line-height: 6.5rem;
-  color: #222; }
+  color: #222;
+  border: 0; }
+.navbar-link:hover {
+  border: 0; }
 .navbar-link.active {
   color: #33C3F0; }
 .navbar-spacer {
