@@ -1,8 +1,10 @@
 class TextsController < ApplicationController
+  before_filter :authenticate_user!
   include TextsHelper
 
   def create
     @text = Text.new(text_params)
+    @text.user_id = current_user.id
 
     if @text.save
       @text.hidden = false
@@ -18,11 +20,11 @@ class TextsController < ApplicationController
   end
 
   def edit
-    @text = Text.find_by :id => params[:id]
+    @text = Text.find_by id: params[:id], user_id: current_user.id
   end
 
   def destroy
-    @text = Text.find_by :id => params[:id]
+    @text = Text.find_by id: params[:id], user_id: current_user.id
     @text.destroy
 
     redirect_to '/texts/' + @text.language.name
@@ -33,8 +35,10 @@ class TextsController < ApplicationController
       my_texts = []
       @total_text_count = 0
     else
-      my_texts = Text.where :language_id => selected_language.id, :hidden => hidden
-      @total_text_count = Text.where(:language_id => selected_language.id).count
+      my_texts = Text.where language_id: selected_language.id, hidden: hidden, user_id: current_user.id
+      @total_text_count = Text.where(language_id: selected_language.id, user_id: current_user.id).count
+      @known_word_count = Word.where('rating >= 3 and rating < 6 and language_id = ? and user_id = ?', selected_language.id, current_user.id).count
+      @word_count = Word.where('rating != 6 and language_id = ? and user_id = ?', selected_language.id, current_user.id).count
     end
     my_texts = [] if my_texts == nil
     @hidden = hidden
@@ -69,19 +73,19 @@ class TextsController < ApplicationController
   end
 
   def show
-    @text = Text.find_by :id => params[:id]
+    @text = Text.find_by id: params[:id], user_id: current_user.id
     
     if @text == nil
       redirect_to texts_path
     else
       uniq_words = (@text.raw_words + @text.raw_words_title + @text.raw_words_category).sort.uniq
-      words = Word.find_create_bulk @text.language_id, uniq_words
+      words = Word.find_create_bulk @text.language_id, uniq_words, current_user.id
 
       @processed_text = process_text @text.split_words, words
       @processed_title = process_text @text.split_words_title, words
       @processed_category = process_text @text.split_words_category, words
 
-      @services = Service.where('language_id=? OR language_id=0', @text.language_id)
+      @services = Service.where('(language_id=? or language_id=0) and user_id = ?', @text.language_id, current_user.id)
       @services = [] if @services == nil
     end
   end

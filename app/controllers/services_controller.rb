@@ -1,6 +1,9 @@
 class ServicesController < ApplicationController
+  before_filter :authenticate_user!
+  
   def create
     @service = Service.new(service_params)
+    @service.user_id = current_user.id
  
     if @service.save
       redirect_to services_path
@@ -10,18 +13,18 @@ class ServicesController < ApplicationController
   end
 
   def edit
-    @service = Service.find_by :id => params[:id]
+    @service = Service.find_by id: params[:id], user_id: current_user.id
   end
 
   def destroy
-    @service = Service.find_by :id => params[:id]
+    @service = Service.find_by id: params[:id], user_id: current_user.id
     @service.destroy
    
     redirect_to services_path
   end
 
   def index
-    @services = Service.order(:name)
+    @services = Service.where(user_id: current_user.id).order(:name)
   end
 
   def new
@@ -29,7 +32,7 @@ class ServicesController < ApplicationController
   end
 
   def update
-    @service = Service.find_by :id => params[:id]
+    @service = Service.find_by id: params[:id], user_id: current_user.id
    
     if @service.update(service_params)
       redirect_to services_path

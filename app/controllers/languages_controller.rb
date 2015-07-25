@@ -1,5 +1,9 @@
 class LanguagesController < ApplicationController
+  before_filter :authenticate_user!
+  
   def create
+    redirect_to settings_path if not current_user.admin?
+
     @language = Language.new(language_params)
  
     if @language.save
@@ -10,10 +14,14 @@ class LanguagesController < ApplicationController
   end
 
   def edit
+    redirect_to settings_path if not current_user.admin?
+
     @language = Language.where("lower(name) LIKE ?", params[:id])[0]
   end
 
   def destroy
+    redirect_to settings_path if not current_user.admin?
+
     @language = Language.find(params[:id])
     @language.destroy
    
@@ -21,14 +29,20 @@ class LanguagesController < ApplicationController
   end
 
   def index
+    redirect_to settings_path if not current_user.admin?
+
     @languages = Language.order(:name)
   end
 
   def new
+    redirect_to settings_path if not current_user.admin?
+
     @language = Language.new
   end
 
   def update
+    redirect_to settings_path if not current_user.admin?
+    
     @language = Language.find(params[:id])
    
     if @language.update(language_params)

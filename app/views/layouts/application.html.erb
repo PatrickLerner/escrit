@@ -23,17 +23,27 @@
             <% lang = "/" + @text.language.name.downcase %>
           <% end %>
           <li class="navbar-item"><a class="navbar-link" href="/">escrit</a></li>
-          <li class="navbar-item"><a class="navbar-link" href="/texts<%= lang %>">Texts</a></li>
-          <li class="navbar-item"><a class="navbar-link" href="/statistics<%= lang %>">Statistics</a></li>
-          <li class="navbar-item"><a class="navbar-link" href="/settings">Settings</a></li>
-          <li class="navbar-item" style="float: right;"><a class="navbar-link" href="#"><%= fa_icon("sign-out") %>Logout</a></li>
+          <% if user_signed_in? %>
+            <li class="navbar-item"><a class="navbar-link" href="/texts<%= lang %>">Texts</a></li>
+            <li class="navbar-item"><a class="navbar-link" href="/statistics<%= lang %>">Statistics</a></li>
+            <li class="navbar-item"><a class="navbar-link" href="/settings">Settings</a></li>
+          <% end %>
+          <li class="navbar-item" style="float: right;">
+            <% if user_signed_in? %>
+              <%= link_to fa_icon("sign-out") + " Logout", :destroy_user_session, method: :delete, class: 'navbar-link' %>
+            <% else %>
+              <%= link_to fa_icon("sign-in") + " Login", new_user_session_path, class: 'navbar-link' %>
+            <% end %>
+          </li>
         </ul>
       </div>
     </nav>
 
     <div class="docs-section" id="intro">
-	  <%= yield %>
-	</div>
+	    <%= yield %>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+	  </div>
   </div>
 </body>
 </html>

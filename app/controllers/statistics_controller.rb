@@ -1,4 +1,5 @@
 class StatisticsController < ApplicationController
+  before_filter :authenticate_user!
   include TextsHelper
   
   def index
@@ -10,11 +11,11 @@ class StatisticsController < ApplicationController
       start_date = (i*7).day.ago.beginning_of_week.beginning_of_day
       end_date = (i*7).day.ago.end_of_week.end_of_day
       if selected_language == nil
-        @new_words_data += [Word.where(created_at: start_date..end_date).length]
-        @new_texts_data += [Text.where(created_at: start_date..end_date).length]
+        @new_words_data += [Word.where(created_at: start_date..end_date, user_id: current_user.id).length]
+        @new_texts_data += [Text.where(created_at: start_date..end_date, user_id: current_user.id).length]
       else
-        @new_words_data += [Word.where(created_at: start_date..end_date, language_id: selected_language.id).length]
-        @new_texts_data += [Text.where(created_at: start_date..end_date, language_id: selected_language.id).length]
+        @new_words_data += [Word.where(created_at: start_date..end_date, language_id: selected_language.id, user_id: current_user.id).length]
+        @new_texts_data += [Text.where(created_at: start_date..end_date, language_id: selected_language.id, user_id: current_user.id).length]
       end
       if i == 0
         @new_words_labels += ["this week"]
@@ -30,9 +31,9 @@ class StatisticsController < ApplicationController
     5.times { |i|
       rating = i + 1
       if selected_language == nil
-        word_count = Word.where('rating == ?', rating).count
+        word_count = Word.where('rating == ? and user_id = ?', rating, current_user.id).count
       else
-        word_count = Word.where('rating == ? and language_id = ?', rating, selected_language.id).count
+        word_count = Word.where('rating == ? and language_id = ? and user_id = ?', rating, selected_language.id, current_user.id).count
       end
       @words_data += [word_count.to_s]
       @words_labels += [rating.to_s]

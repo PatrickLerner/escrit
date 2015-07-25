@@ -4,12 +4,15 @@
 
 <div class="row">
   <div class="two-thirds column">
-  	<p>In this section of the website you can adjust you personal settings.</p>
+    <p>In this section of the website you can adjust you personal settings.</p>
   </div>
   <div class="one-third column">
-  	<p>
-	  <a href="/services" class="button u-full-width"><%= fa_icon("cogs") %> Edit Services</a>
-	  <a href="/languages" class="button u-full-width"><%= fa_icon("flag-o") %> Edit Languages</a>
-	</p>
+    <p>
+      <a href="<%= edit_user_registration_path %>" class="button u-full-width"><%= fa_icon("user") %> Edit User Profile</a>
+      <a href="/services" class="button u-full-width"><%= fa_icon("cogs") %> Edit Services</a>
+      <% if current_user.admin? %>
+        <a href="/languages" class="button u-full-width"><%= fa_icon("flag") %> Edit Languages</a>
+      <% end %>
+    </p>
   </div>
 </div>

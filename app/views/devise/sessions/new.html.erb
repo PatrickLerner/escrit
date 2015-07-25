@@ -1,0 +1,26 @@
+<% content_for :title, 'Login' %>
+
+<h4>Login</h4>
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="row">
+    <div class="two-thirds column">
+      <%= f.label :email %>
+      <%= f.email_field :email, autofocus: true, class: "u-full-width" %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password, autocomplete: "off", class: "u-full-width" %>
+
+      <% if devise_mapping.rememberable? -%>
+        <div class="field">
+          <%= f.check_box :remember_me %>
+          <span>Remember me</span>
+        </div>
+      <% end -%>
+    </div>
+    <div class="one-third column">
+      <%= f.submit "Login", class: "button-primary u-full-width" %>
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+<% end %>

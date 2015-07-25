@@ -2,8 +2,17 @@ module TextsHelper
   include WordsHelper
 
   def language_options filter_unused = false
+    options = []
     if filter_unused
-      options = Language.order(:name).select { |l| l.texts.count > 0 }.map { |l| [l.name, l.id] }
+      #options = Language.order(:name).select { |l| l.texts.count > 0 }.map { |l| [l.name, l.id] }
+      my_texts = Text.where user_id: current_user.id
+      languages = {}
+      my_texts.each { |t|
+        languages[t.language.name] = t.language.id
+      }
+      languages.sort.each { |k, v|
+        options += [[k, v]]
+      }
     else
       options = Language.order(:name).map { |l| [l.name, l.id] }
     end

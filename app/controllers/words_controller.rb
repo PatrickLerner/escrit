@@ -1,10 +1,11 @@
 class WordsController < ApplicationController
+  before_filter :authenticate_user!
   include ApplicationHelper
   include TextsHelper
 
   def show
     lang = Language.where("lower(name) LIKE ?", params[:language])[0]
-    @word = Word.find_by value: utf8downcase(params[:id]), language_id: lang.id
+    @word = Word.find_by value: utf8downcase(params[:id]), language_id: lang.id, user_id: current_user.id
     if @word
       output = {
         value: @word.value,
@@ -29,10 +30,10 @@ class WordsController < ApplicationController
 
   def update
     lang = Language.where("lower(name) LIKE ?", params[:word][:language])[0]
-    @word = Word.find_by value: utf8downcase(params[:id]), language_id: lang.id
+    @word = Word.find_by value: utf8downcase(params[:id]), language_id: lang.id, user_id: current_user.id
 
     if not @word
-      @word = Word.new value: utf8downcase(params[:id]), language_id: lang.id
+      @word = Word.new value: utf8downcase(params[:id]), language_id: lang.id, user_id: current_user.id
       @word.save
     end
 
