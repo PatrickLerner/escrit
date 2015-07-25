@@ -3,6 +3,16 @@ class WordsController < ApplicationController
   include ApplicationHelper
   include TextsHelper
 
+  def index
+    if not params[:language]
+      redirect_to '/words/' + Language.first.name.downcase
+    else
+      lang = Language.where("lower(name) LIKE ?", params[:language])[0]
+      @language_name = lang.name
+      @words = Word.paginate(:page => params[:page], :per_page => 250).where 'user_id = ? and rating < 6 and language_id = ?', current_user.id, lang.id
+    end
+  end
+
   def show
     lang = Language.where("lower(name) LIKE ?", params[:language])[0]
     @word = Word.find_by value: utf8downcase(params[:id]), language_id: lang.id, user_id: current_user.id

@@ -8,10 +8,12 @@
   </div>
   <div class="one-third column">
     <p>
-      <a href="<%= edit_user_registration_path %>" class="button u-full-width"><%= fa_icon("user") %> Edit User Profile</a>
-      <a href="/services" class="button u-full-width"><%= fa_icon("cogs") %> Edit Services</a>
+      <a href="<%= edit_user_registration_path %>" class="button u-full-width"><%= fa_icon("user") %> User Profile</a>
+      <a href="/services" class="button u-full-width"><%= fa_icon("cogs") %> Services</a>
+      <a href="/words" class="button u-full-width"><%= fa_icon("list") %> List of Words</a>
       <% if current_user.admin? %>
-        <a href="/languages" class="button u-full-width"><%= fa_icon("flag") %> Edit Languages</a>
+        <h5>Admin Actions</h5>
+        <a href="/languages" class="button u-full-width"><%= fa_icon("flag") %> Languages</a>
       <% end %>
     </p>
   </div>

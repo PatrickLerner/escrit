@@ -18,7 +18,8 @@ Rails.application.routes.draw do
   resources :texts
   get '/words/:language/:id', to: 'words#show', :constraints => { :id => /.+/ }
   patch '/words/:id', to: 'words#update', :constraints => { :id => /.+/ }
-  #resources :words
+  get '/words/:language', to: 'words#index'
+  get '/words', to: 'words#index'
   resources :services
   get '/settings', to: 'settings#index'
   get '/statistics', to: 'statistics#index'
