@@ -1,5 +1,5 @@
 class RegistrationController < Devise::RegistrationsController
-  after_filter :add_account 
+  after_filter :add_account, only: :create
 
   protected
     def add_account

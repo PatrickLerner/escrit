@@ -16,7 +16,7 @@
   </div>
 <% end %>
 
-<%= form_for :service, :url => services_path do |f| %>
+<%= form_for :service, :url => services_path, html: { class: 'service_form' } do |f| %>
   <div class="row">
     <div class="two-thirds column">
       <p>
@@ -42,10 +42,10 @@
     <div class="one-third column">
       <div class="row">
         <div class="one-half column">
-          <%= f.submit 'Add', :class => 'button-primary u-full-width' %>
+          <%= link_to fa_icon("floppy-o") + ' Save', '', :class => 'button button-primary u-full-width', :onclick => "$('.service_form').submit(); return false;" %>
         </div>
         <div class="one-half column">
-          <%= link_to 'Abort', services_path, class: 'button u-full-width', title: 'Go back to overview' %>
+          <%= link_to fa_icon("ban") + ' Abort', services_path, class: 'button u-full-width', title: 'Go back to overview' %>
         </div>
       </div>
 
