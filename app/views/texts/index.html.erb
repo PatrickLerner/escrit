@@ -42,9 +42,9 @@
               <tr>
                 <td>
                   <% if not text.completed %>
-                    <alias title="Not all words in this text have been rated yet."><%= fa_icon("square-o") %></alias>
+                    <alias title="Not all words in this text have been rated yet."><%= fa_icon("minus") %></alias>
                   <% else %>
-                    <alias title="You have worked through this text and rated all the words within it."><%= fa_icon("check-square-o") %></alias>
+                    <alias title="You have worked through this text and rated all the words within it."><%= fa_icon("check") %></alias>
                   <% end %>
                   <%= link_to text.title, text_path(text) %>
                 </td>
