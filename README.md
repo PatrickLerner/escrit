@@ -4,6 +4,10 @@
 
 escrit is a small Ruby on Rails tool released under the terms of the BSD License (for details see the 'license.txt' file).
 
+### Online Version
+
+There is an online version of the software available at http://escrit.eu/ for people to try, use. No guarantees for uptime, keeping it available, however.
+
 ### What Is Escrit?
 
 Escrit is a simple web application that aims to aid you in reading texts in a foreign language you are trying to learn. After setting up your account, simply import a text (from a text book, newspaper or book) into the web interface and get started reading.
