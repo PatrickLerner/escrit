@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get '/texts/new', to: 'texts#new'
   get '/texts/:language/new', to: 'texts#new', :constraints => { :language => /.+/ }
   get '/texts/:language/archive', to: 'texts#index_hidden', :constraints => { :language => /.+/ }
+  get '/texts/:language/public', to: 'texts#index_public', :constraints => { :language => /.+/ }
   get '/texts/:id/edit', to: 'texts#edit', :constraints => { :id => /.+/ }
   get '/texts/:language', to: 'texts#index', :constraints => { :language => /.+/ }
   resources :texts

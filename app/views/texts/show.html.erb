@@ -9,14 +9,18 @@
   <div class="one-third column">
     <div class="row">
       <div class="one-half column">
-        <% if not @text.hidden %>
-          <%= link_to fa_icon("chevron-left") + " Back", texts_path + "/" + @text.language.name.downcase, class: 'button button-primary u-full-width', title: 'Back to Overview' %>
-        <% else %>
+        <% if @text.public %>
+          <%= link_to fa_icon("chevron-left") + " Back", texts_path + "/" + @text.language.name.downcase + "/public", class: 'button button-primary u-full-width', title: 'Back to Overview' %>
+        <% elsif @text.hidden %>
           <%= link_to fa_icon("chevron-left") + " Back", texts_path + "/" + @text.language.name.downcase + "/archive", class: 'button button-primary u-full-width', title: 'Back to Overview' %>
+        <% else %>
+          <%= link_to fa_icon("chevron-left") + " Back", texts_path + "/" + @text.language.name.downcase, class: 'button button-primary u-full-width', title: 'Back to Overview' %>
         <% end %>
       </div>
       <div class="one-half column">
-        <%= link_to fa_icon("pencil") + " Edit", edit_text_path(@text), class: 'button u-full-width', title: 'Edit the Text' %>
+        <% if @text.is_allowed_to_update current_user %>
+          <%= link_to fa_icon("pencil") + " Edit", edit_text_path(@text), class: 'button u-full-width', title: 'Edit the Text' %>
+        <% end %>
       </div>
     </div>
     <strong>Category:</strong> <i><%= @processed_category %></i>

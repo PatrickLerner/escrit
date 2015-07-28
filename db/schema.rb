@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150725010831) do
+ActiveRecord::Schema.define(version: 20150727231040) do
 
   create_table "categories", force: true do |t|
     t.string   "title"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20150725010831) do
     t.integer  "category_id"
     t.boolean  "hidden"
     t.integer  "user_id"
+    t.boolean  "public"
   end
 
   add_index "texts", ["category_id"], name: "index_texts_on_category_id"

@@ -31,8 +31,17 @@
       <%= f.label :content %>
       <%= f.text_area :content, placeholder: "Content", style: 'height: 15em;', :class => 'u-full-width' %>
 
-      <%= f.check_box :hidden %>
-      <span>Text is archived and should not appear in the normal overview page</span>
+      <label>
+        <%= f.check_box :hidden %>
+        <span>Text is archived and should not appear in the normal overview page</span>
+      </label>
+
+      <% if current_user.admin? %>
+        <label>
+          <%= f.check_box :public %>
+          <span>Make this text publicly available for all users</span>
+        </label>
+      <% end %>
     </div>
     <div class="one-third column">
       <div class="row">

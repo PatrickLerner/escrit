@@ -8,6 +8,10 @@ class Text < ActiveRecord::Base
   validates :content, presence: true, length: { minimum: 4 }
   validates :language_id, presence: true
 
+  def is_allowed_to_update current_user
+    current_user.admin? or (current_user.id == read_attribute(:user_id) and not read_attribute(:public))
+  end
+
   def difficulty
     raw = self.raw_words
 

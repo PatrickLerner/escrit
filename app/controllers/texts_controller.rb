@@ -5,6 +5,7 @@ class TextsController < ApplicationController
   def create
     @text = Text.new(text_params)
     @text.user_id = current_user.id
+    @text.public = false
 
     if @text.save
       @text.hidden = false
@@ -20,28 +21,40 @@ class TextsController < ApplicationController
   end
 
   def edit
-    @text = Text.find_by id: params[:id], user_id: current_user.id
+    @text = Text.find_by id: params[:id]
+    if not @text.is_allowed_to_update current_user
+      @text = nil
+    end
   end
 
   def destroy
     @text = Text.find_by id: params[:id], user_id: current_user.id
-    @text.destroy
+    
+    if not @text.public or current_user.admin?
+      @text.destroy
+    end
 
     redirect_to '/texts/' + @text.language.name
   end
 
-  def index hidden = false
+  def index hidden = false, public = false
     if selected_language == nil
       my_texts = []
       @total_text_count = 0
     else
-      my_texts = Text.where language_id: selected_language.id, hidden: hidden, user_id: current_user.id
-      @total_text_count = Text.where(language_id: selected_language.id, user_id: current_user.id).count
+      if public
+        my_texts = Text.where language_id: selected_language.id, public: true
+      else
+        my_texts = Text.where language_id: selected_language.id, hidden: hidden, user_id: current_user.id, public: false
+      end
+
+      @total_text_count = Text.where(language_id: selected_language.id, user_id: current_user.id, public: false).count
       @known_word_count = Word.where('rating >= 3 and rating < 6 and language_id = ? and user_id = ?', selected_language.id, current_user.id).count
       @word_count = Word.where('rating != 6 and language_id = ? and user_id = ?', selected_language.id, current_user.id).count
     end
     my_texts = [] if my_texts == nil
     @hidden = hidden
+    @public = public
 
     @texts = {}
     my_texts.each do |t|
@@ -68,14 +81,19 @@ class TextsController < ApplicationController
     render 'index'
   end
 
+  def index_public
+    index false, true
+    render 'index'
+  end
+
   def new
     @text = Text.new
   end
 
   def show
-    @text = Text.find_by id: params[:id], user_id: current_user.id
+    @text = Text.find_by id: params[:id]
     
-    if @text == nil
+    if @text == nil or (@text.user_id != current_user.id and not current_user.admin? and not @text.public)
       redirect_to texts_path
     else
       uniq_words = (@text.raw_words + @text.raw_words_title + @text.raw_words_category).sort.uniq
@@ -93,21 +111,29 @@ class TextsController < ApplicationController
   def update
     @text = Text.find_by :id => params[:id]
 
-    if @text.update(text_params)
-      @text.update_word_count
-      @text.save
-      if text_params[:completed]
-        render plain: "ok"
+    if not @text.public or current_user.admin?
+      if params[:public] and not current_user.admin?
+        params[:public] = false
+      end
+      
+      if @text.update(text_params)
+        @text.update_word_count
+        @text.save
+        if text_params[:completed]
+          render plain: "ok"
+        else
+          redirect_to @text
+        end
       else
-        redirect_to @text
+        render 'edit'
       end
     else
-      render 'edit'
+      redirect_to @text
     end
   end
 
   private
     def text_params
-      params.require(:text).permit(:category, :title, :content, :language_id, :completed, :hidden)
+      params.require(:text).permit(:category, :title, :content, :language_id, :completed, :hidden, :public)
     end
 end

@@ -4,7 +4,7 @@
   <% content_for :title, '%s Texts' % [selected_language.name] %>
 <% end %>
 
-<h4><%= if selected_language then selected_language.name + " " else "" end %>Texts<%= if @hidden then " (Archived)" else "" end %></h4>
+<h4><%= if selected_language then selected_language.name + " " else "" end %>Texts<%= if @hidden then " (Archived)" else "" end %><%= if @public then " (Public)" else "" end %></h4>
 
 <div class="row">
   <div class="two-thirds column">
@@ -41,7 +41,9 @@
             <% texts.each do |text| %>
               <tr>
                 <td>
-                  <% if not text.completed %>
+                  <% if text.public %>
+                    <alias title="This is a public text. Make a copy for you to see its status."><%= fa_icon("star-o") %></alias>
+                  <% elsif not text.completed %>
                     <alias title="Not all words in this text have been rated yet."><%= fa_icon("minus") %></alias>
                   <% else %>
                     <alias title="You have worked through this text and rated all the words within it."><%= fa_icon("check") %></alias>
@@ -66,15 +68,23 @@
 
     <%= link_to fa_icon("plus") + ' Add New', new_url, class: 'button button-primary u-full-width', title: 'Add a new text' %>
 
-    <% if selected_language and not @hidden %>
-      <%= link_to fa_icon("folder-open-o") + ' Show Archived Texts', "/texts/" + selected_language.name.downcase + "/archive", class: 'button u-full-width', title: 'Show archived texts.' %>
-    <% elsif selected_language and @hidden %>
-      <%= link_to fa_icon("folder-open-o") + ' Show Active Texts', "/texts/" + selected_language.name.downcase, class: 'button u-full-width', title: 'Show currently active texts.' %>
+    <% if selected_language and not @public %>
+
+      <%= link_to fa_icon("users") + ' Show Public Texts', "/texts/" + selected_language.name.downcase + "/public", class: 'button u-full-width', title: 'Show public texts.' %>
+
+      <% if selected_language and not @hidden %>
+        <%= link_to fa_icon("folder-open-o") + ' Show Archived Texts', "/texts/" + selected_language.name.downcase + "/archive", class: 'button u-full-width', title: 'Show archived texts.' %>
+      <% elsif selected_language and @hidden %>
+        <%= link_to fa_icon("folder-open-o") + ' Show Active Texts', "/texts/" + selected_language.name.downcase, class: 'button u-full-width', title: 'Show currently active texts.' %>
+      <% end %>
+    <% elsif selected_language and @public %>
+      <%= link_to fa_icon("user") + ' Show Private Texts', "/texts/" + selected_language.name.downcase, class: 'button u-full-width', title: 'Show your private texts.' %>
     <% end %>
 
-    <% if language_options(true).count > 0 %>
-     <%= select_tag :language_text, options_for_select(['Filter Language'] + language_options(true).map { |k| k[0] }, selected: selection), class: 'u-full-width' %>
+    <% if language_options(false).count > 0 %>
+     <%= select_tag :language_text, options_for_select(['Filter Language'] + language_options(false).map { |k| k[0] }, selected: selection), class: 'u-full-width' %>
     <% end %>
+
     <% if selected_language != nil %>
       <% if @word_count == 0 %>
         <p>You have no words marked as known (level three or higher) in <%= selected_language.name %> yet, but why not get it started right away and try to work on that?</p>
