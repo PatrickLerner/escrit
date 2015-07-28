@@ -17,7 +17,9 @@
       <% end %>
     <% else %>
       <% if @texts == {} %>
-        <% if not @hidden %>
+        <% if @public %>
+          <p>It appears that no public texts in <%= selected_language.name %> have been added yet.</p>
+        <% elsif not @hidden %>
           <p>It seems like you have not yet added any texts in <%= selected_language.name %> yet. Please feel free to add some that interest you. If you need inspiration, try looking online for newspapers, short stories, song lyrics or other media.</p>
         <% else %>
           <p>You seem to not have any archived texts in <%= selected_language.name %>.</p>
