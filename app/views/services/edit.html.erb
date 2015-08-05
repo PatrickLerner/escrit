@@ -38,6 +38,10 @@
           <%= f.label :url, 'URL Mask:' %>
           <%= f.text_field :url, :class => 'u-full-width' %>
         </p>
+
+        <p class="warning">
+          Looks like your URL Mask does not contain a place holder, {query}. It will probably not work this way.
+        </p>
     </div>
     <div class="one-third column">
       <div class="row">
@@ -52,6 +56,7 @@
 
       <p>Here you can add the details of the new service you want to add.</p>
       <p>The URL mask must contain a placeholder where the word is inserted into, specify where this placeholder goes with '{query}'.</p>
+      <p>For example if looking up the word 'testword' gives you a URL like <u>http://example.com/?q=testword</u>, then you need to put <u>http://example.com/?q={query}</u> as the URL Mask in this form.</p>
     </div>
   </div>
 <% end %>
