@@ -3,9 +3,10 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
-	$('#service_url').keydown ->
+	check_url_mask = ->
 		s = $('#service_url').val()
 		$('p.warning').css('display', if /\{query\}/.test(s) then 'none' else 'block')
-	$('#service_url').change ->
-		s = $('#service_url').val()
-		$('p.warning').css('display', if /\{query\}/.test(s) then 'none' else 'block')
+
+	$('#service_url').keydown check_url_mask
+	$('#service_url').keyup check_url_mask
+	$('#service_url').change check_url_mask
