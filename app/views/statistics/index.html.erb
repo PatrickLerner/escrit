@@ -7,15 +7,15 @@
     <h5>New Words Added (Per Week)</h5>
     <canvas id="newWords"></canvas>
     <ul>
-        <li>In the last <%= @new_words_count - 1 %> weeks you added on average <%= number_with_precision(@new_words_average, precision: 2) %> new words per week.</li>
-        <li>In your best week in the last <%= @new_words_data.count - 1 %> weeks, you added <%= @new_words_data.max %> new words.</li>
+        <li>In the last <%= pluralize(@new_words_count, "week") %> you added on average <%= number_with_precision(@new_words_average, precision: 2) %> new words per week.</li>
+        <li>In your best week in the last <%= @new_words_data.count %> weeks, you added <%= @new_words_data.max %> new words.</li>
     </ul>
 
     <h5>New Texts Added (Per Week)</h5>
     <canvas id="newTexts"></canvas>
     <ul>
-        <li>In the last <%= @new_texts_count - 1 %> weeks you added on average <%= number_with_precision(@new_texts_average, precision: 2) %> new texts per week.</li>
-        <li>In your best week in the last <%= @new_texts_data.count - 1 %> weeks, you added <%= @new_texts_data.max %> new texts.</li>
+        <li>In the last <%= pluralize(@new_texts_count, "week") %> you added on average <%= number_with_precision(@new_texts_average, precision: 2) %> new texts per week.</li>
+        <li>In your best week in the last <%= @new_texts_data.count %> weeks, you added <%= @new_texts_data.max %> new texts.</li>
     </ul>
 
     <h5>Words (by Rating)</h5>
