@@ -92,14 +92,15 @@ class TextsController < ApplicationController
       @texts[category] = texts
     }
 
-    compliments = Compliment.where language_id: selected_language.id
-    if compliments.count == 0
-      compliments = Compliment.where language_id: 0
-    end
-    if compliments.count > 0
-      @compliment = compliments.sample.value
-    else
-      @compliment = ""
+    @compliment = ""
+    if selected_language != nil and @word_count > 0
+      compliments = Compliment.where language_id: selected_language.id
+      if compliments.count == 0
+        compliments = Compliment.where language_id: 0
+      end
+      if compliments.count > 0
+        @compliment = compliments.sample.value
+      end
     end
   end
 
