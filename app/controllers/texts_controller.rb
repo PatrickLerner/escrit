@@ -2,6 +2,21 @@ class TextsController < ApplicationController
   before_filter :authenticate_user!
   include TextsHelper
 
+  def copy
+    @text = Text.find_by id: params[:id]
+    
+    if @text == nil or (@text.user_id != current_user.id and not current_user.admin? and not @text.public)
+      redirect_to texts_path
+    else
+      @new_text = @text.dup
+      @new_text.user_id = current_user.id
+      @new_text.public = false
+      @new_text.hidden = false
+      @new_text.save
+      redirect_to text_path(@new_text)
+    end
+  end
+
   def create
     @text = Text.new(text_params)
     @text.user_id = current_user.id

@@ -18,10 +18,15 @@
         <% end %>
       </div>
       <div class="one-half column">
-        <% if @text.is_allowed_to_update current_user %>
+        <% if @text.is_allowed_to_update current_user and not @text.public %>
           <%= link_to fa_icon("pencil") + " Edit", edit_text_path(@text), class: 'button u-full-width', title: 'Edit the Text' %>
+        <% elsif @text.public %>
+          <%= link_to fa_icon("clipboard") + " Copy", text_path(@text) + '/copy', class: 'button u-full-width', data: { confirm: 'Do you want to copy this text into your private library?' }, title: 'Make a copy of this text and add it to your personal text library.' %>
         <% end %>
       </div>
+      <% if @text.is_allowed_to_update current_user and @text.public %>
+        <%= link_to fa_icon("pencil") + " Edit", edit_text_path(@text), class: 'button u-full-width', title: 'Edit the Text' %>
+      <% end %>
     </div>
     <strong>Category:</strong> <i><%= @processed_category %></i>
     <div id="stats"></div>
