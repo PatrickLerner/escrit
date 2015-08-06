@@ -1,0 +1,46 @@
+<% content_for :title, 'Edit Compliment' %>
+
+<h4>Edit Compliment</h4>
+
+<% if @compliment.errors.any? %>
+  <div id="error_explanation">
+    <h6>
+      <%= pluralize(@compliment.errors.count, "error") %> prohibited
+      this language from being saved:
+    </h6>
+    <ul>
+      <% @compliment.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_for :compliment, :url => compliment_path(@compliment), html: { method: :patch, class: 'compliment_form' } do |f| %>
+  <div class="row">
+    <div class="two-thirds column">
+        <p>
+          <%= f.label :value, 'Compliment:' %>
+          <%= f.text_field :value, :class => 'u-full-width' %>
+        </p>
+
+        <p>
+          <%= f.label :language_id, 'Language:' %>
+          <%= f.select :language_id, options_for_select([["All", 0]] + language_options, @compliment.language_id), {}, :class => 'u-full-width' %>
+        </p>
+    </div>
+    <div class="one-third column">
+      <div class="row">
+        <div class="one-half column">
+          <%= link_to fa_icon("floppy-o") + ' Save', '', :class => 'button button-primary u-full-width', :onclick => "$('.compliment_form').submit(); return false;" %>
+        </div>
+        <div class="one-half column">
+          <%= link_to fa_icon("ban") + ' Abort', compliments_path, class: 'button u-full-width', title: 'Go back to overview' %>
+        </div>
+      </div>
+      <%= link_to fa_icon("times") + " Delete", compliment_path(@compliment), method: :delete, data: { confirm: 'Are you absolutely certain?' }, title: 'Delete', class: 'button u-full-width button-delete' %>
+
+      <p>Here you can add the details of the new compliment you want to add.</p>
+    </div>
+  </div>
+<% end %>

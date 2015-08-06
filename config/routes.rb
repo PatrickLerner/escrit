@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   get '/words/:language', to: 'words#index'
   get '/words', to: 'words#index'
   resources :services
+  resources :compliments
   get '/settings', to: 'settings#index'
   get '/statistics', to: 'statistics#index'
   get '/statistics/:language', to: 'statistics#index', :constraints => { :language => /.+/ }

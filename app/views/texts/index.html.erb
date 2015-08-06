@@ -100,13 +100,8 @@
         <p>You have no words marked as known (level three or higher) in <%= selected_language.name %> yet, but why not get it started right away and try to work on that?</p>
       <% else %>
          <p>
-          You have rated <%= number_with_precision @word_count, precision: 0, delimiter: ',' %> <%= selected_language.name %> words, with <%= number_with_precision @known_word_count, precision: 0, delimiter: ',' %> marked as known (level three or higher).
-          <% if @known_word_count >= 500 %>
-            Congratulations on your good work thus far!
-          <% elsif @known_word_count != 0 %>
-            Keep it up, you are doing well!
-          <% end %>
-         </p>
+          You have rated <%= number_with_precision @word_count, precision: 0, delimiter: ',' %> <%= selected_language.name %> words, with <%= number_with_precision @known_word_count, precision: 0, delimiter: ',' %> marked as known (level three or higher). <b><%= @compliment %></b>
+          </p>
       <% end %>
 
       <% if @total_text_count == 0 %>

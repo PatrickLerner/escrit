@@ -91,6 +91,16 @@ class TextsController < ApplicationController
       end
       @texts[category] = texts
     }
+
+    compliments = Compliment.where language_id: selected_language.id
+    if compliments.count == 0
+      compliments = Compliment.where language_id: 0
+    end
+    if compliments.count > 0
+      @compliment = compliments.sample.value
+    else
+      @compliment = ""
+    end
   end
 
   def index_hidden
