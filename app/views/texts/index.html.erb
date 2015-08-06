@@ -10,12 +10,15 @@
   <div class="two-thirds column">
     <% if selected_language == nil %>
       <p>In this section of the website you can add and read texts which you are interested in reading.</p>
+
       <% if language_options(true).count > 0 %>
         <p>Note that texts are filtered by language, so please select your language in the sidebar to see all the texts you added for that language.</p>
       <% else %>
         <p>It seems like you have not yet added any texts at all yet. If you need inspiration, try looking online for newspapers, short stories, song lyrics or other media.</p>
       <% end %>
+
     <% else %>
+
       <% if @texts == {} %>
         <% if @public %>
           <p>It appears that no public texts in <%= selected_language.name %> have been added yet.</p>
@@ -24,6 +27,7 @@
         <% else %>
           <p>You seem to not have any archived texts in <%= selected_language.name %>.</p>
         <% end %>
+
       <% end %>
       <%
         last_category = nil
@@ -79,8 +83,11 @@
       <% elsif selected_language and @hidden %>
         <%= link_to fa_icon("folder-open-o") + ' Show Active Texts', "/texts/" + selected_language.name.downcase, class: 'button u-full-width', title: 'Show currently active texts.' %>
       <% end %>
+
     <% elsif selected_language and @public %>
+
       <%= link_to fa_icon("user") + ' Show Private Texts', "/texts/" + selected_language.name.downcase, class: 'button u-full-width', title: 'Show your private texts.' %>
+
     <% end %>
 
     <% if language_options(false).count > 0 %>
@@ -88,6 +95,7 @@
     <% end %>
 
     <% if selected_language != nil %>
+
       <% if @word_count == 0 %>
         <p>You have no words marked as known (level three or higher) in <%= selected_language.name %> yet, but why not get it started right away and try to work on that?</p>
       <% else %>
@@ -104,8 +112,9 @@
       <% if @total_text_count == 0 %>
         <p>You have not added any <%= selected_language.name %> texts to the website yet, but feel free to add <%= link_to 'add one', new_text_path %> if you want.</p>
       <% else %>
-        <p>You have already added <%= pluralize(@total_text_count, selected_language.name + " text") %> to the website, but feel free to add <%= link_to 'add a new one', new_text_path %> if you want.</p>
+        <p>You have already added <%= pluralize(@total_text_count, selected_language.name + " text") %> to the website<%= if @total_text_count_public > 0 then ' (' + @total_text_count_public.to_s + ' of which are public)' else '' end %>, but feel free to add <%= link_to 'add a new one', new_text_path %> if you want.</p>
       <% end %>
+
     <% end %>
   </div>
 </div>
