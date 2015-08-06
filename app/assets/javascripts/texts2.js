@@ -9,6 +9,7 @@ var description = [
 	"Know it in my sleep.",
 	"(Ignore Word)"
 ];
+var showColors = true;
 
 var isMobile = false; //initiate as false
 // device detection
@@ -90,6 +91,18 @@ $(document).ready(function() {
 			if (!isMobile)
 				$('.lookup #lword').focus();
 		});
+	});
+
+	$('#colorToggle').click(function () {
+		showColors = !showColors;
+		if (showColors) {
+			$('#colorToggle').html('<i class="fa fa-toggle-on"></i> Colors: On');
+			$('.word').css('background', '');
+		}
+		else {
+			$('#colorToggle').html('<i class="fa fa-toggle-off"></i> Colors: Off');
+			$('.word').css('background', 'white');
+		}
 	});
 
 	$('#buttons span').click(function (event) {
