@@ -24,7 +24,16 @@ class ServicesController < ApplicationController
   end
 
   def index
-    @services = Service.where(user_id: current_user.id).order(:name)
+    all_services = Service.where(user_id: current_user.id)
+    @services = all_services.sort { |a, b|
+      l_a = if a.language then a.language.name else "All" end
+      l_b = if b.language then b.language.name else "All" end
+      if (l_a <=> l_b) != 0
+        l_a <=> l_b
+      else
+        a.name <=> b.name
+      end
+    }
   end
 
   def new

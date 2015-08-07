@@ -23,7 +23,7 @@ class ComplimentsController < ApplicationController
   end
 
   def index
-    @compliments = Compliment.order(:value).all
+    @compliments = Compliment.all
   end
 
   def new
