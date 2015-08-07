@@ -29,19 +29,24 @@
       <%= f.text_field :title, placeholder: "Title", autocomplete: :off, :class => 'u-full-width' %>
 
       <%= f.label :content %>
-      <%= f.text_area :content, placeholder: "Content", style: 'height: 15em;', :class => 'u-full-width' %>
+      <%= f.text_area :content, placeholder: "Content", style: 'height: 18em;', :class => 'u-full-width' %>
 
-      <label>
-        <%= f.check_box :hidden %>
-        <span>Text is archived and should not appear in the normal overview page</span>
-      </label>
-
-      <% if current_user.admin? %>
-        <label>
-          <%= f.check_box :public %>
-          <span>Make this text publicly available for all users</span>
-        </label>
-      <% end %>
+      <div class="row">
+        <div class="one-half column">
+          <label>
+            <%= f.check_box :hidden %>
+            <span>Archive this text</span>
+          </label>
+        </div>
+        <div class="one-half column">
+          <% if current_user.admin? %>
+            <label>
+              <%= f.check_box :public %>
+              <span>Make text public</span>
+            </label>
+          <% end %>
+        </div>
+      </div>
     </div>
     <div class="one-third column">
       <div class="row">
