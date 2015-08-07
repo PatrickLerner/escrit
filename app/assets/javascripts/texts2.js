@@ -96,11 +96,11 @@ $(document).ready(function() {
 	$('#colorToggle').click(function () {
 		showColors = !showColors;
 		if (showColors) {
-			$('#colorToggle').html('<i class="fa fa-toggle-on"></i> Colors: On');
+			$('#colorToggle').html('<i class="fa fa-toggle-on"></i> Show Colors');
 			$('.word').css('background', '');
 		}
 		else {
-			$('#colorToggle').html('<i class="fa fa-toggle-off"></i> Colors: Off');
+			$('#colorToggle').html('<i class="fa fa-toggle-off"></i> Show Colors');
 			$('.word').css('background', 'white');
 		}
 		return false;
