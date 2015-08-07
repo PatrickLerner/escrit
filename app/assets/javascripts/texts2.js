@@ -103,6 +103,7 @@ $(document).ready(function() {
 			$('#colorToggle').html('<i class="fa fa-toggle-off"></i> Colors: Off');
 			$('.word').css('background', 'white');
 		}
+		return false;
 	});
 
 	$('#buttons span').click(function (event) {
