@@ -1,3 +1,13 @@
+a.toggle-link {
+  color: black;
+  border: 0;
+
+  &:hover {
+    color: black;
+    border: 0;
+  }
+}
+
 p.warning {
   background-color: #DE352E;
   color: white;
