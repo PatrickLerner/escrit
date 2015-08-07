@@ -2,23 +2,23 @@
 
 <h4>Add New Service</h4>
 
-<% if @service.errors.any? %>
-  <div id="error_explanation">
-    <h6>
-      <%= pluralize(@service.errors.count, "error") %> prohibited
-      this language from being saved:
-    </h6>
-    <ul>
-      <% @service.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
-
 <%= form_for :service, :url => services_path, html: { class: 'service_form' } do |f| %>
   <div class="row">
     <div class="two-thirds column">
+      <% if @service.errors.any? %>
+        <div id="error_explanation">
+          <h6>
+            <%= pluralize(@service.errors.count, "error") %> prohibited
+            this language from being saved:
+          </h6>
+          <ul>
+            <% @service.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    
       <p>
         <%= f.label :name, 'Name:' %>
         <%= f.text_field :name, :class => 'u-full-width' %>

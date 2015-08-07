@@ -2,23 +2,23 @@
 
 <h4>Add New Compliment</h4>
 
-<% if @compliment.errors.any? %>
-  <div id="error_explanation">
-    <h6>
-      <%= pluralize(@compliment.errors.count, "error") %> prohibited
-      this language from being saved:
-    </h6>
-    <ul>
-      <% @compliment.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
-
 <%= form_for :compliment, :url => compliments_path, html: { class: 'compliment_form' } do |f| %>
   <div class="row">
     <div class="two-thirds column">
+      <% if @compliment.errors.any? %>
+        <div id="error_explanation">
+          <h6>
+            <%= pluralize(@compliment.errors.count, "error") %> prohibited
+            this language from being saved:
+          </h6>
+          <ul>
+            <% @compliment.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
       <p>
         <%= f.label :value, 'Compliment:' %>
         <%= f.text_field :value, :class => 'u-full-width' %>

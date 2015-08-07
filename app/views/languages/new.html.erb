@@ -2,23 +2,23 @@
 
 <h4>Add New Languages</h4>
 
-<% if @language.errors.any? %>
-  <div id="error_explanation">
-    <h6>
-      <%= pluralize(@language.errors.count, "error") %> prohibited
-      this language from being saved:
-    </h6>
-    <ul>
-      <% @language.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
-
 <%= form_for :language, :url => languages_path, html: { class: 'languages_form' } do |f| %>
   <div class="row">
     <div class="two-thirds column">
+      <% if @language.errors.any? %>
+        <div id="error_explanation">
+          <h6>
+            <%= pluralize(@language.errors.count, "error") %> prohibited
+            this language from being saved:
+          </h6>
+          <ul>
+            <% @language.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
       <p>
         <%= f.label :name, 'Language Name:' %>
         <%= f.text_field :name, :class => 'u-full-width' %>

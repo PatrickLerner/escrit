@@ -2,46 +2,46 @@
 
 <h4>Edit Service</h4>
 
-<% if @service.errors.any? %>
-  <div id="error_explanation">
-    <h6>
-      <%= pluralize(@service.errors.count, "error") %> prohibited
-      this language from being saved:
-    </h6>
-    <ul>
-      <% @service.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
-
 <%= form_for :service, :url => service_path(@service), html: { method: :patch, class: 'service_form' } do |f| %>
   <div class="row">
     <div class="two-thirds column">
-        <p>
-          <%= f.label :name, 'Name:' %>
-          <%= f.text_field :name, :class => 'u-full-width' %>
-        </p>
+      <% if @service.errors.any? %>
+        <div id="error_explanation">
+          <h6>
+            <%= pluralize(@service.errors.count, "error") %> prohibited
+            this language from being saved:
+          </h6>
+          <ul>
+            <% @service.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-        <p>
-          <%= f.label :short_name, 'Short Name:' %>
-          <%= f.text_field :short_name, :class => 'u-full-width' %>
-        </p>
+      <p>
+        <%= f.label :name, 'Name:' %>
+        <%= f.text_field :name, :class => 'u-full-width' %>
+      </p>
 
-        <p>
-          <%= f.label :language_id, 'Language:' %>
-          <%= f.select :language_id, options_for_select([["All", 0]] + language_options, @service.language_id), {}, :class => 'u-full-width' %>
-        </p>
+      <p>
+        <%= f.label :short_name, 'Short Name:' %>
+        <%= f.text_field :short_name, :class => 'u-full-width' %>
+      </p>
 
-        <p>
-          <%= f.label :url, 'URL Mask:' %>
-          <%= f.text_field :url, :class => 'u-full-width' %>
-        </p>
+      <p>
+        <%= f.label :language_id, 'Language:' %>
+        <%= f.select :language_id, options_for_select([["All", 0]] + language_options, @service.language_id), {}, :class => 'u-full-width' %>
+      </p>
 
-        <p class="warning">
-          Looks like your URL Mask does not contain a place holder, {query}. It will probably not work this way.
-        </p>
+      <p>
+        <%= f.label :url, 'URL Mask:' %>
+        <%= f.text_field :url, :class => 'u-full-width' %>
+      </p>
+
+      <p class="warning">
+        Looks like your URL Mask does not contain a place holder, {query}. It will probably not work this way.
+      </p>
     </div>
     <div class="one-third column">
       <div class="row">
