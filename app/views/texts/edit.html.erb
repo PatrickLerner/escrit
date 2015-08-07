@@ -2,23 +2,23 @@
 
 <h4>Edit Text</h4>
 
-<% if @text.errors.any? %>
-  <div id="error_explanation">
-    <h6>
-      <%= pluralize(@text.errors.count, "error") %> prohibited
-      this text from being saved:
-    </h6>
-    <ul>
-      <% @text.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
-
 <%= form_for :text, url: text_path(@text), html: { method: :patch, class: 'text_form' } do |f| %>
   <div class="row">
     <div class="two-thirds column">
+      <% if @text.errors.any? %>
+        <div id="error_explanation">
+          <h5>
+            <%= pluralize(@text.errors.count, "error") %> prohibited
+            this text from being saved:
+          </h5>
+          <ul>
+            <% @text.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      
       <%= f.label :language_id %>
       <%= f.select :language_id, options_for_select(language_options, @text.language_id), {}, :class => 'u-full-width' %>
 
