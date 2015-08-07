@@ -1,4 +1,5 @@
 var last_word = "";
+var needSave = false;
 var text_language;
 var description = [
 	"Never seen it before.",
@@ -77,12 +78,13 @@ function onRatingsButton(rating) {
 			async: true
 		});
 		refreshCurrentWordRating(rating);
+		needSave = false;
 	}
 }
 
 $(document).ready(function() {
 	$('.word').click(function (event) {
-		if (last_word != "") {
+		if (last_word != "" && needSave) {
 			$.ajax({
 				type: 'PATCH',
 				url: '/words/' + last_word,
@@ -92,6 +94,7 @@ $(document).ready(function() {
 				},
 				async: true
 			});
+			needSave = false;
 		}
 		last_word = event.target.innerHTML;
 		$.getJSON("/words/" + text_language + '/' + last_word, function(data) {
@@ -101,6 +104,7 @@ $(document).ready(function() {
 			refreshCurrentWordRating(data["rating"]);
 			if (!isMobile)
 				$('.lookup #lword').focus();
+			needSave = false;
 		});
 	});
 
@@ -124,6 +128,10 @@ $(document).ready(function() {
 		onRatingsButton(rating);
 		if (!isMobile)
 			$('.lookup #lword').focus();
+	});
+
+	$(".lookup #lword").change(function () {
+		needSave = true;
 	});
 
 	$(".lookup #lword").keyup(function(event) {
