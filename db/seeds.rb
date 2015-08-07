@@ -1,18 +1,24 @@
 Language.create!([
-  {name: "Arabic"},
   {name: "English"},
   {name: "French"},
   {name: "German"},
   {name: "Italian"},
-  {name: "Portugese"},
   {name: "Russian"},
   {name: "Spanish"},
-  {name: "Other"}
+  {name: "Icelandic"}
 ])
-Service.create!([
-  {name: "dict.cc EN<=>DE", short_name: "dict.cc", url: "http://www.dict.cc/?s={query}", language_id: 4},
-  {name: "Forvo", short_name: "forvo", url: "http://forvo.com/search/{query}/", language_id: 0},
-  {name: "Google Translator", short_name: "gtans", url: "https://translate.google.com/#auto/en/{query}", language_id: 0},
-  {name: "English Wiktionary", short_name: "wikt", url: "http://en.wiktionary.org/wiki/{query}", language_id: 0},
-  {name: "Yandex EN<=>RU", short_name: "yandex", url: "https://translate.yandex.com/?text={query}&lang=ru-en", language_id: 7}
+Compliment.create!([
+  {value: "Bon travail!", language_id: (Language.find_by name: "French").id},
+  {value: "Bonne réussite.", language_id: (Language.find_by name: "French").id},
+  {value: "Bravo!", language_id: (Language.find_by name: "French").id},
+  {value: "Continue comme ça.", language_id: (Language.find_by name: "French").id},
+  {value: "Très bien!", language_id: (Language.find_by name: "French").id},
+  {value: "Gut gemacht!", language_id: (Language.find_by name: "German").id},
+  {value: "Klasse!", language_id: (Language.find_by name: "German").id},
+  {value: "Mach weiter so!", language_id: (Language.find_by name: "German").id},
+  {value: "Nicht schlecht :)", language_id: (Language.find_by name: "German").id},
+  {value: "Weiter so!", language_id: (Language.find_by name: "German").id},
+  {value: "Очень хорошо уже.", language_id: (Language.find_by name: "Russian").id},
+  {value: "Так держать.", language_id: (Language.find_by name: "Russian").id},
+  {value: "Хорошоя работа!", language_id: (Language.find_by name: "Russian").id}
 ])
