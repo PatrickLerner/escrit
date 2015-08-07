@@ -19,25 +19,17 @@
         </div>
       <% end %>
     
-      <p>
-        <%= f.label :name, 'Name:' %>
-        <%= f.text_field :name, :class => 'u-full-width' %>
-      </p>
+      <%= f.label :name, 'Name:' %>
+      <%= f.text_field :name, :class => 'u-full-width' %>
 
-      <p>
-        <%= f.label :short_name, 'Short Name:' %>
-        <%= f.text_field :short_name, :class => 'u-full-width' %>
-      </p>
+      <%= f.label :short_name, 'Short Name:' %>
+      <%= f.text_field :short_name, :class => 'u-full-width' %>
 
-      <p>
-        <%= f.label :language_id, 'Language:' %>
-        <%= f.select :language_id, options_for_select([["All", 0]] + language_options), {}, :class => 'u-full-width' %>
-      </p>
+      <%= f.label :language_id, 'Language:' %>
+      <%= f.select :language_id, options_for_select([["All", 0]] + language_options), {}, :class => 'u-full-width' %>
 
-      <p>
-        <%= f.label :url, 'URL Mask:' %>
-        <%= f.text_field :url, :class => 'u-full-width' %>
-      </p>
+      <%= f.label :url, 'URL Mask:' %>
+      <%= f.text_field :url, :class => 'u-full-width' %>
 
       <p class="warning">
         Looks like your URL Mask does not contain a place holder, {query}. It will probably not work this way.

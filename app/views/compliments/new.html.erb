@@ -19,15 +19,11 @@
         </div>
       <% end %>
 
-      <p>
-        <%= f.label :value, 'Compliment:' %>
-        <%= f.text_field :value, :class => 'u-full-width' %>
-      </p>
+      <%= f.label :value, 'Compliment:' %>
+      <%= f.text_field :value, :class => 'u-full-width' %>
 
-      <p>
-        <%= f.label :language_id, 'Language:' %>
-        <%= f.select :language_id, options_for_select([["All", 0]] + language_options), {}, :class => 'u-full-width' %>
-      </p>
+      <%= f.label :language_id, 'Language:' %>
+      <%= f.select :language_id, options_for_select([["All", 0]] + language_options), {}, :class => 'u-full-width' %>
     </div>
     <div class="one-third column">
       <div class="row">
