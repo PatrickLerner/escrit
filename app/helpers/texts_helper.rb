@@ -4,7 +4,6 @@ module TextsHelper
   def language_options filter_unused = false
     options = []
     if filter_unused
-      #options = Language.order(:name).select { |l| l.texts.count > 0 }.map { |l| [l.name, l.id] }
       my_texts = Text.where user_id: current_user.id
       languages = {}
       my_texts.each { |t|
@@ -21,8 +20,17 @@ module TextsHelper
   end
 
   def selected_language
-    if params[:language]
-      Language.where("lower(name) LIKE ?", params[:language])[0]
+    if params[:language] != Rails.cache.fetch('selected_language')
+      Rails.cache.delete('selected_language')
+      Rails.cache.delete('selected_language_value')
+    end
+    Rails.cache.fetch('selected_language') do
+      params[:language]
+    end
+    Rails.cache.fetch('selected_language_value') do
+      if params[:language]
+        Language.where("lower(name) LIKE ?", params[:language])[0]
+      end
     end
   end
 
