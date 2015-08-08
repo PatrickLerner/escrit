@@ -50,16 +50,20 @@ module TextsHelper
         processed += wstr
       end
     end
+    processed = processed.gsub /^([#]+)[ \t]*(.*)[\n]*/, "\\1 \\2\n\n"
     processed = processed.gsub /\r/, ''
     paragraphs = processed.split /[\n]{2,}/
-    paragraphs = paragraphs.map { |p|
-      p.sub /^#[ \t]*(.*)[\n]*/, '<h5>\1</h5>'
+    paragraphs = paragraphs.map { |p| p.strip
+      # p.sub /^#[ \t]*(.*)[\n]*/, '<h5>\1</h5>'
     }
-    if paragraphs.count > 1
-      processed = ("<p>" + paragraphs.join("</p><p>") + "</p>")
-    else
-      processed = paragraphs[0]
-    end
+    processed = paragraphs.map { |p|
+      if p[0] == '#'
+        p = p.gsub /^##[ \t]*(.*)[\n]*/, '<h6 class="docs-header">\1</h6>'
+        p = p.gsub /^#[ \t]*(.*)[\n]*/, '<h5>\1</h5>'
+      else
+        '<p>' + p + '</p>'
+      end
+    }.join
     processed = processed.gsub /\n/, "<br />"
     processed.html_safe
   end
