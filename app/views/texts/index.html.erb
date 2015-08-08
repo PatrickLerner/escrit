@@ -72,9 +72,9 @@
                   <% if text.public %>
                     <alias title="This is a public text. Make a copy for you to see its status."><%= fa_icon("star-o") %></alias>
                   <% elsif not text.completed %>
-                    <alias title="Not all words in this text have been rated yet."><%= fa_icon("minus") %></alias>
+                    <alias title="Not all words in this text have been rated yet."><%= fa_icon("minus", style: 'width: 1.5rem') %></alias>
                   <% else %>
-                    <alias title="You have worked through this text and rated all the words within it."><%= fa_icon("check") %></alias>
+                    <alias title="You have worked through this text and rated all the words within it."><%= fa_icon("check", style: 'width: 1.5rem') %></alias>
                   <% end %>
                   <%= link_to text.title, text_path(text) %>
                 </td>
