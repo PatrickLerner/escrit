@@ -4,18 +4,40 @@
   <% content_for :title, '%s Texts' % [selected_language.name] %>
 <% end %>
 
-<h4><%= if selected_language then selected_language.name + " " else "" end %>Texts<%= if @hidden then " (Archived)" else "" end %><%= if @public then " (Public)" else "" end %></h4>
+<% selection = if selected_language then selected_language.name else nil end %>
+
+<div class="row">
+  <div class="two-thirds column">
+    <h4><%= if selected_language then selected_language.name + " " else "" end %>Texts<%= if @hidden then " (Archived)" else "" end %><%= if @public then " (Public)" else "" end %></h4>
+  </div>
+  <div class="one-third column" style="text-align: right; vertical-align: middle;">
+    <% if selected_language != nil %>
+      <a href="/texts" class="toggle-link"><%= fa_icon 'language' %> Other Languages</a>
+    <% end %>
+  </div>
+</div>
 
 <div class="row">
   <div class="two-thirds column">
     <% if selected_language == nil %>
-      <p>In this section of the website you can add and read texts which you are interested in reading.</p>
 
-      <% if language_options(true).count > 0 %>
-        <p>Note that texts are filtered by language, so please select your language in the sidebar to see all the texts you added for that language.</p>
-      <% else %>
-        <p>It seems like you have not yet added any texts at all yet. If you need inspiration, try looking online for newspapers, short stories, song lyrics or other media.</p>
-      <% end %>
+      <% op = language_options(true).map { |l| l[0] } %>
+      <h6 class="docs-header">Select Language:</h6>
+      <p>
+        <div class="row">
+          <% @languages.in_groups(3, false).to_a.each { |splice| %>
+            <div class="one-third column">
+              <% splice.each { |lang| %>
+                <% l = if not op.include? lang.name then "button-gray" else "" end %>
+                <%= link_to lang.name, '/texts/' + lang.name.downcase, class: 'button u-full-width ' + l %>
+              <% } %>
+            </div>
+          <% } %>
+        </div>
+      </p>
+      <h6 class="docs-header">How to Read?</h6>
+      <p>In this section of the website you can add and read texts which you are interested in reading. Just pick the language you are interested in studying from the list and begin to add some texts or look through the publically available texts.</p>
+      <p>If you need material, look for easy texts online, try to read news or maybe the lyrics to your favorite song.</p>
 
     <% else %>
 
@@ -70,9 +92,11 @@
   </div>
   <div class="one-third column">
     <% new_url = if selected_language then "/texts/" + selected_language.name.downcase + "/new" else new_text_path end %>
-    <% selection = if selected_language then selected_language.name else nil end %>
-
-    <%= link_to fa_icon("plus") + ' Add New', new_url, class: 'button button-primary u-full-width', title: 'Add a new text' %>
+    <% if selection == nil %>
+      <%= image_tag "globe.png", :class => "u-full-width no-border" %>
+    <% else %>
+      <%= link_to fa_icon("plus") + ' Add New', new_url, class: 'button button-primary u-full-width', title: 'Add a new text' %>
+    <% end %>
 
     <% if selected_language and not @public %>
 
@@ -90,17 +114,13 @@
 
     <% end %>
 
-    <% if language_options(false).count > 0 %>
-     <%= select_tag :language_text, options_for_select(['Filter Language'] + language_options(false).map { |k| k[0] }, selected: selection), class: 'u-full-width' %>
-    <% end %>
-
     <% if selected_language != nil %>
 
       <% if @word_count == 0 %>
-        <p>You have no words marked as known (level three or higher) in <%= selected_language.name %> yet, but why not get it started right away and try to work on that?</p>
+        <p>You have no words marked as <alias title="Rated at three or higher">known</alias> in <%= selected_language.name %> yet, but why not get it started right away and try to work on that?</p>
       <% else %>
          <p>
-          You have rated <%= number_with_precision @word_count, precision: 0, delimiter: ',' %> <%= selected_language.name %> words, with <%= number_with_precision @known_word_count, precision: 0, delimiter: ',' %> marked as known (level three or higher).<br /><b><%= @compliment %></b>
+          You have rated <%= number_with_precision @word_count, precision: 0, delimiter: ',' %> <%= selected_language.name %> words, with <%= number_with_precision @known_word_count, precision: 0, delimiter: ',' %> marked as <alias title="Rated at three or higher">known</alias>.<br /><b><%= @compliment %></b>
           </p>
       <% end %>
 

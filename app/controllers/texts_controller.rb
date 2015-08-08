@@ -53,6 +53,8 @@ class TextsController < ApplicationController
   end
 
   def index hidden = false, public = false
+    @languages = Language.order(:name).all
+
     if selected_language == nil
       my_texts = []
       @total_text_count = 0
