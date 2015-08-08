@@ -56,14 +56,18 @@ module TextsHelper
     paragraphs = paragraphs.map { |p| p.strip
       # p.sub /^#[ \t]*(.*)[\n]*/, '<h5>\1</h5>'
     }
-    processed = paragraphs.map { |p|
-      if p[0] == '#'
-        p = p.gsub /^##[ \t]*(.*)[\n]*/, '<h6 class="docs-header">\1</h6>'
-        p = p.gsub /^#[ \t]*(.*)[\n]*/, '<h5>\1</h5>'
-      else
-        '<p>' + p + '</p>'
-      end
-    }.join
+    processed = if paragraphs.count > 1
+      paragraphs.map { |p|
+        if p[0] == '#'
+          p = p.gsub /^##[ \t]*(.*)[\n]*/, '<h6 class="docs-header">\1</h6>'
+          p = p.gsub /^#[ \t]*(.*)[\n]*/, '<h5>\1</h5>'
+        else
+          '<p>' + p + '</p>'
+        end
+      }.join
+    else
+      paragraphs.join
+    end
     processed = processed.gsub /\n/, "<br />"
     processed.html_safe
   end
