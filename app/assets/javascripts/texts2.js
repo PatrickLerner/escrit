@@ -85,6 +85,11 @@ function onRatingsButton(rating) {
 }
 
 $(document).ready(function() {
+	$('.lookup #links a').click(function () {
+		if (!isMobile)
+			$('.lookup #lword').focus();
+	});
+	
 	$('.word').click(function (event) {
 		if (last_word == event.target.innerHTML) {
 			$('.lookup').fadeOut(400);
