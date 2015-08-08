@@ -19,7 +19,7 @@ class WordsController < ApplicationController
     if @word
       output = {
         value: @word.value,
-        note: @word.note,
+        note: @word.note.strip,
         language: @word.language.name,
         rating: @word.rating
       }
@@ -48,6 +48,7 @@ class WordsController < ApplicationController
     end
 
     params[:word][:language] = lang
+    params[:word][:note] = params[:word][:note].strip
 
     if @word.update(word_params)
       render plain: "ok"
