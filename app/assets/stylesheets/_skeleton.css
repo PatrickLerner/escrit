@@ -25,6 +25,57 @@
 - Media Queries
 */
 
+@font-face {
+  font-family: 'Raleway';
+  src: url('Raleway-Light.ttf');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('Raleway-Regular.ttf');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('Raleway-Medium.ttf');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('Raleway-Bold.ttf');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('Raleway-Light-Italic.ttf');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('Raleway-Regular-Italic.ttf');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('Raleway-Medium-Italic.ttf');
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('Raleway-Bold-Italic.ttf');
+  font-weight: 600;
+  font-style: italic;
+}
 
 /* Grid
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -179,7 +230,7 @@ input[type="button"] {
   color: #222;
   text-align: center;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 38px;
   letter-spacing: .1rem;
   text-transform: uppercase;
