@@ -1,0 +1,35 @@
+<% content_for :title, '%s (User)' % [@user.name] %>
+
+<h4>
+  <%= @user.name %>
+  <% if @user.admin? %>
+    (Admin)
+  <% end %>
+</h4>
+
+<div class="row">
+  <div class="two-thirds column">
+  &nbsp;
+  </div>
+  <div class="one-third column">
+    <%= image_tag avatar_url(@user), class: 'profile-picture u-full-width' %>
+    <table class="u-full-width">
+      <thead>
+        <tr>
+          <th>Language</th>
+          <th style="text-align: right">Words</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @words.each { |l, w| %>
+          <tr>
+            <td><%= l %></td>
+            <td style="text-align: right">
+              <%= number_with_precision w, precision: 0, delimiter: ',' %>
+            </td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>

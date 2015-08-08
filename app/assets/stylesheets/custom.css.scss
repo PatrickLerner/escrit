@@ -29,6 +29,12 @@ p.warning {
     &.no-border {
       border: none;
     }
+
+    &.profile-picture {
+      border: 3px solid #191919;
+      border-radius: 6000px;
+      padding: 0;
+    }
   }
 }
 

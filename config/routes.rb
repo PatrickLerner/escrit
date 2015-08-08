@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   get '/settings', to: 'settings#index'
   get '/statistics', to: 'statistics#index'
   get '/statistics/:language', to: 'statistics#index', :constraints => { :language => /.+/ }
+  get '/u/:id', to: 'users#show'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -3,10 +3,24 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <div class="row">
     <div class="two-thirds column">
-      <%= devise_error_messages! %>
+      <% if @user.errors.any? %>
+        <div id="error_explanation">
+          <h5>
+            <%= pluralize(@user.errors.count, "error") %> prohibited your changes from being saved:
+          </h5>
+          <ul>
+            <% @user.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name, autofocus: true, class: "u-full-width" %>
 
       <%= f.label :email %>
-      <%= f.email_field :email, autofocus: true, class: "u-full-width" %>
+      <%= f.email_field :email, class: "u-full-width" %>
 
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
         <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
