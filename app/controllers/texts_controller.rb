@@ -20,7 +20,7 @@ class TextsController < ApplicationController
   def create
     @text = Text.new(text_params)
     @text.user_id = current_user.id
-    @text.public = false
+    @text.public = false unless current_user.admin?
 
     if @text.save
       @text.hidden = false
