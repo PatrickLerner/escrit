@@ -116,22 +116,22 @@ td > alias > i {
 .lookup {
   position: fixed;
   background-color: #fff;
-  padding: 0;
-  margin-top: 1em;
+  padding: 1rem 0;
   display: none;
   overflow: overflow;
-  text-align: center;
   left: 0;
   bottom: 0;
   width: 100%;
-  border-top: 1px solid #eee;
+  z-index: 99;
+  border-top: 1px solid #eaeaea;
+  box-sizing: border-box;
 
   #close-btn {
     display: block;
   }
 
   input {
-    margin-bottom: 1em;
+    margin-bottom: 0;
     width: 100%;
     border: 0;
     font-size: 16px;
@@ -152,6 +152,7 @@ td > alias > i {
   }
 
   #buttons {
+    margin-top: 3px;
     text-align: center;
 
     span {
@@ -168,7 +169,6 @@ td > alias > i {
   }
 
   #links {
-    text-align: center;
     font-size: 12px;
     margin-top: 0.5em;
 
@@ -179,7 +179,7 @@ td > alias > i {
   }
 
   h4 {
-    font-size: 1.5em;
+    font-size: 1.4em;
     margin-bottom: 0;
   }
 }
@@ -284,18 +284,6 @@ span.s4 {
 @media (min-width: 550px) {
   .docs-section {
     padding: 6rem 0; }
-
-  .lookup {
-    left: auto;
-    bottom: auto;
-    width: auto;
-    padding: 0 0.5em;
-    border-top: 0;
-
-    #close-btn {
-      display: none;
-    }
-  }
 }
 
 /* Larger than tablet */

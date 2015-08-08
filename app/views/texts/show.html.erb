@@ -1,5 +1,39 @@
 <% content_for :title, '%s (%s)' % [@text.title, @text.category] %>
 
+<section class="lookup">
+  <div class="container">
+    <!--<span id="close-btn">(Close)</span>-->
+    <div class="row">
+      <div class="two-thirds column">
+        <h4 id="rword">test</h4>
+        <input id="lword" value="test" />
+        <div id="links">
+          <%=
+            @services.each_with_index.map { |service, i|
+              "<a t_href='%s' target='%s' title='%s'>%s</a>" % [service.url, service.short_name + '_' + i.to_s, service.name, service.short_name]
+            }.join(' – ').html_safe
+          %>
+        </div>
+      </div>
+      <div class="one-third column" style="vertical-align: middle">
+        <div style="text-align: right">
+          <span id="close-btn"><%= fa_icon 'times' %> Close</span>
+        </div>
+        <div id="buttons">
+          <span class="s6">/</span>
+          <span class="s0" title="Shortcut: Control + 0">0</span>
+          <span class="s1" title="Shortcut: Control + 1">1</span>
+          <span class="s2" title="Shortcut: Control + 2">2</span>
+          <span class="s3" title="Shortcut: Control + 3">3</span>
+          <span class="s4" title="Shortcut: Control + 4">4</span>
+          <span class="s5" title="Shortcut: Control + 5">5</span>
+          <div id="description"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <h4><%= @processed_title %></h4>
 
 <div class="row">
@@ -31,31 +65,10 @@
     </div>
     <strong>Category:</strong> <i><%= @processed_category %></i>
     <div id="stats"></div>
-
-    <section class="lookup">
-      <span id="close-btn">(Close)</span>
-      <h4 id="rword">test</h4>
-      <input id="lword" value="test" />
-      <div id="buttons">
-        <span class="s6">/</span>
-        <span class="s0" title="Shortcut: Control + 0">0</span>
-        <span class="s1" title="Shortcut: Control + 1">1</span>
-        <span class="s2" title="Shortcut: Control + 2">2</span>
-        <span class="s3" title="Shortcut: Control + 3">3</span>
-        <span class="s4" title="Shortcut: Control + 4">4</span>
-        <span class="s5" title="Shortcut: Control + 5">5</span>
-      </div>
-      <div id="description"></div>
-      <div id="links">
-        <%=
-          @services.each_with_index.map { |service, i|
-            "<a t_href='%s' target='%s' title='%s'>%s</a>" % [service.url, service.short_name + '_' + i.to_s, service.name, service.short_name]
-          }.join(' – ').html_safe
-        %>
-      </div>
-    </section>
   </div>
 </div>
+
+<br />
 
 <script type="text/javascript">
   text_language = '<%= @text.language.name %>';
