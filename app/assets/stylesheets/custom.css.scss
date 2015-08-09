@@ -121,7 +121,11 @@ td > alias > i {
 
 .lookup {
   position: fixed;
-  background-color: #fff;
+  background-color: #eaeaea;
+  background: -webkit-linear-gradient(#ffffff, #eaeaea);
+  background: -o-linear-gradient(#ffffff, #eaeaea);
+  background: -moz-linear-gradient(#ffffff, #eaeaea);
+  background: linear-gradient(#ffffff, #eaeaea);
   padding: 1rem 0;
   display: none;
   overflow: overflow;
@@ -129,7 +133,7 @@ td > alias > i {
   bottom: 0;
   width: 100%;
   z-index: 99;
-  border-top: 1px solid #eaeaea;
+  border-top: 1px solid #ADADAD;
   box-sizing: border-box;
 
   #close-btn {
