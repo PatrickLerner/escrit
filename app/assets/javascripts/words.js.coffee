@@ -5,4 +5,7 @@
 $ ->
 	$('#language_words').change ->
 		selected = $('#language_words option').filter(':selected').text()
-		window.location.href = "/words/" + selected.toLowerCase()
+		if selected is $('#language_words option').filter(':first').text()
+			window.location.href = "/words"
+		else
+			window.location.href = "/words/" + selected.toLowerCase()

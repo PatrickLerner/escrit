@@ -4,9 +4,7 @@ class WordsController < ApplicationController
   include TextsHelper
 
   def index
-    if not params[:language]
-      redirect_to '/words/' + Language.first.name.downcase
-    else
+    if params[:language]
       lang = Language.where("lower(name) LIKE ?", params[:language])[0]
       @language_name = lang.name
       @words = Word.paginate(:page => params[:page], :per_page => 250).where 'user_id = ? and rating < 6 and language_id = ?', current_user.id, lang.id

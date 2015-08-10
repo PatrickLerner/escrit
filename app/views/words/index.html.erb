@@ -1,60 +1,68 @@
-<% content_for :title, @language_name + ' Words' %>
+<% if @language_name %>
+  <% content_for :title, 'List of ' + @language_name + ' Words' %>
+<% else %>
+  <% content_for :title, 'List of Words' %>
+<% end %>
 
 <h4><%= @language_name %> Words</h4>
 
 <div class="row">
   <div class="two-thirds column">
-    <% if @words.count == 0 %>
-      <p>You seem to have no words in <%= @language_name %> yet. If you want to see your words in a different language, select it in the sidebar.</p>
+    <% if not @language_name %>
+      <p>Please select in the sidebar the language for which you are interested in seeing your saved words of.</p>
     <% else %>
-      <%= will_paginate @words, class: 'pagination' %>
-      <div class="pagination_info">
-        <%= page_entries_info @words %>
-      </div>
-    <% end %>
-    <%
-      current_date = nil
-      open = false
-      @words.each { |w|
-        w_date = w.created_at.strftime("%F")
-        if w_date != current_date
-          current_date = w_date
-          if open
-    %>
-        </tbody>
-      </table>
-        <% end
-        open = true %>
-        <h5><%= current_date %></h5>
-      <table class="u-full-width">
-        <thead>
-          <th style="width: 40%">Word</th>
-          <th style="width: 50%">Note</th>
-          <th style="text-align: center">Rating</th>
-        </thead>
-        <tbody>
-    <%
-        end
-    %>
-      <tr>
-        <td><%= w.value %><%=  %></td>
-        <td><%= w.note %></td>
-        <td style="text-align: center"><span class="s<%= w.rating %> word-list-rating" title="<%= [ "Looked it up once.", "This time I'll remember it.", "I'm getting it now.", "Seems easy at this point.", "Know it in my sleep."][w.rating - 1] %>"><%= w.rating %></span></td>
-      </tr>
-    <% } %>
-    <% if open %>
-        </tbody>
-      </table>
-    <% end %>
-    <% if @words.count > 0 %>
-      <%= will_paginate @words, class: 'pagination' %>
-      <div class="pagination_info">
-        <%= page_entries_info @words %>
-      </div>
+      <% if @words.count == 0 %>
+        <p>You seem to have no words in <%= @language_name %> yet. If you want to see your words in a different language, select it in the sidebar.</p>
+      <% else %>
+        <%= will_paginate @words, class: 'pagination' %>
+        <div class="pagination_info">
+          <%= page_entries_info @words %>
+        </div>
+      <% end %>
+      <%
+        current_date = nil
+        open = false
+        @words.each { |w|
+          w_date = w.created_at.strftime("%F")
+          if w_date != current_date
+            current_date = w_date
+            if open
+      %>
+          </tbody>
+        </table>
+          <% end
+          open = true %>
+          <h5><%= current_date %></h5>
+        <table class="u-full-width">
+          <thead>
+            <th style="width: 40%">Word</th>
+            <th style="width: 50%">Note</th>
+            <th style="text-align: center">Rating</th>
+          </thead>
+          <tbody>
+      <%
+          end
+      %>
+        <tr>
+          <td><%= w.value %><%=  %></td>
+          <td><%= w.note %></td>
+          <td style="text-align: center"><span class="s<%= w.rating %> word-list-rating" title="<%= [ "Looked it up once.", "This time I'll remember it.", "I'm getting it now.", "Seems easy at this point.", "Know it in my sleep."][w.rating - 1] %>"><%= w.rating %></span></td>
+        </tr>
+      <% } %>
+      <% if open %>
+          </tbody>
+        </table>
+      <% end %>
+      <% if @words.count > 0 %>
+        <%= will_paginate @words, class: 'pagination' %>
+        <div class="pagination_info">
+          <%= page_entries_info @words %>
+        </div>
+      <% end %>
     <% end %>
   </div>
   <div class="one-third column">
     <%= link_to fa_icon("chevron-left") + " Back", settings_path, class: 'button button-primary u-full-width', title: 'Back to Overview' %>
-    <%= select_tag :language_words, options_for_select(language_options(false).map { |k| k[0] }, selected: @language_name), class: 'u-full-width' %>
+    <%= select_tag :language_words, options_for_select(["Select Language"] + language_options(true).map { |k| k[0] }, selected: @language_name), class: 'u-full-width' %>
   </div>
 </div>
