@@ -1,11 +1,24 @@
-<% content_for :title, '%s (User)' % [@user.name] %>
+<% if @user.admin %>
+  <% content_for :title, '%s (Admin)' % [@user.name] %>
+<% else %>
+  <% content_for :title, '%s (User)' % [@user.name] %>
+<% end %>
 
-<h4>
-  <%= @user.name %>
-  <% if @user.admin? %>
-    (Admin)
-  <% end %>
-</h4>
+<div class="row">
+  <div class="two-thirds column">
+    <h4>
+      <%= @user.name %>
+      <% if @user.admin? %>
+        (Admin)
+      <% end %>
+    </h4>
+  </div>
+  <div class="one-third column">
+    <% if @user == current_user %>
+      <a href="<%= edit_user_registration_path %>" class="button button-primary u-full-width"><%= fa_icon("user") %> Edit Your Profile</a>
+    <% end %>
+  </div>
+</div>
 
 <div class="row">
   <div class="two-thirds column">
@@ -15,6 +28,11 @@
         Since then they have been working on learning and improving their reading skills in <%= @words.map{ |l, w| l }.to_sentence %>.
       <% end %>
     </p>
+
+    <% if @user.about.strip != "" %>
+      <h6 class="docs-header">About Me</h6>
+      <p><%= simple_format @user.about.strip %></p>
+    <% end %>
   </div>
   <div class="one-third column">
     <%= image_tag avatar_url(@user), class: 'profile-picture u-full-width' %>

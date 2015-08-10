@@ -19,6 +19,9 @@
       <%= f.label :name %>
       <%= f.text_field :name, autofocus: true, class: "u-full-width" %>
 
+      <%= f.label :about %>
+      <%= f.text_area :about, placeholder: "About Me", style: 'height: 8em;', :class => 'u-full-width' %>
+
       <%= f.label :email %>
       <%= f.email_field :email, class: "u-full-width" %>
 
@@ -34,6 +37,9 @@
 
       <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
       <%= f.password_field :current_password, autocomplete: "off", class: "u-full-width" %>
+
+      <label>Profile Picture</label>
+      <p>To change your profile picture, please go to <a href="https://gravatar.com/">Gravatar</a> and register with the email address you have set in your user profile.</p>
     </div>
     <div class="one-third column">
       <%= f.submit "Update Profile", class: "u-full-width button-primary" %>

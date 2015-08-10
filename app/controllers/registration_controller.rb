@@ -12,15 +12,18 @@ class RegistrationController < Devise::RegistrationsController
           {name: "Yandex EN<=>RU", short_name: "yandex", url: "https://translate.yandex.com/?text={query}&lang=ru-en", language_id: 7, user_id: resource.id}
         ])
       end
-   end
+    end
+
+    def after_update_path_for(resource)
+      '/u/' + resource.id.to_s
+    end
 
   private
+    def sign_up_params
+      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    end
 
-  def sign_up_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
-  end
-
-  def account_update_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :current_password)
-  end
+    def account_update_params
+      params.require(:user).permit(:name, :about, :email, :password, :password_confirmation, :current_password)
+    end
 end
