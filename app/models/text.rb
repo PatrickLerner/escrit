@@ -2,6 +2,7 @@ class Text < ActiveRecord::Base
   include WordsHelper
 
   belongs_to :language
+  belongs_to :user
   default_scope { joins(:language).order('category asc, title asc') }
   validates :category, length: { minimum: 4 }
   validates :title, length: { minimum: 4 }

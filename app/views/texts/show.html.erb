@@ -64,6 +64,21 @@
     </div>
     <strong>Category:</strong> <i><%= @processed_category %></i>
     <div id="stats"></div>
+    <% if @text.public %>
+      <p>
+        <div class="row">
+          <div class="three columns">
+            <a href="/u/<%= @text.user.id %>" class="image-link">
+              <%= image_tag avatar_url(@text.user, 64), class: 'profile-picture u-full-width' %>
+            </a>
+          </div>
+          <div class="nine columns">
+            <b>Uploaded by:</b><br />
+            <a href="/u/<%= @text.user.id %>"><%= @text.user.name %></a>
+          </div>
+        </div>
+      </p>
+    <% end %>
   </div>
 </div>
 

@@ -6,7 +6,7 @@
   <div class="two-thirds column">
     <div class="row">
       <div class="one-half column">
-        <a href="<%= edit_user_registration_path %>" class="button u-full-width"><%= fa_icon("user") %> User Profile</a>
+        <a href="/u/<%= current_user.id %>" class="button u-full-width"><%= fa_icon("user") %> User Profile</a>
       </div>
       <div class="one-half column">
         <a href="/services" class="button u-full-width"><%= fa_icon("cogs") %> Services</a>
