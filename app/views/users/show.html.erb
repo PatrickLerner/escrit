@@ -29,7 +29,7 @@
       <% end %>
     </p>
 
-    <% if @user.about.strip != "" %>
+    <% if @user.about and @user.about.strip != "" %>
       <h6 class="docs-header">About Me</h6>
       <p><%= simple_format @user.about.strip %></p>
     <% end %>
