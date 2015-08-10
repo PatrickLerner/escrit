@@ -133,7 +133,7 @@
         <p>You have no words marked as <alias title="Rated at three or higher">known</alias> in <%= selected_language.name %> yet, but why not get it started right away and try to work on that?</p>
       <% else %>
          <p>
-          You have rated <%= number_with_precision @word_count, precision: 0, delimiter: ',' %> <%= selected_language.name %> words, with <%= number_with_precision @known_word_count, precision: 0, delimiter: ',' %> marked as <alias title="Rated at three or higher">known</alias>.<br /><b><%= @compliment %></b>
+          You have added <%= number_with_precision @word_count, precision: 0, delimiter: ',' %> <%= selected_language.name %> words, of which <%= number_with_precision @known_word_count, precision: 0, delimiter: ',' %> should be '<alias title="Rated at three or higher">familiar</alias>' to you.<br /><b><%= @compliment %></b>
           </p>
       <% end %>
 
