@@ -23,7 +23,6 @@ class TextsController < ApplicationController
     @text.public = false unless current_user.admin?
 
     if @text.save
-      @text.hidden = false
       @text.update_word_count
       @text.save
       redirect_to @text
