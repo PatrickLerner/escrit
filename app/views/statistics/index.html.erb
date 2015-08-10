@@ -32,6 +32,12 @@
 </div>
 
 <script type="text/javascript">
+    var fontFamily = "'Raleway', 'Helvetica Neue', 'Helvetica', 'Arial'";
+    Chart.defaults.global.scaleFontFamily = fontFamily;
+    Chart.defaults.global.tooltipFontFamily = fontFamily;
+    Chart.defaults.global.tooltipTitleFontFamily = fontFamily;
+    Chart.defaults.global.pointLabelFontFamily = fontFamily;
+    Chart.defaults.global.scaleLabel = "<%%= '  ' + value%>";
     var newWordsData = {
         labels: [<%= @new_words_labels.map{|i| '"' + i + '"'}.join(',').html_safe %>],
         datasets: [
