@@ -21,6 +21,9 @@ class TextsController < ApplicationController
     @text = Text.new(text_params)
     @text.user_id = current_user.id
     @text.public = false unless current_user.admin?
+    @text.category = @text.category.strip
+    @text.content = @text.content.strip
+    @text.title = @text.title.strip
 
     if @text.save
       @text.update_word_count
@@ -146,6 +149,9 @@ class TextsController < ApplicationController
       end
       
       if @text.update(text_params)
+        @text.category = @text.category.strip
+        @text.content = @text.content.strip
+        @text.title = @text.title.strip
         @text.update_word_count
         @text.save
         if text_params[:completed]
