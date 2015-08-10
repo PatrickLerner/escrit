@@ -9,7 +9,12 @@
 
 <div class="row">
   <div class="two-thirds column">
-  &nbsp;
+    <p>
+      This User has been a member of this website since <%= @user.created_at.strftime("%d %B %Y") %> (<%= ((Time.now - @user.created_at) / 24.hours).to_i %> days).
+      <% if @words.count > 0 %>
+        Since then they have been working on learning and improving their reading skills in <%= @words.map{ |l, w| l }.to_sentence %>.
+      <% end %>
+    </p>
   </div>
   <div class="one-third column">
     <%= image_tag avatar_url(@user), class: 'profile-picture u-full-width' %>
