@@ -11,13 +11,17 @@ module ApplicationHelper
     #if user.avatar_url.present?
     #  user.avatar_url
     #else
-      if root_url == "http://londinium.dmtg:3000/"
-        default_url = "http://i.imgur.com/h7Ch3qJ.png"
-      else
+      if local_version
         default_url = root_url + image_path("default-profile.png")
+      else
+        default_url = "http://i.imgur.com/h7Ch3qJ.png"
       end
       gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
       "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}&d=#{CGI.escape(default_url)}"
     #end
+  end
+
+  def local_version
+    root_url != "http://escrit.eu/"
   end
 end

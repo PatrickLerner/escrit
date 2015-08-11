@@ -11,6 +11,10 @@
   <%= favicon_link_tag 'favicon.png' %>
 </head>
 <body>
+  <% if local_version %>
+    <div class="corner-ribbon top-left sticky blue shadow">Dev Version</div>
+  <% end %>
+
   <div class="container">
     <nav class="navbar">
       <div class="container">
