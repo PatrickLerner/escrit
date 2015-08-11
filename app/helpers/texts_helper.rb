@@ -69,6 +69,8 @@ module TextsHelper
       paragraphs.join
     end
     processed = processed.gsub /\n/, "<br />"
+    processed = processed.gsub /\*\*(.*?)\*\*/, '<strong>\1</strong>'
+    processed = processed.gsub /__(.*?)__/, '<em>\1</em>'
     processed.html_safe
   end
 end
