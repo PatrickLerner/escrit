@@ -36,23 +36,25 @@
   </div>
   <div class="one-third column">
     <%= image_tag avatar_url(@user), class: 'profile-picture u-full-width' %>
-    <table class="u-full-width">
-      <thead>
-        <tr>
-          <th>Language</th>
-          <th style="text-align: right">Words Added</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @words.each { |l, w| %>
+    <% if @words.count > 0 %>
+      <table class="u-full-width">
+        <thead>
           <tr>
-            <td><%= l %></td>
-            <td style="text-align: right">
-              <%= number_with_precision w, precision: 0, delimiter: ',' %>
-            </td>
+            <th>Language</th>
+            <th style="text-align: right">Words Added</th>
           </tr>
-        <% } %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @words.each { |l, w| %>
+            <tr>
+              <td><%= l %></td>
+              <td style="text-align: right">
+                <%= number_with_precision w, precision: 0, delimiter: ',' %>
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    <% end %>
   </div>
 </div>
