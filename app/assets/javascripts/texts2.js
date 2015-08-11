@@ -11,6 +11,7 @@ var description = [
 	"(Ignore Word)"
 ];
 var showColors = true;
+var underlineColors = false;
 var currentRating = 0;
 
 var isMobile = false; //initiate as false
@@ -126,10 +127,27 @@ $(document).ready(function() {
 		if (showColors) {
 			$('#colorToggle').html('<i class="fa fa-toggle-on"></i> Show Colors');
 			$('.word').css('background', '');
+			$('.word').css('border', '');
+			$('#underlineToggle').css('display', 'block');
 		}
 		else {
 			$('#colorToggle').html('<i class="fa fa-toggle-off"></i> Show Colors');
 			$('.word').css('background', 'white');
+			$('.word').css('border', 'none');
+			$('#underlineToggle').css('display', 'none');
+		}
+		return false;
+	});
+
+	$('#underlineToggle').click(function () {
+		underlineColors = !underlineColors;
+		if (underlineColors) {
+			$('#underlineToggle').html('<i class="fa fa-toggle-on"></i> Underline');
+			$('.word').addClass('underline');
+		}
+		else {
+			$('#underlineToggle').html('<i class="fa fa-toggle-off"></i> Underline');
+			$('.word').removeClass('underline');
 		}
 		return false;
 	});

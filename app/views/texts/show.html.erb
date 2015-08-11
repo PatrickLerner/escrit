@@ -60,7 +60,14 @@
       <% if @text.is_allowed_to_update current_user and @text.public %>
         <%= link_to fa_icon("pencil") + " Edit", edit_text_path(@text), class: 'button u-full-width', title: 'Edit the Text' %>
       <% end %>
-      <%= link_to fa_icon("toggle-on") + " Show Colors", '#', class: 'toggle-link u-full-width', title: 'Toggle Colors', id: 'colorToggle' %>
+      <div class="row">
+        <div class="one-half column">
+          <%= link_to fa_icon("toggle-on") + " Show Colors", '#', class: 'toggle-link u-full-width', title: 'Toggle Colors', id: 'colorToggle' %>
+        </div>
+        <div class="one-half column">
+          <%= link_to fa_icon("toggle-off") + " Underline", '#', class: 'toggle-link u-full-width', title: 'Toggle Underline or Full Color', id: 'underlineToggle' %>
+        </div>
+      </div>
     </div>
     <strong>Category:</strong> <i><%= @processed_category %></i>
     <div id="stats"></div>

@@ -255,6 +255,24 @@ span.s4 {
   background: linear-gradient(#CEE5F9, #CFDFEB);
 }
 
+span.underline.s0, span.underline.s1, span.underline.s2, span.underline.s3, span.underline.s4, span.underline.s5 {
+  background: none; }
+
+span.underline.s0 {
+  border-bottom: 3px #FA737B solid; }
+
+span.underline.s1 {
+  border-bottom: 3px #FAB75C solid; }
+
+span.underline.s2 {
+  border-bottom: 3px #FFF878 solid; }
+
+span.underline.s3 {
+  border-bottom: 3px #A4F179 solid; }
+
+span.underline.s4 {
+  border-bottom: 3px #ABCADC solid; }
+
 .word { cursor: pointer; }
 
 .container {
