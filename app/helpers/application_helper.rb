@@ -12,7 +12,7 @@ module ApplicationHelper
     #  user.avatar_url
     #else
       if root_url == "http://londinium.dmtg:3000/"
-        default_url = "http://i.imgur.com/gqBDAeV.png"
+        default_url = "http://i.imgur.com/h7Ch3qJ.png"
       else
         default_url = root_url + image_path("default-profile.png")
       end
