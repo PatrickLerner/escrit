@@ -65,7 +65,7 @@ function updateCounter() {
 		sum += i * $('.s' + i + '.word').map (function () { return this.innerHTML }).get().filter(onlyUnique).length;
 	var count = $('.word').map (function () { return this.innerHTML }).get().filter(onlyUnique).length;
 	var rating = (sum / count).toFixed(1);
-	$('#stats').html('<b>Unrated Words:</b> ' + nl + ' – <alias title="The text\'s rating is the average rating across all words. It therefore is ranked from 0 (knowing no words at all) to 5 (knowing all words perfectly)."><b>Rating:</b> ' + rating + '</alias>');
+	$('#stats').html('<b>Unrated Words:</b> ' + nl + ' – <b><alias title="The text\'s rating is the average rating across all words. It therefore is ranked from 0 (knowing no words at all) to 5 (knowing all words perfectly).">Rating</alias>:</b> ' + rating);
 }
 
 function onRatingsButton(rating) {
