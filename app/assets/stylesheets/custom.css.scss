@@ -286,66 +286,86 @@ td > alias > i {
   }
 }
 
-span.s0 { background-color: #FA737B; }
-span.s1 { background-color: #FAB75C; }
-span.s2 { background-color: #F3F79C; }
-span.s3 { background-color: #D3F2BC; }
+$s0_color1: #F1A899;
+$s0_color2: #F1A899;
+$s0_color3: #E46A5B;
+
+$s1_color1: #F9C889;
+$s1_color2: #F9C889;
+$s1_color3: #F2A550;
+
+$s2_color1: #F2F399;
+$s2_color2: #F2F399;
+$s2_color3: #F2E344;
+
+$s3_color1: #BFF3B1;
+$s3_color2: #BFF3B1;
+$s3_color3: #9AE085;
+
+$s4_color1: #D0E1F2;
+$s4_color2: #D0E1F2;
+$s4_color3: #ADC0E0;
+
+span.s0 { background-color: $s0_color1; }
+span.s1 { background-color: #F2DB99; }
+span.s2 { background-color: #F2F399; }
+span.s3 { background-color: #BFF3B1; }
 span.s4 { background-color: #CEE5F9; }
 span.s5 { background-color: inherit; }
 span.s6 { background-color: inherit; }
 
 span.s0 {
-  background: -webkit-linear-gradient(#FA737B, #F56E70);
-  background: -o-linear-gradient(#FA737B, #F56E70);
-  background: -moz-linear-gradient(#FA737B, #F56E70);
-  background: linear-gradient(#FA737B, #F56E70);
+  background: -webkit-linear-gradient($s0_color1, $s0_color2);
+  background: -o-linear-gradient($s0_color1, $s0_color2);
+  background: -moz-linear-gradient($s0_color1, $s0_color2);
+  background: linear-gradient($s0_color1, $s0_color2);
 }
 
 span.s1 {
-  background: -webkit-linear-gradient(#FAB75C, #F7BD56);
-  background: -o-linear-gradient(#FAB75C, #F7BD56);
-  background: -moz-linear-gradient(#FAB75C, #F7BD56);
-  background: linear-gradient(#FAB75C, #F7BD56);
+  background: -webkit-linear-gradient($s1_color1, $s1_color2);
+  background: -o-linear-gradient($s1_color1, $s1_color2);
+  background: -moz-linear-gradient($s1_color1, $s1_color2);
+  background: linear-gradient($s1_color1, $s1_color2);
 }
 
 span.s2 {
-  background: -webkit-linear-gradient(#F3F79C, #FAF69A);
-  background: -o-linear-gradient(#F3F79C, #FAF69A);
-  background: -moz-linear-gradient(#F3F79C, #FAF69A);
-  background: linear-gradient(#F3F79C, #FAF69A);
+  background: -webkit-linear-gradient($s2_color1, $s2_color2);
+  background: -o-linear-gradient($s2_color1, $s2_color2);
+  background: -moz-linear-gradient($s2_color1, $s2_color2);
+  background: linear-gradient($s2_color1, $s2_color2);
 }
 
 span.s3 {
-  background: -webkit-linear-gradient(#D3F2BC, #B8F1B3);
-  background: -o-linear-gradient(#D3F2BC, #B8F1B3);
-  background: -moz-linear-gradient(#D3F2BC, #B8F1B3);
-  background: linear-gradient(#D3F2BC, #B8F1B3);
+  background: -webkit-linear-gradient($s3_color1, $s3_color2);
+  background: -o-linear-gradient($s3_color1, $s3_color2);
+  background: -moz-linear-gradient($s3_color1, $s3_color2);
+  background: linear-gradient($s3_color1, $s3_color2);
 }
 
 span.s4 {
-  background: -webkit-linear-gradient(#CEE5F9, #CFDFEB);
-  background: -o-linear-gradient(#CEE5F9, #CFDFEB);
-  background: -moz-linear-gradient(#CEE5F9, #CFDFEB);
-  background: linear-gradient(#CEE5F9, #CFDFEB);
+  background: -webkit-linear-gradient($s4_color1, $s4_color2);
+  background: -o-linear-gradient($s4_color1, $s4_color2);
+  background: -moz-linear-gradient($s4_color1, $s4_color2);
+  background: linear-gradient($s4_color1, $s4_color2);
 }
 
 span.underline.s0, span.underline.s1, span.underline.s2, span.underline.s3, span.underline.s4, span.underline.s5 {
   background: none; }
 
 span.underline.s0 {
-  border-bottom: 3px #FA737B solid; }
+  border-bottom: 3px $s0_color3 solid; }
 
 span.underline.s1 {
-  border-bottom: 3px #FAB75C solid; }
+  border-bottom: 3px $s1_color3 solid; }
 
 span.underline.s2 {
-  border-bottom: 3px #FFF878 solid; }
+  border-bottom: 3px $s2_color3 solid; }
 
 span.underline.s3 {
-  border-bottom: 3px #A4F179 solid; }
+  border-bottom: 3px $s3_color3 solid; }
 
 span.underline.s4 {
-  border-bottom: 3px #ABCADC solid; }
+  border-bottom: 3px $s4_color3 solid; }
 
 .word { cursor: pointer; }
 
