@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :redirect_subdomain
 
+  # always redirect away from the www-version of the site to the plain url one
   def redirect_subdomain
     if request.host == 'www.escrit.eu'
       redirect_to 'http://escrit.eu' + request.fullpath

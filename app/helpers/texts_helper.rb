@@ -1,6 +1,8 @@
 module TextsHelper
   include WordsHelper
 
+  # returns list of languages as an array where each language is an array [name, id]
+  # if filter_unused is set, only returns languages the current user has added texts in.
   def language_options filter_unused = false
     options = []
     if filter_unused
@@ -19,6 +21,8 @@ module TextsHelper
     options
   end
 
+  # returns the currently selected language of the page (as an Object),
+  # or nil if none was selected
   def selected_language
     if params[:language] != Rails.cache.fetch('selected_language')
       Rails.cache.delete('selected_language')
@@ -38,7 +42,7 @@ module TextsHelper
     processed = ''
     split_words.each do |wstr|
       wstrlow = wstr.mb_chars.downcase.to_s
-      if words.keys.include? wstrlow and not /https?:\/\/[\S]+/.match wstrlow
+      if words.keys.include?(wstrlow) and not (/https?:\/\/[\S]+/.match(wstrlow))
         w = words[wstrlow]
         processed += '<span class="word s' + w.rating.to_s + '">' + wstr + '</span>'
       elsif /https?:\/\/[\S]+/.match wstrlow and (wstrlow[-4..-1] == '.jpg' or wstrlow[-4..-1] == '.png')
@@ -50,17 +54,15 @@ module TextsHelper
         processed += wstr
       end
     end
-    processed = processed.gsub /^([#]+)[ \t]*(.*)[\n]*/, "\\1 \\2\n\n"
-    processed = processed.gsub /\r/, ''
-    paragraphs = processed.split /[\n]{2,}/
-    paragraphs = paragraphs.map { |p| p.strip
-      # p.sub /^#[ \t]*(.*)[\n]*/, '<h5>\1</h5>'
-    }
+    processed = processed.gsub(/^([#]+)[ \t]*(.*)[\n]*/, "\\1 \\2\n\n")
+    processed = processed.gsub(/\r/, '')
+    paragraphs = processed.split(/[\n]{2,}/)
+    paragraphs = paragraphs.map { |p| p.strip }
     processed = if paragraphs.count > 1
       paragraphs.map { |p|
         if p[0] == '#'
-          p = p.gsub /^##[ \t]*(.*)[\n]*/, '<h6 class="docs-header">\1</h6>'
-          p = p.gsub /^#[ \t]*(.*)[\n]*/, '<h5>\1</h5>'
+          p = p.gsub(/^##[ \t]*(.*)[\n]*/, '<h6 class="docs-header">\1</h6>')
+          p = p.gsub(/^#[ \t]*(.*)[\n]*/, '<h5>\1</h5>')
         else
           '<p>' + p + '</p>'
         end
@@ -68,9 +70,9 @@ module TextsHelper
     else
       paragraphs.join
     end
-    processed = processed.gsub /\n/, "<br />"
-    processed = processed.gsub /\*\*(.*?)\*\*/, '<strong>\1</strong>'
-    processed = processed.gsub /__(.*?)__/, '<em>\1</em>'
+    processed = processed.gsub(/\n/, "<br />")
+    processed = processed.gsub(/\*\*(.*?)\*\*/, '<strong>\1</strong>')
+    processed = processed.gsub(/__(.*?)__/, '<em>\1</em>')
     processed.html_safe
   end
 end
