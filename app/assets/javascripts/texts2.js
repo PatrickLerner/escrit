@@ -152,6 +152,30 @@ $(document).ready(function() {
 		return false;
 	});
 
+	$('#archiveToggle').click(function () {
+		if (!$('#text_hidden').prop('checked')) {
+			$('#archiveToggle').html('<i class="fa fa-toggle-on"></i> Archive this text');
+			$('#text_hidden').prop('checked', true);
+		}
+		else {
+			$('#archiveToggle').html('<i class="fa fa-toggle-off"></i> Archive this text');
+			$('#text_hidden').prop('checked', false);
+		}
+		return false;
+	});
+
+	$('#publicToggle').click(function () {
+		if (!$('#text_public').prop('checked')) {
+			$('#publicToggle').html('<i class="fa fa-toggle-on"></i> Make text public');
+			$('#text_public').prop('checked', true);
+		}
+		else {
+			$('#publicToggle').html('<i class="fa fa-toggle-off"></i> Make text public');
+			$('#text_public').prop('checked', false);
+		}
+		return false;
+	});
+
 	$('#buttons span').click(function (event) {
 		var rating = event.target.innerHTML;
 		if (rating == '/')

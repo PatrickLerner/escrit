@@ -33,20 +33,21 @@
 
       <div class="row">
         <div class="one-half column">
-          <label>
-            <%= f.check_box :hidden %>
-            <span>Archive this text</span>
-          </label>
+          <a href="#" id="archiveToggle" class="toggle-link">
+            <%= fa_icon("toggle-" + if @text.hidden then "on" else "off" end) %> Archive this text
+          </a>
         </div>
         <div class="one-half column">
           <% if current_user.admin? %>
-            <label>
-              <%= f.check_box :public %>
-              <span>Make text public</span>
-            </label>
+            <a href="#" id="publicToggle" class="toggle-link">
+              <%= fa_icon("toggle-" + if @text.public then "on" else "off" end) %> Make text public
+            </a>
           <% end %>
         </div>
       </div>
+
+      <%= f.check_box :hidden, style: "display: none" %>
+      <%= f.check_box :public, style: "display: none" %>
     </div>
     <div class="one-third column">
       <div class="row">
