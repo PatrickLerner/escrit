@@ -338,6 +338,8 @@ select {
   border-radius: 0px;
   box-shadow: 0 0 1px #cccccc;
   -webkit-appearance: none;
+  -moz-appearance: none;
+   appearance: none;
   box-sizing: border-box; }
 /* Removes awkward default styles on some inputs for iOS */
 input[type="email"],
