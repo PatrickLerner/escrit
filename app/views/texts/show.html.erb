@@ -71,7 +71,8 @@
     </div>
     <strong>Category:</strong> <i><%= @processed_category %></i>
     <div id="stats"></div>
-    <% if @text.public %>
+
+    <% if @text.public and @text.user %>
       <p>
         <div class="row">
           <div class="three columns">
@@ -86,6 +87,7 @@
         </div>
       </p>
     <% end %>
+
   </div>
 </div>
 
