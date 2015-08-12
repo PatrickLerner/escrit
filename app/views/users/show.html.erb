@@ -23,7 +23,7 @@
 <div class="row">
   <div class="two-thirds column">
     <p>
-      This User has been a member of this website since <%= @user.created_at.strftime("%d %B %Y") %> (<%= pluralize ((Time.now - @user.created_at) / 24.hours).to_i, "day" %>).
+      This User has been a member of this website since <%= @user.created_at.strftime("%d %B %Y") %> (<%= ChronicDuration.output( (Time.now - @user.created_at), weeks: true, format: :long, units: 2) %>).
       <% if @words.count > 0 %>
         Since then they have been working on learning and improving their reading skills in <%= @words.map{ |l, w| l }.to_sentence %>.
       <% end %>
