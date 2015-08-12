@@ -47,3 +47,8 @@ gem 'seed_dump'
 gem 'lightbox2-rails'
 gem 'devise'
 gem 'will_paginate', '~> 3.0.6'
+
+group :production do
+  gem 'pg'
+  gem 'puma'
+end

@@ -34,3 +34,11 @@ test: &test
 
 production:
   <<: *defaults
+  host: localhost
+  adapter: postgresql
+  encoding: utf8
+  database: escritdb
+  pool: 5
+  username: <%= ENV['ESCRIT_DATABASE_USER'] %>
+  password: <%= ENV['ESCRIT_DATABASE_PASSWORD'] %>
+
