@@ -47,10 +47,9 @@ gem 'seed_dump'
 gem 'lightbox2-rails'
 gem 'devise'
 gem 'will_paginate', '~> 3.0.6'
+gem 'chronic_duration'
 
 group :production do
   gem 'pg'
   gem 'puma'
 end
-
-gem 'chronic_duration'
