@@ -50,7 +50,7 @@
       </p>
       <h6 class="docs-header">How to Read?</h6>
       <p>In this section of the website you can add and read texts which you are interested in reading. Just pick the language you are interested in studying from the list and begin to add some texts or look through the publically available texts.</p>
-      <p>If you need material, look for easy texts online, try to read news or maybe the lyrics to your favorite song.</p>
+      <p>If you need material, look for easy texts online, try to read news or maybe the lyrics to your favorite song. Many classical texts are available online, or you could try your hand at reading about interesting things from wikipedia. Or, if you want to keep it simple, you can add texts from your text book or class.</p>
 
     <% else %>
 
@@ -133,14 +133,14 @@
         <p>You have no words marked as <alias title="Rated at three or higher">known</alias> in <%= selected_language.name %> yet, but why not get it started right away and try to work on that?</p>
       <% else %>
          <p>
-          You have added <%= number_with_precision @word_count, precision: 0, delimiter: ',' %> <%= selected_language.name %> words, of which <%= number_with_precision @known_word_count, precision: 0, delimiter: ',' %> should be '<alias title="Rated at three or higher">familiar</alias>' to you.<br /><b><%= @compliment %></b>
+          You have already added <%= number_with_precision @word_count, precision: 0, delimiter: ',' %> <%= selected_language.name %> words, of which <%= number_with_precision @known_word_count, precision: 0, delimiter: ',' %> should be more or less '<alias title="Rated at three or higher">familiar</alias>' to you.<br /><b><%= @compliment %></b>
           </p>
       <% end %>
 
       <% if @total_text_count == 0 %>
         <p>You have not added any <%= selected_language.name %> texts to the website yet, but feel free to add <%= link_to 'add one', new_text_path %> if you want.</p>
       <% else %>
-        <p>You have already added <%= pluralize(@total_text_count, selected_language.name + " text") %> to the website<%= if @total_text_count_public > 0 then ' (' + @total_text_count_public.to_s + ' of which are public)' else '' end %>, but feel free to add <%= link_to 'add a new one', new_text_path %> if you want.</p>
+        <p>You have already added <%= pluralize(@total_text_count - @total_text_count_public, selected_language.name + " text") %> to the website, but feel free to add <%= link_to 'add a new one', new_text_path %> if you want.</p>
       <% end %>
 
     <% end %>
