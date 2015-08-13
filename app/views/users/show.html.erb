@@ -35,7 +35,9 @@
     <% end %>
   </div>
   <div class="one-third column">
-    <%= image_tag avatar_url(@user), class: 'profile-picture u-full-width' %>
+    <div style="text-align: center;">
+      <%= image_tag avatar_url(@user), class: 'profile-picture' %>
+    </div>
     <% if @words.count > 0 %>
       <table class="u-full-width">
         <thead>

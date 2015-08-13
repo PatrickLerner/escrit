@@ -1,4 +1,4 @@
-.corner-ribbon{
+.corner-ribbon {
   width: 200px;
   background: #e43;
   position: absolute;
@@ -15,24 +15,24 @@
 
 /* Custom styles */
 
-.corner-ribbon.sticky{
+.corner-ribbon.sticky {
   position: fixed;
 }
 
-.corner-ribbon.shadow{
+.corner-ribbon.shadow {
   box-shadow: 0 0 3px rgba(0,0,0,.3);
 }
 
 /* Different positions */
 
-.corner-ribbon.top-left{
+.corner-ribbon.top-left {
   top: 25px;
   left: -50px;
   transform: rotate(-45deg);
   -webkit-transform: rotate(-45deg);
 }
 
-.corner-ribbon.top-right{
+.corner-ribbon.top-right {
   top: 25px;
   right: -50px;
   left: auto;
@@ -40,7 +40,7 @@
   -webkit-transform: rotate(45deg);
 }
 
-.corner-ribbon.bottom-left{
+.corner-ribbon.bottom-left {
   top: auto;
   bottom: 25px;
   left: -50px;
@@ -48,7 +48,7 @@
   -webkit-transform: rotate(45deg);
 }
 
-.corner-ribbon.bottom-right{
+.corner-ribbon.bottom-right {
   top: auto;
   right: -50px;
   bottom: 25px;
@@ -111,6 +111,7 @@ p.warning {
       border: 3px solid #191919;
       border-radius: 6000px;
       padding: 0;
+      width: 75%;
     }
   }
 }
