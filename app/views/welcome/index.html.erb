@@ -3,26 +3,27 @@
 <div class="row">
   <div class="two-thirds column">
   	<h6 class="docs-header">What is escrit?</h6>
-  	<p>Escrit is a simple web application that aims to aid you in reading texts in a foreign language you are trying to learn. After setting up your account, simply import a text (from a text book, newspaper or book) into the web interface and get started reading.</p>
-  	<p>Words which you are not familiar with (or which you have not marked as such) will be highlighted in dark red, while words you understand will not be highlighted at all. As you read through the text, you can mark words according to your familiarity level quickly and simply and even enter a translation or note for each word to help you remember it in the future.</p>
+  	<p>escrit is a language learning tool that supports you in reading texts in a foreign language. After setting up your account, you can import any text you would like to read, be it from a text book, newspaper or from a book.</p>
+    <p>Having imported it, escrit allows you to look up words you do not understand in online dictionaries, and keep track of which words you know and how well you know them. You rate words and they will appear color highlighted in your text as well as in all future texts, reminding you of them.</p>
+    <p>Through this kind of quick, productive and extensive reading, you will quickly find your vocabulary naturally expand itself without the frustration of utilizing any complicated software or tools such as flashcards which can easily become boring and frustrating to have to use. Instead, jump right in, take an interesting text in your target language and have some fun learning something new.</p>
 
   	<h6 class="docs-header">What languages are supported?</h6>
-  	<p>The basic problem that arrises for escrit when supporting a language is what in computer-linguisics (or natural language processing) is called <a href="http://en.wikipedia.org/wiki/Text_segmentation">Text segmentation</a>. As escrit works on text on a word to word basis it needs to be able to split a text into words. Currently this is done mostly on the basis of where a space or another segmentor is in the text.</p>
-  	<p>This works fairly well for a variety of languages, but is less optimal for others. Mandarin or Japanese for instance do not commonly use spaces between words, and the very definition of where a word ends and starts can be challenging to define. Other languages such as German split words up in certain gramatical constructs using the prefix of a word as a seperate word in a different part of the sentence.</p>
-  	<p>So long as the language uses spaces to clearly seperate text, however, escrit can generally be used to help reading it.</p>
-
-    <div class="row">
-      <div class="one-half column">
-        <h6 class="docs-header">Cookie Policy</h6>
-        <p>This website uses cookies and by using it you agree to cookies being saved on your computer. For more information about this, please refer to the <a href="/cookies">Cookie Policy</a>.</p>
-      </div>
-      <div class="one-half column">
-        <h6 class="docs-header">Legal Disclosure</h6>
-        <p>As required by German and EU law, you can find legal information about the operator of this website on the <a href="/legal">impressum or legal disclosure page</a>.</p>
-      </div>
-    </div>
+  	<p>Languages in which words can be clearly separated into words, based on their usage of space or special characters, can theoretically be used in escrit. As such, languages like Japanese or Mandarin, which do not use space characters, can currently not be supported.</p>
+    <p>Languages that use space characters, however, work in general. Currently escrit officially supports the following languages:</p>
+    <p><em><%= @languages.map {|l| l.name }.to_sentence %></em></p>
   </div>
   <div class="one-third column centered">
     <%= image_tag "oldmanreadsabook.png", :class => "border p80" %>
+  </div>
+
+  <div class="row">
+    <div class="one-half column">
+      <h6 class="docs-header">Cookie Policy</h6>
+      <p>This website uses cookies and by using it you agree to cookies being saved on your computer. For more information about this, please refer to the <a href="/cookies">Cookie Policy</a>.</p>
+    </div>
+    <div class="one-half column">
+      <h6 class="docs-header">Legal Disclosure</h6>
+      <p>As required by German and EU law, you can find legal information about the operator of this website on the <a href="/legal">impressum or legal disclosure page</a>.</p>
+    </div>
   </div>
 </div>
