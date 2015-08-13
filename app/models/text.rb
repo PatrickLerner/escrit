@@ -6,7 +6,7 @@ class Text < ActiveRecord::Base
   default_scope { joins(:language).order('category asc, title asc') }
   validates :category, length: { minimum: 4 }
   validates :title, length: { minimum: 4 }
-  validates :content, length: { minimum: 4, maximum: 8000 }
+  validates :content, length: { minimum: 4, maximum: 10000 }
   validates :language_id, presence: true
 
   def is_allowed_to_update current_user
