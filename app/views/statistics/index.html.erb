@@ -7,15 +7,15 @@
     <h5>New Words Added (Per Week)</h5>
     <canvas id="newWords"></canvas>
     <p>
-      <div style="text-align: center;">In the last <%= pluralize(@new_words_count, "week") %> you added on average <%= number_with_precision(@new_words_average, precision: 2) %> new words per week.</div>
-      <div style="text-align: center;">In your best week in the last <%= @new_words_data.count %> weeks, you added <%= @new_words_data.max %> new words.</div>
+      <div class="centered">In the last <%= pluralize(@new_words_count, "week") %> you added on average <%= number_with_precision(@new_words_average, precision: 2) %> new words per week.</div>
+      <div class="centered">In your best week in the last <%= @new_words_data.count %> weeks, you added <%= @new_words_data.max %> new words.</div>
     </p>
 
     <h5>New Texts Added (Per Week)</h5>
     <canvas id="newTexts"></canvas>
     <p>
-      <div style="text-align: center;">In the last <%= pluralize(@new_texts_count, "week") %> you added on average <%= number_with_precision(@new_texts_average, precision: 2) %> new texts per week.</div>
-      <div style="text-align: center;">In your best week in the last <%= @new_texts_data.count %> weeks, you added <%= @new_texts_data.max %> new texts.</div>
+      <div class="centered">In the last <%= pluralize(@new_texts_count, "week") %> you added on average <%= number_with_precision(@new_texts_average, precision: 2) %> new texts per week.</div>
+      <div class="centered">In your best week in the last <%= @new_texts_data.count %> weeks, you added <%= @new_texts_data.max %> new texts.</div>
     </p>
 
     <h5>Words (by Rating)</h5>
@@ -24,7 +24,7 @@
       <% count = @words_data.each_with_index.map { |k, i| k.to_i * (i + 1) }.reduce(:+).to_f %>
       <% sum = @words_data.map{ |i| i.to_i }.reduce(:+).to_f %>
       <% average = if sum > 0 then count / sum else 0 end %>
-      <div style="text-align: center;">The average rating of a word is: <%= number_with_precision(average, precision: 2) %></div>
+      <div class="centered">The average rating of a word is: <%= number_with_precision(average, precision: 2) %></div>
     </p>
   </div>
   <div class="one-third column">

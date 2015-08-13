@@ -106,7 +106,7 @@
   <div class="one-third column">
     <% new_url = if selected_language then "/texts/" + selected_language.name.downcase + "/new" else new_text_path end %>
     <% if selection == nil %>
-      <%= image_tag "globe.png", :class => "u-full-width no-border" %>
+      <%= image_tag "globe.png", class: "u-full-width" %>
     <% else %>
       <%= link_to fa_icon("plus") + ' Add New', new_url, class: 'button button-primary u-full-width', title: 'Add a new text' %>
     <% end %>

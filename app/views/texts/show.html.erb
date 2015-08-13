@@ -75,7 +75,7 @@
     <% if @text.public and @text.user %>
       <p>
         <div class="row">
-          <div class="three columns" style="text-align: center;">
+          <div class="three columns centered">
             <a href="/u/<%= @text.user.id %>" class="image-link">
               <%= image_tag avatar_url(@text.user, 64), class: 'profile-picture' %>
             </a>
