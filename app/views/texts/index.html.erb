@@ -71,7 +71,7 @@
       %>
         <table class="u-full-width">
           <thead>
-            <th><%= category %></th>
+            <th colspan="2"><%= category %></th>
             <th style="text-align: right">
               <alias title="Total number of words in the category">
                 <%= number_with_precision total_words, precision: 0, delimiter: ',' %>
@@ -81,7 +81,7 @@
           <tbody>
             <% texts.each do |text| %>
               <tr>
-                <td>
+                <td class="centered" style="width: 2.5em; padding-right: 0">
                   <% if text.public %>
                     <alias title="This is a public text. Make a copy for you to see its status."><%= fa_icon("star-o") %></alias>
                   <% elsif not text.completed %>
@@ -89,6 +89,8 @@
                   <% else %>
                     <alias title="You have worked through this text and rated all the words within it."><%= fa_icon("check", style: 'width: 1.5rem') %></alias>
                   <% end %>
+                </td>
+                <td style="padding-left: 0">
                   <%= link_to text.title, text_path(text) %>
                 </td>
                 <td style="text-align: right">
