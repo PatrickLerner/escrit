@@ -31,7 +31,13 @@
           <%= link_to fa_icon("ban") + ' Abort', languages_path, class: 'button u-full-width', title: 'Go back to overview' %>
         </div>
       </div>
-      <%= link_to fa_icon("times") + " Delete", language_path(@language), method: :delete, data: { confirm: 'Are you absolutely certain?' }, title: 'Delete', class: 'button u-full-width button-delete' %>
+      
+      <% if @language.texts.count == 0 and @language.words.count == 0 %>
+        <%= link_to fa_icon("times") + " Delete", language_path(@language), method: :delete, data: { confirm: 'Are you absolutely certain?' }, title: 'Delete', class: 'button u-full-width button-delete' %>
+      <% else %>
+        <span class="button u-full-width button-delete"><%= fa_icon("times") %> Delete (disabled)</span>
+      <% end %>
+
       <p>Here you can edit or delete a language from the system. Please be very careful with deleting them as it will currently break references to it in the database if it was used by somebody to classify their texts, probably breaking the system.</p>
     </div>
   </div>

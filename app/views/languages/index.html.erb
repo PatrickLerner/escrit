@@ -5,15 +5,26 @@
 <div class="row">
   <div class="two-thirds column">
     <table class="u-full-width">
-      <tr>
-        <th></th>
-      </tr>
-     
-      <% @languages.each do |language| %>
+      <thead>
         <tr>
-          <td><%= link_to language.name, '/languages/' + language.name.downcase + '/edit', title: 'Edit Language Name' %></td>
+          <th>Language</th>
+          <th style="text-align: right">Texts</th>
+          <th style="text-align: right">Words</th>
         </tr>
-      <% end %>
+      </thead>
+      <tbody>
+        <% @languages.each do |language| %>
+          <tr>
+            <td><%= link_to language.name, '/languages/' + language.name.downcase + '/edit', title: 'Edit Language Name' %></td>
+            <td style="text-align: right">
+              <%= number_with_precision language.texts.count, precision: 0, delimiter: ',' %>
+            </td>
+            <td style="text-align: right">
+              <%= number_with_precision language.words.count, precision: 0, delimiter: ',' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
     </table>
   </div>
   <div class="one-third column">
