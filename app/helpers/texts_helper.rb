@@ -6,7 +6,7 @@ module TextsHelper
   def language_options filter_unused = false
     options = []
     if filter_unused
-      my_texts = Text.select("texts.*, languages.name as language_name, languages.id as language_id").joins(:language).where(user_id: current_user.id)
+      my_texts = Text.select("texts.*, languages.name as language_name, languages.id as language_id").joins(:language).where(user_id: current_user.id, public: false)
       languages = {}
       my_texts.each { |t|
         languages[t.language_name] = t.language_id
