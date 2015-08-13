@@ -6,26 +6,34 @@
   <div class="two-thirds column">
     <h5>New Words Added (Per Week)</h5>
     <canvas id="newWords"></canvas>
-    <ul>
-      <li>In the last <%= pluralize(@new_words_count, "week") %> you added on average <%= number_with_precision(@new_words_average, precision: 2) %> new words per week.</li>
-      <li>In your best week in the last <%= @new_words_data.count %> weeks, you added <%= @new_words_data.max %> new words.</li>
-    </ul>
+    <p>
+      <div style="text-align: center;">In the last <%= pluralize(@new_words_count, "week") %> you added on average <%= number_with_precision(@new_words_average, precision: 2) %> new words per week.</div>
+      <div style="text-align: center;">In your best week in the last <%= @new_words_data.count %> weeks, you added <%= @new_words_data.max %> new words.</div>
+    </p>
 
     <h5>New Texts Added (Per Week)</h5>
     <canvas id="newTexts"></canvas>
-    <ul>
-      <li>In the last <%= pluralize(@new_texts_count, "week") %> you added on average <%= number_with_precision(@new_texts_average, precision: 2) %> new texts per week.</li>
-      <li>In your best week in the last <%= @new_texts_data.count %> weeks, you added <%= @new_texts_data.max %> new texts.</li>
-    </ul>
+    <p>
+      <div style="text-align: center;">In the last <%= pluralize(@new_texts_count, "week") %> you added on average <%= number_with_precision(@new_texts_average, precision: 2) %> new texts per week.</div>
+      <div style="text-align: center;">In your best week in the last <%= @new_texts_data.count %> weeks, you added <%= @new_texts_data.max %> new texts.</div>
+    </p>
 
     <h5>Words (by Rating)</h5>
     <canvas id="words"></canvas>
+    <p>
+      <div style="text-align: center;">The average rating of a word is: <%= number_with_precision(@words_data.each_with_index.map { |k, i| k.to_i * (i + 1) }.reduce(:+).to_f / @words_data.map{ |i| i.to_i }.reduce(:+).to_f, precision: 2) %></div>
+    </p>
   </div>
   <div class="one-third column">
     <% selection = if selected_language then selected_language.name else nil end %>
+    <% selection_options = language_options(true).map { |k| k[0] } %>
+    <% if selected_language and not selection_options.include? selected_language.name %>
+      <% selection_options += [selected_language.name] %>
+      <% selection_options.sort! %>
+    <% end %>
     <% if language_options(true).count > 0 %>
      <label for="language_statistics">Filter by Language:</label>
-     <%= select_tag :language_statistics, options_for_select(['All'] + language_options(true).map { |k| k[0] }, selected: selection), class: 'u-full-width' %>
+     <%= select_tag :language_statistics, options_for_select(['All'] + selection_options, selected: selection), class: 'u-full-width' %>
     <% end %>
     <%= image_tag "typewriter.png", :class => "u-full-width no-border" %>
   </div>
@@ -98,7 +106,7 @@
 
         function resizeCanvas() {
             var w = $('.two-thirds').innerWidth(),
-                h = Math.round(w / 3 * 2);
+                h = Math.round(w / 5 * 3);
 
             $("#newWords").css({"width" : w, "height": h});   
             $("#newTexts").css({"width" : w, "height": h});   
