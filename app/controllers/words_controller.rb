@@ -5,14 +5,14 @@ class WordsController < ApplicationController
 
   def index
     if params[:language]
-      lang = Language.where("lower(name) LIKE ?", params[:language])[0]
+      lang = Language.where("lower(name) = ?", params[:language].downcase)[0]
       @language_name = lang.name
       @words = Word.paginate(:page => params[:page], :per_page => 250).where 'user_id = ? and rating < 6 and language_id = ?', current_user.id, lang.id
     end
   end
 
   def show
-    lang = Language.where("lower(name) LIKE ?", params[:language])[0]
+    lang = Language.where("lower(name) = ?", params[:language].downcase)[0]
     @word = Word.find_by value: utf8downcase(params[:id]), language_id: lang.id, user_id: current_user.id
     if @word
       output = {
@@ -37,7 +37,7 @@ class WordsController < ApplicationController
   end
 
   def update
-    lang = Language.where("lower(name) LIKE ?", params[:word][:language])[0]
+    lang = Language.where("lower(name) = ?", params[:word][:language].downcase)[0]
     @word = Word.find_by value: utf8downcase(params[:id]), language_id: lang.id, user_id: current_user.id
 
     if not @word

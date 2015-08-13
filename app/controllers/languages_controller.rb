@@ -16,7 +16,7 @@ class LanguagesController < ApplicationController
   def edit
     redirect_to settings_path if not current_user.admin?
 
-    @language = Language.where("lower(name) LIKE ?", params[:id])[0]
+    @language = Language.where("lower(name) = ?", params[:id].downcase)[0]
   end
 
   def destroy

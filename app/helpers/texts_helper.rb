@@ -33,7 +33,7 @@ module TextsHelper
     end
     Rails.cache.fetch('selected_language_value') do
       if params[:language]
-        Language.where("lower(name) LIKE ?", params[:language])[0]
+        Language.where("lower(name) = ?", params[:language].downcase)[0]
       end
     end
   end
