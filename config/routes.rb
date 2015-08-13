@@ -30,6 +30,8 @@ Rails.application.routes.draw do
   get '/statistics', to: 'statistics#index'
   get '/statistics/:language', to: 'statistics#index', :constraints => { :language => /.+/ }
   get '/u/:id', to: 'users#show'
+  get "/help/:page" => "help#show"
+  get "/help" => "help#index"
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
