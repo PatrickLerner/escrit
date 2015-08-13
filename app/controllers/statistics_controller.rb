@@ -60,9 +60,9 @@ class StatisticsController < ApplicationController
     5.times { |i|
       rating = i + 1
       if selected_language == nil
-        word_count = Word.where('rating == ? and user_id = ?', rating, current_user.id).count
+        word_count = Word.where('rating = ? and user_id = ?', rating, current_user.id).count
       else
-        word_count = Word.where('rating == ? and language_id = ? and user_id = ?', rating, selected_language.id, current_user.id).count
+        word_count = Word.where('rating = ? and language_id = ? and user_id = ?', rating, selected_language.id, current_user.id).count
       end
       @words_data += [word_count.to_s]
       @words_labels += [rating.to_s]
