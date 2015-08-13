@@ -9,10 +9,14 @@ class Text < ActiveRecord::Base
   validates :content, length: { minimum: 4, maximum: 10000 }
   validates :language_id, presence: true
 
-  def is_allowed_to_update current_user
-    current_user.admin? or (current_user.id == read_attribute(:user_id) and not read_attribute(:public))
+  # returns if the given user is allowed to update the text
+  # admins are allowed to update all texts, other users only their own
+  # and only if their text has not been made public
+  def is_allowed_to_update user
+    user.admin? or (user.id == read_attribute(:user_id) and not read_attribute(:public))
   end
 
+  # calculates the difficulty / rating of the text
   def difficulty
     raw = self.raw_words
 
