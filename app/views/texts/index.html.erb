@@ -38,8 +38,8 @@
       <h6 class="docs-header">Select Language:</h6>
       <p>
         <div class="row">
-          <% @languages.in_groups(3, false).to_a.each { |splice| %>
-            <div class="one-third column">
+          <% @languages.in_groups(4, false).to_a.each { |splice| %>
+            <div class="three columns">
               <% splice.each { |lang| %>
                 <% l = if not op.include? lang.name then "button-gray" else "" end %>
                 <%= link_to lang.name, '/texts/' + lang.name.downcase, class: 'button u-full-width ' + l %>

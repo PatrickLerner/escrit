@@ -142,11 +142,11 @@ $(document).ready(function() {
 	$('#underlineToggle').click(function () {
 		underlineColors = !underlineColors;
 		if (underlineColors) {
-			$('#underlineToggle').html('<i class="fa fa-toggle-on"></i> Underline');
+			$('#underlineToggle').html('<i class="fa fa-toggle-on"></i> Only Underline');
 			$('.word').addClass('underline');
 		}
 		else {
-			$('#underlineToggle').html('<i class="fa fa-toggle-off"></i> Underline');
+			$('#underlineToggle').html('<i class="fa fa-toggle-off"></i> Only Underline');
 			$('.word').removeClass('underline');
 		}
 		return false;
