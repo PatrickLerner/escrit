@@ -316,10 +316,10 @@ $s4_color2: #D0E1F2;
 $s4_color3: #ADC0E0;
 
 span.s0 { background-color: $s0_color1; }
-span.s1 { background-color: #F2DB99; }
-span.s2 { background-color: #F2F399; }
-span.s3 { background-color: #BFF3B1; }
-span.s4 { background-color: #CEE5F9; }
+span.s1 { background-color: $s1_color1; }
+span.s2 { background-color: $s2_color1; }
+span.s3 { background-color: $s3_color1; }
+span.s4 { background-color: $s4_color1; }
 span.s5 { background-color: inherit; }
 span.s6 { background-color: inherit; }
 
