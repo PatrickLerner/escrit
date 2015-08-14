@@ -45,6 +45,8 @@ module TextsHelper
       if words.keys.include?(wstrlow) and not (/https?:\/\/[\S]+/.match(wstrlow))
         w = words[wstrlow]
         processed += '<span class="word s' + w.rating.to_s + '">' + wstr + '</span>'
+      elsif /@https?:\/\/[\S]+/.match wstrlow and (wstrlow[-4..-1] == '.jpg' or wstrlow[-4..-1] == '.png')
+        processed += '<div class="centered"><a href="' + wstr.mb_chars[1..-1] + '" data-lightbox="images" class="image-link"><img class="border" src="' + wstr.mb_chars[1..-1] + '" /></a></div>'
       elsif /https?:\/\/[\S]+/.match wstrlow and (wstrlow[-4..-1] == '.jpg' or wstrlow[-4..-1] == '.png')
         processed += '<div class="centered"><a href="' + wstr.mb_chars + '" data-lightbox="images" class="image-link"><img src="' + wstr.mb_chars + '" /></a></div>'
       elsif /https?:\/\/www\.youtube\.com\/watch\?v=[A-Za-z0-9]+/.match wstrlow
