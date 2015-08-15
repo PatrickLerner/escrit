@@ -42,7 +42,6 @@ gem 'kramdown'
 gem "font-awesome-rails"
 gem 'naturalsort', :require => 'natural_sort_kernel'
 gem 'jquery-turbolinks'
-gem 'chart-js-rails'
 gem 'seed_dump'
 gem 'lightbox2-rails'
 gem 'devise'

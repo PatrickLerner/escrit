@@ -32,8 +32,6 @@ GEM
       railties (>= 3.1)
     bcrypt (3.1.10)
     builder (3.2.2)
-    chart-js-rails (0.0.9)
-      railties (> 3.1)
     chronic_duration (0.10.6)
       numerizer (~> 0.1.1)
     coffee-rails (4.0.1)
@@ -146,7 +144,6 @@ PLATFORMS
 
 DEPENDENCIES
   audiojs
-  chart-js-rails
   chronic_duration
   coffee-rails (~> 4.0.0)
   devise

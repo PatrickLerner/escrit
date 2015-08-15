@@ -14,7 +14,6 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require turbolinks
-//= require Chart
 //= require lightbox
 //= require audiojs
 //= require_tree .
