@@ -22,10 +22,10 @@ class StatisticsController < ApplicationController
 
       if selected_language == nil
         new_words = Word.where(created_at: start_date..end_date, user_id: current_user.id).length
-        new_texts = Text.where(created_at: start_date..end_date, user_id: current_user.id, public: false).length
+        new_texts = Text.where(created_at: start_date..end_date, user_id: current_user.id).length
       else
         new_words = Word.where(created_at: start_date..end_date, language_id: selected_language.id, user_id: current_user.id).length
-        new_texts = Text.where(created_at: start_date..end_date, language_id: selected_language.id, user_id: current_user.id, public: false).length
+        new_texts = Text.where(created_at: start_date..end_date, language_id: selected_language.id, user_id: current_user.id).length
       end
 
       @new_words_data += [new_words]
