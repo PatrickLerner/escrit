@@ -67,8 +67,12 @@ class StatisticsController < ApplicationController
       @words_data += [word_count.to_s]
       @words_labels += [rating.to_s]
     }
-
-    @total_read_texts = Text.where(user_id: 1, completed: true).count
-    @total_read_words = Text.sum(:id, conditions: { user_id: 1, completed: true })
+    if selected_language == nil
+      @total_read_texts = Text.where(user_id: current_user.id, completed: true).count
+      @total_read_words = Text.sum(:id, conditions: { user_id: current_user.id, completed: true})
+    else
+      @total_read_texts = Text.where(user_id: current_user.id, completed: true).count
+      @total_read_words = Text.sum(:id, conditions: { user_id: current_user.id, completed: true, language_id: selected_language.id })
+    end
   end
 end
