@@ -4,9 +4,6 @@
 
 <div class="row">
   <div class="two-thirds column">
-    <h5>Completed Texts</h5>
-    <p>You have finished reading a total of <%= number_with_precision @total_read_texts, precision: 0, delimiter: ',' %> <%= "text".pluralize @total_read_texts %> with a combined total word count of <%= number_with_precision @total_read_words, precision: 0, delimiter: ',' %> <%= "word".pluralize @total_read_words %> (can include words more than once).</p>
-
     <h5>New Words Added (Per Week)</h5>
     <canvas id="newWords"></canvas>
     <p>
@@ -20,6 +17,9 @@
       <div class="centered">In the last <%= pluralize(@new_texts_count, "week") %> you added on average <%= number_with_precision(@new_texts_average, precision: 2) %> new texts per week.</div>
       <div class="centered">In your best week in the last <%= @new_texts_data.count %> weeks, you added <%= @new_texts_data.max %> new texts.</div>
     </p>
+
+    <h5>Completed Texts</h5>
+    <p>You have finished reading a total of <%= number_with_precision @total_read_texts, precision: 0, delimiter: ',' %> <%= "text".pluralize @total_read_texts %> with a combined total word count of <%= number_with_precision @total_read_words, precision: 0, delimiter: ',' %> <%= "word".pluralize @total_read_words %> (can include words more than once).</p>
 
     <h5>Words (by Rating)</h5>
     <canvas id="words"></canvas>
