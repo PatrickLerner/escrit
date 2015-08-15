@@ -169,6 +169,6 @@ class TextsController < ApplicationController
 
   private
     def text_params
-      params.require(:text).permit(:category, :title, :content, :language_id, :completed, :hidden, :public)
+      params.require(:text).permit(:category, :title, :content, :language_id, :completed, :hidden, :public, :audio_url)
     end
 end

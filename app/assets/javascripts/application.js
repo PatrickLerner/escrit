@@ -16,4 +16,5 @@
 //= require turbolinks
 //= require Chart
 //= require lightbox
+//= require audiojs
 //= require_tree .

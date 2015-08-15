@@ -48,6 +48,9 @@ gem 'lightbox2-rails'
 gem 'devise'
 gem 'will_paginate', '~> 3.0.6'
 gem 'chronic_duration'
+gem 'audiojs'
+
+gem 'quiet_assets', group: :development
 
 group :production do
   gem 'pg'

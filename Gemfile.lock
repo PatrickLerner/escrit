@@ -28,6 +28,8 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
+    audiojs (0.1.4)
+      railties (>= 3.1)
     bcrypt (3.1.10)
     builder (3.2.2)
     chart-js-rails (0.0.9)
@@ -77,6 +79,8 @@ GEM
     orm_adapter (0.5.0)
     pg (0.18.2)
     puma (2.12.3)
+    quiet_assets (1.1.0)
+      railties (>= 3.1, < 5.0)
     rack (1.5.5)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -141,6 +145,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  audiojs
   chart-js-rails
   chronic_duration
   coffee-rails (~> 4.0.0)
@@ -154,6 +159,7 @@ DEPENDENCIES
   naturalsort
   pg
   puma
+  quiet_assets
   rails (= 4.1.8)
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)

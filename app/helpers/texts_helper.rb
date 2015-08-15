@@ -49,6 +49,8 @@ module TextsHelper
         processed += '<div class="centered"><a href="' + wstr.mb_chars[1..-1] + '" data-lightbox="images" class="image-link"><img class="border" src="' + wstr.mb_chars[1..-1] + '" /></a></div>'
       elsif /https?:\/\/[\S]+/.match wstrlow and (wstrlow[-4..-1] == '.jpg' or wstrlow[-4..-1] == '.png')
         processed += '<div class="centered"><a href="' + wstr.mb_chars + '" data-lightbox="images" class="image-link"><img src="' + wstr.mb_chars + '" /></a></div>'
+      elsif /https?:\/\/[\S]+/.match wstrlow and (wstrlow[-4..-1] == '.mp3')
+        processed += '<audio src="' + wstr.mb_chars + '" preload="none"></audio>'
       elsif /https?:\/\/www\.youtube\.com\/watch\?v=[A-Za-z0-9]+/.match wstrlow
         youtube_id = wstr.mb_chars.split("=").last
         processed += '<div class="embed-container"><iframe src="//www.youtube.com/embed/' + youtube_id + '"></iframe></div>'

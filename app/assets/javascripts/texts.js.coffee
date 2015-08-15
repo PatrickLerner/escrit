@@ -9,3 +9,5 @@ $ ->
 			window.location.href = "/texts"
 		else
 			window.location.href = "/texts/" + selected.toLowerCase()
+	audiojs.events.ready ->
+    	audiojs.createAll()
