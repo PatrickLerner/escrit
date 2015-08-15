@@ -67,5 +67,8 @@ class StatisticsController < ApplicationController
       @words_data += [word_count.to_s]
       @words_labels += [rating.to_s]
     }
+
+    @total_read_texts = Text.where(user_id: 1, completed: true).count
+    @total_read_words = Text.sum(:id, conditions: { user_id: 1, completed: true })
   end
 end
