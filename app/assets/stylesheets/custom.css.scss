@@ -11,6 +11,7 @@ audio {
   margin: 1em auto;
   font: inherit;
   font-size: 14px;
+  width: 100%;
   
   .play-pause {
     width: 25px;
@@ -28,7 +29,8 @@ audio {
   .scrubber {
     border: 1px solid #191919;
     background: #eee;
-    width: 310px;
+    width: 65%;
+    float: left;
     height: 10px;
     margin: 5px;
   }
@@ -44,6 +46,10 @@ audio {
     height: 10px;
     background: #eee;
     background-image: none;
+  }
+
+  .time {
+    width: 100px;
   }
 
   .time, .time em {
