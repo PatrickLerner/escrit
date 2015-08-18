@@ -1,29 +1,22 @@
 <% content_for :title, 'Settings' %>
 
-<h4>Settings</h4>
+<h4>More...</h4>
 
 <div class="row">
   <div class="two-thirds column">
     <div class="row">
       <div class="one-third column">
+        <h5>Settings</h5>
         <a href="/u/<%= current_user.id %>" class="button u-full-width"><%= fa_icon("user") %> User Profile</a>
-      </div>
-      <div class="one-third column">
         <a href="/services" class="button u-full-width"><%= fa_icon("cogs") %> Services</a>
       </div>
       <div class="one-third column">
-      </div>
-    </div>
-
-    <p><h5>Additional Tools</h5></p>
-    <div class="row">
-      <div class="one-third column">
+        <h5>Tools</h5>
         <a href="/words" class="button u-full-width"><%= fa_icon("list") %> List of Words</a>
       </div>
       <div class="one-third column">
+        <h5>Community</h5>
         <a href="https://www.reddit.com/r/escrit/" class="button u-full-width" target="_blank"><%= fa_icon("comments") %> Forum</a>
-      </div>
-      <div class="one-third column">
       </div>
     </div>
 
