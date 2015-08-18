@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150810183023) do
+ActiveRecord::Schema.define(version: 20150818013240) do
 
   create_table "categories", force: true do |t|
     t.string   "title"
@@ -34,6 +34,16 @@ ActiveRecord::Schema.define(version: 20150810183023) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "replacements", force: true do |t|
+    t.string   "value"
+    t.string   "replacement"
+    t.integer  "language_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "replacements", ["language_id"], name: "index_replacements_on_language_id"
 
   create_table "services", force: true do |t|
     t.string   "name"

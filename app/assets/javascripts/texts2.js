@@ -22,7 +22,7 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
 function refreshCurrentWordRating(rating) {
 	currentRating = rating;
 	$('.word').each(function(i) {
-		if (this.innerHTML.toLowerCase() == last_word.toLowerCase()) {
+		if ($(this).attr('value').toLowerCase() == last_word.toLowerCase()) {
 			for (i = 0; i <= 6; i++)
 				$(this).removeClass('s' + i);
 			$(this).addClass("s" + rating);
@@ -104,12 +104,12 @@ $(document).ready(function() {
 			});
 			needSave = false;
 		}
-		if (last_word == event.target.innerHTML) {
+		if (last_word == $(event.target).attr('value')) {
 			$('.lookup').fadeOut(400);
 			last_word = "";
 		}
 		else {
-			last_word = event.target.innerHTML;
+			last_word = $(event.target).attr('value');
 			$.getJSON("/words/" + text_language + '/' + last_word, function(data) {
 				$('.lookup').fadeIn(400);
 				$('.lookup #rword').html(last_word);

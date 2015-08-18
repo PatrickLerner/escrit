@@ -131,9 +131,9 @@ class TextsController < ApplicationController
       uniq_words = (@text.raw_words + @text.raw_words_title + @text.raw_words_category).sort.uniq
       words = Word.find_create_bulk @text.language_id, uniq_words, current_user.id
 
-      @processed_text = process_text @text.split_words, words
-      @processed_title = process_text @text.split_words_title, words
-      @processed_category = process_text @text.split_words_category, words
+      @processed_text = process_text @text.split_words, words, @text.language_id
+      @processed_title = process_text @text.split_words_title, words, @text.language_id
+      @processed_category = process_text @text.split_words_category, words, @text.language_id
 
       @services = Service.where('(language_id=? or language_id=0) and user_id = ?', @text.language_id, current_user.id)
       @services = [] if @services == nil

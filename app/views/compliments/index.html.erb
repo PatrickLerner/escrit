@@ -12,14 +12,14 @@
      
       <% @compliments.each do |compliment| %>
         <tr>
-          <td><%= link_to compliment.value, edit_compliment_path(compliment), title: 'Edit Service Entry' %></td>
+          <td><%= link_to compliment.value, edit_compliment_path(compliment), title: 'Edit Compliment Entry' %></td>
           <td><%= if compliment.language then compliment.language.name else "All" end %></td>
         </tr>
       <% end %>
     </table>
   </div>
   <div class="one-third column">
-    <%= link_to fa_icon("plus") + ' Add New', new_compliment_path, class: 'button button-primary u-full-width', title: 'Add a new service' %>
+    <%= link_to fa_icon("plus") + ' Add New', new_compliment_path, class: 'button button-primary u-full-width', title: 'Add a new compliment' %>
     <%= link_to fa_icon("chevron-left") + " Back", settings_path, class: 'button u-full-width', title: 'Back to Settings' %>
     <p>Compliments are small text snippets shown in the sidebar to motivate users to continue on with their language learning process.</p>
   </div>

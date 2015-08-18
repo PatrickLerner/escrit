@@ -1,0 +1,44 @@
+<% content_for :title, 'Add New Replacement' %>
+
+<h4>Add New Replacement</h4>
+
+<%= form_for :replacement, :url => replacements_path, html: { class: 'replacement_form' } do |f| %>
+  <div class="row">
+    <div class="two-thirds column">
+      <% if @replacement.errors.any? %>
+        <div id="error_explanation">
+          <h6>
+            <%= pluralize(@replacement.errors.count, "error") %> prohibited
+            this language from being saved:
+          </h6>
+          <ul>
+            <% @replacement.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%= f.label :value, 'Value:' %>
+      <%= f.text_field :value, :class => 'u-full-width' %>
+
+      <%= f.label :replacement, 'Replacement:' %>
+      <%= f.text_field :replacement, :class => 'u-full-width' %>
+
+      <%= f.label :language_id, 'Language:' %>
+      <%= f.select :language_id, options_for_select(language_options), {}, :class => 'u-full-width' %>
+    </div>
+    <div class="one-third column">
+      <div class="row">
+        <div class="one-half column">
+          <%= link_to fa_icon("floppy-o") + ' Save', '', :class => 'button button-primary u-full-width', :onclick => "$('.replacement_form').submit(); return false;" %>
+        </div>
+        <div class="one-half column">
+          <%= link_to fa_icon("ban") + ' Abort', replacements_path, class: 'button u-full-width', title: 'Go back to overview' %>
+        </div>
+      </div>
+
+      <p>Here you can add the details of the new replacement you want to add.</p>
+    </div>
+  </div>
+<% end %>
