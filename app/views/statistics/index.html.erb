@@ -33,6 +33,7 @@
       <% count = @words_data.each_with_index.map { |k, i| k.to_i * (i + 1) }.reduce(:+).to_f %>
       <% sum = @words_data.map{ |i| i.to_i }.reduce(:+).to_f %>
       <% average = if sum > 0 then count / sum else 0 end %>
+      <div class="centered">You have rated a total of <%= number_with_precision sum, precision: 0, delimiter: ',' %> <%= "word".pluralize sum %>.</div>
       <div class="centered">The average rating of a word is: <%= number_with_precision(average, precision: 2) %></div>
     </p>
   </div>
