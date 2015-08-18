@@ -4,6 +4,12 @@
 
 <div class="row">
   <div class="two-thirds column">
+    <h5>New Words Added (This Week)</h5>
+    <canvas id="newWordsThisWeek"></canvas>
+    <p>
+        <div class="centered">You have added <%= number_with_precision @total_new_words_this_week, precision: 0, delimiter: ',' %> <%= "word".pluralize @total_new_words_this_week %> this week so far.</div>
+    </p>
+
     <h5>New Words Added (Per Week)</h5>
     <canvas id="newWords"></canvas>
     <p>
@@ -52,6 +58,24 @@
     Chart.defaults.global.tooltipTitleFontFamily = fontFamily;
     Chart.defaults.global.pointLabelFontFamily = fontFamily;
     Chart.defaults.global.scaleLabel = "<%%= '  ' + value%>";
+
+    var newWordsThisWeekData = {
+        labels: [<%= @new_words_this_week_labels.map{|i| '"' + i + '"'}.join(',').html_safe %>],
+        datasets: [
+            {
+                label: "Number of Words",
+                fillColor: "rgba(33, 47, 63,0.9)",
+                strokeColor: "rgba(33, 47, 63,1)",
+                pointColor: "rgba(33, 47, 63,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+                data: [<%= @new_words_this_week_data.join ',' %>]
+            }
+        ]
+    };
+    var newWordsThisWeekCtx = $("#newWordsThisWeek").get(0).getContext("2d");
+
     var newWordsData = {
         labels: [<%= @new_words_labels.map{|i| '"' + i + '"'}.join(',').html_safe %>],
         datasets: [
@@ -114,11 +138,18 @@
             var w = $('.two-thirds').innerWidth(),
                 h = Math.round(w / 5 * 3);
 
-            $("#newWords").css({"width" : w, "height": h});   
-            $("#newTexts").css({"width" : w, "height": h});   
-            $("#words").css({"width" : w, "height": h});   
-            
+            $("#newWords").css({"width" : w, "height": h});
+            $("#newWordsThisWeek").css({"width" : w, "height": h});
+            $("#newTexts").css({"width" : w, "height": h});
+            $("#words").css({"width" : w, "height": h});
+
             var newWordsChart = new Chart(newWordsCtx).Bar(newWordsData, {
+                barStrokeWidth : 0,
+                responsive: true,
+                maintainAspectRatio: true
+            });
+
+            var newWordsThisWeekChart = new Chart(newWordsThisWeekCtx).Bar(newWordsThisWeekData, {
                 barStrokeWidth : 0,
                 responsive: true,
                 maintainAspectRatio: true

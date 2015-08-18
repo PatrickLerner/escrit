@@ -3,6 +3,27 @@ class StatisticsController < ApplicationController
   include TextsHelper
   
   def index
+    @new_words_this_week_data = []
+    @new_words_this_week_labels = []
+    @total_new_words_this_week = 0
+
+    7.times { |i|
+      start_date = 0.day.ago.beginning_of_week.beginning_of_day + i.days
+      end_date = 0.day.ago.beginning_of_week.end_of_day + i.days
+
+      new_words = 0
+
+      if selected_language == nil
+        new_words = Word.where(created_at: start_date..end_date, user_id: current_user.id).length
+      else
+        new_words = Word.where(created_at: start_date..end_date, language_id: selected_language.id, user_id: current_user.id).length
+      end
+
+      @new_words_this_week_data += [new_words]
+      @total_new_words_this_week += new_words
+    }
+    @new_words_this_week_labels = %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday]
+
     @new_words_data = []
     @new_words_labels = []
     @new_texts_data = []
