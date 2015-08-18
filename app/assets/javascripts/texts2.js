@@ -112,7 +112,7 @@ $(document).ready(function() {
 			last_word = $(event.target).attr('value');
 			$.getJSON("/words/" + text_language + '/' + last_word, function(data) {
 				$('.lookup').fadeIn(400);
-				$('.lookup #rword').html(last_word);
+				$('.lookup #rword').html(event.target.innerHTML);
 				$('.lookup #lword').val(data["note"]);
 				refreshCurrentWordRating(data["rating"]);
 				if (!isMobile)
