@@ -7,9 +7,8 @@ class Word < ActiveRecord::Base
     self.rating ||= 0
   end
 
-  def self.determine_replacement_value word, language_id
+  def self.determine_replacement_value word, replacements
     v = word
-    replacements = Replacement.where language_id: language_id
     replacements.each { |r|
       v = v.gsub r.value.downcase, r.replacement.downcase
       v = v.gsub r.value.upcase, r.replacement.upcase
@@ -17,25 +16,27 @@ class Word < ActiveRecord::Base
     v
   end
 
-  def replacement_value
-    Word.determine_replacement_value read_attribute(:value), read_attribute(:language_id)
+  def replacement_value replacements
+    Word.determine_replacement_value read_attribute(:value), replacements
   end
 
-  def self.find_create language, word, user_id
-    word = Word.determine_replacement_value word.mb_chars.downcase.to_s, language
-    w = Word.find_by value: word, language: language, user_id: user_id
+  def self.find_create language_id, word, user_id
+    replacements = Replacement.where language_id: language_id
+    word = Word.determine_replacement_value word.mb_chars.downcase.to_s, replacements
+    w = Word.find_by value: word, language_id: language_id, user_id: user_id
     w = Word.new value: word if not w
     return w
   end
 
-  def self.find_create_bulk language, words, user_id
+  def self.find_create_bulk language_id, words, user_id
+    replacements = Replacement.where language_id: language_id
     words = words.map { |w|
-      Word.determine_replacement_value w, language
+      Word.determine_replacement_value w, replacements
     }
     remaining = words
     result = {}
 
-    list = Word.where value: words, language: language, user_id: user_id
+    list = Word.where value: words, language_id: language_id, user_id: user_id
     list.each do |res|
       remaining.delete res.value
       word = res.value.mb_chars.downcase.to_s
@@ -44,7 +45,7 @@ class Word < ActiveRecord::Base
 
     remaining.each do |rem|
       word = rem.mb_chars.downcase.to_s
-      result[word] = Word.new value: word, language: Language.find(language), user_id: user_id
+      result[word] = Word.new value: word, language_id: Language.find(language_id), user_id: user_id
     end
 
     return result

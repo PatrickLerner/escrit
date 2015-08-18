@@ -40,12 +40,13 @@ module TextsHelper
 
   def process_text split_words, words, language_id
     processed = ''
+    replacements = replacements = Replacement.where language_id: language_id
     split_words.each do |wstr|
       wstrlow = wstr.mb_chars.downcase.to_s
-      wstrrep = Word.determine_replacement_value wstrlow, language_id
+      wstrrep = Word.determine_replacement_value wstrlow, replacements
       if words.keys.include?(wstrrep) and not (/https?:\/\/[\S]+/.match(wstrlow))
         w = words[wstrrep]
-        processed += '<span class="word s' + w.rating.to_s + '" value="' + w.replacement_value + '">' + wstr + '</span>'
+        processed += '<span class="word s' + w.rating.to_s + '" value="' + w.replacement_value(replacements) + '">' + wstr + '</span>'
       elsif /@https?:\/\/[\S]+/.match wstrlow and (wstrlow[-4..-1] == '.jpg' or wstrlow[-4..-1] == '.png')
         processed += '<div class="centered"><a href="' + wstr.mb_chars[1..-1] + '" data-lightbox="images" class="image-link"><img class="border" src="' + wstr.mb_chars[1..-1] + '" /></a></div>'
       elsif /https?:\/\/[\S]+/.match wstrlow and (wstrlow[-4..-1] == '.jpg' or wstrlow[-4..-1] == '.png')
