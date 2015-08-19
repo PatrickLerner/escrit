@@ -76,9 +76,9 @@ class TextsController < ApplicationController
       @total_text_count_public = 0
     else
       if public
-        my_texts = Text.where language_id: selected_language.id, public: true
+        my_texts = Text.where(language_id: selected_language.id, public: true).order('category asc, title asc')
       else
-        my_texts = Text.where language_id: selected_language.id, hidden: hidden, user_id: current_user.id, public: false
+        my_texts = Text.where(language_id: selected_language.id, hidden: hidden, user_id: current_user.id, public: false).order('category asc, title asc')
       end
 
       @total_text_count = Text.where(language_id: selected_language.id, user_id: current_user.id).count
