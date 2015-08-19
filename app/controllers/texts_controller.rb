@@ -7,9 +7,9 @@ class TextsController < ApplicationController
   def autocomplete_text_category
     term = params[:term]
     if (params[:lang])
-      texts = Text.where('category like ? and user_id = ? and language_id = ?', "%#{term}%", current_user.id, params[:lang]).group('category').select('category')
+      texts = Text.where('category like ? and user_id = ? and language_id = ?', "%#{term}%", current_user.id, params[:lang]).group('category').select('category').order('category asc')
     else
-      texts = Text.where('category like ? and user_id = ?', "%#{term}%", current_user.id).group('category').select('category')
+      texts = Text.where('category like ? and user_id = ?', "%#{term}%", current_user.id).group('category').select('category').order('category asc')
     end
     cats = texts.map { |t| t.category }
     render :text => cats.to_json
