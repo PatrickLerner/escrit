@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get '/legal', to: 'welcome#legal_notice'
 
   resources :languages
+  get '/texts/category(.:format)', to: 'texts#autocomplete_text_category', as: :autocomplete_text_category_texts
   get '/texts/:id', to: 'texts#show', :constraints => { :id => /[0-9]+/ }
   get '/texts/new', to: 'texts#new'
   get '/texts/:language/new', to: 'texts#new', :constraints => { :language => /.+/ }

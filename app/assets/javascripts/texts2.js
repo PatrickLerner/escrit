@@ -270,3 +270,12 @@ $(document).ready(function() {
 		last_word = "";
 	});
 });
+
+$(function() {
+	$( "#text_category" ).autocomplete({
+		source: function(request, response) {
+			$.getJSON("/texts/category", { lang: $('#text_language_id').val(), 'term': $('#text_category').val() }, response);
+		},
+		minLength: 2
+	});
+});

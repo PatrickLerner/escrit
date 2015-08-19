@@ -2,6 +2,19 @@ class TextsController < ApplicationController
   before_filter :authenticate_user!
   include TextsHelper
 
+  #autocomplete :text, :category, :full => true
+
+  def autocomplete_text_category
+    term = params[:term]
+    if (params[:lang])
+      texts = Text.where('category like ? and user_id = ? and language_id = ?', "%#{term}%", current_user.id, params[:lang]).group('category').select('category')
+    else
+      texts = Text.where('category like ? and user_id = ?', "%#{term}%", current_user.id).group('category').select('category')
+    end
+    cats = texts.map { |t| t.category }
+    render :text => cats.to_json
+  end
+
   def copy
     @text = Text.find_by id: params[:id]
     
