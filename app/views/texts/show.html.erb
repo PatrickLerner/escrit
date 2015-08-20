@@ -50,7 +50,7 @@
           <%= link_to fa_icon("chevron-left") + " Back", texts_path + "/" + @text.language.name.downcase, class: 'button button-primary u-full-width', title: 'Back to Overview' %>
         <% end %>
       </div>
-      
+
       <div class="one-half column">
         <% if @text.is_allowed_to_update current_user and not @text.public %>
           <%= link_to fa_icon("pencil") + " Edit", edit_text_path(@text), class: 'button u-full-width', title: 'Edit the Text' %>
@@ -75,9 +75,9 @@
       <% end %>
     </div>
     <strong>Category:</strong> <i><%= @processed_category %></i>
-    <div id="stats"></div>
-
-    <% if @text.public and @text.user %>
+    
+    <% if @text.public and @text.user %> 
+      <div id="stats"></div>
       <p>
         <div class="row">
           <div class="three columns centered">
