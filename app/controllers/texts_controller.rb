@@ -141,9 +141,12 @@ class TextsController < ApplicationController
     if @text == nil or (@text.user_id != current_user.id and not current_user.admin? and not @text.public)
       redirect_to texts_path
     else
-      uniq_words = (@text.raw_words + @text.raw_words_title + @text.raw_words_category).sort.uniq
-      words = Word.find_create_bulk @text.language_id, uniq_words, current_user.id
-
+      if current_user.native_language_id != @text.language_id
+        uniq_words = (@text.raw_words + @text.raw_words_title + @text.raw_words_category).sort.uniq
+        words = Word.find_create_bulk @text.language_id, uniq_words, current_user.id
+      else
+        words = {}
+      end
       @processed_text = process_text @text.split_words, words, @text.language_id
       @processed_title = process_text @text.split_words_title, words, @text.language_id
       @processed_category = process_text @text.split_words_category, words, @text.language_id

@@ -24,6 +24,9 @@
       <%= f.label :about %>
       <%= f.text_area :about, placeholder: "About Me", style: 'height: 15em;', :class => 'u-full-width' %>
 
+      <%= f.label :native_language_id, 'Native Language:' %>
+      <%= f.select :native_language_id, options_for_select([["-", 0]] + language_options, @user.native_language_id), {}, :class => 'u-full-width' %>
+
       <%= f.label :email %>
       <%= f.email_field :email, class: "u-full-width" %>
 

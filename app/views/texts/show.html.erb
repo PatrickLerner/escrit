@@ -50,6 +50,7 @@
           <%= link_to fa_icon("chevron-left") + " Back", texts_path + "/" + @text.language.name.downcase, class: 'button button-primary u-full-width', title: 'Back to Overview' %>
         <% end %>
       </div>
+      
       <div class="one-half column">
         <% if @text.is_allowed_to_update current_user and not @text.public %>
           <%= link_to fa_icon("pencil") + " Edit", edit_text_path(@text), class: 'button u-full-width', title: 'Edit the Text' %>
@@ -57,17 +58,21 @@
           <%= link_to fa_icon("clipboard") + " Copy", text_path(@text) + '/copy', class: 'button u-full-width', data: { confirm: 'Do you want to copy this text into your private library?' }, title: 'Make a copy of this text and add it to your personal text library.' %>
         <% end %>
       </div>
+
       <% if @text.is_allowed_to_update current_user and @text.public %>
         <%= link_to fa_icon("pencil") + " Edit", edit_text_path(@text), class: 'button u-full-width', title: 'Edit the Text' %>
       <% end %>
-      <div class="row">
-        <div class="one-half column" style="text-align: center">
-          <%= link_to fa_icon("toggle-on") + " Show Colors", '#', class: 'toggle-link u-full-width', title: 'Toggle Colors', id: 'colorToggle' %>
+
+      <% if current_user.native_language_id != @text.language_id %>
+        <div class="row">
+          <div class="one-half column" style="text-align: center">
+            <%= link_to fa_icon("toggle-on") + " Show Colors", '#', class: 'toggle-link u-full-width', title: 'Toggle Colors', id: 'colorToggle' %>
+          </div>
+          <div class="one-half column" style="text-align: center">
+            <%= link_to fa_icon("toggle-off") + " Only Underline", '#', class: 'toggle-link u-full-width', title: 'Toggle Underline or Full Color', id: 'underlineToggle' %>
+          </div>
         </div>
-        <div class="one-half column" style="text-align: center">
-          <%= link_to fa_icon("toggle-off") + " Only Underline", '#', class: 'toggle-link u-full-width', title: 'Toggle Underline or Full Color', id: 'underlineToggle' %>
-        </div>
-      </div>
+      <% end %>
     </div>
     <strong>Category:</strong> <i><%= @processed_category %></i>
     <div id="stats"></div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150818013240) do
+ActiveRecord::Schema.define(version: 20150820045514) do
 
   create_table "categories", force: true do |t|
     t.string   "title"
@@ -91,9 +91,11 @@ ActiveRecord::Schema.define(version: 20150818013240) do
     t.boolean  "admin"
     t.string   "name"
     t.text     "about"
+    t.integer  "native_language_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["native_language_id"], name: "index_users_on_native_language_id"
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
   create_table "words", force: true do |t|
