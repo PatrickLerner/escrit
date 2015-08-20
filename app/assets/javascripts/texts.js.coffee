@@ -11,3 +11,8 @@ $ ->
 			window.location.href = "/texts/" + selected.toLowerCase()
 	audiojs.events.ready ->
     	audiojs.createAll()
+    $('.showMoreText').click ->
+    	value = $(this).attr('value')
+    	$('.cat-' + value).css('display', 'table-row')
+    	$(this).css('display', 'none')
+    	return false
