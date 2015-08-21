@@ -132,7 +132,7 @@
     <% if selection == nil %>
       <%= image_tag "globe.png", class: "u-full-width" %>
     <% else %>
-      <%= link_to fa_icon("plus") + ' Add New', new_url, class: 'button button-primary u-full-width', title: 'Add a new text' %>
+      <%= link_to fa_icon("plus") + ' Add New Text', new_url, class: 'button button-primary u-full-width', title: 'Add a new text' %>
     <% end %>
 
     <% if selected_language and not @public %>
