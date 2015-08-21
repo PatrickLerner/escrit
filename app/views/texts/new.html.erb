@@ -35,21 +35,6 @@
       <%= f.label :content %>
       <%= f.text_area :content, placeholder: "Content", style: 'height: 18em;', :class => 'u-full-width' %>
 
-      <div class="row">
-        <div class="one-half column">
-          <a href="#" id="archiveToggle" class="toggle-link">
-            <%= fa_icon("toggle-off") %> Archive this text
-          </a>
-        </div>
-        <div class="one-half column">
-          <% if current_user.admin? %>
-            <a href="#" id="publicToggle" class="toggle-link">
-              <%= fa_icon("toggle-off") %> Make text public
-            </a>
-          <% end %>
-        </div>
-      </div>
-
       <%= f.check_box :hidden, style: "display: none" %>
       <%= f.check_box :public, style: "display: none" %>
     </div>
@@ -66,7 +51,20 @@
           <% end %>
         </div>
       </div>
-      
+
+      <div>
+        <a href="#" id="archiveToggle" class="toggle-link">
+          <%= fa_icon("toggle-off") %> Archive this text
+        </a>
+      </div>
+      <% if current_user.admin? %>
+        <div>
+          <a href="#" id="publicToggle" class="toggle-link">
+            <%= fa_icon("toggle-off") %> Make text public
+          </a>
+        </div>
+      <% end %>
+      <hr />
       <p>Here you can add a new text to the website that you can then read. Don't worry, texts are not public and will only be visible to you.</p>
       <p>Texts with the same category will be grouped together, which is useful when handling for instance multiple chapters from a book.</p>
       <b>Formatting</b>
