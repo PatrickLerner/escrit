@@ -1,4 +1,5 @@
 var last_word = "";
+var last_word_case = "";
 var needSave = false;
 var text_language;
 var description = [
@@ -34,7 +35,7 @@ function refreshCurrentWordRating(rating) {
 	$('#description').html(description[rating]);
 	$('.lookup #links a').each(function(i) {
 		var t_href = $(this).attr('t_href');
-		$(this).attr('href', t_href.replace('{query}', encodeURIComponent(last_word)));
+		$(this).attr('href', t_href.replace('{query}', encodeURIComponent(last_word_case)));
 	});
 	updateCounter();
 }
@@ -110,9 +111,10 @@ $(document).ready(function() {
 		}
 		else {
 			last_word = $(event.target).attr('value');
+			last_word_case = event.target.innerHTML;
 			$.getJSON("/words/" + text_language + '/' + last_word, function(data) {
 				$('.lookup').fadeIn(400);
-				$('.lookup #rword').html(event.target.innerHTML);
+				$('.lookup #rword').html(last_word_case);
 				$('.lookup #lword').val(data["note"]);
 				refreshCurrentWordRating(data["rating"]);
 				if (!isMobile)
