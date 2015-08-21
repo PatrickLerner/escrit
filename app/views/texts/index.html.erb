@@ -93,12 +93,14 @@
               <% end %>
 
                 <td class="centered" style="width: 2.5em; padding-right: 0">
-                  <% if text.public %>
-                    <alias title="This is a public text. Make a copy for you to see its status."><%= fa_icon("star-o") %></alias>
+                  <% if current_user.native_language_id == selected_language.id %>
+                    <alias title="This is your native language, you should know all the words ;)"><%= fa_icon 'check' %></alias>
+                  <% elsif text.public %>
+                    <alias title="This is a public text. Make a copy for you to see its status."><%= fa_icon 'star-o' %></alias>
                   <% elsif not text.completed %>
-                    <alias title="Not all words in this text have been rated yet."><%= fa_icon("minus", style: 'width: 1.5rem') %></alias>
+                    <alias title="Not all words in this text have been rated yet."><%= fa_icon 'minus' %></alias>
                   <% else %>
-                    <alias title="You have worked through this text and rated all the words within it."><%= fa_icon("check", style: 'width: 1.5rem') %></alias>
+                    <alias title="You have worked through this text and rated all the words within it."><%= fa_icon 'check' %></alias>
                   <% end %>
                 </td>
                 <td style="padding-left: 0">
