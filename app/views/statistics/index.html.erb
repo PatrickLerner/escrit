@@ -7,26 +7,38 @@
     <h5>New Words Added (This Week)</h5>
     <canvas id="newWordsThisWeek"></canvas>
     <p>
-        <div class="centered">You have added <%= number_with_precision @total_new_words_this_week, precision: 0, delimiter: ',' %> <%= "word".pluralize @total_new_words_this_week %> this week so far.</div>
+      <div class="centered">
+        You have added <%= number_with_precision @total_new_words_this_week, precision: 0, delimiter: ',' %> <%= "word".pluralize @total_new_words_this_week %> this week so far.
+      </div>
     </p>
 
     <h5>New Words Added (Per Week)</h5>
     <canvas id="newWords"></canvas>
     <p>
-      <div class="centered">In the last <%= pluralize(@new_words_count, "week") %> you added on average <%= number_with_precision(@new_words_average, precision: 2) %> new words per week.</div>
-      <div class="centered">In your best week in the last <%= @new_words_data.count %> weeks, you added <%= @new_words_data.max %> new words.</div>
+      <div class="centered">
+        In the last <%= pluralize(@new_words_count, "week") %> you added on average <%= number_with_precision(@new_words_average, precision: 2) %> new words per week.
+      </div>
+      <div class="centered">
+        In your best week in the last <%= @new_words_data.count %> weeks, you added <%= @new_words_data.max %> new words.
+      </div>
     </p>
 
     <h5>New Texts Added (Per Week)</h5>
     <canvas id="newTexts"></canvas>
     <p>
-      <div class="centered">In the last <%= pluralize(@new_texts_count, "week") %> you added on average <%= number_with_precision(@new_texts_average, precision: 2) %> new texts per week.</div>
-      <div class="centered">In your best week in the last <%= @new_texts_data.count %> weeks, you added <%= @new_texts_data.max %> new texts.</div>
+      <div class="centered">
+        In the last <%= pluralize(@new_texts_count, "week") %> you added on average <%= number_with_precision(@new_texts_average, precision: 2) %> new texts per week.
+      </div>
+      <div class="centered">
+        In your best week in the last <%= @new_texts_data.count %> weeks, you added <%= @new_texts_data.max %> new texts.
+      </div>
     </p>
 
     <h5>Completed Texts</h5>
     <p>
-        <div class="centered">You have finished reading a total of <%= number_with_precision @total_read_texts, precision: 0, delimiter: ',' %> <%= "text".pluralize @total_read_texts %> with a combined total word count of <%= number_with_precision @total_read_words, precision: 0, delimiter: ',' %> <%= "word".pluralize @total_read_words %> (can include words more than once).</div>
+      <div class="centered">
+        You have finished reading a total of <%= number_with_precision @total_read_texts, precision: 0, delimiter: ',' %> <%= "text".pluralize @total_read_texts %> with a combined total word count of <%= number_with_precision @total_read_words, precision: 0, delimiter: ',' %> <%= "word".pluralize @total_read_words %> (can include words more than once).
+      </div>
     </p>
 
     <h5>Words (by Rating)</h5>
@@ -35,8 +47,12 @@
       <% count = @words_data.each_with_index.map { |k, i| k.to_i * (i + 1) }.reduce(:+).to_f %>
       <% sum = @words_data.map{ |i| i.to_i }.reduce(:+).to_f %>
       <% average = if sum > 0 then count / sum else 0 end %>
-      <div class="centered">You have rated a total of <%= number_with_precision sum, precision: 0, delimiter: ',' %> <%= "word".pluralize sum %>.</div>
-      <div class="centered">The average rating of a word is: <%= number_with_precision(average, precision: 2) %></div>
+      <div class="centered">
+        You have rated a total of <%= number_with_precision sum, precision: 0, delimiter: ',' %> <%= "word".pluralize sum %>.
+      </div>
+      <div class="centered">
+        The average rating of a word is: <%= number_with_precision(average, precision: 2) %>
+      </div>
     </p>
   </div>
   <div class="one-third column">
@@ -55,120 +71,120 @@
 </div>
 
 <script type="text/javascript">
-    var fontFamily = "'Raleway', 'Helvetica Neue', 'Helvetica', 'Arial'";
-    Chart.defaults.global.scaleFontFamily = fontFamily;
-    Chart.defaults.global.tooltipFontFamily = fontFamily;
-    Chart.defaults.global.tooltipTitleFontFamily = fontFamily;
-    Chart.defaults.global.pointLabelFontFamily = fontFamily;
-    Chart.defaults.global.scaleLabel = "<%%= '  ' + value%>";
+  var fontFamily = "'Raleway', 'Helvetica Neue', 'Helvetica', 'Arial'";
+  Chart.defaults.global.scaleFontFamily = fontFamily;
+  Chart.defaults.global.tooltipFontFamily = fontFamily;
+  Chart.defaults.global.tooltipTitleFontFamily = fontFamily;
+  Chart.defaults.global.pointLabelFontFamily = fontFamily;
+  Chart.defaults.global.scaleLabel = "<%%= '  ' + value%>";
 
-    var newWordsThisWeekData = {
-        labels: [<%= @new_words_this_week_labels.map{|i| '"' + i + '"'}.join(',').html_safe %>],
-        datasets: [
-            {
-                label: "Number of Words",
-                fillColor: "rgba(33, 47, 63,0.9)",
-                strokeColor: "rgba(33, 47, 63,1)",
-                pointColor: "rgba(33, 47, 63,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(151,187,205,1)",
-                data: [<%= @new_words_this_week_data.join ',' %>]
-            }
-        ]
-    };
-    var newWordsThisWeekCtx = $("#newWordsThisWeek").get(0).getContext("2d");
+  var newWordsThisWeekData = {
+    labels: [<%= @new_words_this_week_labels.map{|i| '"' + i + '"'}.join(',').html_safe %>],
+    datasets: [
+      {
+        label: "Number of Words",
+        fillColor: "rgba(33, 47, 63,0.9)",
+        strokeColor: "rgba(33, 47, 63,1)",
+        pointColor: "rgba(33, 47, 63,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(151,187,205,1)",
+        data: [<%= @new_words_this_week_data.join ',' %>]
+      }
+    ]
+  };
+  var newWordsThisWeekCtx = $("#newWordsThisWeek").get(0).getContext("2d");
 
-    var newWordsData = {
-        labels: [<%= @new_words_labels.map{|i| '"' + i + '"'}.join(',').html_safe %>],
-        datasets: [
-            {
-                label: "Number of Words",
-                fillColor: "rgba(33, 47, 63,0.9)",
-                strokeColor: "rgba(33, 47, 63,1)",
-                pointColor: "rgba(33, 47, 63,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(151,187,205,1)",
-                data: [<%= @new_words_data.join ',' %>]
-            }
-        ]
-    };
-    var newWordsCtx = $("#newWords").get(0).getContext("2d");
+  var newWordsData = {
+    labels: [<%= @new_words_labels.map{|i| '"' + i + '"'}.join(',').html_safe %>],
+    datasets: [
+      {
+        label: "Number of Words",
+        fillColor: "rgba(33, 47, 63,0.9)",
+        strokeColor: "rgba(33, 47, 63,1)",
+        pointColor: "rgba(33, 47, 63,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(151,187,205,1)",
+        data: [<%= @new_words_data.join ',' %>]
+      }
+    ]
+  };
+  var newWordsCtx = $("#newWords").get(0).getContext("2d");
 
-    var newTextsData = {
-        labels: [<%= @new_texts_labels.map{|i| '"' + i + '"'}.join(',').html_safe %>],
-        datasets: [
-            {
-                label: "Number of Texts",
-                fillColor: "rgba(33, 47, 63,0.9)",
-                strokeColor: "rgba(33, 47, 63,1)",
-                pointColor: "rgba(33, 47, 63,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(151,187,205,1)",
-                data: [<%= @new_texts_data.join ',' %>]
-            }
-        ]
-    };
-    var newTextsCtx = $("#newTexts").get(0).getContext("2d");
+  var newTextsData = {
+    labels: [<%= @new_texts_labels.map{|i| '"' + i + '"'}.join(',').html_safe %>],
+    datasets: [
+      {
+        label: "Number of Texts",
+        fillColor: "rgba(33, 47, 63,0.9)",
+        strokeColor: "rgba(33, 47, 63,1)",
+        pointColor: "rgba(33, 47, 63,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(151,187,205,1)",
+        data: [<%= @new_texts_data.join ',' %>]
+      }
+    ]
+  };
+  var newTextsCtx = $("#newTexts").get(0).getContext("2d");
 
-    var wordsData = {
-        labels: [<%= @words_labels.map{|i| '"' + i + '"'}.join(',').html_safe %>],
-        datasets: [
-            {
-                label: "Number of Texts",
-                fillColor: "rgba(33, 47, 63,0.9)",
-                strokeColor: "rgba(33, 47, 63,1)",
-                pointColor: "rgba(33, 47, 63,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(151,187,205,1)",
-                data: [<%= @words_data.join ',' %>]
-            }
-        ]
-    };
-    var wordsCtx = $("#words").get(0).getContext("2d");
+  var wordsData = {
+    labels: [<%= @words_labels.map{|i| '"' + i + '"'}.join(',').html_safe %>],
+    datasets: [
+      {
+        label: "Number of Texts",
+        fillColor: "rgba(33, 47, 63,0.9)",
+        strokeColor: "rgba(33, 47, 63,1)",
+        pointColor: "rgba(33, 47, 63,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(151,187,205,1)",
+        data: [<%= @words_data.join ',' %>]
+      }
+    ]
+  };
+  var wordsCtx = $("#words").get(0).getContext("2d");
 
-    $(document).ready(function() {
-        var htmlCanvas = document.getElementById('newWords'),
-            context = htmlCanvas.getContext('2d');
+  $(document).ready(function() {
+    var htmlCanvas = document.getElementById('newWords'),
+        context = htmlCanvas.getContext('2d');
 
-        window.addEventListener('resize', resizeCanvas, false);
-        resizeCanvas();
+    window.addEventListener('resize', resizeCanvas, false);
+    resizeCanvas();
 
-        function resizeCanvas() {
-            var w = $('.two-thirds').innerWidth(),
-                h = Math.round(w / 5 * 3);
+    function resizeCanvas() {
+      var w = $('.two-thirds').innerWidth(),
+          h = Math.round(w / 5 * 3);
 
-            $("#newWords").css({"width" : w, "height": h});
-            $("#newWordsThisWeek").css({"width" : w, "height": h});
-            $("#newTexts").css({"width" : w, "height": h});
-            $("#words").css({"width" : w, "height": h});
+      $("#newWords").css({"width" : w, "height": h});
+      $("#newWordsThisWeek").css({"width" : w, "height": h});
+      $("#newTexts").css({"width" : w, "height": h});
+      $("#words").css({"width" : w, "height": h});
 
-            var newWordsChart = new Chart(newWordsCtx).Bar(newWordsData, {
-                barStrokeWidth : 0,
-                responsive: true,
-                maintainAspectRatio: true
-            });
+      var newWordsChart = new Chart(newWordsCtx).Bar(newWordsData, {
+        barStrokeWidth : 0,
+        responsive: true,
+        maintainAspectRatio: true
+      });
 
-            var newWordsThisWeekChart = new Chart(newWordsThisWeekCtx).Bar(newWordsThisWeekData, {
-                barStrokeWidth : 0,
-                responsive: true,
-                maintainAspectRatio: true
-            });
+      var newWordsThisWeekChart = new Chart(newWordsThisWeekCtx).Bar(newWordsThisWeekData, {
+        barStrokeWidth : 0,
+        responsive: true,
+        maintainAspectRatio: true
+      });
 
-            var newTextsChart = new Chart(newTextsCtx).Bar(newTextsData, {
-                barStrokeWidth : 0,
-                responsive: true,
-                maintainAspectRatio: true
-            });
+      var newTextsChart = new Chart(newTextsCtx).Bar(newTextsData, {
+        barStrokeWidth : 0,
+        responsive: true,
+        maintainAspectRatio: true
+      });
 
-            var wordsChart = new Chart(wordsCtx).Bar(wordsData, {
-                barStrokeWidth : 0,
-                responsive: true,
-                maintainAspectRatio: true
-            });
-        }
-    });
+      var wordsChart = new Chart(wordsCtx).Bar(wordsData, {
+        barStrokeWidth : 0,
+        responsive: true,
+        maintainAspectRatio: true
+      });
+    }
+  });
 </script>
