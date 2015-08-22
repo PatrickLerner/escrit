@@ -82,9 +82,8 @@ class TextsController < ApplicationController
         my_texts = Text.where(language_id: selected_language.id, hidden: hidden, user_id: current_user.id, public: false).order('category asc, title asc')
       end
 
-      @total_text_count = Text.where(language_id: selected_language.id, user_id: current_user.id).count
+      @total_text_count = Text.where(language_id: selected_language.id, user_id: current_user.id, public: false).count
       @total_text_count_read = Text.where(language_id: selected_language.id, user_id: current_user.id, completed: true, public: false).count
-      @total_text_count_public = Text.where(language_id: selected_language.id, user_id: current_user.id, public: true).count
       @known_word_count = Word.where('rating >= 3 and rating < 6 and language_id = ? and user_id = ?', selected_language.id, current_user.id).count
       @word_count = Word.where('rating != 6 and language_id = ? and user_id = ?', selected_language.id, current_user.id).count
     end
