@@ -69,8 +69,10 @@ module TextsHelper
         if p[0] == '#'
           p = p.gsub(/^##[ \t]*(.*)[\n]*/, '<h6 class="docs-header">\1</h6>')
           p = p.gsub(/^#[ \t]*(.*)[\n]*/, '<h5>\1</h5>')
-        else
+        elsif not (/<img/.match p)
           '<p>' + p + '</p>'
+        else
+          p
         end
       }.join
     else
