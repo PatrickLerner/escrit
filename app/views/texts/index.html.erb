@@ -166,7 +166,7 @@
           <h4 style="margin-bottom: 0;">
             <%= number_with_precision @known_word_count, precision: 0, delimiter: ',' %>
           </h4>
-          <alias title="Rated at three or higher">familiar</alias> <%= "word".pluralize @known_word_count %>.
+          <alias title="Words with a rating of three or above are considered familiar. That is, you probably remember them more often than you forget them.">familiar <%= "word".pluralize @known_word_count %></alias>.
         </div>
       </div>
 
