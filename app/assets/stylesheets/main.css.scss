@@ -1,3 +1,24 @@
+.fa-check {
+  color: #0FC55C;
+}
+
+.fa-minus {
+  color: #D24149;
+}
+
+.fa-star {
+  color: #F7C91C;
+}
+
+table.listing {
+  margin-bottom: 0;
+  margin-top: 1.5em;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
 .showMoreText {
   font-size: 0.9em;
   color: #333;

@@ -45,20 +45,19 @@
 
 <div class="row" style="margin-top: 0;">
   <div class="two-thirds column">
-    <div style="">
-      <%= @processed_text %>
-    </div>
+    <%= @processed_text %>
   </div>
   <div class="one-third column">
     <div class="row">
       <div class="one-half column">
+        <% back_url = texts_path + "/" + @text.language.name.downcase %>
         <% if @text.public %>
-          <%= link_to fa_icon("chevron-left") + " Back", texts_path + "/" + @text.language.name.downcase + "/public", class: 'button button-primary u-full-width', title: 'Back to Overview' %>
+          <% back_url += "/public" %>
         <% elsif @text.hidden %>
-          <%= link_to fa_icon("chevron-left") + " Back", texts_path + "/" + @text.language.name.downcase + "/archive", class: 'button button-primary u-full-width', title: 'Back to Overview' %>
-        <% else %>
-          <%= link_to fa_icon("chevron-left") + " Back", texts_path + "/" + @text.language.name.downcase, class: 'button button-primary u-full-width', title: 'Back to Overview' %>
+          <% back_url += "/archive" %>
         <% end %>
+
+        <%= link_to fa_icon("chevron-left") + " Back", back_url, class: 'button button-primary u-full-width', title: 'Back to Overview' %>
       </div>
       <div class="one-half column">
         <% if @text.is_allowed_to_update current_user and not @text.public %>

@@ -71,7 +71,7 @@
           category_id += 1
           total_words = texts.map { |t| t.word_count }.inject(:+)
       %>
-        <table class="u-full-width">
+        <table class="u-full-width listing">
           <thead>
             <th colspan="2"><%= category %></th>
             <th style="text-align: right">
@@ -94,7 +94,7 @@
 
                 <td class="centered" style="width: 2.5em; padding-right: 0">
                   <% if text.public %>
-                    <alias title="This is a public text. Make a copy for you to see its status."><%= fa_icon 'star-o' %></alias>
+                    <alias title="This is a public text. Make a copy for you to see its status."><%= fa_icon 'star' %></alias>
                   <% elsif current_user.native_language_id == selected_language.id %>
                     <alias title="This is your native language, you should know all the words ;)"><%= fa_icon 'check' %></alias>
                   <% elsif not text.completed %>
@@ -113,17 +113,15 @@
                 </td>
               </tr>
             <% end %>
-            <% if text_count > max_text_count %>
-              <tr>
-                <td colspan="3" class="centered" style="border-bottom: none;">
-                  <a href="#" class="showMoreText" value="<%= category_id %>">
-                    Show <%= text_count - max_text_count %> more <%= "text".pluralize(text_count - max_text_count) %>
-                  </a>
-                </td>
-              </tr>
-            <% end %>
           </tbody>
         </table>
+        <% if text_count > max_text_count %>
+            <div class="centered">
+              <a href="#" class="showMoreText" value="<%= category_id %>">
+                Show <%= text_count - max_text_count %> more <%= "text".pluralize(text_count - max_text_count) %>
+              </a>
+            </div>
+        <% end %>
       <% end %>
     <% end %>
   </div>
