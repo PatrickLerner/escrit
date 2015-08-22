@@ -19,15 +19,20 @@
         </div>
       <% end %>
 
-      <%= f.label :language_id %>
-      <% if selected_language %>
-        <%= f.select :language_id, options_for_select(language_options, selected_language.id), {}, :class => 'u-full-width' %>
-      <% else %>
-        <%= f.select :language_id, options_for_select(language_options), {}, :class => 'u-full-width' %>
-      <% end %>
-
-      <%= f.label :category %>
-      <%= f.text_field :category, placeholder: "Category", :class => 'u-full-width' %>
+      <div class="row">
+        <div class="one-third column">
+          <%= f.label :language_id %>
+          <% if selected_language %>
+            <%= f.select :language_id, options_for_select(language_options, selected_language.id), {}, :class => 'u-full-width' %>
+          <% else %>
+            <%= f.select :language_id, options_for_select(language_options), {}, :class => 'u-full-width' %>
+          <% end %>
+        </div>
+        <div class="two-thirds column">
+          <%= f.label :category %>
+          <%= f.text_field :category, placeholder: "Category", :class => 'u-full-width' %>
+        </div>
+      </div>
       
       <%= f.label :title %>
       <%= f.text_field :title, placeholder: "Title", autocomplete: :off, :class => 'u-full-width' %>
@@ -64,7 +69,9 @@
           </a>
         </div>
       <% end %>
-      <hr />
+      
+      <hr style="margin: 1rem 0" />
+
       <p>Here you can add a new text to the website that you can then read. Don't worry, texts are not public and will only be visible to you.</p>
       <p>Texts with the same category will be grouped together, which is useful when handling for instance multiple chapters from a book.</p>
       <b>Formatting</b>
