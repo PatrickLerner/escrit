@@ -67,7 +67,7 @@ function updateCounter() {
 	var rating = (sum / count).toFixed(1);
 	$('#unratedWords').html(nl);
 	$('#averageRating').html(rating);
-	$('#unratedWordsPlural').css('display', nl == 1 ? 'none' : 'inline');
+	$('#unratedWordsPlural').html(nl == 1 ? 'word' : 'words');
 }
 
 function onRatingsButton(rating) {

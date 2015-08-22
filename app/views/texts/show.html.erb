@@ -33,13 +33,35 @@
   </div>
 </section>
 
-<h5 style="font-size: 1.6rem; font-style: italic; margin-bottom: 0; padding-left: 0.3rem;">
-  <%= @processed_category %>
-</h5>
+<div class="row">
+  <div class="eight columns">
+    <h5 style="font-size: 1.6rem; font-style: italic; margin-bottom: 0; padding-left: 0.3rem;">
+      <%= @processed_category %>
+    </h5>
 
-<h4 style="margin-bottom: 0rem;">
-  <%= @processed_title %>
-</h4>
+    <h4 style="margin-bottom: 0rem;">
+      <%= @processed_title %>
+    </h4>
+  </div>
+  <div class="four columns">
+    <% if current_user.native_language_id != @text.language_id %>
+      <div class="row">
+        <div class="one-half column centered">
+          <h4 style="margin-bottom: 0;" id="unratedWords">
+            0
+          </h4>
+          unrated <span id="unratedWordsPlural">words</span>.
+        </div>
+        <div class="one-half column centered">
+          <h4 style="margin-bottom: 0;" id="averageRating">
+            0.0
+          </h4>
+          <alias title="The text's rating is the average rating across all words. It therefore is ranked from 0 (knowing no words at all) to 5 (knowing all words perfectly).">average rating</alias>.
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
 
 <hr style="margin-top: 0.5rem; margin-bottom: 2rem;" />
 
@@ -66,52 +88,31 @@
           <%= link_to fa_icon("clipboard") + " Copy", text_path(@text) + '/copy', class: 'button u-full-width', data: { confirm: 'Do you want to copy this text into your private library?' }, title: 'Make a copy of this text and add it to your personal text library.' %>
         <% end %>
       </div>
-
-      <% if @text.is_allowed_to_update current_user and @text.public %>
-        <%= link_to fa_icon("pencil") + " Edit", edit_text_path(@text), class: 'button u-full-width', title: 'Edit the Text' %>
-      <% end %>
-
-      <% if current_user.native_language_id != @text.language_id %>
-        <div class="row" style="margin-bottom: 1rem;">
-          <div class="one-half column" style="text-align: center">
-            <%= link_to fa_icon("toggle-on") + " Show Colors", '#', class: 'toggle-link u-full-width', title: 'Toggle Colors', id: 'colorToggle' %>
-          </div>
-          <div class="one-half column" style="text-align: center">
-            <%= link_to fa_icon("toggle-off") + " Only Underline", '#', class: 'toggle-link u-full-width', title: 'Toggle Underline or Full Color', id: 'underlineToggle' %>
-          </div>
-        </div>
-
-        <div id="stats">
-          <hr style="margin: 1em 0;" />
-
-          <div class="row">
-            <div class="one-half column centered">
-              <h4 style="margin-bottom: 0;" id="unratedWords">
-                17
-              </h4>
-              unrated word<span id="unratedWordsPlural">s</span>.
-            </div>
-            <div class="one-half column centered">
-              <h4 style="margin-bottom: 0;" id="averageRating">
-                2.3
-              </h4>
-              <alias title="The text's rating is the average rating across all words. It therefore is ranked from 0 (knowing no words at all) to 5 (knowing all words perfectly).">average rating</alias>.
-            </div>
-          </div>
-        </div>
-      <% end %>
-
-      <% if @text.public and @text.user %>
-        <hr style="margin: 1em 0;" />
-
-        <p style="font-size: 1.35rem; text-align: center; margin-bottom: 1rem;">
-          <b>Uploaded by:</b>
-          <a href="/u/<%= @text.user.id %>"><%= @text.user.name %></a>
-        </p>
-      <% end %>
-
     </div>
 
+    <% if @text.is_allowed_to_update current_user and @text.public %>
+      <%= link_to fa_icon("pencil") + " Edit", edit_text_path(@text), class: 'button u-full-width', title: 'Edit the Text' %>
+    <% end %>
+
+    <% if current_user.native_language_id != @text.language_id %>
+      <div class="row" style="margin-bottom: 1rem;">
+        <div class="one-half column" style="text-align: center">
+          <%= link_to fa_icon("toggle-on") + " Show Colors", '#', class: 'toggle-link u-full-width', title: 'Toggle Colors', id: 'colorToggle' %>
+        </div>
+        <div class="one-half column" style="text-align: center">
+          <%= link_to fa_icon("toggle-off") + " Only Underline", '#', class: 'toggle-link u-full-width', title: 'Toggle Underline or Full Color', id: 'underlineToggle' %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if @text.public and @text.user %>
+      <hr style="margin: 1em 0;" />
+
+      <p style="font-size: 1.35rem; text-align: center; margin-bottom: 1rem;">
+        <b>Uploaded by:</b>
+        <a href="/u/<%= @text.user.id %>"><%= @text.user.name %></a>
+      </p>
+    <% end %>
   </div>
 </div>
 
