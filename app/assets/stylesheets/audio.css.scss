@@ -1,0 +1,63 @@
+audio {
+  width: 100%;
+  margin-top: 1em;
+}
+
+.audiojs {
+  height: 22px;
+  background: none;
+  -webkit-box-shadow: none;
+  -o-box-shadow: none;
+  margin: 1em auto;
+  font: inherit;
+  font-size: 14px;
+  width: 100%;
+  .play-pause {
+    width: 25px;
+    height: 20px;
+    padding: 0px 8px 0px 0px;
+    border: 0;
+  }
+  p {
+    width: 25px;
+    height: 20px;
+    margin: -3px 0px 0px -1px;
+  }
+  .scrubber {
+    border: 1px solid #191919;
+    background: #eee;
+    width: 65%;
+    float: left;
+    height: 10px;
+    margin: 5px;
+  }
+  .progress {
+    height: 10px;
+    width: 0px;
+    background: #212F3F;
+    background-image: none;
+  }
+  .loaded {
+    height: 10px;
+    background: #eee;
+    background-image: none;
+  }
+  .time {
+    width: 100px;
+  }
+  .time,
+  .time em {
+    float: left;
+    height: 25px;
+    line-height: 25px;
+    border: 0;
+    color: black;
+    text-shadow: none;
+    padding: 0;
+    text-align: left;
+  }
+  .error-message {
+    height: 24px;
+    line-height: 24px;
+  }
+}
