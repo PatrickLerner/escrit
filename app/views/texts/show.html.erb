@@ -90,7 +90,7 @@
               <h4 style="margin-bottom: 0;" id="unratedWords">
                 17
               </h4>
-              unrated words.
+              unrated word<span id="unratedWordsPlural">s</span>.
             </div>
             <div class="one-half column centered">
               <h4 style="margin-bottom: 0;" id="averageRating">
@@ -104,7 +104,7 @@
 
       <% if @text.public and @text.user %>
         <hr style="margin: 1em 0;" />
-        
+
         <p style="font-size: 1.35rem; text-align: center; margin-bottom: 1rem;">
           <b>Uploaded by:</b>
           <a href="/u/<%= @text.user.id %>"><%= @text.user.name %></a>
