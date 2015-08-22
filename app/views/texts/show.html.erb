@@ -33,11 +33,21 @@
   </div>
 </section>
 
-<h4><%= @processed_title %></h4>
+<h5 style="font-size: 1.6rem; font-style: italic; margin-bottom: 0; padding-left: 0.3rem;">
+  <%= @processed_category %>
+</h5>
 
-<div class="row">
+<h4 style="margin-bottom: 0rem;">
+  <%= @processed_title %>
+</h4>
+
+<hr style="margin-top: 0; margin-bottom: 2rem;" />
+
+<div class="row" style="margin-top: 0;">
   <div class="two-thirds column">
-    <%= @processed_text %>
+    <div style="">
+      <%= @processed_text %>
+    </div>
   </div>
   <div class="one-third column">
     <div class="row">
@@ -50,7 +60,6 @@
           <%= link_to fa_icon("chevron-left") + " Back", texts_path + "/" + @text.language.name.downcase, class: 'button button-primary u-full-width', title: 'Back to Overview' %>
         <% end %>
       </div>
-
       <div class="one-half column">
         <% if @text.is_allowed_to_update current_user and not @text.public %>
           <%= link_to fa_icon("pencil") + " Edit", edit_text_path(@text), class: 'button u-full-width', title: 'Edit the Text' %>
@@ -64,7 +73,7 @@
       <% end %>
 
       <% if current_user.native_language_id != @text.language_id %>
-        <div class="row">
+        <div class="row" style="margin-bottom: 1rem;">
           <div class="one-half column" style="text-align: center">
             <%= link_to fa_icon("toggle-on") + " Show Colors", '#', class: 'toggle-link u-full-width', title: 'Toggle Colors', id: 'colorToggle' %>
           </div>
@@ -73,27 +82,21 @@
           </div>
         </div>
       <% end %>
-    </div>
-    <strong>Category:</strong> <i><%= @processed_category %></i>
-    <% if current_user.native_language_id != @text.language_id %>
-      <div id="stats"></div>
-    <% end %>
 
-    <% if @text.public and @text.user %>
-      <p>
-        <div class="row">
-          <div class="three columns centered">
-            <a href="/u/<%= @text.user.id %>" class="image-link">
-              <%= image_tag avatar_url(@text.user, 64), class: 'profile-picture' %>
-            </a>
-          </div>
-          <div class="nine columns">
-            <b>Uploaded by:</b><br />
-            <a href="/u/<%= @text.user.id %>"><%= @text.user.name %></a>
-          </div>
+      <% if current_user.native_language_id != @text.language_id %>
+        <div id="stats" style="font-size: 1.35rem; text-align: center; margin-bottom: 1rem;">
+          &nbsp;
         </div>
-      </p>
-    <% end %>
+      <% end %>
+
+      <% if @text.public and @text.user %>
+        <p style="font-size: 1.35rem; text-align: center; margin-bottom: 1rem;">
+          <b>Uploaded by:</b>
+          <a href="/u/<%= @text.user.id %>"><%= @text.user.name %></a>
+        </p>
+      <% end %>
+
+    </div>
 
   </div>
 </div>
