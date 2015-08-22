@@ -1,13 +1,13 @@
 .pagination {
   text-align: center;
-  padding: 0.3e m 0.6e m;
-  margin-bottom: 0.5e m;
+  padding: 0.3em 0.6em;
+  margin-bottom: 0.5em;
   cursor: default;
 }
 
 .pagination a,
 .pagination span {
-  padding: 0.2e m 0.3e m;
+  padding: 0.2em 0.3em;
   border: 0;
 }
 
@@ -15,11 +15,11 @@
   border: 0;
 }
 
-.pagination.disabled {
+.pagination .disabled {
   color: #aaaaaa;
 }
 
-.pagination.current {
+.pagination .current {
   font-style: normal;
   background-color: #212F3F;
   color: white;
