@@ -52,7 +52,7 @@ module TextsHelper
       elsif /https?:\/\/[\S]+/.match wstrlow and (wstrlow[-4..-1] == '.jpg' or wstrlow[-4..-1] == '.png')
         processed += '<div class="centered"><a href="' + wstr.mb_chars + '" data-lightbox="images" class="image-link"><img src="' + wstr.mb_chars + '" /></a></div>'
       elsif /https?:\/\/[\S]+/.match wstrlow and (wstrlow[-4..-1] == '.mp3')
-        processed += '<audio src="' + wstr.mb_chars + '" preload="none"></audio>'
+        processed += '<div><audio src="' + wstr.mb_chars + '" preload="none"></audio></div>'
       elsif /https?:\/\/www\.youtube\.com\/watch\?v=[A-Za-z0-9]+/.match wstrlow
         youtube_id = wstr.mb_chars.split("=").last
         processed += '<div class="embed-container"><iframe src="//www.youtube.com/embed/' + youtube_id + '"></iframe></div>'
@@ -69,7 +69,7 @@ module TextsHelper
         if p[0] == '#'
           p = p.gsub(/^##[ \t]*(.*)[\n]*/, '<h6 class="docs-header">\1</h6>')
           p = p.gsub(/^#[ \t]*(.*)[\n]*/, '<h5>\1</h5>')
-        elsif not (/<img/.match p)
+        elsif not (/<div/.match p)
           '<p>' + p + '</p>'
         else
           p
