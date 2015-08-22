@@ -153,18 +153,42 @@
 
     <% if selected_language != nil %>
 
-      <% if @word_count == 0 %>
-        <p>You have no words marked as <alias title="Rated at three or higher">known</alias> in <%= selected_language.name %> yet, but why not get it started right away and try to work on that?</p>
-      <% else %>
-         <p>
-          You have already added <%= number_with_precision @word_count, precision: 0, delimiter: ',' %> <%= selected_language.name %> words, of which <%= number_with_precision @known_word_count, precision: 0, delimiter: ',' %> should be more or less '<alias title="Rated at three or higher">familiar</alias>' to you.<br /><b><%= @compliment %></b>
-          </p>
-      <% end %>
+      <hr style="margin: 1em 0;" />
 
-      <% if @total_text_count == 0 %>
-        <p>You have not added any <%= selected_language.name %> texts to the website yet, but feel free to add <%= link_to 'add one', new_text_path %> if you want.</p>
-      <% else %>
-        <p>You have already added <%= pluralize(@total_text_count - @total_text_count_public, selected_language.name + " text") %> to the website, but feel free to add <%= link_to 'add a new one', new_text_path %> if you want.</p>
+      <div class="row">
+        <div class="one-half column centered">
+          <h4 style="margin-bottom: 0;">
+            <%= number_with_precision @word_count, precision: 0, delimiter: ',' %>
+          </h4>
+          <%= "word".pluralize @word_count %> added.
+        </div>
+        <div class="one-half column centered">
+          <h4 style="margin-bottom: 0;">
+            <%= number_with_precision @known_word_count, precision: 0, delimiter: ',' %>
+          </h4>
+          <alias title="Rated at three or higher">familiar</alias> <%= "word".pluralize @known_word_count %>.
+        </div>
+      </div>
+
+      <div class="row" style="margin-top: 1.5em;">
+        <div class="one-half column centered">
+          <h4 style="margin-bottom: 0;">
+            <%= number_with_precision @total_text_count - @total_text_count_public, precision: 0, delimiter: ',' %>
+          </h4>
+          <%= "text".pluralize @total_text_count - @total_text_count_public %> added.
+        </div>
+        <div class="one-half column centered">
+          <h4 style="margin-bottom: 0;">
+            <%= number_with_precision @total_text_count_read, precision: 0, delimiter: ',' %>
+          </h4>
+          <%= "text".pluralize @total_text_count_read %> read.
+        </div>
+      </div>
+
+      <% if @word_count > 0 %>
+        <div class="centered" style="margin-top: 1.5em;">
+          <b><%= @compliment %></b>
+        </div>
       <% end %>
 
     <% end %>

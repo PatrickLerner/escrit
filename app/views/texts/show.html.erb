@@ -81,11 +81,24 @@
             <%= link_to fa_icon("toggle-off") + " Only Underline", '#', class: 'toggle-link u-full-width', title: 'Toggle Underline or Full Color', id: 'underlineToggle' %>
           </div>
         </div>
-      <% end %>
 
-      <% if current_user.native_language_id != @text.language_id %>
-        <div id="stats" style="font-size: 1.35rem; text-align: center; margin-bottom: 1rem;">
-          &nbsp;
+        <div id="stats">
+          <hr style="margin: 1em 0;" />
+
+          <div class="row">
+            <div class="one-half column centered">
+              <h4 style="margin-bottom: 0;" id="unratedWords">
+                17
+              </h4>
+              unrated words.
+            </div>
+            <div class="one-half column centered">
+              <h4 style="margin-bottom: 0;" id="averageRating">
+                2.3
+              </h4>
+              <alias title="The text's rating is the average rating across all words. It therefore is ranked from 0 (knowing no words at all) to 5 (knowing all words perfectly).">average rating.</alias>
+            </div>
+          </div>
         </div>
       <% end %>
 

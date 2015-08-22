@@ -47,7 +47,7 @@ function onlyUnique(value, index, self) {
 }
 
 function updateCounter() {
-	var nl = $('.s0.word').map (function () { return this.innerHTML }).get().filter(onlyUnique).length;
+	var nl = $('.s0.word').map (function () { return this.innerHTML.toLowerCase() }).get().filter(onlyUnique).length;
 
 	if (old_nl == -1 || (old_nl == 0 && nl != 0) || (old_nl != 0 && nl == 0))
 		$.ajax({
@@ -60,13 +60,13 @@ function updateCounter() {
 		});
 	old_nl = nl;
 
-	$('#stats').html();
 	var sum = 0;
 	for (i = 1; i <= 5; i++)
-		sum += i * $('.s' + i + '.word').map (function () { return this.innerHTML }).get().filter(onlyUnique).length;
-	var count = $('.word').map (function () { return this.innerHTML }).get().filter(onlyUnique).length;
+		sum += i * $('.s' + i + '.word').map (function () { return this.innerHTML.toLowerCase() }).get().filter(onlyUnique).length;
+	var count = $('.word').map (function () { return this.innerHTML.toLowerCase() }).get().filter(onlyUnique).length;
 	var rating = (sum / count).toFixed(1);
-	$('#stats').html('<b>Unrated Words:</b> ' + nl + ' – <b><alias title="The text\'s rating is the average rating across all words. It therefore is ranked from 0 (knowing no words at all) to 5 (knowing all words perfectly).">Rating</alias>:</b> ' + rating);
+	$('#unratedWords').html(nl);
+	$('#averageRating').html(rating);
 }
 
 function onRatingsButton(rating) {
