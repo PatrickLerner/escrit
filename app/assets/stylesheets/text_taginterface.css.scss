@@ -75,3 +75,33 @@
     margin-bottom: 0;
   }
 }
+
+#close-container {
+  display: inline;
+}
+
+#close-btn {
+  float: right;
+}
+
+#buttons {
+  float: left;
+}
+
+#description {
+  display: none;
+}
+
+@media (min-width: 750px) {
+  #close-container {
+    display: block;
+  }
+
+  #close-btn, #buttons {
+    float: none;
+  }
+
+  #description {
+    display: block;
+  }
+}
