@@ -282,8 +282,8 @@ input[type="submit"].button-delete,
 input[type="reset"].button-delete,
 input[type="button"].button-delete {
   color: #FFF;
-  background-color: #e74c3c;
-  border-color: #e74c3c; }
+  background-color: hsl(6, 78%, 57%);
+  border-color: hsl(6, 78%, 55%); }
 .button.button-delete:hover,
 button.button-delete:hover,
 input[type="submit"].button-delete:hover,
@@ -295,8 +295,8 @@ input[type="submit"].button-delete:focus,
 input[type="reset"].button-delete:focus,
 input[type="button"].button-delete:focus {
   color: #FFF;
-  background-color: #DC342C;
-  border-color: #DC342C; }
+  background-color: hsl(6, 78%, 55%);
+  border-color: hsl(6, 78%, 53%); }
 .button.button-gray,
 button.button-gray,
 input[type="submit"].button-gray,
