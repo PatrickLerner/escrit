@@ -289,8 +289,8 @@ input[type="submit"].button-primary,
 input[type="reset"].button-primary,
 input[type="button"].button-primary {
   color: #FFF;
-  background-color: #5787e1;
-  border-color: #5381DA; }
+  background-color: hsl(207, 70%, 61%);
+  border-color: hsl(207, 70%, 59%); }
 .button.button-primary:hover,
 button.button-primary:hover,
 input[type="submit"].button-primary:hover,
@@ -302,8 +302,8 @@ input[type="submit"].button-primary:focus,
 input[type="reset"].button-primary:focus,
 input[type="button"].button-primary:focus {
   color: #FFF;
-  background-color: #5381DA;
-  border-color: #507DD6; }
+  background-color: hsl(207, 70%, 59%);
+  border-color: hsl(207, 70%, 57%); }
 .button.button-delete,
 button.button-delete,
 input[type="submit"].button-delete,
