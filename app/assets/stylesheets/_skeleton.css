@@ -261,8 +261,8 @@ input[type="submit"].button-primary,
 input[type="reset"].button-primary,
 input[type="button"].button-primary {
   color: #FFF;
-  background-color: #5787e1;
-  border-color: #5381DA; }
+  background-color: #5B74A2;
+  border-color: #546E9E; }
 .button.button-primary:hover,
 button.button-primary:hover,
 input[type="submit"].button-primary:hover,
@@ -274,8 +274,8 @@ input[type="submit"].button-primary:focus,
 input[type="reset"].button-primary:focus,
 input[type="button"].button-primary:focus {
   color: #FFF;
-  background-color: #5381DA;
-  border-color: #507DD6; }
+  background-color: #546E9E;
+  border-color: #546E9E; }
 .button.button-delete,
 button.button-delete,
 input[type="submit"].button-delete,
