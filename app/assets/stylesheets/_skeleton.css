@@ -290,7 +290,7 @@ input[type="reset"].button-primary,
 input[type="button"].button-primary {
   color: #FFF;
   background-color: hsl(207, 70%, 61%);
-  border-color: hsl(207, 70%, 59%); }
+  border-color: hsl(207, 70%, 50%); }
 .button.button-primary:hover,
 button.button-primary:hover,
 input[type="submit"].button-primary:hover,
@@ -303,7 +303,7 @@ input[type="reset"].button-primary:focus,
 input[type="button"].button-primary:focus {
   color: #FFF;
   background-color: hsl(207, 70%, 59%);
-  border-color: hsl(207, 70%, 57%); }
+  border-color: hsl(207, 70%, 50%); }
 .button.button-delete,
 button.button-delete,
 input[type="submit"].button-delete,
@@ -394,7 +394,7 @@ input[type="url"]:focus,
 input[type="password"]:focus,
 textarea:focus,
 select:focus {
-  border: 1px solid #33C3F0;
+  border: 1px solid hsl(207, 70%, 59%);
   outline: 0; }
 label,
 legend {
