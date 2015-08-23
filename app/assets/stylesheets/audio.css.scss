@@ -24,8 +24,8 @@ audio {
     margin: -3px 0px 0px -1px;
   }
   .scrubber {
-    border: 1px solid #191919;
-    background: #eee;
+    border: 1px solid #93B0C7;
+    background: #fff;
     width: 65%;
     float: left;
     height: 10px;
@@ -34,12 +34,12 @@ audio {
   .progress {
     height: 10px;
     width: 0px;
-    background: #212F3F;
+    background: #538DBB;
     background-image: none;
   }
   .loaded {
     height: 10px;
-    background: #eee;
+    background: inherit;
     background-image: none;
   }
   .time {

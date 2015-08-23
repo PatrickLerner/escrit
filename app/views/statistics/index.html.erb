@@ -78,6 +78,9 @@
   Chart.defaults.global.pointLabelFontFamily = fontFamily;
   Chart.defaults.global.scaleLabel = "<%%= '  ' + value%>";
 
+  Chart.defaults.global.tooltipFillColor = "hsl(211, 52%, 28%)";
+  Chart.defaults.global.tooltipFontColor = "#fff";
+
   var newWordsThisWeekData = {
     labels: [<%= @new_words_this_week_labels.map{|i| '"' + i + '"'}.join(',').html_safe %>],
     datasets: [
@@ -85,10 +88,6 @@
         label: "Number of Words",
         fillColor: "hsl(207, 70%, 61%)",
         strokeColor: "hsl(207, 70%, 50%)",
-        pointColor: "#4371C7",
-        pointStrokeColor: "#fff",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(151,187,205,1)",
         data: [<%= @new_words_this_week_data.join ',' %>]
       }
     ]
