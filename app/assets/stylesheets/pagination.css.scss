@@ -21,7 +21,8 @@
 
 .pagination .current {
   font-style: normal;
-  background-color: #212F3F;
+  background-color: hsl(207, 70%, 61%);
+  border-color: #2688d9;
   color: white;
   display: inline-block;
   width: 1.6em;
@@ -30,7 +31,6 @@
   -moz-border-radius: 1em;
   -webkit-border-radius: 1em;
   border-radius: 1em;
-  text-shadow: rgba(255, 255, 255, 0.8) 1px 1px 1px;
 }
 
 .pagination a {
