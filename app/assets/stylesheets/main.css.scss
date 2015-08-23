@@ -190,12 +190,22 @@ td > alias > i {
   font-weight: 600;
 }
 
+.one-third {
+  border-top: 1px solid #E1E1E1;
+  padding-top: 1.5em;
+  margin-top: 1.5em;
+}
 
 /* Larger than phone */
 
 @media (min-width: 550px) {
   .docs-section {
     padding: 5rem 0;
+  }
+  .one-third {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
   }
 }
 
