@@ -158,13 +158,17 @@
           <h4 style="margin-bottom: 0;">
             <%= number_with_precision @word_count, precision: 0, delimiter: ',' %>
           </h4>
-          <%= "word".pluralize @word_count %> added.
+          <span style="color: gray;">
+            <%= "word".pluralize @word_count %> added.
+          </span>
         </div>
         <div class="one-half column centered">
           <h4 style="margin-bottom: 0;">
             <%= number_with_precision @known_word_count, precision: 0, delimiter: ',' %>
           </h4>
-          <alias title="Words with a rating of three or above are considered familiar. That is, you probably remember them more often than you forget them.">familiar <%= "word".pluralize @known_word_count %></alias>.
+          <span style="color: gray;">
+            <alias title="Words with a rating of three or above are considered familiar. That is, you probably remember them more often than you forget them.">familiar <%= "word".pluralize @known_word_count %></alias>.
+          </span>
         </div>
       </div>
 
@@ -173,13 +177,17 @@
           <h4 style="margin-bottom: 0;">
             <%= number_with_precision @total_text_count, precision: 0, delimiter: ',' %>
           </h4>
-          <%= "text".pluralize @total_text_count %> added.
+          <span style="color: gray;">
+            <%= "text".pluralize @total_text_count %> added.
+          </span>
         </div>
         <div class="one-half column centered">
           <h4 style="margin-bottom: 0;">
             <%= number_with_precision @total_text_count_read, precision: 0, delimiter: ',' %>
           </h4>
-          <%= "text".pluralize @total_text_count_read %> read.
+          <span style="color: gray;">
+            <%= "text".pluralize @total_text_count_read %> read.
+          </span>
         </div>
       </div>
 
