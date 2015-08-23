@@ -26,15 +26,16 @@
           <% if selected_language %>
             <% lang = "/" + selected_language.name.downcase %>
           <% end %>
-          <% if controller_name == 'texts' and action_name == 'index' %>
-            <% lang = "" %>
-          <% end %>
           <% if @text and @text.language %>
             <% lang = "/" + @text.language.name.downcase %>
           <% end %>
           <li class="navbar-item"><a class="navbar-link" href="/">escrit</a></li>
           <% if user_signed_in? %>
-            <li class="navbar-item"><a class="navbar-link" href="/texts<%= lang %>">Texts</a></li>
+            <% if controller_name == 'texts' and action_name == 'index'  %>
+              <li class="navbar-item"><a class="navbar-link" href="/texts">Texts</a></li>
+            <% else %>
+              <li class="navbar-item"><a class="navbar-link" href="/texts<%= lang %>">Texts</a></li>
+            <% end %>
             <li class="navbar-item"><a class="navbar-link" href="/statistics<%= lang %>">Statistics</a></li>
             <li class="navbar-item"><a class="navbar-link" href="/settings">More...</a></li>
           <% end %>
