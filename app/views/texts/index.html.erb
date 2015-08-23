@@ -138,9 +138,9 @@
       <%= link_to fa_icon("users") + ' Show Public Texts', "/texts/" + selected_language.name.downcase + "/public", class: 'button u-full-width', title: 'Show public texts.' %>
 
       <% if selected_language and not @hidden %>
-        <%= link_to fa_icon("folder-open-o") + ' Show Archived Texts', "/texts/" + selected_language.name.downcase + "/archive", class: 'button u-full-width', title: 'Show archived texts.' %>
+        <%= link_to fa_icon("archive") + ' Show Archived Texts', "/texts/" + selected_language.name.downcase + "/archive", class: 'button u-full-width', title: 'Show archived texts.' %>
       <% elsif selected_language and @hidden %>
-        <%= link_to fa_icon("file-text-o") + ' Show Active Texts', "/texts/" + selected_language.name.downcase, class: 'button u-full-width', title: 'Show currently active texts.' %>
+        <%= link_to fa_icon("inbox") + ' Show Active Texts', "/texts/" + selected_language.name.downcase, class: 'button u-full-width', title: 'Show currently active texts.' %>
       <% end %>
 
     <% elsif selected_language and @public %>
