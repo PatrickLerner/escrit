@@ -10,6 +10,19 @@
   color: #F7C91C;
 }
 
+.fa-toggle-on:before, .fa-toggle-off:before {
+  font-size: 1.2em;
+  vertical-align: middle;
+}
+
+.fa-toggle-on:before {
+  color: #6083C5;
+}
+
+.fa-toggle-off:before {
+  color: #555;
+}
+
 table.listing {
   margin-bottom: 0;
   margin-top: 1.5em;

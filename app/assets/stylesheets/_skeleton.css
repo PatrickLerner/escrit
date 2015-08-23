@@ -92,6 +92,34 @@
   float: left;
   box-sizing: border-box; }
 
+/* No wrap columns */
+
+.no-wrap .column,
+.no-wrap .columns {
+  margin-left: 4%; }
+.no-wrap .column:first-child,
+.no-wrap .columns:first-child {
+  margin-left: 0; }
+
+.no-wrap .one.column,
+.no-wrap .one.columns                    { width: 4.66666666667%; }
+.no-wrap .two.columns                    { width: 13.3333333333%; }
+.no-wrap .three.columns                  { width: 22%;            }
+.no-wrap .four.columns                   { width: 30.6666666667%; }
+.no-wrap .five.columns                   { width: 39.3333333333%; }
+.no-wrap .six.columns                    { width: 48%;            }
+.no-wrap .seven.columns                  { width: 56.6666666667%; }
+.no-wrap .eight.columns                  { width: 65.3333333333%; }
+.no-wrap .nine.columns                   { width: 74.0%;          }
+.no-wrap .ten.columns                    { width: 82.6666666667%; }
+.no-wrap .eleven.columns                 { width: 91.3333333333%; }
+.no-wrap .twelve.columns                 { width: 100%; margin-left: 0; }
+
+.no-wrap .one-third.column               { width: 30.6666666667%; }
+.no-wrap .two-thirds.column              { width: 65.3333333333%; }
+
+.no-wrap .one-half.column                { width: 48%; }
+
 /* For devices larger than 400px */
 @media (min-width: 400px) {
   .container {

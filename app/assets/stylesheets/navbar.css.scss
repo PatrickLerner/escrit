@@ -1,11 +1,3 @@
-.navbar {
-  background-color: #F5F5F5;
-  background: -webkit-linear-gradient(#F5F5F5, #ffffff);
-  background: -o-linear-gradient(#F5F5F5, #ffffff);
-  background: -moz-linear-gradient(#F5F5F5, #ffffff);
-  background: linear-gradient(#F5F5F5, #ffffff);
-}
-
 .navbar,
 .navbar-spacer {
   width: 100%;
@@ -43,7 +35,7 @@
   letter-spacing: .2rem;
   margin-right: 35px;
   text-decoration: none;
-  line-height: 6.5rem;
+  line-height: 4.5rem;
   color: #222;
   border: 0;
 }
@@ -71,6 +63,14 @@
 /* Larger than tablet */
 
 @media (min-width: 750px) {
+  .navbar {
+    background-color: #F5F5F5;
+    background: -webkit-linear-gradient(#F5F5F5, #ffffff);
+    background: -o-linear-gradient(#F5F5F5, #ffffff);
+    background: -moz-linear-gradient(#F5F5F5, #ffffff);
+    background: linear-gradient(#F5F5F5, #ffffff);
+  }
+
   /* Navbar */
   .navbar + .docs-section {
     border-top-width: 0;
