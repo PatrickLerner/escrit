@@ -50,7 +50,6 @@
       </div>
       <%= link_to fa_icon("times") + " Delete", text_path(@text), method: :delete, data: { confirm: 'Are you absolutely certain?' }, title: 'Delete', class: 'button u-full-width button-delete' %>
 
-
       <div>
         <a href="#" id="archiveToggle" class="toggle-link">
           <%= fa_icon("toggle-" + if @text.hidden then "on" else "off" end) %> Archive this text

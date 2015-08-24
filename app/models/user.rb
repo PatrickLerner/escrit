@@ -7,4 +7,5 @@ class User < ActiveRecord::Base
   validates :name, presence: true
 
   has_many :texts
+  has_many :buddies, foreign_key: "origin_id", class_name: "Buddy"
 end

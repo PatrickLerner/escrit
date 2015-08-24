@@ -89,7 +89,47 @@
 
   <div class="one-third column">
     <div style="text-align: center;">
-      <%= image_tag avatar_url(@user), class: 'profile-picture' %>
+      <%= image_tag avatar_url(@user), class: 'profile-picture', style: 'margin-bottom: 1em;' %>
+
+      <% if @user.id != current_user.id %>
+        <% if @is_buddy %>
+          <%= link_to fa_icon('trash-o') + ' Remove As Buddy', '/u/' + @user.id.to_s + '/remove/' + @user.id.to_s, class: 'button u-full-width', data: { confirm: 'Are you absolutely certain?' } %>
+        <% else %>
+          <a href="/u/<%= @user.id %>/add" class="button button-primary u-full-width"><%= fa_icon("plus") %> Mark As Buddy</a>
+        <% end %>
+      <% end %>
+
+      <% if @user.buddies.count > 0 %>
+        <hr style="margin: 1em 0;" />
+
+        <h5>Buddies</h5>
+
+        <% @user.buddies.each { |buddy| %>
+          <% friend = buddy.destination %>
+
+          <div class="row no-wrap">
+            <div class="three columns">
+              <a href="/u/<%= friend.id %>" class="image-link">
+                <%= image_tag avatar_url(friend), class: 'profile-picture', style: 'border-width: 2px;' %>
+              </a>
+            </div>
+            <div class="eight columns" style="text-align: left; overflow: hidden; white-space: nowrap;">
+              <h5 style="margin-top: 0.4em; font-size: 1.3em">
+                <a href="/u/<%= friend.id %>">
+                  <%= friend.name %>
+                </a>
+              </h5>
+            </div>
+            <div class="one column" style="text-align: left;">
+              <% if @user.id == current_user.id %>
+                <h5 style="margin-top: 0.2em">
+                  <%= link_to fa_icon('trash-o'), '/u/' + friend.id.to_s + '/remove/' + current_user.id.to_s, class: 'image-link', data: { confirm: 'Are you absolutely certain?' } %>
+                </h5>
+              <% end %>
+            </div>
+          </div>
+        <% } %>
+      <% end %>
     </div>
   </div>
 </div>
