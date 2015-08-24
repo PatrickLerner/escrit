@@ -33,30 +33,63 @@
       <h6 class="docs-header">About Me</h6>
       <p><%= simple_format @user.about.strip %></p>
     <% end %>
+
+    <% trophy_header = false %>
+
+    <% if @words.count > 0 %>
+      <% @words.each { |l, w| %>
+        <% if w >= 100 %>
+          <% if not trophy_header %>
+            <h6 class="docs-header">Trophy Case</h6>
+            <% trophy_header = true %>
+          <% end %>
+          
+          <h5 style="margin-bottom: 0; margin-top: 0.6em"><%= l %></h5>
+          <div class="row no-wrap" style="margin-top: 0">
+            <div class="two columns centered">
+              <%= image_tag "ribbon.png", :class => "no-border" %>
+            </div>
+            <div class="four columns" style="text-align: left">
+              <h5 style="margin-bottom: 0; margin-top: 0.5em" title="<%= @user.name %> has added a total of <%= number_with_precision w, precision: 0, delimiter: ',' %> <%= "word".pluralize w %> so far.">
+                Level
+                <% level = w.to_f/1000.to_f %>
+                <% if w < 1000 %>
+                  <%= number_with_precision level, precision: 1, delimiter: ',' %>
+                <% else %>
+                  <%= level.floor %>
+                <% end %>
+              </h5>
+              <span style="color: gray;">
+                for words added.
+              </span>
+            </div>
+            <div class="two columns centered">
+              <%= image_tag "trophy.png", :class => "no-border" %>
+            </div>
+            <div class="four columns" style="text-align: left">
+              <% w_familiar = if @words_familiar[l] then @words_familiar[l] else 0 end %>
+              <h5 style="margin-bottom: 0; margin-top: 0.5em" title="<%= @user.name %> has rated a total of <%= number_with_precision w_familiar, precision: 0, delimiter: ',' %> <%= "word".pluralize w_familiar %> to be familiar to them (rating of three or above).">
+                Level
+                <% level = w_familiar.to_f/1000.to_f %>
+                <% if level >= 0.1 and level < 1 %>
+                  <%= number_with_precision level, precision: 1, delimiter: ',' %>
+                <% else %>
+                  <%= level.floor %>
+                <% end %>
+              </h5>
+              <span style="color: gray;">
+                for <alias title="Words with a rating of three or above are considered familiar. That is, you probably remember them more often than you forget them.">familiar words</alias>.
+              </span>
+            </div>
+          </div>
+        <% end %>
+      <% } %>
+    <% end %>
   </div>
+
   <div class="one-third column">
     <div style="text-align: center;">
       <%= image_tag avatar_url(@user), class: 'profile-picture' %>
     </div>
-    <% if @words.count > 0 %>
-      <table class="u-full-width">
-        <thead>
-          <tr>
-            <th>Language</th>
-            <th style="text-align: right">Words Added</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @words.each { |l, w| %>
-            <tr>
-              <td><%= l %></td>
-              <td style="text-align: right">
-                <%= number_with_precision w, precision: 0, delimiter: ',' %>
-              </td>
-            </tr>
-          <% } %>
-        </tbody>
-      </table>
-    <% end %>
   </div>
 </div>
