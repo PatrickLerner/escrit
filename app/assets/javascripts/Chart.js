@@ -406,7 +406,7 @@
 
 			var	valueRange = Math.abs(maxValue - minValue),
 				rangeOrderOfMagnitude = calculateOrderOfMagnitude(valueRange),
-				graphMax = Math.ceil(10*(maxValue / (1 * Math.pow(10, rangeOrderOfMagnitude))))/10 * Math.pow(10, rangeOrderOfMagnitude),
+				graphMax = 1.2 * Math.ceil(10*(maxValue / (1 * Math.pow(10, rangeOrderOfMagnitude))))/10 * Math.pow(10, rangeOrderOfMagnitude),
 				graphMin = (startFromZero) ? 0 : Math.floor(minValue / (1 * Math.pow(10, rangeOrderOfMagnitude))) * Math.pow(10, rangeOrderOfMagnitude),
 				graphRange = graphMax - graphMin,
 				stepValue = Math.pow(10, rangeOrderOfMagnitude),
