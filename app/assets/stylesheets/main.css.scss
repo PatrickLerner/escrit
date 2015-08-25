@@ -1,3 +1,38 @@
+.button-group {
+  .button {
+    margin-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .button:hover + .button {
+    border-top-color: #888;
+  }
+
+  .button:last-child:hover {
+    border-bottom-color: #888;
+  }
+
+  .button:last-child {
+    border-bottom: #bbb 1px solid;
+  }
+
+  .button-primary + .button {
+    border-top-color: hsl(207, 70%, 61%);
+  }
+
+  .button-primary:hover + .button {
+    border-top-color: hsl(207, 70%, 50%);
+  }
+
+  .button-primary:last-child:hover {
+    border-bottom-color: hsl(207, 70%, 50%);
+  }
+
+  .button-primary:last-child {
+    border-bottom: hsl(207, 70%, 50%) 1px solid;
+  }
+}
+
 .fa-check {
   color: #0FC55C;
 }

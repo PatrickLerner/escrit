@@ -9,16 +9,17 @@
 <div class="row">
   <div class="two-thirds column">
     <h4>
+      <% if @hidden %>
+        Your Archived
+      <% elsif @public %>
+        Public
+      <% else %>
+        Your
+      <% end %>
       <% if selected_language %>
         <%= selected_language.name %>
       <% end %>
       Texts
-      <% if @hidden %>
-        (Archived)
-      <% end %>
-      <% if @public %>
-        (Public)
-      <% end %>
       </h4>
   </div>
   <div class="one-third column" style="text-align: right; vertical-align: middle;">
@@ -133,19 +134,29 @@
       <%= link_to fa_icon("plus") + ' Add New Text', new_url, class: 'button button-primary u-full-width', title: 'Add a new text' %>
     <% end %>
 
-    <% if selected_language and not @public %>
+    <% if selected_language %>
 
-      <%= link_to fa_icon("users") + ' Show Public Texts', "/texts/" + selected_language.name.downcase + "/public", class: 'button u-full-width', title: 'Show public texts.' %>
+      <hr style="margin: 1em 0;" />
 
-      <% if selected_language and not @hidden %>
-        <%= link_to fa_icon("archive") + ' Show Archived Texts', "/texts/" + selected_language.name.downcase + "/archive", class: 'button u-full-width', title: 'Show archived texts.' %>
-      <% elsif selected_language and @hidden %>
-        <%= link_to fa_icon("inbox") + ' Show Active Texts', "/texts/" + selected_language.name.downcase, class: 'button u-full-width', title: 'Show currently active texts.' %>
-      <% end %>
+      <div class="button-group">
+        <% if not @public and not @hidden %>
+          <%= link_to 'Your Texts', "/texts/" + selected_language.name.downcase, class: 'button button-primary u-full-width', title: 'Show currently active texts.' %>
+        <% else %>
+          <%= link_to 'Your Texts', "/texts/" + selected_language.name.downcase, class: 'button u-full-width', title: 'Show currently active texts.' %>
+        <% end %>
 
-    <% elsif selected_language and @public %>
+        <% if @hidden %>
+          <%= link_to 'Archived Texts', "/texts/" + selected_language.name.downcase + "/archive", class: 'button button-primary u-full-width', title: 'Show archived texts.' %>
+        <% else %>
+          <%= link_to 'Archived Texts', "/texts/" + selected_language.name.downcase + "/archive", class: 'button u-full-width', title: 'Show archived texts.' %>
+        <% end %>
 
-      <%= link_to fa_icon("user") + ' Show Private Texts', "/texts/" + selected_language.name.downcase, class: 'button u-full-width', title: 'Show your private texts.' %>
+        <% if @public %>
+          <%= link_to 'Public Texts', "/texts/" + selected_language.name.downcase + "/public", class: 'button button-primary u-full-width', title: 'Show public texts.' %>
+        <% else %>
+          <%= link_to 'Public Texts', "/texts/" + selected_language.name.downcase + "/public", class: 'button u-full-width', title: 'Show public texts.' %>
+        <% end %>
+      </div>
 
     <% end %>
 
