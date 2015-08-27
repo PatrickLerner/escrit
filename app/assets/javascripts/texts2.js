@@ -48,6 +48,8 @@ function onlyUnique(value, index, self) {
 
 function updateCounter() {
 	var nl = $('.s0.word').map (function () { return this.innerHTML.toLowerCase() }).get().filter(onlyUnique).length;
+	var total = $('.word').map (function () { return this.innerHTML.toLowerCase() }).get().filter(onlyUnique).length;
+	var rated = total - nl;
 
 	if (old_nl == -1 || (old_nl == 0 && nl != 0) || (old_nl != 0 && nl == 0))
 		$.ajax({
@@ -66,8 +68,13 @@ function updateCounter() {
 	var count = $('.word').map (function () { return this.innerHTML.toLowerCase() }).get().filter(onlyUnique).length;
 	var rating = (sum / count).toFixed(1);
 	$('#unratedWords').html(nl);
+	$('#unratedWords').attr('title', 'In this text you have ' + nl + ' unrated words and ' + rated + ' rated words from a total of ' + total + ' unique words.');
 	$('#averageRating').html(rating);
 	$('#unratedWordsPlural').html(nl == 1 ? 'word' : 'words');
+
+	if (total == 0) {
+		$('.stat-block').html('');
+	}
 }
 
 function onRatingsButton(rating) {
@@ -129,14 +136,14 @@ $(document).ready(function() {
 		showColors = !showColors;
 		if (showColors) {
 			$('#colorToggle').html('<i class="fa fa-toggle-on"></i> Show Colors');
-			$('.word').css('background', '');
-			$('.word').css('border', '');
+			$('.s0,.s1,.s2,.s3,.s4,.s5,.s6').css('background', '');
+			$('.s0,.s1,.s2,.s3,.s4,.s5,.s6').css('border', '');
 			$('#underlineToggle').css('display', 'block');
 		}
 		else {
 			$('#colorToggle').html('<i class="fa fa-toggle-off"></i> Show Colors');
-			$('.word').css('background', 'white');
-			$('.word').css('border', 'none');
+			$('.s0,.s1,.s2,.s3,.s4,.s5,.s6').css('background', 'white');
+			$('.s0,.s1,.s2,.s3,.s4,.s5,.s6').css('border', 'none');
 			$('#underlineToggle').css('display', 'none');
 		}
 		return false;
@@ -146,11 +153,11 @@ $(document).ready(function() {
 		underlineColors = !underlineColors;
 		if (underlineColors) {
 			$('#underlineToggle').html('<i class="fa fa-toggle-on"></i> Only Underline');
-			$('.word').addClass('underline');
+			$('.s0,.s1,.s2,.s3,.s4,.s5,.s6').addClass('underline');
 		}
 		else {
 			$('#underlineToggle').html('<i class="fa fa-toggle-off"></i> Only Underline');
-			$('.word').removeClass('underline');
+			$('.s0,.s1,.s2,.s3,.s4,.s5,.s6').removeClass('underline');
 		}
 		return false;
 	});

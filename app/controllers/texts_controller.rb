@@ -137,20 +137,28 @@ class TextsController < ApplicationController
   end
 
   def show
+    if params[:user] and current_user.admin?
+      user_id = params[:user]
+    else
+      user_id = current_user.id
+    end
+    @user = User.find_by id: user_id
+    disabled_words = (user_id != current_user.id)
+
     @text = Text.find_by id: params[:id]
     
     if @text == nil or (@text.user_id != current_user.id and not current_user.admin? and not @text.public)
       redirect_to texts_path
     else
-      if current_user.native_language_id != @text.language_id
+      if @user.native_language_id != @text.language_id
         uniq_words = (@text.raw_words + @text.raw_words_title + @text.raw_words_category).sort.uniq
-        words = Word.find_create_bulk @text.language_id, uniq_words, current_user.id
+        words = Word.find_create_bulk @text.language_id, uniq_words, @user.id
       else
         words = {}
       end
-      @processed_text = process_text @text.split_words, words, @text.language_id
-      @processed_title = process_text @text.split_words_title, words, @text.language_id
-      @processed_category = process_text @text.split_words_category, words, @text.language_id
+      @processed_text = process_text @text.split_words, words, @text.language_id, disabled_words
+      @processed_title = process_text @text.split_words_title, words, @text.language_id, disabled_words
+      @processed_category = process_text @text.split_words_category, words, @text.language_id, disabled_words
 
       @services = Service.where('(language_id=? or language_id=0) and user_id = ?', @text.language_id, current_user.id)
       @services = [] if @services == nil
