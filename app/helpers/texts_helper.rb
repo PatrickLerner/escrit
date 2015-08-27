@@ -81,6 +81,7 @@ module TextsHelper
     processed = processed.gsub(/\n/, "<br />")
     processed = processed.gsub(/\*\*(.*?)\*\*/, '<strong>\1</strong>')
     processed = processed.gsub(/__(.*?)__/, '<em>\1</em>')
+    processed = processed.gsub(/\(\((.*?)\)\)/, '<span class="hint">(\1)</span>')
     processed.html_safe
   end
 end

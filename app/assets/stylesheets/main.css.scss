@@ -1,3 +1,10 @@
+.hint {
+  opacity: 0.6;
+  .word {
+    border-bottom: 1px dotted #191919;
+  }
+}
+
 .button-group {
   .button {
     margin-bottom: 0;
