@@ -146,9 +146,9 @@
         <% end %>
 
         <% if @hidden %>
-          <%= link_to 'Archived Texts', "/texts/" + selected_language.name.downcase + "/archive", class: 'button button-primary u-full-width', title: 'Show archived texts.' %>
+          <%= link_to 'Your Archived Texts', "/texts/" + selected_language.name.downcase + "/archive", class: 'button button-primary u-full-width', title: 'Show archived texts.' %>
         <% else %>
-          <%= link_to 'Archived Texts', "/texts/" + selected_language.name.downcase + "/archive", class: 'button u-full-width', title: 'Show archived texts.' %>
+          <%= link_to 'Your Archived Texts', "/texts/" + selected_language.name.downcase + "/archive", class: 'button u-full-width', title: 'Show archived texts.' %>
         <% end %>
 
         <% if @public %>

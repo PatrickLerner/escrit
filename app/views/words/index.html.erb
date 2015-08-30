@@ -64,6 +64,6 @@
   <div class="one-third column centered">
     <%= link_to fa_icon("chevron-left") + " Back", settings_path, class: 'button button-primary u-full-width', title: 'Back to Overview' %>
     <%= select_tag :language_words, options_for_select(["Select Language"] + language_options(true).map { |k| k[0] }, selected: @language_name), class: 'u-full-width' %>
-    <%= image_tag "booksandmagiclamp.png", class: "p80" %>
+    <%= image_tag "clipboard.png", class: "p80" %>
   </div>
 </div>
