@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   get '/u/:id', to: 'users#show'
   get '/u/:id/add', to: 'users#add'
   get '/u/:id/remove/:did', to: 'users#remove'
+  get '/u', to: 'users#index'
   get "/help/:page" => "help#show"
   get "/help" => "help#index"
 

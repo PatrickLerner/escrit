@@ -1,0 +1,32 @@
+<% content_for :title, 'List of Users' %>
+
+<h4>List of Users</h4>
+
+
+    <table class="u-full-width">
+      <tbody>
+        <% @users.in_groups_of(3, nil).to_a.each { |splice| %>
+          <tr>
+            <% splice.each { |user| %>
+            <td style="width: 3em;">
+              <% if user %>
+                <%= link_to image_tag(avatar_url(user, 48), class: 'profile-picture', style: 'width: 2.5em; height: 2.5em'), '/u/' + user.id.to_s %>
+              <% end %>
+            </td>
+            <td style="padding-left: 0;">
+              <% if user %>
+                <% name = user.name %>
+                <% name += ' (Admin)' if user.admin %>
+                <%= link_to name, '/u/' + user.id.to_s %>
+              <% end %>
+            </td>
+            <% } %>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+
+    <%= will_paginate @words, class: 'pagination' %>
+    <div class="pagination_info">
+      <%= page_entries_info @words %>
+    </div>

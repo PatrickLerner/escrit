@@ -30,6 +30,11 @@ en:
         one:   word
         few:   words
         other: words
+      user:
+        zero:  users
+        one:   user
+        few:   users
+        other: users
     page_entries_info:
       single_page:
         zero:  "No %{model} found"

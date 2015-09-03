@@ -9,6 +9,10 @@ class UsersController < ApplicationController
     @is_buddy = if buddy then true else false end
   end
 
+  def index
+    @users = User.paginate(:page => params[:page], :per_page => 30).order :name
+  end
+
   def add
     user = User.find_by id: params[:id]
     buddy = Buddy.find_by origin_id: current_user.id, destination_id: params[:id]
