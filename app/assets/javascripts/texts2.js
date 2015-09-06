@@ -78,6 +78,7 @@ function updateCounter() {
 }
 
 function onRatingsButton(rating) {
+	currentRating = rating;
 	if (last_word) {
 		$.ajax({
 			type: 'PATCH',
@@ -190,6 +191,8 @@ $(document).ready(function() {
 		var rating = event.target.innerHTML;
 		if (rating == '/')
 			rating = 6;
+		else
+			rating = parseInt(rating);
 		onRatingsButton(rating);
 		if (!isMobile)
 			$('.lookup #lword').focus();
@@ -226,11 +229,17 @@ $(document).ready(function() {
 				},
 				async: true
 			});
+		// tab key incrases rating by one
 		if (keyCode == 9) {
 			event.preventDefault();
-			currentRating = currentRating + 1;
+			if (!event.shiftKey)
+				currentRating += 1;
+			else
+				currentRating -= 1;
 			if (currentRating > 6)
 				currentRating = 0;
+			if (currentRating < 0)
+				currentRating = 6;
 			onRatingsButton(currentRating);
 		}
 		if (keyCode == 48 && event.ctrlKey) {
