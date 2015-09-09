@@ -40,6 +40,11 @@
       <%= f.label :content %>
       <%= f.text_area :content, placeholder: "Content", style: 'height: 18em;', :class => 'u-full-width' %>
 
+      <p>
+        <strong>Character Count:</strong>
+        <span id="character_count">0</span> / 10,000
+      </p>
+
       <%= f.check_box :hidden, style: "display: none" %>
       <%= f.check_box :public, style: "display: none" %>
     </div>
