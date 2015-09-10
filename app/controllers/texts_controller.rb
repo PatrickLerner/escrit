@@ -168,6 +168,10 @@ class TextsController < ApplicationController
   def update
     @text = Text.find_by :id => params[:id]
 
+    if text_params[:completed] and not current_user.id == @text.id
+      render plain: "not allowed"
+    end
+
     if not @text.public or current_user.admin?
       if params[:public] and not current_user.admin?
         params[:public] = false
