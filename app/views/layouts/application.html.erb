@@ -41,6 +41,7 @@
           <% end %>
           <li class="navbar-item" style="float: right;">
             <% if user_signed_in? %>
+              <%= link_to fa_icon("user") + ' ' + current_user.name, '/u/' + current_user.id.to_s, class: 'navbar-link' %>
               <%= link_to fa_icon("sign-out") + " Logout", :destroy_user_session, method: :delete, class: 'navbar-link' %>
             <% else %>
               <%= link_to fa_icon("sign-in") + " Login", new_user_session_path, class: 'navbar-link' %>
