@@ -31,8 +31,12 @@ class Word < ActiveRecord::Base
   def self.find_create_bulk language_id, words, user_id
     replacements = Replacement.where language_id: language_id
     words = words.map { |w|
+      if w.match(/(.*)\|\|(.*)/)
+        wparts = w.match(/(.*)\|\|(.*)/)
+        w = wparts[2].mb_chars.downcase.to_s
+      end
       Word.determine_replacement_value w, replacements
-    }
+    }.uniq
     remaining = words
     result = {}
 
@@ -45,7 +49,7 @@ class Word < ActiveRecord::Base
 
     remaining.each do |rem|
       word = rem.mb_chars.downcase.to_s
-      result[word] = Word.new value: word, language_id: Language.find(language_id), user_id: user_id
+      result[word] = Word.new value: word, language_id: language_id, user_id: user_id
     end
 
     return result

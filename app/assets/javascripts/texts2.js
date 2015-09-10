@@ -121,6 +121,12 @@ $(document).ready(function() {
 		else {
 			last_word = $(event.target).attr('value');
 			last_word_case = event.target.innerHTML;
+			if ($(event.target).attr('title')) {
+				last_word_case = $(event.target).attr('title');
+				last_word_case = last_word_case.replace('...', ' ... ');
+				last_word_case = last_word_case.replace('..', ' ... ');
+				last_word_case = last_word_case.replace('_', ' ');
+			}
 			$.getJSON("/words/" + text_language + '/' + last_word, function(data) {
 				$('.lookup').fadeIn(400);
 				$('.lookup #rword').html(last_word_case);

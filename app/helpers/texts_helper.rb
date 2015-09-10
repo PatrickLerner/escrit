@@ -43,11 +43,23 @@ module TextsHelper
     replacements = replacements = Replacement.where language_id: language_id
     split_words.each do |wstr|
       wstrlow = wstr.mb_chars.downcase.to_s
-      wstrrep = Word.determine_replacement_value wstrlow, replacements
+      if wstrlow.match(/(.*)\|\|(.*)/)
+        wparts = wstrlow.match(/(.*)\|\|(.*)/)
+        wstrlow = wparts[2].mb_chars.downcase.to_s
+        wstrrep = Word.determine_replacement_value wparts[2], replacements
+        wstr = wparts[1]
+        wname = wparts[2]
+      else
+        wstrrep = Word.determine_replacement_value wstrlow, replacements
+        wname = nil
+      end
+
       if words.keys.include?(wstrrep) and not (/https?:\/\/[\S]+/.match(wstrlow))
         w = words[wstrrep]
         if disabled_words
-          processed += '<span class="s' + w.rating.to_s + '" value="' + w.replacement_value(replacements) + '">' + wstr + '</span>'
+          processed += '<span class="s' + w.rating.to_s + '">' + wstr + '</span>'
+        elsif wname != nil
+          processed += '<span class="word s' + w.rating.to_s + '" value="' + w.replacement_value(replacements) + '" title="' + wname + '">' + wstr + '</span>'
         else
           processed += '<span class="word s' + w.rating.to_s + '" value="' + w.replacement_value(replacements) + '">' + wstr + '</span>'
         end

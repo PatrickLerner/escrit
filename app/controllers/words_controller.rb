@@ -8,6 +8,11 @@ class WordsController < ApplicationController
       lang = Language.where("lower(name) = ?", params[:language].downcase)[0]
       @language_name = lang.name
       @words = Word.paginate(:page => params[:page], :per_page => 250).where 'user_id = ? and rating < 6 and language_id = ?', current_user.id, lang.id
+      @words.map { |w|
+        w.value.gsub! '..', ' ... '
+        w.value.gsub! '...', ' ... '
+        w.value.gsub! '_', ' '
+      }
     end
   end
 
