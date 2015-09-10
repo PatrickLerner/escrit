@@ -4,9 +4,16 @@
 
 <div class="row">
   <div class="two-thirds column">
-    <p>This section is still in construction, but here you will find help to a variety of topics of how to use and utilize this website.</p>
+    <div class="row">
+      <div class="one-half column centered">
+        <%= link_to fa_icon("edit") + " Text Formatting", '/help/format', class: 'button u-full-width', title: 'Formatting Help' %>
+      </div>
+      <div class="one-half column centered">
+        <%= link_to fa_icon("keyboard-o") + " Keyboard Shortcuts", '/help/shortcuts', class: 'button u-full-width', title: 'Formatting Help' %>
+      </div>
+    </div>
   </div>
   <div class="one-third column">
-    <%= link_to fa_icon("edit") + " Formatting Help", '/help/format', class: 'button u-full-width', title: 'Formatting Help' %>
+    <p>This section is still in construction, but here you will find help to a variety of topics of how to use and utilize this website.</p>
   </div>
 </div>
