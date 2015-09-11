@@ -22,7 +22,7 @@
         <% if @is_buddy %>
           <%= link_to fa_icon('minus') + ' Remove As Buddy', '/u/' + @user.id.to_s + '/remove/' + @user.id.to_s, class: 'button u-full-width', data: { confirm: 'Are you absolutely certain?' } %>
         <% else %>
-          <a href="/u/<%= @user.id %>/add" class="button button-primary u-full-width"><%= fa_icon("plus") %> Mark As Buddy</a>
+          <a href="/u/<%= @user.id %>/add" class="button u-full-width"><%= fa_icon("plus") %> Mark As Buddy</a>
         <% end %>
       <% end %>
     </div>
