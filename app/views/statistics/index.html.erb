@@ -16,10 +16,10 @@
     <canvas id="newWords"></canvas>
     <p>
       <div class="centered">
-        In the last <%= pluralize(@new_words_count, "week") %> you added on average <%= number_with_precision(@new_words_average, precision: 2) %> new words per week.
+        In the last <%= pluralize(@new_words_count, "week") %> you added on average <%= number_with_precision(@new_words_average, precision: 2, delimiter: ',') %> new words per week.
       </div>
       <div class="centered">
-        In your best week in the last <%= @new_words_data.count %> weeks, you added <%= @new_words_data.max %> new words.
+        In your best week in the last <%= @new_words_data.count %> weeks, you added <%= number_with_precision @new_words_data.max, precision: 0, delimiter: ',' %> new <%= "word".pluralize @new_words_data.max %>.
       </div>
     </p>
 
@@ -27,10 +27,10 @@
     <canvas id="newTexts"></canvas>
     <p>
       <div class="centered">
-        In the last <%= pluralize(@new_texts_count, "week") %> you added on average <%= number_with_precision(@new_texts_average, precision: 2) %> new texts per week.
+        In the last <%= pluralize(@new_texts_count, "week") %> you added on average <%= number_with_precision(@new_texts_average, precision: 2, delimiter: ',') %> new texts per week.
       </div>
       <div class="centered">
-        In your best week in the last <%= @new_texts_data.count %> weeks, you added <%= @new_texts_data.max %> new texts.
+        In your best week in the last <%= @new_texts_data.count %> weeks, you added <%= number_with_precision @new_texts_data.max, precision: 0, delimiter: ',' %> new <%= "text".pluralize @new_texts_data.max %>.
       </div>
     </p>
 
