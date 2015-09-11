@@ -19,11 +19,13 @@
       <% if @user == current_user %>
         <a href="<%= edit_user_registration_path %>" class="button u-full-width"><%= fa_icon("user") %> Edit Your Profile</a>
       <% else %>
+        <!--
         <% if @is_buddy %>
           <%= link_to fa_icon('minus') + ' Remove As Buddy', '/u/' + @user.id.to_s + '/remove/' + @user.id.to_s, class: 'button u-full-width', data: { confirm: 'Are you absolutely certain?' } %>
         <% else %>
           <a href="/u/<%= @user.id %>/add" class="button u-full-width"><%= fa_icon("plus") %> Mark As Buddy</a>
         <% end %>
+        -->
       <% end %>
     </div>
   </div>
@@ -93,6 +95,7 @@
       <% } %>
     <% end %>
 
+    <!--
     <% if @user.buddies.count > 0 %>
 
       <h6 class="docs-header" style="margin-top: 2em;">Buddies</h6>
@@ -123,5 +126,7 @@
         </div>
       <% } %>
     <% end %>
+
+    -->
   </div>
 </div>
