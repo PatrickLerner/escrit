@@ -52,6 +52,12 @@
   color: #F7C91C;
 }
 
+.button {
+  .fa-check, .fa-minus, .fa-star {
+    color: black;
+  }
+}
+
 .fa-toggle-on:before, .fa-toggle-off:before {
   font-size: 1.2em;
   vertical-align: middle;
@@ -162,7 +168,7 @@ p.warning {
     &.profile-picture {
       border: 1px solid #C7CCD0;
       padding: 0;
-      width: 75%;
+      width: 90%;
     }
   }
 }

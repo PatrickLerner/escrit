@@ -4,23 +4,30 @@
   <% content_for :title, '%s (User)' % [@user.name] %>
 <% end %>
 
-<div class="row">
-  <div class="two-thirds column">
-    <h4>
-      <%= @user.name %>
-      <% if @user.admin? %>
-        (Admin)
-      <% end %>
-    </h4>
-  </div>
-  <div class="one-third column">
-    <% if @user == current_user %>
-      <a href="<%= edit_user_registration_path %>" class="button button-primary u-full-width"><%= fa_icon("user") %> Edit Your Profile</a>
-    <% end %>
-  </div>
-</div>
+<h4>
+  <%= @user.name %>
+  <% if @user.admin? %>
+    (Admin)
+  <% end %>
+</h4>
 
 <div class="row">
+  <div class="one-third column">
+    <div style="text-align: center;">
+      <%= image_tag avatar_url(@user), class: 'profile-picture', style: 'margin-bottom: 1em;' %>
+
+      <% if @user == current_user %>
+        <a href="<%= edit_user_registration_path %>" class="button u-full-width"><%= fa_icon("user") %> Edit Your Profile</a>
+      <% else %>
+        <% if @is_buddy %>
+          <%= link_to fa_icon('minus') + ' Remove As Buddy', '/u/' + @user.id.to_s + '/remove/' + @user.id.to_s, class: 'button u-full-width', data: { confirm: 'Are you absolutely certain?' } %>
+        <% else %>
+          <a href="/u/<%= @user.id %>/add" class="button button-primary u-full-width"><%= fa_icon("plus") %> Mark As Buddy</a>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
   <div class="two-thirds column">
     <p>
       This User has been a member of this website since <%= @user.created_at.strftime("%d %B %Y") %> (<%= ChronicDuration.output( (Time.now - @user.created_at), weeks: true, format: :long, units: 2) %>).
@@ -85,51 +92,36 @@
         <% end %>
       <% } %>
     <% end %>
-  </div>
 
-  <div class="one-third column">
-    <div style="text-align: center;">
-      <%= image_tag avatar_url(@user), class: 'profile-picture', style: 'margin-bottom: 1em;' %>
+    <% if @user.buddies.count > 0 %>
 
-      <% if @user.id != current_user.id %>
-        <% if @is_buddy %>
-          <%= link_to fa_icon('trash-o') + ' Remove As Buddy', '/u/' + @user.id.to_s + '/remove/' + @user.id.to_s, class: 'button u-full-width', data: { confirm: 'Are you absolutely certain?' } %>
-        <% else %>
-          <a href="/u/<%= @user.id %>/add" class="button button-primary u-full-width"><%= fa_icon("plus") %> Mark As Buddy</a>
-        <% end %>
-      <% end %>
+      <h6 class="docs-header" style="margin-top: 2em;">Buddies</h6>
 
-      <% if @user.buddies.count > 0 %>
-        <hr style="margin: 1em 0;" />
+      <% @user.buddies.each { |buddy| %>
+        <% friend = buddy.destination %>
 
-        <h5>Buddies</h5>
-
-        <% @user.buddies.each { |buddy| %>
-          <% friend = buddy.destination %>
-
-          <div class="row no-wrap">
-            <div class="three columns">
-              <a href="/u/<%= friend.id %>" class="image-link">
-                <%= image_tag avatar_url(friend), class: 'profile-picture' %>
-              </a>
-            </div>
-            <div class="eight columns" style="text-align: left; overflow: hidden; white-space: nowrap;">
-              <h5 style="margin-top: 0.4em; font-size: 1.3em">
-                <a href="/u/<%= friend.id %>">
-                  <%= friend.name %>
-                </a>
-              </h5>
-            </div>
-            <div class="one column" style="text-align: left;">
-              <% if @user.id == current_user.id %>
-                <h5 style="margin-top: 0.2em">
-                  <%= link_to fa_icon('trash-o'), '/u/' + friend.id.to_s + '/remove/' + current_user.id.to_s, class: 'image-link', data: { confirm: 'Are you absolutely certain?' } %>
-                </h5>
-              <% end %>
-            </div>
+        <div class="row no-wrap">
+          <div class="two columns">
+            <a href="/u/<%= friend.id %>" class="image-link">
+              <%= image_tag avatar_url(friend), class: 'profile-picture' %>
+            </a>
           </div>
-        <% } %>
-      <% end %>
-    </div>
+          <div class="nine columns" style="text-align: left; overflow: hidden; white-space: nowrap;">
+            <h5>
+              <a href="/u/<%= friend.id %>">
+                <%= friend.name %>
+              </a>
+            </h5>
+          </div>
+          <div class="one column" style="text-align: left;">
+            <% if @user.id == current_user.id %>
+              <h5 style="margin-top: 0.2em">
+                <%= link_to fa_icon('trash-o'), '/u/' + friend.id.to_s + '/remove/' + current_user.id.to_s, class: 'image-link', data: { confirm: 'Are you absolutely certain?' } %>
+              </h5>
+            <% end %>
+          </div>
+        </div>
+      <% } %>
+    <% end %>
   </div>
 </div>

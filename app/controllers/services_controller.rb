@@ -42,7 +42,7 @@ class ServicesController < ApplicationController
 
   def update
     @service = Service.find_by id: params[:id], user_id: current_user.id
-   
+    
     if @service.update(service_params)
       redirect_to services_path
     else
