@@ -62,12 +62,14 @@
               <h5 style="margin-bottom: 0; margin-top: 0.5em" title="<%= @user.name %> has added a total of <%= number_with_precision w, precision: 0, delimiter: ',' %> <%= "word".pluralize w %> so far.">
                 Level
                 <% level = w.to_f/1000.to_f %>
+                <% percentage = ((w % 1000).to_f/1000.to_f * 100).round %>
                 <% if w < 1000 %>
                   <%= number_with_precision level, precision: 1, delimiter: ',' %>
                 <% else %>
                   <%= level.floor %>
                 <% end %>
               </h5>
+              <div class="progress" style="width: <%= percentage %>%;" title="<%= @user.name %> is <%= percentage %>% to the next level."></div>
               <span style="color: gray;">
                 for words added.
               </span>
@@ -77,6 +79,7 @@
             </div>
             <div class="four columns" style="text-align: left">
               <% w_familiar = if @words_familiar[l] then @words_familiar[l] else 0 end %>
+              <% percentage = ((w_familiar % 1000).to_f/1000.to_f * 100).round %>
               <h5 style="margin-bottom: 0; margin-top: 0.5em" title="<%= @user.name %> has rated a total of <%= number_with_precision w_familiar, precision: 0, delimiter: ',' %> <%= "word".pluralize w_familiar %> to be familiar to them (rating of three or above).">
                 Level
                 <% level = w_familiar.to_f/1000.to_f %>
@@ -86,6 +89,7 @@
                   <%= level.floor %>
                 <% end %>
               </h5>
+              <div class="progress" style="width: <%= percentage %>%;" title="<%= @user.name %> is <%= percentage %>% to the next level."></div>
               <span style="color: gray;">
                 for <alias title="Words with a rating of three or above are considered familiar. That is, you probably remember them more often than you forget them.">familiar words</alias>.
               </span>
