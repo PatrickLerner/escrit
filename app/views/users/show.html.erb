@@ -69,7 +69,9 @@
                   <%= level.floor %>
                 <% end %>
               </h5>
-              <div class="progress" style="width: <%= percentage %>%;" title="<%= @user.name %> is <%= percentage %>% to the next level."></div>
+              <div class="progress" title="<%= @user.name %> is <%= percentage %>% to the next level.">
+                <div class="current" style="width: <%= percentage %>%;" ></div>
+              </div>
               <span style="color: gray;">
                 for words added.
               </span>
@@ -89,7 +91,9 @@
                   <%= level.floor %>
                 <% end %>
               </h5>
-              <div class="progress" style="width: <%= percentage %>%;" title="<%= @user.name %> is <%= percentage %>% to the next level."></div>
+              <div class="progress" title="<%= @user.name %> is <%= percentage %>% to the next level.">
+                <div class="current" style="width: <%= percentage %>%;" ></div>
+              </div>
               <span style="color: gray;">
                 for <alias title="Words with a rating of three or above are considered familiar. That is, you probably remember them more often than you forget them.">familiar words</alias>.
               </span>
