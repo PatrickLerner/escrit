@@ -109,6 +109,7 @@ class TextsController < ApplicationController
       end
       @texts[category] = texts
     }
+    @texts = @texts.sort
 
     @compliment = ""
     if selected_language != nil and @word_count > 0
