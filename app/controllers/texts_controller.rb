@@ -15,6 +15,32 @@ class TextsController < ApplicationController
     render :text => cats.to_json
   end
 
+  def vocabulary
+    if params[:user] and current_user.admin?
+      user_id = params[:user]
+    else
+      user_id = current_user.id
+    end
+    @user = User.find_by id: user_id
+
+    @text = Text.find_by id: params[:id]
+    
+    if @text == nil or (@text.user_id != current_user.id and not current_user.admin? and not @text.public)
+      redirect_to texts_path
+    else
+      if @user.native_language_id != @text.language_id
+        uniq_words = (@text.raw_words + @text.raw_words_title + @text.raw_words_category).sort.uniq
+        @words = Word.find_create_bulk @text.language_id, uniq_words, @user.id
+        @words = @words.sort
+        @words.map { |k, w|
+          w.value.gsub! '..', ' ... '
+          w.value.gsub! '...', ' ... '
+          w.value.gsub! '_', ' '
+        }
+      end
+    end
+  end
+
   def copy
     @text = Text.find_by id: params[:id]
     

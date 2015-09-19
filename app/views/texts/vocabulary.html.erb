@@ -1,0 +1,61 @@
+<% content_for :title, 'Vocabulary: %s (%s)' % [@text.title, @text.category] %>
+
+<h5 style="font-size: 1.6rem; font-style: italic; margin-bottom: 0; padding-left: 0.3rem;">
+  <%= @text.category %>
+</h5>
+
+<h4 style="margin-bottom: 0rem;">
+  Vocabulary: <%= @text.title %>
+</h4>
+
+<hr style="margin-top: 0.5rem; margin-bottom: 2rem;" />
+
+<div class="row" style="margin-top: 0;">
+  <div class="two-thirds column">
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 40%">Word</th>
+          <th style="width: 50%">Note</th>
+          <th class="centered">Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @words.each { |r, w| %>
+          <% if w.rating > 0 and w.rating < 6 and w.note != '' %>
+            <tr class="rating-<%= w.rating %>" <% if w.rating == 5 %>style="display: none;"<% end %>>
+              <td><%= w.value %></td>
+              <td><%= w.note %></td>
+              <td style="text-align: center"><span class="s<%= w.rating %> word-list-rating" title="<%= [ "Looked it up once.", "This time I'll remember it.", "I'm getting it now.", "Seems easy at this point.", "Know it in my sleep."][w.rating - 1] %>"><%= w.rating %></span></td>
+            </tr>
+          <% end %>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+  <div class="one-third column">
+    <%= link_to fa_icon("chevron-left") + " Back", text_path(@text), class: 'button button-primary u-full-width', title: 'Back to Overview' %>
+    <hr style="margin: 1em 0" />
+    <div class="centered">
+      <label>Show words with ratings:</label>
+      <% 5.times { |i| %>
+        <span class="s<%= i + 1 %> vocabulary-rating" style="cursor: pointer; opacity: <%= if i == 4 then 0.3 else 1 end %>" title="<%= [ "Looked it up once.", "This time I'll remember it.", "I'm getting it now.", "Seems easy at this point.", "Know it in my sleep."][i] %>"><%= i + 1 %></span>
+      <% } %>
+    </div>
+    <hr style="margin: 1em 0" />
+    <p>Here you can find a list of all the words from the text that you annotated with a note. You can filter the listing using the buttons above to hide words you are more or less familiar with.</p>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('.vocabulary-rating').click(function (event) {
+      var rating = event.target.innerHTML;
+      $('.rating-' + rating).toggle();
+      if ($(this).css('opacity') == 1)
+        $(this).css('opacity', 0.3);
+      else
+        $(this).css('opacity', 1);
+    });
+  });
+</script>

@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get '/texts/:language/public', to: 'texts#index_public', :constraints => { :language => /.+/ }
   get '/texts/:id/edit', to: 'texts#edit', :constraints => { :id => /.+/ }
   get '/texts/:id/copy', to: 'texts#copy', :constraints => { :id => /.+/ }
+  get '/texts/:id/vocabulary', to: 'texts#vocabulary', :constraints => { :id => /.+/ }
   get '/texts/:language', to: 'texts#index', :constraints => { :language => /.+/ }
   resources :texts
   get '/words/:language/:id', to: 'words#show', :constraints => { :id => /.+/ }

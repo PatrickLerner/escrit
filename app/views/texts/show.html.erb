@@ -96,7 +96,11 @@
       <%= link_to fa_icon("clipboard") + " Copy", text_path(@text) + '/copy', class: 'button u-full-width', data: { confirm: 'Do you want to copy this text into your private library?' }, title: 'Make a copy of this text and add it to your personal text library.' %>
     <% end %>
 
+    <%= link_to fa_icon("list") + " Vocabulary", text_path(@text) + '/vocabulary', class: 'button u-full-width', title: 'Show all the words that occur in the text in a handy table.' %>
+
     <% if current_user.native_language_id != @text.language_id %>
+      <hr style="margin: 1em 0" />
+
       <div class="row" style="margin-bottom: 1rem;">
         <div class="one-half column" style="text-align: center">
           <%= link_to fa_icon("toggle-on") + " Show Colors", '#', class: 'toggle-link u-full-width', title: 'Toggle Colors', id: 'colorToggle' %>
