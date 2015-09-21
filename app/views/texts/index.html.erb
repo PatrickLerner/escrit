@@ -55,7 +55,7 @@
 
     <% else %>
 
-      <% if @texts == {} %>
+      <% if @texts == [] %>
         <% if @public %>
           <p>It appears that no public texts in <%= selected_language.name %> have been added yet.</p>
         <% elsif not @hidden %>
