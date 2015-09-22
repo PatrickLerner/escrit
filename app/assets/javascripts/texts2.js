@@ -47,8 +47,8 @@ function onlyUnique(value, index, self) {
 }
 
 function updateCounter() {
-	var nl = $('.s0.word').map (function () { return this.innerHTML.toLowerCase() }).get().filter(onlyUnique).length;
-	var total = $('.word').map (function () { return this.innerHTML.toLowerCase() }).get().filter(onlyUnique).length;
+	var nl = $('.s0.w').map (function () { return this.innerHTML.toLowerCase() }).get().filter(onlyUnique).length;
+	var total = $('.w').map (function () { return this.innerHTML.toLowerCase() }).get().filter(onlyUnique).length;
 	var rated = total - nl;
 
 	if (old_nl == -1 || (old_nl == 0 && nl != 0) || (old_nl != 0 && nl == 0))
@@ -64,8 +64,8 @@ function updateCounter() {
 
 	var sum = 0;
 	for (i = 1; i <= 5; i++)
-		sum += i * $('.s' + i + '.word').map (function () { return this.innerHTML.toLowerCase() }).get().filter(onlyUnique).length;
-	var count = $('.word').map (function () { return this.innerHTML.toLowerCase() }).get().filter(onlyUnique).length;
+		sum += i * $('.s' + i + '.w').map (function () { return this.innerHTML.toLowerCase() }).get().filter(onlyUnique).length;
+	var count = $('.w').map (function () { return this.innerHTML.toLowerCase() }).get().filter(onlyUnique).length;
 	var rating = (sum / count).toFixed(1);
 	$('#unratedWords').html(nl);
 	$('#unratedWords').attr('title', 'In this text you have ' + nl + ' unrated words and ' + rated + ' rated words from a total of ' + total + ' unique words.');

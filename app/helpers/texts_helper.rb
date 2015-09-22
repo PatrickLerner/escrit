@@ -57,11 +57,11 @@ module TextsHelper
       if words.keys.include?(wstrrep) and not (/https?:\/\/[\S]+/.match(wstrlow))
         w = words[wstrrep]
         if disabled_words
-          processed += '<span class="s' + w.rating.to_s + '">' + wstr + '</span>'
+          processed += '<span class="w s' + w.rating.to_s + '">' + wstr + '</span>'
         elsif wname != nil
-          processed += '<span class="word s' + w.rating.to_s + '" value="' + w.replacement_value(replacements) + '" title="' + wname + '">' + wstr + '</span>'
+          processed += '<span class="w word s' + w.rating.to_s + '" value="' + w.replacement_value(replacements) + '" title="' + wname + '">' + wstr + '</span>'
         else
-          processed += '<span class="word s' + w.rating.to_s + '" value="' + w.replacement_value(replacements) + '">' + wstr + '</span>'
+          processed += '<span class="w word s' + w.rating.to_s + '" value="' + w.replacement_value(replacements) + '">' + wstr + '</span>'
         end
       elsif /@https?:\/\/[\S]+/.match wstrlow and (wstrlow[-4..-1] == '.jpg' or wstrlow[-4..-1] == '.png')
         processed += '<div class="centered"><a href="' + wstr.mb_chars[1..-1] + '" data-lightbox="images" class="image-link"><img class="border" src="' + wstr.mb_chars[1..-1] + '" /></a></div>'
