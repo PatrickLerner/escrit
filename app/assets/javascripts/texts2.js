@@ -51,16 +51,19 @@ function updateCounter() {
 	var total = $('.w').map (function () { return this.innerHTML.toLowerCase() }).get().filter(onlyUnique).length;
 	var rated = total - nl;
 
-	if (old_nl == -1 || (old_nl == 0 && nl != 0) || (old_nl != 0 && nl == 0))
-		$.ajax({
-			type: 'PATCH',
-			url: document.URL,
-			data: {
-				'text[completed]': nl == 0
-			},
-			async: true
-		});
-	old_nl = nl;
+	var words = $('.word').length;
+	if (words > 0) {
+		if (old_nl == -1 || (old_nl == 0 && nl != 0) || (old_nl != 0 && nl == 0))
+			$.ajax({
+				type: 'PATCH',
+				url: document.URL,
+				data: {
+					'text[completed]': nl == 0
+				},
+				async: true
+			});
+		old_nl = nl;
+	}
 
 	var sum = 0;
 	for (i = 1; i <= 5; i++)
