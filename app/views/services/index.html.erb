@@ -13,7 +13,15 @@
      
       <% @services.each do |service| %>
         <tr>
-          <td><%= link_to service.name, edit_service_path(service), title: 'Edit Service Entry' %></td>
+          <% if service.enabled %>
+            <td>
+              <%= link_to service.name, edit_service_path(service), title: 'Edit Service Entry' %>
+            </td>
+          <% else %>
+            <td class="disabled_entry">
+              (<%= link_to service.name, edit_service_path(service), title: 'Edit Service Entry' %>)
+            </td>
+          <% end %>
           <td><%= service.short_name %></td>
           <td><%= if service.language then service.language.name else "All" end %></td>
         </tr>
