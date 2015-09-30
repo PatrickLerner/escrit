@@ -34,6 +34,13 @@
       <p class="warning">
         Looks like your URL Mask does not contain a place holder, {query}. It will probably not work this way.
       </p>
+
+      <label>
+        <%= f.check_box :enabled, :checked => 'checked' %>
+        <span>
+          Enable this service for usage when reading text.
+        </span>
+      </label>
     </div>
     <div class="one-third column">
       <div class="row">

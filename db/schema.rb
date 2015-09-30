@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150824175431) do
+ActiveRecord::Schema.define(version: 20150930112516) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "buddies", force: true do |t|
     t.integer  "origin_id"
@@ -20,27 +23,27 @@ ActiveRecord::Schema.define(version: 20150824175431) do
     t.datetime "updated_at"
   end
 
-  add_index "buddies", ["destination_id"], name: "index_buddies_on_destination_id"
-  add_index "buddies", ["origin_id"], name: "index_buddies_on_origin_id"
+  add_index "buddies", ["destination_id"], name: "index_buddies_on_destination_id", using: :btree
+  add_index "buddies", ["origin_id"], name: "index_buddies_on_origin_id", using: :btree
 
   create_table "categories", force: true do |t|
-    t.string   "title"
+    t.text     "title"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "language_id"
   end
 
-  add_index "categories", ["language_id"], name: "index_categories_on_language_id"
+  add_index "categories", ["language_id"], name: "index_categories_on_language_id", using: :btree
 
   create_table "compliments", force: true do |t|
-    t.string   "value"
+    t.text     "value"
     t.integer  "language_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "languages", force: true do |t|
-    t.string   "name"
+    t.text     "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -53,22 +56,23 @@ ActiveRecord::Schema.define(version: 20150824175431) do
     t.datetime "updated_at"
   end
 
-  add_index "replacements", ["language_id"], name: "index_replacements_on_language_id"
+  add_index "replacements", ["language_id"], name: "index_replacements_on_language_id", using: :btree
 
   create_table "services", force: true do |t|
-    t.string   "name"
-    t.string   "short_name"
-    t.string   "url"
+    t.text     "name"
+    t.text     "short_name"
+    t.text     "url"
     t.integer  "language_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.boolean  "enabled"
   end
 
-  add_index "services", ["language_id"], name: "index_services_on_language_id"
+  add_index "services", ["language_id"], name: "index_services_on_language_id", using: :btree
 
   create_table "texts", force: true do |t|
-    t.string   "title"
+    t.text     "title"
     t.text     "content"
     t.text     "category"
     t.boolean  "completed"
@@ -82,35 +86,35 @@ ActiveRecord::Schema.define(version: 20150824175431) do
     t.boolean  "public"
   end
 
-  add_index "texts", ["category_id"], name: "index_texts_on_category_id"
-  add_index "texts", ["language_id"], name: "index_texts_on_language_id"
+  add_index "texts", ["category_id"], name: "index_texts_on_category_id", using: :btree
+  add_index "texts", ["language_id"], name: "index_texts_on_language_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
+    t.text     "email",                  default: "", null: false
+    t.text     "encrypted_password",     default: "", null: false
+    t.text     "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
+    t.text     "current_sign_in_ip"
+    t.text     "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "admin"
-    t.string   "name"
+    t.text     "name"
     t.text     "about"
     t.integer  "native_language_id"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["native_language_id"], name: "index_users_on_native_language_id"
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["native_language_id"], name: "index_users_on_native_language_id", using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "words", force: true do |t|
-    t.string   "value"
-    t.string   "note"
+    t.text     "value"
+    t.text     "note"
     t.integer  "rating"
     t.integer  "language_id"
     t.datetime "created_at"

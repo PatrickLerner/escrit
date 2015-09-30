@@ -187,7 +187,7 @@ class TextsController < ApplicationController
       @processed_title = process_text @text.split_words_title, words, @text.language_id, disabled_words
       @processed_category = process_text @text.split_words_category, words, @text.language_id, disabled_words
 
-      @services = Service.where('(language_id=? or language_id=0) and user_id = ?', @text.language_id, current_user.id)
+      @services = Service.where('(language_id=? or language_id=0) and user_id = ? and enabled = true', @text.language_id, current_user.id)
       @services = [] if @services == nil
     end
   end

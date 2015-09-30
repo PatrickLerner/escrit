@@ -52,6 +52,6 @@ class ServicesController < ApplicationController
 
   private
     def service_params
-      params.require(:service).permit(:name, :short_name, :url, :language_id)
+      params.require(:service).permit(:name, :short_name, :url, :language_id, :enabled)
     end
 end
