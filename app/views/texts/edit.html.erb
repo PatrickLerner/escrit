@@ -18,7 +18,7 @@
           </ul>
         </div>
       <% end %>
-      
+
       <div class="row">
         <div class="one-third column">
           <%= f.label :language_id %>
@@ -26,7 +26,7 @@
         </div>
         <div class="two-thirds column">
           <%= f.label :category %>
-          <%= f.text_field :category, placeholder: "Category", autocomplete: :off, :class => 'u-full-width' %>
+          <%= f.text_field :category, placeholder: "Category", autocomplete: :off, class: 'u-full-width', style: 'margin: 0' %>
         </div>
       </div>
 
@@ -40,7 +40,14 @@
         <strong>Character Count:</strong>
         <span id="character_count">0</span> / 10,000
       </p>
-      
+
+      <hr style="margin: 1rem 0" />
+
+      <label style="margin: 0; margin-top: 0.3em;">
+        <input id="text_bulk_update" name="text[bulk_update]" type="checkbox" value="1">
+        <span>Update archive status and rename category for all texts in this category</span>
+      </label>
+
       <%= f.check_box :hidden, style: "display: none" %>
       <%= f.check_box :public, style: "display: none" %>
     </div>

@@ -197,12 +197,15 @@ class TextsController < ApplicationController
 
     if text_params[:completed] and not current_user.id == @text.id
       render plain: "not allowed"
-    end
-
-    if not @text.public or current_user.admin?
-      if params[:public] and not current_user.admin?
-        params[:public] = false
+    elsif not @text.public or current_user.admin?
+      if text_params[:public] and not current_user.admin?
+        text_params[:public] = false
       end
+
+      if text_params[:bulk_update]
+        Text.where(category: @text.category, language_id: @text.language_id, public: @text.public, hidden: @text.hidden).update_all(category: text_params['category'], public: text_params['public'], hidden: text_params['hidden'])
+      end
+      params[:text].delete :bulk_update
       
       if @text.update(text_params)
         @text.category = @text.category.strip
@@ -225,6 +228,6 @@ class TextsController < ApplicationController
 
   private
     def text_params
-      params.require(:text).permit(:category, :title, :content, :language_id, :completed, :hidden, :public, :audio_url)
+      params.require(:text).permit(:category, :title, :content, :language_id, :completed, :hidden, :public, :audio_url, :bulk_update)
     end
 end
