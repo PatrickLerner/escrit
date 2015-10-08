@@ -3,13 +3,22 @@ class RegistrationController < Devise::RegistrationsController
 
   protected
     def add_account
+      german = Language.find_by(name: 'German').id
+      russian = Language.find_by(name: 'Russian').id
+      ukrainian = Language.find_by(name: 'Ukrainian').id
+
       if resource.persisted? # user is created successfuly
         Service.create!([
-          {name: "dict.cc EN<=>DE", short_name: "dict.cc", url: "http://www.dict.cc/?s={query}", language_id: 4, user_id: resource.id},
-          {name: "Forvo", short_name: "forvo", url: "http://forvo.com/search/{query}/", language_id: 0, user_id: resource.id},
-          {name: "Google Translator", short_name: "gtans", url: "https://translate.google.com/#auto/en/{query}", language_id: 0, user_id: resource.id},
-          {name: "English Wiktionary", short_name: "wikt", url: "http://en.wiktionary.org/wiki/{query}", language_id: 0, user_id: resource.id},
-          {name: "Yandex EN<=>RU", short_name: "yandex", url: "https://translate.yandex.com/?text={query}&lang=ru-en", language_id: 7, user_id: resource.id}
+          {name: "English Wiktionary", short_name: "wikt", url: "http://en.wiktionary.org/wiki/{query}", language_id: 0, user_id: resource.id, enabled: true},
+          {name: "Forvo", short_name: "forvo", url: "http://forvo.com/search/{query}/", language_id: 0, user_id: resource.id, enabled: true},
+          {name: "Google Translator", short_name: "gtans", url: "https://translate.google.com/#auto/en/{query}", language_id: 0, user_id: resource.id, enabled: true},
+          {name: "tatoeba", short_name: "tatoeba", url: "http://tatoeba.org/eng/sentences/search?query=%3D{query}&from=und&to=und", language_id: 0, user_id: resource.id, enabled: true},
+          {name: "dict.cc EN<=>DE", short_name: "dict.cc", url: "http://www.dict.cc/?s={query}", language_id: german, user_id: resource.id, enabled: true},
+          {name: "schoLingua.com", short_name: "sling", url: "http://www.scholingua.com/en/de/conjugation/{query}", language_id: german, user_id: resource.id, enabled: true},
+          {name: "Yandex Dictionary EN<=>RU", short_name: "ydict", url: "https://slovari.yandex.ru/{query}/en/", language_id: russian, user_id: resource.id, enabled: true},
+          {name: "Yandex EN<=>RU", short_name: "yandex", url: "https://translate.yandex.com/?text={query}&lang=ru-en", language_id: russian, user_id: resource.id, enabled: true},
+          {name: "bab.la", short_name: "bab.la", url: "http://en.bab.la/dictionary/russian-english/{query}", language_id: russian, user_id: resource.id, enabled: true},
+          {name: "Yandex EN<=>UA", short_name: "yandex", url: "https://translate.yandex.com/?text={query}&lang=uk-en", language_id: ukrainian, user_id: resource.id, enabled: true}
         ])
       end
     end
