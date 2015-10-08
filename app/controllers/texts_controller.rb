@@ -195,7 +195,7 @@ class TextsController < ApplicationController
   def update
     @text = Text.find_by :id => params[:id]
 
-    if text_params[:completed] and not current_user.id == @text.id
+    if params[:completed] and not current_user.id == @text.id
       render plain: "not allowed"
     elsif not @text.public or current_user.admin?
       if text_params[:public] and not current_user.admin?
