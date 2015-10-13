@@ -2,6 +2,7 @@ var last_word = "";
 var last_word_case = "";
 var needSave = false;
 var text_language;
+var no_patch = false;
 var description = [
 	"Never seen it before.",
 	"Looked it up once.",
@@ -52,7 +53,7 @@ function updateCounter() {
 	var rated = total - nl;
 
 	var words = $('.word').length;
-	if (words > 0) {
+	if (words > 0 && !no_patch) {
 		if (old_nl == -1 || (old_nl == 0 && nl != 0) || (old_nl != 0 && nl == 0))
 			$.ajax({
 				type: 'PATCH',
@@ -104,7 +105,7 @@ $(document).ready(function() {
 			$('.lookup #lword').focus();
 	});
 	
-	$('.word').click(function (event) {
+	var word_link = function (event) {
 		if (last_word != "" && needSave) {
 			$.ajax({
 				type: 'PATCH',
@@ -140,7 +141,9 @@ $(document).ready(function() {
 				needSave = false;
 			});
 		}
-	});
+	};
+
+	$('.word').click(word_link);
 
 	$('#colorToggle').click(function () {
 		showColors = !showColors;
@@ -296,6 +299,16 @@ $(document).ready(function() {
 		}
 		$('.lookup').fadeOut(400);
 		last_word = "";
+	});
+
+	$('#preview_btn').bind('click', function (evt) {
+		var text = $('#preview_text').val();
+		$.post("#", { text: text })
+			.done(function( data ) {
+				$('#text').html(data);
+				$('.word').click(word_link);
+			});
+		return false;
 	});
 });
 

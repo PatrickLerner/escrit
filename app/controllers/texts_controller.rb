@@ -1,6 +1,7 @@
 class TextsController < ApplicationController
   before_filter :authenticate_user!
   include TextsHelper
+  include WordsHelper
 
   #autocomplete :text, :category, :full => true
 
@@ -161,6 +162,30 @@ class TextsController < ApplicationController
 
   def new
     @text = Text.new
+  end
+
+  def reader
+    @services = Service.where('(language_id=? or language_id=0) and user_id = ? and enabled = true', selected_language.id, current_user.id)
+    @services = [] if @services == nil
+  end
+
+  def reader_preview
+    if params[:user] and current_user.admin?
+      user_id = params[:user]
+    else
+      user_id = current_user.id
+    end
+    user = User.find_by id: user_id
+    disabled_words = (user_id != current_user.id)
+
+    sp_words = WordsHelper.split_words params['text']
+
+    uniq_words = WordsHelper.raw_words(params['text']).sort.uniq
+    words = Word.find_create_bulk selected_language.id, uniq_words, user.id
+
+    processed_text = process_text sp_words, words, selected_language.id, disabled_words
+
+    render :text => processed_text
   end
 
   def show
