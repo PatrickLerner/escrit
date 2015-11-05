@@ -44,7 +44,6 @@
 .navbar-link {
   font-size: 11px;
   font-weight: 500;
-  margin-right: 35px;
   text-decoration: none;
   line-height: 4rem;
   color: #222;
@@ -114,12 +113,14 @@
     position: relative;
     float: left;
     margin-bottom: 0;
+    padding: 0 1em;
+    text-align: center;
 
     ul {
       padding: 0;
       position: absolute;
       top: 4rem;
-      left: -2rem;
+      left: -1px;
       width: 18rem;
       font-weight: normal;
       -webkit-box-shadow: none;
@@ -141,21 +142,28 @@
       .fa {
         display: inherit;
       }
+
+      li {
+        text-transform: none;
+        display: block; 
+        color: #222;
+        padding: 0;
+        margin: 3px 0rem;
+        width: 100%;
+        text-align: left;
+
+        .navbar-link {
+          line-height: 4rem;
+          width: 100%;
+          padding: 0 2rem;
+          display: inline-block;
+          font-weight: normal;
+        }
+      }
     }
     .fa {
       width: 1.2em;
       text-align: center;
-    }
-    ul li {
-      text-transform: none;
-      display: block; 
-      color: #222;
-      margin: 0;
-      padding: 0rem 2rem;
-      .navbar-link {
-        line-height: 4rem;
-        font-weight: normal;
-      }
     }
     &:hover ul {
       display: block;
@@ -178,7 +186,6 @@
   .navbar-link {
     font-size: 14px;
     font-weight: bold;
-    margin-right: 35px;
     text-decoration: none;
     line-height: 4rem;
     color: #444;
