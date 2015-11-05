@@ -29,9 +29,8 @@
           <% if @text and @text.language %>
             <% lang = "/" + @text.language.name.downcase %>
           <% end %>
-          <li class="navbar-item"><a class="navbar-link" href="/">escrit</a></li>
           <% if user_signed_in? %>
-            
+            <li class="navbar-item"><a class="navbar-link" href="/">Home</a></li>
             <li class="navbar-item">
               <% if controller_name == 'texts' and action_name == 'index'  %>
                 <% text_url = '/texts' %>
@@ -40,9 +39,9 @@
               <% end %>
               <a class="navbar-link" href="<%= text_url %>">Reading</a>
               <ul>
-                <li class="navbar-item"><a class="navbar-link" href="<%= text_url %>"><%= fa_icon('list-alt') %> Your Texts</a></li>
+                <li class="navbar-item"><a class="navbar-link" href="<%= text_url %>"><%= fa_icon('book') %> Texts</a></li>
                 <li class="navbar-item"><a class="navbar-link" href="/statistics<%= lang %>"><%= fa_icon("bar-chart") %> Statistics</a></li>
-                <li class="navbar-item"><a class="navbar-link" href="/words<%= lang %>"><%= fa_icon("list") %> List of Words</a></li>
+                <li class="navbar-item"><a class="navbar-link" href="/words<%= lang %>"><%= fa_icon("list") %> Word List</a></li>
               </ul>
             </li>
           <% end %>
