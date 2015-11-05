@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title><%= page_title.html_safe %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!--<link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">-->
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -31,18 +31,32 @@
           <% end %>
           <li class="navbar-item"><a class="navbar-link" href="/">escrit</a></li>
           <% if user_signed_in? %>
-            <% if controller_name == 'texts' and action_name == 'index'  %>
-              <li class="navbar-item"><a class="navbar-link" href="/texts">Texts</a></li>
-            <% else %>
-              <li class="navbar-item"><a class="navbar-link" href="/texts<%= lang %>">Texts</a></li>
-            <% end %>
-            <li class="navbar-item"><a class="navbar-link" href="/statistics<%= lang %>">Statistics</a></li>
-            <li class="navbar-item"><a class="navbar-link" href="/settings">More...</a></li>
+            
+            <li class="navbar-item">
+              <% if controller_name == 'texts' and action_name == 'index'  %>
+                <% text_url = '/texts' %>
+              <% else %>
+                <% text_url = '/texts' + lang %>
+              <% end %>
+              <a class="navbar-link" href="<%= text_url %>">Reading</a>
+              <ul>
+                <li class="navbar-item"><a class="navbar-link" href="<%= text_url %>"><%= fa_icon('list-alt') %> Your Texts</a></li>
+                <li class="navbar-item"><a class="navbar-link" href="/statistics<%= lang %>"><%= fa_icon("bar-chart") %> Statistics</a></li>
+                <li class="navbar-item"><a class="navbar-link" href="/words<%= lang %>"><%= fa_icon("list") %> List of Words</a></li>
+              </ul>
+            </li>
           <% end %>
           <li class="navbar-item" style="float: right;">
             <% if user_signed_in? %>
-              <%= link_to fa_icon("user") + ' ' + current_user.name, '/u/' + current_user.id.to_s, class: 'navbar-link' %>
-              <%= link_to fa_icon("sign-out") + " Logout", :destroy_user_session, method: :delete, class: 'navbar-link' %>
+              <%= link_to current_user.name, '/u/' + current_user.id.to_s, class: 'navbar-link' %>
+              <ul>
+                <li><%= link_to fa_icon("user") + ' Your Profile', '/u/' + current_user.id.to_s, class: 'navbar-link' %></li>
+                <li><a class="navbar-link" href="/settings"><%= fa_icon("wrench") %> Settings</a></li>
+                <li><a href="/help" class="navbar-link" ><%= fa_icon("life-ring") %> Help</a></li>
+                <li>
+                  <%= link_to fa_icon("sign-out") + " Logout", :destroy_user_session, method: :delete, class: 'navbar-link' %>
+                </li>
+              </ul>
             <% else %>
               <%= link_to fa_icon("sign-in") + " Login", new_user_session_path, class: 'navbar-link' %>
             <% end %>
