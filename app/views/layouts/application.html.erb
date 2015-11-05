@@ -37,7 +37,7 @@
               <% else %>
                 <% text_url = '/texts' + lang %>
               <% end %>
-              <a class="navbar-link" href="<%= text_url %>">Reading</a>
+              <a class="navbar-link navbar-submenu" href="<%= text_url %>">Reading</a>
               <ul>
                 <li class="navbar-item"><a class="navbar-link" href="<%= text_url %>"><%= fa_icon('book') %> Texts</a></li>
                 <li class="navbar-item"><a class="navbar-link" href="/statistics<%= lang %>"><%= fa_icon("bar-chart") %> Statistics</a></li>
@@ -45,14 +45,14 @@
               </ul>
             </li>
           <% end %>
-          <li class="navbar-item" style="float: right;">
+          <li class="navbar-item navbar-user">
             <% if user_signed_in? %>
-              <%= link_to current_user.name, '/u/' + current_user.id.to_s, class: 'navbar-link' %>
+              <%= link_to current_user.name, '/u/' + current_user.id.to_s, class: 'navbar-link navbar-submenu' %>
               <ul>
-                <li><%= link_to fa_icon("user") + ' Your Profile', '/u/' + current_user.id.to_s, class: 'navbar-link' %></li>
-                <li><a class="navbar-link" href="/settings"><%= fa_icon("wrench") %> Settings</a></li>
-                <li><a href="/help" class="navbar-link" ><%= fa_icon("life-ring") %> Help</a></li>
-                <li>
+                <li class="navbar-item"><%= link_to fa_icon("user") + ' Your Profile', '/u/' + current_user.id.to_s, class: 'navbar-link' %></li>
+                <li class="navbar-item"><a class="navbar-link" href="/settings"><%= fa_icon("wrench") %> Settings</a></li>
+                <li class="navbar-item"><a href="/help" class="navbar-link" ><%= fa_icon("life-ring") %> Help</a></li>
+                <li class="navbar-item">
                   <%= link_to fa_icon("sign-out") + " Logout", :destroy_user_session, method: :delete, class: 'navbar-link' %>
                 </li>
               </ul>
