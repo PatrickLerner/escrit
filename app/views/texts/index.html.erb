@@ -44,7 +44,7 @@
             <% op.in_groups(4, false).to_a.each { |splice| %>
               <div class="three columns">
                 <% splice.each { |lang| %>
-                  <%= link_to image_tag('flags/' +  lang.downcase + '.png', style: 'height: 40px; margin-bottom: 0.5em') + '<br>'.html_safe + lang, '/texts/' + lang.downcase, class: 'button u-full-width', style: 'line-height: 1em; height: auto; padding: 1em 0;' %>
+                  <%= link_to image_tag('flags/' +  lang.downcase + '.png', style: 'height: 30px; margin-bottom: 0.5em') + '<br>'.html_safe + lang, '/texts/' + lang.downcase, class: 'button u-full-width', style: 'line-height: 1em; height: auto; padding: 1em 0;' %>
                 <% } %>
               </div>
             <% } %>
