@@ -36,22 +36,36 @@
     <% if selected_language == nil %>
 
       <% op = language_options(true).map { |l| l[0] } %>
-      <h6 class="docs-header">Select Language:</h6>
+
+      <% if op.length > 0 %>
+        <h6 class="docs-header">Read in one of your current languages...</h6>
+        <p>
+          <div class="row">
+            <% op.in_groups(4, false).to_a.each { |splice| %>
+              <div class="three columns">
+                <% splice.each { |lang| %>
+                  <%= link_to image_tag('flags/' +  lang.downcase + '.png') + '<br>'.html_safe + lang, '/texts/' + lang.downcase, class: 'button u-full-width', style: 'line-height: 0; height: auto; padding-bottom: 1.3em;' %>
+                <% } %>
+              </div>
+            <% } %>
+          </div>
+        </p>
+
+        <h6 class="docs-header">... or try reading in a new language ...</h6>
+      <% else %>
+        <h6 class="docs-header">Chose the language in which you want to read something...</h6>
+      <% end %>
       <p>
         <div class="row">
-          <% @languages.in_groups(4, false).to_a.each { |splice| %>
+          <% @languages.reject{|l| op.include? l.name }.in_groups(4, false).to_a.each { |splice| %>
             <div class="three columns">
               <% splice.each { |lang| %>
-                <% l = if not op.include? lang.name then "button-gray" else "" end %>
-                <%= link_to lang.name, '/texts/' + lang.name.downcase, class: 'button u-full-width ' + l %>
+                <%= link_to image_tag('flags/' +  lang.name.downcase + '.png', style: 'height: 16px; vertical-align: middle; ') + ' ' + lang.name, '/texts/' + lang.name.downcase, class: 'button u-full-width', style: 'padding: 0 1em;; text-align: left;' %>
               <% } %>
             </div>
           <% } %>
         </div>
       </p>
-      <h6 class="docs-header">How does this work?</h6>
-      <p>In this section of the website you can add and read texts which you are interested in reading. Just pick the language you are interested in studying from the list and begin to add some texts or look through the publically available texts.</p>
-      <p>If you need material, look for easy texts online, try to read news or maybe the lyrics to your favorite song. Many classical texts are available online, or you could try your hand at reading about interesting things from wikipedia. Or, if you want to keep it simple, you can add texts from your text book or class.</p>
 
     <% else %>
 
