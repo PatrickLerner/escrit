@@ -1,7 +1,7 @@
 module ApplicationHelper
   # Create the page title based on the information supplied by the view template
   def page_title(separator = " – ")
-    [content_for(:title), 'escrit'].compact.join(separator)
+    [content_for(:title), 'escrit.еu'].compact.join(separator)
   end
   
   # converts a utf8 string into lower case
