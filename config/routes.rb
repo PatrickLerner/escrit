@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
   get '/cookies', to: 'welcome#cookie_policy'
+  get '/home', to: 'welcome#home'
   get '/legal', to: 'welcome#legal_notice'
 
   resources :languages

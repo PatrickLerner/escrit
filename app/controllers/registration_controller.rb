@@ -23,6 +23,8 @@ class RegistrationController < Devise::RegistrationsController
       end
     end
 
+
+
     def after_update_path_for(resource)
       '/u/' + resource.id.to_s
     end

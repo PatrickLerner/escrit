@@ -8,4 +8,8 @@ class WelcomeController < ApplicationController
 
   def legal_notice
   end
+
+  def home
+    @user = current_user
+  end
 end

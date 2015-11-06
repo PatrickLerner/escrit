@@ -30,7 +30,7 @@
             <% lang = "/" + @text.language.name.downcase %>
           <% end %>
           <% if user_signed_in? %>
-            <li class="navbar-item"><a class="navbar-link" href="/">Home</a></li>
+            <li class="navbar-item"><a class="navbar-link" href="/home">Home</a></li>
             <li class="navbar-item">
               <% if controller_name == 'texts' and action_name == 'index'  %>
                 <% text_url = '/texts' %>

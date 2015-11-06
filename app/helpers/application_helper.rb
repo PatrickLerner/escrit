@@ -20,7 +20,7 @@ module ApplicationHelper
       default_url = root_url + image_path("default-profile.png")
     else
       # for testing environments use a publically hosted one
-      default_url = "http://i.imgur.com/1scmzd5.png"
+      default_url = "http://i.imgur.com/Sp2eIpR.png"
     end
     # generate id
     gravatar_id = Digest::MD5.hexdigest(user.email.downcase)

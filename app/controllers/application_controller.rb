@@ -11,4 +11,8 @@ class ApplicationController < ActionController::Base
       redirect_to 'http://escrit.eu' + request.fullpath
     end
   end
+
+  def after_sign_in_path_for(resource)
+    '/home'
+  end
 end
