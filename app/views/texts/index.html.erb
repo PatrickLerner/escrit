@@ -9,13 +9,6 @@
 <div class="row">
   <div class="two-thirds column">
     <h4>
-      <% if @hidden %>
-        Your Archived
-      <% elsif @public %>
-        Public
-      <% else %>
-        Your
-      <% end %>
       <% if selected_language %>
         <%= selected_language.name %>
       <% end %>
@@ -68,6 +61,26 @@
       </p>
 
     <% else %>
+      <div class="row">
+        <div class="nine columns">
+          <b>Show:</b>
+          <span style="margin-left: 2em; <% if not @public and not @hidden %>font-weight: bold<% end %>">
+            <%= link_to 'Private Texts', "/texts/" + selected_language.name.downcase, title: 'Show currently active texts.' %>
+          </span>
+
+          <span style="margin-left: 2em; <% if @hidden %>font-weight: bold<% end %>">
+            <%= link_to 'Archived Texts', "/texts/" + selected_language.name.downcase + "/archive", title: 'Show archived texts.' %>
+          </span>
+
+          <span style="margin-left: 2em; <% if @public %>font-weight: bold<% end %>">
+            <%= link_to 'Public Texts', "/texts/" + selected_language.name.downcase + "/public", title: 'Show public texts.' %>
+          </span>
+        </div>
+        <div class="three columns">
+          <% new_url = if selected_language then "/texts/" + selected_language.name.downcase + "/new" else new_text_path end %>
+          <%= link_to fa_icon("plus") + ' New Text', new_url, class: 'button button-primary u-full-width', title: 'Add a new text' %>
+        </div>
+      </div>
 
       <% if @texts == [] %>
         <% if @public %>
@@ -141,36 +154,11 @@
     <% end %>
   </div>
   <div class="one-third column">
-    <% new_url = if selected_language then "/texts/" + selected_language.name.downcase + "/new" else new_text_path end %>
     <% if selection == nil %>
       <%= image_tag "globe.png", class: "u-full-width" %>
     <% else %>
-      <div class="button-group">
-        <%= link_to fa_icon("plus") + ' Add New Text', new_url, class: 'button button-primary u-full-width', title: 'Add a new text' %>
-        <%= link_to fa_icon("magic") + ' Quick Reader', '/texts/' + selected_language.name.downcase + '/reader', class: 'button u-full-width', title: 'Quickly read a text without adding it to the library.' %>
-      </div>
 
-      <hr style="margin: 1em 0;" />
-
-      <div class="button-group">
-        <% if not @public and not @hidden %>
-          <%= link_to 'Your Texts', "/texts/" + selected_language.name.downcase, class: 'button button-primary u-full-width', title: 'Show currently active texts.' %>
-        <% else %>
-          <%= link_to 'Your Texts', "/texts/" + selected_language.name.downcase, class: 'button u-full-width', title: 'Show currently active texts.' %>
-        <% end %>
-
-        <% if @hidden %>
-          <%= link_to 'Your Archived Texts', "/texts/" + selected_language.name.downcase + "/archive", class: 'button button-primary u-full-width', title: 'Show archived texts.' %>
-        <% else %>
-          <%= link_to 'Your Archived Texts', "/texts/" + selected_language.name.downcase + "/archive", class: 'button u-full-width', title: 'Show archived texts.' %>
-        <% end %>
-
-        <% if @public %>
-          <%= link_to 'Public Texts', "/texts/" + selected_language.name.downcase + "/public", class: 'button button-primary u-full-width', title: 'Show public texts.' %>
-        <% else %>
-          <%= link_to 'Public Texts', "/texts/" + selected_language.name.downcase + "/public", class: 'button u-full-width', title: 'Show public texts.' %>
-        <% end %>
-      </div>
+    <%= image_tag 'sidebar/' + selected_language.name.downcase + '.png', class: 'u-full-width' %>
 
     <% end %>
 
