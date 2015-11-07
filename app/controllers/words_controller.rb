@@ -5,9 +5,16 @@ class WordsController < ApplicationController
 
   def index
     if params[:language]
+      @search_term = params['q']
       lang = Language.where("lower(name) = ?", params[:language].downcase)[0]
       @language_name = lang.name
-      @words = Word.paginate(:page => params[:page], :per_page => 250).where 'user_id = ? and rating < 6 and language_id = ?', current_user.id, lang.id
+
+      if @search_term == nil || @search_term.split == ''
+        @words = Word.paginate(:page => params[:page], :per_page => 250).where 'user_id = ? and rating < 6 and language_id = ?', current_user.id, lang.id
+      else
+        @words = Word.paginate(:page => params[:page], :per_page => 250).where 'user_id = ? and rating < 6 and language_id = ? and (value ilike ? or note ilike ?)', current_user.id, lang.id, "%#{@search_term}%", "%#{@search_term}%"
+      end
+
       @words.map { |w|
         w.value.gsub! '..', ' ... '
         w.value.gsub! '...', ' ... '

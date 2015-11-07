@@ -12,8 +12,19 @@
       <p>Please select in the sidebar the language for which you are interested in seeing your saved words of.</p>
     <% else %>
       <% if @words.count == 0 %>
-        <p>You seem to have no words in <%= @language_name %> yet. If you want to see your words in a different language, select it in the sidebar.</p>
+        <% if @search_term == nil || @search_term.split == '' %>
+          <p>You seem to have no words in <%= @language_name %> yet. If you want to see your words in a different language, select it in the sidebar.</p>
+        <% else %>
+          <form action="/words/<%= @language_name.downcase %>" method="get">
+            <input type="text" name="q" class="u-full-width" placeholder="Search for a word" value="<%= @search_term %>" autocomplete="off">
+          </form>
+          <p>No <%= @language_name %> words match your search phrase "<%= @search_term %>".</p>
+        <% end %>
       <% else %>
+        <form action="/words/<%= @language_name.downcase %>" method="get">
+          <input type="text" name="q" class="u-full-width" placeholder="Search for a word" value="<%= @search_term %>" autocomplete="off">
+        </form>
+
         <%= will_paginate @words, class: 'pagination' %>
         <div class="pagination_info">
           <%= page_entries_info @words %>
