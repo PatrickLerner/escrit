@@ -3,17 +3,17 @@
 <h4>Help</h4>
 
 <div class="row">
-  <div class="two-thirds column">
-    <div class="row">
-      <div class="one-half column centered">
-        <%= link_to fa_icon("edit") + " Text Formatting", '/help/format', class: 'button u-full-width', title: 'Formatting Help' %>
-      </div>
-      <div class="one-half column centered">
-        <%= link_to fa_icon("keyboard-o") + " Keyboard Shortcuts", '/help/shortcuts', class: 'button u-full-width', title: 'Formatting Help' %>
-      </div>
-    </div>
+  <div class="one-half column">
+    <h6 class="docs-header">Reading texts</h6>
+    <ul>
+      <li><%= link_to "How do I use keyboard shortcuts?", '/help/shortcuts' %></li>
+      <li><%= link_to "What is the idea behind reading texts?", "/help/reading" %></li>
+    </ul>
   </div>
-  <div class="one-third column">
-    <p>This section is still in construction, but here you will find help to a variety of topics of how to use and utilize this website.</p>
+  <div class="one-half column">
+    <h6 class="docs-header">Adding new texts</h6>
+    <ul>
+      <li><%= link_to "How do I format a text?", '/help/format' %></li>
+    </ul>
   </div>
 </div>
