@@ -4,12 +4,23 @@
   <% content_for :title, 'List of Words' %>
 <% end %>
 
-<h4><%= @language_name %> Words</h4>
+<div class="row">
+  <div class="two-thirds column">
+    <h4><%= @language_name %> Word List</h4>
+  </div>
+  <div class="one-third column" style="text-align: right; vertical-align: middle;">
+    <% if selected_language != nil %>
+      <a href="/words" class="toggle-link">
+        <%= fa_icon 'language' %> Other Languages
+      </a>
+    <% end %>
+  </div>
+</div>
 
 <div class="row">
   <div class="two-thirds column">
     <% if not @language_name %>
-      <p>Please select in the sidebar the language for which you are interested in seeing your saved words of.</p>
+      <%= render 'texts/language_choice', url_prefix: '/words' %>
     <% else %>
       <% if @words.count == 0 %>
         <% if @search_term == nil || @search_term.split == '' %>
@@ -73,8 +84,6 @@
     <% end %>
   </div>
   <div class="one-third column centered">
-    <%= link_to fa_icon("chevron-left") + " Back", settings_path, class: 'button button-primary u-full-width', title: 'Back to Overview' %>
-    <%= select_tag :language_words, options_for_select(["Select Language"] + language_options(true).map { |k| k[0] }, selected: @language_name), class: 'u-full-width' %>
     <%= image_tag "clipboard.png", class: "p80" %>
   </div>
 </div>

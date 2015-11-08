@@ -4,6 +4,8 @@ class WordsController < ApplicationController
   include TextsHelper
 
   def index
+    @languages = Language.order(:name).all
+    
     if params[:language]
       @search_term = params['q']
       lang = Language.where("lower(name) = ?", params[:language].downcase)[0]
