@@ -17,11 +17,11 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="two-thirds column">
-    <% if not @language_name %>
-      <%= render 'texts/language_choice', url_prefix: '/words' %>
-    <% else %>
+<% if selected_language == nil %>
+  <%= render 'texts/language_choice', url_prefix: '/words' %>
+<% else %>
+  <div class="row">
+    <div class="two-thirds column">
       <% if @words.count == 0 %>
         <% if @search_term == nil || @search_term.split == '' %>
           <p>You seem to have no words in <%= @language_name %> yet. If you want to see your words in a different language, select it in the sidebar.</p>
@@ -81,9 +81,9 @@
           <%= page_entries_info @words %>
         </div>
       <% end %>
-    <% end %>
+    </div>
+    <div class="one-third column centered">
+      <%= image_tag "clipboard.png", class: "p80" %>
+    </div>
   </div>
-  <div class="one-third column centered">
-    <%= image_tag "clipboard.png", class: "p80" %>
-  </div>
-</div>
+<% end %>

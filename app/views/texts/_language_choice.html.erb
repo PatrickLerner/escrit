@@ -1,31 +1,38 @@
-<% op = language_options(true).map { |l| l[0] } %>
+<div class="row">
+  <div class="two-thirds column">
+    <% op = language_options(true).map { |l| l[0] } %>
 
-<% if op.length > 0 %>
-  <h6 class="docs-header">Read in one of your current languages...</h6>
-  <p>
-    <div class="row">
-      <% op.in_groups(4, false).to_a.each { |splice| %>
-        <div class="three columns">
-          <% splice.each { |lang| %>
-            <%= link_to image_tag('flags/' +  lang.downcase + '.png', style: 'height: 30px; margin-bottom: 0.5em') + '<br>'.html_safe + lang, url_prefix + '/' + lang.downcase, class: 'button u-full-width', style: 'line-height: 1em; height: auto; padding: 1em 0;' %>
+    <% if op.length > 0 %>
+      <h6 class="docs-header">Select one of your current languages...</h6>
+      <p>
+        <div class="row">
+          <% op.in_groups(4, false).to_a.each { |splice| %>
+            <div class="three columns">
+              <% splice.each { |lang| %>
+                <%= link_to image_tag('flags/' +  lang.downcase + '.png', style: 'height: 30px; margin-bottom: 0.5em') + '<br>'.html_safe + lang, url_prefix + '/' + lang.downcase, class: 'button u-full-width', style: 'line-height: 1em; height: auto; padding: 1em 0;' %>
+              <% } %>
+            </div>
           <% } %>
         </div>
-      <% } %>
-    </div>
-  </p>
+      </p>
 
-  <h6 class="docs-header">... or try reading in a new language ...</h6>
-<% else %>
-  <h6 class="docs-header">Chose the language in which you want to read something...</h6>
-<% end %>
-<p>
-  <div class="row">
-    <% @languages.reject{|l| op.include? l.name }.in_groups(4, false).to_a.each { |splice| %>
-      <div class="three columns">
-        <% splice.each { |lang| %>
-          <%= link_to image_tag('flags/' +  lang.name.downcase + '.png', style: 'height: 16px; vertical-align: middle; margin-top: -5px;') + ' ' + lang.name, url_prefix + '/' + lang.name.downcase, class: 'button u-full-width', style: 'padding: 0 1em;; text-align: left;' %>
+      <h6 class="docs-header">... or try a new language ...</h6>
+    <% else %>
+      <h6 class="docs-header">Chose the language in which you want to start ...</h6>
+    <% end %>
+    <p>
+      <div class="row">
+        <% @languages.reject{|l| op.include? l.name }.in_groups(4, false).to_a.each { |splice| %>
+          <div class="three columns">
+            <% splice.each { |lang| %>
+              <%= link_to image_tag('flags/' +  lang.name.downcase + '.png', style: 'height: 16px; vertical-align: middle; margin-top: -5px;') + ' ' + lang.name, url_prefix + '/' + lang.name.downcase, class: 'button u-full-width', style: 'padding: 0 1em;; text-align: left;' %>
+            <% } %>
+          </div>
         <% } %>
       </div>
-    <% } %>
+    </p>
   </div>
-</p>
+  <div class="one-third column">
+      <%= image_tag "globe.png", class: "u-full-width" %>
+  </div>
+</div>

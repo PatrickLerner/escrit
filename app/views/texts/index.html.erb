@@ -24,13 +24,12 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="two-thirds column">
-    <% if selected_language == nil %>
+<% if selected_language == nil %>
+  <%= render 'texts/language_choice', url_prefix: '/texts' %>
+<% else %>
 
-      <%= render 'texts/language_choice', url_prefix: '/texts' %>
-
-    <% else %>
+  <div class="row">
+    <div class="two-thirds column">
       <div class="row">
         <div class="nine columns">
           <b>Show:</b>
@@ -121,18 +120,9 @@
             </div>
         <% end %>
       <% end %>
-    <% end %>
-  </div>
-  <div class="one-third column">
-    <% if selection == nil %>
-      <%= image_tag "globe.png", class: "u-full-width" %>
-    <% else %>
-
-    <%= image_tag 'sidebar/' + selected_language.name.downcase + '.png', class: 'u-full-width' %>
-
-    <% end %>
-
-    <% if selected_language != nil %>
+    </div>
+    <div class="one-third column">
+      <%= image_tag 'sidebar/' + selected_language.name.downcase + '.png', class: 'u-full-width' %>
 
       <hr style="margin: 1em 0;" />
 
@@ -179,7 +169,7 @@
           <b><%= @compliment %></b>
         </div>
       <% end %>
-
-    <% end %>
+    </div>
   </div>
-</div>
+
+<% end %>

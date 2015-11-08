@@ -46,32 +46,31 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="two-thirds column">
-    <% if not @no_selected %>
+<% if selected_language == nil %>
+  <%= render 'texts/language_choice', url_prefix: '/reader' %>
+<% else %>
+
+  <div class="row">
+    <div class="two-thirds column">
       <textarea style="width: 100%; height: 10em; margin-bottom: 0;" id="preview_text" placeholder="Write or paste your text in here."></textarea>
       <div style="margin: 0 0 1em 0; text-align: right;">
         <%= link_to fa_icon("eye") + ' Read Text', '', :class => 'button button-primary', :id => 'preview_btn' %>
       </div>
 
       <div id="text" style="margin-bottom: 5em;"></div>
-    <% else %>
-      <%= render 'texts/language_choice', url_prefix: '/reader' %>
-    <% end %>
-  </div>
-  <div class="one-third column">
-    <% if not @no_selected %>
+    </div>
+    <div class="one-third column">
       <%= image_tag 'sidebar/' + selected_language.name.downcase + '.png', class: 'u-full-width' %>
 
       <hr style="margin: 1em 0;" />
-    <% end %>
-    <p>The Quick Reader is a way to quickly read a text or a passage using escrit in the same way you would read a normal text, but it does not require you to add or save the text into the system first.</p>
-  </div>
-</div>
 
-<% if not @no_selected %>
+      <p>The Quick Reader is a way to quickly read a text or a passage using escrit in the same way you would read a normal text, but it does not require you to add or save the text into the system first.</p>
+    </div>
+  </div>
+
   <script type="text/javascript">
     text_language = '<%= selected_language.name %>';
     no_patch = true;
   </script>
+
 <% end %>
