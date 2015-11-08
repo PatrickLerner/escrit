@@ -18,8 +18,9 @@ Rails.application.routes.draw do
   get '/texts/:language/new', to: 'texts#new', :constraints => { :language => /.+/ }
   get '/texts/:language/archive', to: 'texts#index_hidden', :constraints => { :language => /.+/ }
   get '/texts/:language/public', to: 'texts#index_public', :constraints => { :language => /.+/ }
-  get '/texts/:language/reader', to: 'texts#reader', :constraints => { :language => /.+/ }
-  post '/texts/:language/reader', to: 'texts#reader_preview', :constraints => { :language => /.+/ }
+  get '/reader/:language', to: 'texts#reader', :constraints => { :language => /.+/ }
+  get '/reader/', to: 'texts#reader'
+  post '/reader/:language', to: 'texts#reader_preview', :constraints => { :language => /.+/ }
   get '/texts/:id/edit', to: 'texts#edit', :constraints => { :id => /.+/ }
   get '/texts/:id/copy', to: 'texts#copy', :constraints => { :id => /.+/ }
   get '/texts/:id/vocabulary', to: 'texts#vocabulary', :constraints => { :id => /.+/ }

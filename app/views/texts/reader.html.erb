@@ -33,31 +33,45 @@
   </div>
 </section>
 
-<h4>Quick Reader</h4>
+<div class="row">
+  <div class="two-thirds column">
+    <h4>Quick Reader</h4>
+  </div>
+  <div class="one-third column" style="text-align: right; vertical-align: middle;">
+    <% if not @no_selected %>
+      <a href="/texts" class="toggle-link">
+        <%= fa_icon 'language' %> Other Languages
+      </a>
+    <% end %>
+  </div>
+</div>
 
 <div class="row">
   <div class="two-thirds column">
-    <textarea style="width: 100%; height: 10em;" id="preview_text" placeholder="Write or paste your text in here."></textarea>
+    <% if not @no_selected %>
+      <textarea style="width: 100%; height: 10em; margin-bottom: 0;" id="preview_text" placeholder="Write or paste your text in here."></textarea>
+      <div style="margin: 0 0 1em 0; text-align: right;">
+        <%= link_to fa_icon("eye") + ' Read Text', '', :class => 'button button-primary', :id => 'preview_btn' %>
+      </div>
 
-    <div id="text"></div>
+      <div id="text" style="margin-bottom: 5em;"></div>
+    <% else %>
+      <%= render 'texts/language_choice', url_prefix: '/reader' %>
+    <% end %>
   </div>
   <div class="one-third column">
-    <div class="row">
-      <div class="one-half column">
-        <%= link_to fa_icon("eye") + ' See Text', '', :class => 'button button-primary u-full-width', :id => 'preview_btn' %>
-      </div>
-      <div class="one-half column">
-        <%= link_to fa_icon("ban") + ' Abort', '/texts/' + selected_language.name.downcase, class: 'button u-full-width', title: 'Go back to overview' %>
-      </div>
-    </div>
+    <% if not @no_selected %>
+      <%= image_tag 'sidebar/' + selected_language.name.downcase + '.png', class: 'u-full-width' %>
 
-    <hr style="margin: 1em 0;">
-
+      <hr style="margin: 1em 0;" />
+    <% end %>
     <p>The Quick Reader is a way to quickly read a text or a passage using escrit in the same way you would read a normal text, but it does not require you to add or save the text into the system first.</p>
   </div>
 </div>
 
-<script type="text/javascript">
-  text_language = '<%= selected_language.name %>';
-  no_patch = true;
-</script>
+<% if not @no_selected %>
+  <script type="text/javascript">
+    text_language = '<%= selected_language.name %>';
+    no_patch = true;
+  </script>
+<% end %>
