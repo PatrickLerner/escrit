@@ -105,6 +105,8 @@ initLookupLinks = ->
 
 initTextShow = ->
   text_language = $('#meta_language').html()
+  if $('#meta_no_patch')
+    no_patch = $('#meta_no_patch').html() == 'true'
   updateCounter()
   initLookupLinks()
 
@@ -146,43 +148,44 @@ onRatingsButton = (rating) ->
     needSave = false
   return
 
-initWordLinks = ->
-  word_link = (event) ->
-    if lastObject
-      lastObject.css 'border-bottom', ''
-    lastObject = $(event.target)
-    lastObject.css 'border-bottom', '1px solid red'
-    if last_word != '' and needSave
-      $.ajax
-        type: 'PATCH'
-        url: '/words/' + last_word
-        data:
-          'word[note]': $('#lword').val()
-          'word[language]': text_language
-        async: true
+word_link = (event) ->
+  if lastObject
+    lastObject.css 'border-bottom', ''
+  lastObject = $(event.target)
+  lastObject.css 'border-bottom', '1px solid red'
+  if last_word != '' and needSave
+    $.ajax
+      type: 'PATCH'
+      url: '/words/' + last_word
+      data:
+        'word[note]': $('#lword').val()
+        'word[language]': text_language
+      async: true
+    needSave = false
+  if last_word == $(event.target).attr('value')
+    $('.lookup').fadeOut 400
+    last_word = ''
+    lastObject.css 'border-bottom', ''
+  else
+    last_word = $(event.target).attr('value')
+    last_word_case = event.target.innerHTML
+    if $(event.target).attr('title')
+      last_word_case = $(event.target).attr('title')
+      last_word_case = last_word_case.replace('...', ' ... ')
+      last_word_case = last_word_case.replace('..', ' ... ')
+      last_word_case = last_word_case.replace('_', ' ')
+    $.getJSON '/words/' + text_language + '/' + last_word, (data) ->
+      $('.lookup').fadeIn 400
+      $('.lookup #rword').html last_word_case
+      $('.lookup #lword').val data['note']
+      refreshCurrentWordRating data['rating']
+      if !isMobile
+        $('.lookup #lword').focus()
       needSave = false
-    if last_word == $(event.target).attr('value')
-      $('.lookup').fadeOut 400
-      last_word = ''
-      lastObject.css 'border-bottom', ''
-    else
-      last_word = $(event.target).attr('value')
-      last_word_case = event.target.innerHTML
-      if $(event.target).attr('title')
-        last_word_case = $(event.target).attr('title')
-        last_word_case = last_word_case.replace('...', ' ... ')
-        last_word_case = last_word_case.replace('..', ' ... ')
-        last_word_case = last_word_case.replace('_', ' ')
-      $.getJSON '/words/' + text_language + '/' + last_word, (data) ->
-        $('.lookup').fadeIn 400
-        $('.lookup #rword').html last_word_case
-        $('.lookup #lword').val data['note']
-        refreshCurrentWordRating data['rating']
-        if !isMobile
-          $('.lookup #lword').focus()
-        needSave = false
-        return
-    return
+      return
+  return
+
+initWordLinks = ->
   $('.word').click word_link
 
 initToggleButton = (id, f) ->
@@ -223,6 +226,12 @@ publicToggle = (newState) ->
   else
     $('#text_public').prop 'checked', false
 
+initWordNumbers = ->
+  i = 0
+  for w in $('.w')
+    $(w).attr('nid', i++)
+
+
 $ ->
   detectMobile()
   initAudioJS()
@@ -230,15 +239,12 @@ $ ->
   initTextNewAndEdit()
   initTextShow()
   initWordLinks()
+  initWordNumbers()
 
   initToggleButton 'colorToggle', colorToggle
   initToggleButton 'underlineToggle', underlineToggle
   initToggleButton 'archiveToggle', archiveToggle
   initToggleButton 'publicToggle', publicToggle
-
-  i = 0
-  for w in $('.w')
-    $(w).attr('nid', i++)
 
   $('#buttons span').click (event) ->
     rating = event.target.innerHTML
@@ -340,6 +346,7 @@ $ ->
     $.post('#', text: text).done (data) ->
       $('#text').html data
       $('.word').click word_link
+      initWordNumbers()
       return
     false
   return
