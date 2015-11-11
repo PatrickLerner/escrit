@@ -110,28 +110,26 @@ initTextShow = ->
   updateCounter()
   initLookupLinks()
 
-refreshCurrentWordRating = (rating) ->
+refreshWordRating = (word, word_case, rating) ->
   currentRating = rating
   $('.word').each (i) ->
-    if $(this).attr('value').toLowerCase() == last_word.toLowerCase()
+    if $(this).attr('value').toLowerCase() == word.toLowerCase()
       i = 0
       while i <= 6
         $(this).removeClass 's' + i
         i++
       $(this).addClass 's' + rating
-    return
-  i = 0
-  while i <= 6
-    $('#buttons .s' + i).css 'opacity', '0.4'
-    i++
-  $('#buttons .s' + rating).css 'opacity', '1.0'
-  $('#description').html description[rating]
-  $('.lookup #links a').each (i) ->
-    t_href = $(this).attr('t_href')
-    $(this).attr 'href', t_href.replace('{query}', encodeURIComponent(last_word_case))
-    return
   updateCounter()
-  return
+  if last_word == word
+    i = 0
+    while i <= 6
+      $('#buttons .s' + i).css 'opacity', '0.4'
+      i++
+    $('#buttons .s' + rating).css 'opacity', '1.0'
+    $('#description').html description[rating]
+    $('.lookup #links a').each (i) ->
+      t_href = $(this).attr('t_href')
+      $(this).attr 'href', t_href.replace('{query}', encodeURIComponent(word_case))
 
 onRatingsButton = (rating) ->
   currentRating = rating
@@ -144,7 +142,7 @@ onRatingsButton = (rating) ->
         'word[language]': text_language
         'word[rating]': rating
       async: true
-    refreshCurrentWordRating rating
+    refreshWordRating last_word, last_word_case, rating
     needSave = false
   return
 
@@ -167,8 +165,10 @@ word_link = (event) ->
     last_word = ''
     lastObject.css 'border-bottom', ''
   else
-    last_word = $(event.target).attr('value')
-    last_word_case = event.target.innerHTML
+    cw = $(event.target).attr('value')
+    cw_case = event.target.innerHTML
+    last_word = cw
+    last_word_case = cw_case
     if $(event.target).attr('title')
       last_word_case = $(event.target).attr('title')
       last_word_case = last_word_case.replace('...', ' ... ')
@@ -176,9 +176,10 @@ word_link = (event) ->
       last_word_case = last_word_case.replace('_', ' ')
     $.getJSON '/words/' + text_language + '/' + last_word, (data) ->
       $('.lookup').fadeIn 400
-      $('.lookup #rword').html last_word_case
-      $('.lookup #lword').val data['note']
-      refreshCurrentWordRating data['rating']
+      if last_word == cw
+        $('.lookup #rword').html last_word_case
+        $('.lookup #lword').val data['note']
+      refreshWordRating cw, cw_case, data['rating']
       if !isMobile
         $('.lookup #lword').focus()
       needSave = false
