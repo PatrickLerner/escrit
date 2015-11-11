@@ -298,12 +298,13 @@ $ ->
       if keyCode == 38
         delta = -1
       nid = orig + delta
-      while (orig != nid) and ($('span.w[nid=' + nid + ']').attr('value') == $('span.w[nid=' + orig + ']').attr('value') or $('span.w[nid=' + nid + ']').hasClass('s5') or $('span.w[nid=' + nid + ']').hasClass('s6'))
-        nid += delta
-        if nid == $('.w').size()
-          nid = 0
-        if nid == -1
-          nid = $('.w').size() - 1
+      if not event.shiftKey
+        while (orig != nid) and ($('span.w[nid=' + nid + ']').attr('value') == $('span.w[nid=' + orig + ']').attr('value') or $('span.w[nid=' + nid + ']').hasClass('s5') or $('span.w[nid=' + nid + ']').hasClass('s6'))
+          nid += delta
+          if nid == $('.w').size()
+            nid = 0
+          if nid == -1
+            nid = $('.w').size() - 1
       if orig != nid
         $('span.w[nid=' + nid + ']').click()
       event.preventDefault()
