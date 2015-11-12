@@ -264,12 +264,12 @@ $ ->
     return
   $('.lookup #lword').keyup (event) ->
     keyCode = event.keyCode or event.which
-    if keyCode == 9
-      event.preventDefault()
     if keyCode == 40 or keyCode == 38
+      event.preventDefault()
+    if keyCode == 9
       orig = parseInt($(lastObject).attr('nid'))
       delta = 1
-      if keyCode == 38
+      if event.altKey
         delta = -1
       nid = orig + delta
       if not event.shiftKey
@@ -304,7 +304,8 @@ $ ->
     # tab key incrases rating by one
     if keyCode == 9
       event.preventDefault()
-      if !event.shiftKey
+    if (keyCode == 40 or keyCode == 38) and event.shiftKey
+      if keyCode == 38
         currentRating += 1
       else
         currentRating -= 1
@@ -313,6 +314,7 @@ $ ->
       if currentRating < 0
         currentRating = 6
       onRatingsButton currentRating
+      event.preventDefault()
     if keyCode == 48 and event.ctrlKey
       onRatingsButton 0
       event.preventDefault()
