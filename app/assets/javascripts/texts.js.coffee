@@ -1,5 +1,6 @@
 last_word = ''
 last_word_case = ''
+last_word_val = ''
 needSave = false
 text_language = undefined
 no_patch = false
@@ -179,6 +180,7 @@ word_link = (event) ->
       if last_word == cw
         $('.lookup #rword').html last_word_case
         $('.lookup #lword').val data['note']
+        last_word_val = data['note']
       refreshWordRating cw, cw_case, data['rating']
       if !isMobile
         $('.lookup #lword').focus()
@@ -264,6 +266,8 @@ $ ->
     keyCode = event.keyCode or event.which
     if keyCode == 9
       event.preventDefault()
+    if last_word_val != $('.lookup #lword').val()
+      needSave = true
     return
   $('.lookup #lword').keypress (event) ->
     keyCode = event.keyCode or event.which
@@ -280,6 +284,7 @@ $ ->
           'word[note]': $('#lword').val()
           'word[language]': text_language
         async: true
+      needSave = false
     # tab key incrases rating by one
     if keyCode == 9
       event.preventDefault()
