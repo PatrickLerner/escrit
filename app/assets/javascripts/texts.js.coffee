@@ -340,6 +340,7 @@ $ ->
           'word[language]': text_language
         async: true
       needSave = false
+    lastObject.css 'border-bottom', ''
     $('.lookup').fadeOut 400
     last_word = ''
     return
