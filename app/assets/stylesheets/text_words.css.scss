@@ -13,6 +13,7 @@ $s3_color3: #DCF3CA;
 $s4_color1: #D0E1F2;
 $s4_color2: #D0E1F2;
 $s4_color3: #D4DEEB;
+
 span.s0 {
   background-color: $s0_color1;
 }
@@ -76,6 +77,18 @@ span.s4 {
   background: linear-gradient($s4_color1, $s4_color2);
 }
 
+.current_word {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.8);;
+}
+
+h5 .current_word {
+  border-bottom-width: 2px;
+}
+
+h4 .current_word {
+  border-bottom-width: 3px;
+}
+
 span.underline.s0,
 span.underline.s1,
 span.underline.s2,
@@ -83,6 +96,7 @@ span.underline.s3,
 span.underline.s4,
 span.underline.s5 {
   background: none;
+  border-bottom: none;
 }
 
 span.underline.s0 {
@@ -113,4 +127,8 @@ span.underline.s4 {
   padding: 0 1px;
   margin-right: -1px;
   border-radius: 1px;
+}
+
+span.underline.current_word {
+  background: rgba(0, 0, 0, 0.2);
 }

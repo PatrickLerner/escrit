@@ -149,9 +149,9 @@ onRatingsButton = (rating) ->
 
 word_link = (event) ->
   if lastObject
-    lastObject.css 'border-bottom', ''
+    lastObject.removeClass 'current_word'
   lastObject = $(event.target)
-  lastObject.css 'border-bottom', '1px solid red'
+  lastObject.addClass 'current_word'
   if last_word != '' and needSave
     $.ajax
       type: 'PATCH'
@@ -164,7 +164,7 @@ word_link = (event) ->
   if last_word == $(event.target).attr('value')
     $('.lookup').fadeOut 400
     last_word = ''
-    lastObject.css 'border-bottom', ''
+    lastObject.removeClass 'current_word'
   else
     cw = $(event.target).attr('value')
     cw_case = event.target.innerHTML
@@ -266,6 +266,22 @@ $ ->
     keyCode = event.keyCode or event.which
     if keyCode == 9
       event.preventDefault()
+    if keyCode == 40 or keyCode == 38
+      orig = parseInt($(lastObject).attr('nid'))
+      delta = 1
+      if keyCode == 38
+        delta = -1
+      nid = orig + delta
+      if not event.shiftKey
+        while (orig != nid) and ($('span.w[nid=' + nid + ']').attr('value') == $('span.w[nid=' + orig + ']').attr('value') or $('span.w[nid=' + nid + ']').hasClass('s5') or $('span.w[nid=' + nid + ']').hasClass('s6'))
+          nid += delta
+          if nid == $('.w').size()
+            nid = 0
+          if nid == -1
+            nid = $('.w').size() - 1
+      if orig != nid
+        $('span.w[nid=' + nid + ']').click()
+      event.preventDefault()
     if last_word_val != $('.lookup #lword').val()
       needSave = true
     return
@@ -297,22 +313,6 @@ $ ->
       if currentRating < 0
         currentRating = 6
       onRatingsButton currentRating
-    if keyCode == 40 or keyCode == 38
-      orig = parseInt($(lastObject).attr('nid'))
-      delta = 1
-      if keyCode == 38
-        delta = -1
-      nid = orig + delta
-      if not event.shiftKey
-        while (orig != nid) and ($('span.w[nid=' + nid + ']').attr('value') == $('span.w[nid=' + orig + ']').attr('value') or $('span.w[nid=' + nid + ']').hasClass('s5') or $('span.w[nid=' + nid + ']').hasClass('s6'))
-          nid += delta
-          if nid == $('.w').size()
-            nid = 0
-          if nid == -1
-            nid = $('.w').size() - 1
-      if orig != nid
-        $('span.w[nid=' + nid + ']').click()
-      event.preventDefault()
     if keyCode == 48 and event.ctrlKey
       onRatingsButton 0
       event.preventDefault()
@@ -345,7 +345,7 @@ $ ->
           'word[language]': text_language
         async: true
       needSave = false
-    lastObject.css 'border-bottom', ''
+    lastObject.removeClass 'current_word'
     $('.lookup').fadeOut 400
     last_word = ''
     return
