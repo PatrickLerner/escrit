@@ -269,10 +269,10 @@ $ ->
     if keyCode == 9
       orig = parseInt($(lastObject).attr('nid'))
       delta = 1
-      if event.altKey
+      if event.shiftKey
         delta = -1
       nid = orig + delta
-      if not event.shiftKey
+      if not event.altKey
         while (orig != nid) and ($('span.w[nid=' + nid + ']').attr('value') == $('span.w[nid=' + orig + ']').attr('value') or $('span.w[nid=' + nid + ']').hasClass('s5') or $('span.w[nid=' + nid + ']').hasClass('s6'))
           nid += delta
           if nid == $('.w').size()
