@@ -286,10 +286,10 @@ $ ->
       event.preventDefault()
     if last_word_val != $('.lookup #lword').val()
       needSave = true
-      last_word_val = $('.lookup #lword').val()
       if last_word_val == '' and currentRating == 0
         currentRating = 1
         onRatingsButton currentRating
+      last_word_val = $('.lookup #lword').val()
     return
   $('.lookup #lword').keypress (event) ->
     keyCode = event.keyCode or event.which
