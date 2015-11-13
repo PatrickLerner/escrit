@@ -144,6 +144,7 @@ onRatingsButton = (rating) ->
         'word[rating]': rating
       async: true
     refreshWordRating last_word, last_word_case, rating
+    last_word_val = $('#lword').val()
     needSave = false
   return
 
@@ -160,6 +161,7 @@ word_link = (event) ->
         'word[note]': $('#lword').val()
         'word[language]': text_language
       async: true
+    last_word_val = $('#lword').val()
     needSave = false
   if last_word == $(event.target).attr('value')
     $('.lookup').fadeOut 400
@@ -304,6 +306,7 @@ $ ->
           'word[language]': text_language
         async: true
       needSave = false
+      last_word_val = $('#lword').val()
     # tab key incrases rating by one
     if keyCode == 9
       event.preventDefault()
@@ -349,6 +352,7 @@ $ ->
           'word[note]': $('#lword').val()
           'word[language]': text_language
         async: true
+      last_word_val = $('#lword').val()
       needSave = false
     lastObject.removeClass 'current_word'
     $('.lookup').fadeOut 400
