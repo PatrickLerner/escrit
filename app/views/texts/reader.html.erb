@@ -60,7 +60,11 @@
       <div id="text" style="margin-bottom: 5em;"></div>
     </div>
     <div class="one-third column">
-      <%= image_tag 'sidebar/' + selected_language.name.downcase + '.png', class: 'u-full-width' %>
+      <% image_path = "sidebar/#{selected_language.name.downcase}.png" %>
+      <% if not FileTest.exist?("#{Rails.root}/app/assets/images/#{image_path}") %>
+        <% image_path = 'sidebar/_null.png' %>
+      <% end %>
+      <%= image_tag image_path, class: 'u-full-width' %>
 
       <hr style="margin: 1em 0;" />
 

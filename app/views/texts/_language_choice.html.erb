@@ -9,7 +9,11 @@
           <% op.in_groups(4, false).to_a.each { |splice| %>
             <div class="three columns">
               <% splice.each { |lang| %>
-                <%= link_to image_tag('flags/' +  lang.downcase + '.png', style: 'height: 30px; margin-bottom: 0.5em') + '<br>'.html_safe + lang, url_prefix + '/' + lang.downcase, class: 'button u-full-width', style: 'line-height: 1em; height: auto; padding: 1em 0;' %>
+              <% image_path = "flags/#{lang.downcase}.png" %>
+              <% if not FileTest.exist?("#{Rails.root}/app/assets/images/#{image_path}") %>
+                <% image_path = "flags/_null.png" %>
+              <% end %>
+                <%= link_to image_tag(image_path, style: 'height: 30px; margin-bottom: 0.5em') + '<br>'.html_safe + lang, url_prefix + '/' + lang.downcase, class: 'button u-full-width', style: 'line-height: 1em; height: auto; padding: 1em 0;' %>
               <% } %>
             </div>
           <% } %>
@@ -25,7 +29,11 @@
         <% @languages.reject{|l| op.include? l.name }.in_groups(4, false).to_a.each { |splice| %>
           <div class="three columns">
             <% splice.each { |lang| %>
-              <%= link_to image_tag('flags/' +  lang.name.downcase + '.png', style: 'height: 16px; vertical-align: middle; margin-top: -5px;') + ' ' + lang.name, url_prefix + '/' + lang.name.downcase, class: 'button u-full-width', style: 'padding: 0 1em;; text-align: left;' %>
+              <% image_path = "flags/#{lang.name.downcase}.png" %>
+              <% if not FileTest.exist?("#{Rails.root}/app/assets/images/#{image_path}") %>
+                <% image_path = "flags/_null.png" %>
+              <% end %>
+              <%= link_to image_tag(image_path, style: 'height: 16px; vertical-align: middle; margin-top: -5px;') + ' ' + lang.name, url_prefix + '/' + lang.name.downcase, class: 'button u-full-width', style: 'padding: 0 1em;; text-align: left;' %>
             <% } %>
           </div>
         <% } %>
