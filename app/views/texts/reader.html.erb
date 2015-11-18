@@ -1,77 +1,34 @@
 <% content_for :title, 'Quick Reader' %>
 
-<section class="lookup">
-  <div class="container">
-    <div class="row">
-      <div class="eight columns">
-        <h4 id="rword">test</h4>
-        <input id="lword" value="test" />
-        <div id="links">
-          <%=
-            @services.each_with_index.map { |service, i|
-              "<a t_href='%s' target='%s' title='%s'>%s</a>" % [service.url, service.short_name + '_' + i.to_s, service.name, service.short_name]
-            }.join(' – ').html_safe
-          %>
-        </div>
-      </div>
-      <div class="four columns" style="vertical-align: middle">
-        <div style="text-align: right" id="close-container">
-          <span id="close-btn"><span>close</span> <%= fa_icon 'times' %></span>
-        </div>
-        <div id="buttons">
-          <span class="s6" title="Shortcut: Control + 6">/</span>
-          <span class="s0" title="Shortcut: Control + 0">0</span>
-          <span class="s1" title="Shortcut: Control + 1">1</span>
-          <span class="s2" title="Shortcut: Control + 2">2</span>
-          <span class="s3" title="Shortcut: Control + 3">3</span>
-          <span class="s4" title="Shortcut: Control + 4">4</span>
-          <span class="s5" title="Shortcut: Control + 5">5</span>
-          <div id="description"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<%= render 'texts/header', page_title: "#{current_language.name} Quick Reader", mini: true %>
 
-<div class="row">
-  <div class="two-thirds column">
-    <h4>Quick Reader</h4>
-  </div>
-  <div class="one-third column" style="text-align: right; vertical-align: middle;">
-    <% if not @no_selected %>
-      <a href="/reader" class="toggle-link">
-        <%= fa_icon 'language' %> Other Languages
-      </a>
-    <% end %>
-  </div>
-</div>
+<%= render 'texts/tagger' %>
 
 <% if selected_language == nil %>
   <%= render 'texts/language_choice', url_prefix: '/reader' %>
 <% else %>
 
+  <textarea style="width: 100%; height: 10em; margin-bottom: 0;" id="preview_text" placeholder="Write or paste your text in here."></textarea>
   <div class="row">
-    <div class="two-thirds column">
-      <textarea style="width: 100%; height: 10em; margin-bottom: 0;" id="preview_text" placeholder="Write or paste your text in here."></textarea>
-      <div style="margin: 0 0 1em 0; text-align: right;">
-        <%= link_to fa_icon("eye") + ' Read Text', '', :class => 'button button-primary', :id => 'preview_btn' %>
-      </div>
-
-      <div id="text" style="margin-bottom: 5em;"></div>
+    <div class="nine columns">
+      The Quick Reader is a way to quickly read a text or a passage using escrit in the same way you would read a normal text, but it does not require you to add or save the text into the system first.
     </div>
-    <div class="one-third column">
-      <% image_path = "sidebar/#{selected_language.name.downcase}.png" %>
-      <% if not FileTest.exist?("#{Rails.root}/app/assets/images/#{image_path}") %>
-        <% image_path = 'sidebar/_null.png' %>
-      <% end %>
-      <%= image_tag image_path, class: 'u-full-width' %>
-
-      <hr style="margin: 1em 0;" />
-
-      <p>The Quick Reader is a way to quickly read a text or a passage using escrit in the same way you would read a normal text, but it does not require you to add or save the text into the system first.</p>
+    <div class="three columns">
+      <%= link_to fa_icon("eye") + ' Read Text', '', :class => 'button button-primary u-full-width', :id => 'preview_btn' %>
     </div>
   </div>
+  <hr style="margin: 1em 0" />
 
+  <div class="row">
+    <div class="two columns">
+      &nbsp;
+    </div>
+    <div class="eight columns" id="text">
+    </div>
+    <div class="two columns">
+      &nbsp;
+    </div>
+  </div>
   <span id="meta_language" style="display: none;"><%= selected_language.name %></span>
   <span id="meta_no_patch" style="display: none;">true</span>
 
