@@ -26,12 +26,12 @@ class TextsController < ApplicationController
     else
       if @user.native_language_id != @text.language_id
         uniq_words = (@text.raw_words + @text.raw_words_title + @text.raw_words_category).sort.uniq
-        @words = Word.find_create_bulk @text.language_id, uniq_words, @user.id
+        @words = Note.find_create_bulk @text.language_id, uniq_words, @user.id
         @words = @words.sort
         @words.map { |k, w|
-          w.value.gsub! '..', ' ... '
-          w.value.gsub! '...', ' ... '
-          w.value.gsub! '_', ' '
+          w.word.value.gsub! '..', ' ... '
+          w.word.value.gsub! '...', ' ... '
+          w.word.value.gsub! '_', ' '
         }
       end
     end
