@@ -28,4 +28,31 @@ module ApplicationHelper
     # return full url
     "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}&d=#{CGI.escape(default_url)}"
   end
+
+  # Returns the currently selected language as an object (or nil if none
+  # is selected)
+  def current_language
+    if params[:language] != Rails.cache.fetch('selected_language')
+      Rails.cache.delete('selected_language')
+      Rails.cache.delete('selected_language_value')
+    end
+    Rails.cache.fetch('selected_language') do
+      if @text
+        @text.category.language.short_code
+      else
+        params[:language]
+      end
+    end
+    Rails.cache.fetch('selected_language_value') do
+      if params[:language]
+        Language.where("lower(short_code) = ?", params[:language].downcase)[0]
+      elsif @text
+        @text.category.language
+      end
+    end
+  end
+
+  def language_icon language
+    "sidebar/#{language.downcase}.png"
+  end
 end

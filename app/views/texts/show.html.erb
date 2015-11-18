@@ -1,127 +1,30 @@
 <% content_for :title, '%s (%s)' % [@text.title, @text.category] %>
 
-<section class="lookup">
-  <div class="container">
-    <div class="row">
-      <div class="eight columns">
-        <h4 id="rword">test</h4>
-        <input id="lword" value="test" />
-        <div id="links">
-          <%=
-            @services.each_with_index.map { |service, i|
-              "<a t_href='%s' target='%s' title='%s'>%s</a>" % [service.url, service.short_name + '_' + i.to_s, service.name, service.short_name]
-            }.join(' – ').html_safe
-          %>
-        </div>
-      </div>
-      <div class="four columns" style="vertical-align: middle">
-        <div style="text-align: right" id="close-container">
-          <span id="close-btn"><span>close</span> <%= fa_icon 'times' %></span>
-        </div>
-        <div id="buttons">
-          <span class="s6" title="Shortcut: Control + 6">/</span>
-          <span class="s0" title="Shortcut: Control + 0">0</span>
-          <span class="s1" title="Shortcut: Control + 1">1</span>
-          <span class="s2" title="Shortcut: Control + 2">2</span>
-          <span class="s3" title="Shortcut: Control + 3">3</span>
-          <span class="s4" title="Shortcut: Control + 4">4</span>
-          <span class="s5" title="Shortcut: Control + 5">5</span>
-          <div id="description"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<%= render 'texts/tagger' %>
+
+<header class="mini">
+  <%= image_tag 'book.png', class: 'larger' %>
+  <section>
+    <nav>
+      <%= link_to fa_icon("chevron-left") + ' Back', texts_path(@text.language.name), class: 'button', title: 'Go back to overview' %>
+      <%= link_to fa_icon("list") + ' Vocab', vocabulary_text_path(@text), class: 'button ', title: 'See vocabulary used in this text' %>
+      <%= link_to fa_icon("pencil") + ' Edit', edit_text_path(@text), class: 'button ', title: 'Edit the text' %>
+    </nav>
+    <h1><%= @processed_title %></h1>
+    <h6><%= @processed_category %></h6>
+  </section>
+</header>
 
 <div class="row">
-  <div class="two-thirds column">
-    <h5 style="font-size: 1.6rem; font-style: italic; margin-bottom: 0; padding-left: 0.3rem;">
-      <%= @processed_category %>
-    </h5>
-
-    <h4 style="margin-bottom: 0rem;">
-      <%= @processed_title %>
-    </h4>
+  <div class="two columns">
+    &nbsp;
   </div>
-  <div class="one-third column">
-    <% if current_user.native_language_id != @text.language_id %>
-      <div class="row no-wrap stat-block">
-        <div class="one-half column centered">
-          <h4 style="margin-bottom: 0;" id="unratedWords">
-            0
-          </h4>
-          unrated <span id="unratedWordsPlural">words</span>.
-        </div>
-        <div class="one-half column centered">
-          <h4 style="margin-bottom: 0;" id="averageRating">
-            0.0
-          </h4>
-          <alias title="The text's rating is the average rating across all words. It therefore is ranked from 0 (knowing no words at all) to 5 (knowing all words perfectly).">average rating</alias>.
-        </div>
-      </div>
-    <% end %>
-  </div>
-</div>
-
-<hr style="margin-top: 0.5rem; margin-bottom: 2rem;" />
-
-<div class="row" style="margin-top: 0;">
-  <div class="two-thirds column">
+  <div class="eight columns">
     <%= @processed_text %>
   </div>
-  <div class="one-third column">
-    <div class="row">
-      <div class="one-half column">
-        <% back_url = texts_path + "/" + @text.language.name.downcase %>
-        <% if @text.public %>
-          <% back_url += "/public" %>
-        <% elsif @text.hidden %>
-          <% back_url += "/archive" %>
-        <% end %>
-
-        <%= link_to fa_icon("chevron-left") + " Back", back_url, class: 'button button-primary u-full-width', title: 'Back to Overview' %>
-      </div>
-      <div class="one-half column">
-        <% if @text.is_allowed_to_update current_user and not @text.public %>
-          <%= link_to fa_icon("pencil") + " Edit", edit_text_path(@text), class: 'button u-full-width', title: 'Edit the Text' %>
-        <% elsif @text.public %>
-          <%= link_to fa_icon("clipboard") + " Copy", text_path(@text) + '/copy', class: 'button u-full-width', data: { confirm: 'Do you want to copy this text into your private library?' }, title: 'Make a copy of this text and add it to your personal text library.' %>
-        <% end %>
-      </div>
-    </div>
-
-    <% if @text.is_allowed_to_update current_user and @text.public %>
-      <%= link_to fa_icon("pencil") + " Edit", edit_text_path(@text), class: 'button u-full-width', title: 'Edit the Text' %>
-    <% elsif not @text.public and @text.user_id != current_user.id %>
-      <%= link_to fa_icon("clipboard") + " Copy", text_path(@text) + '/copy', class: 'button u-full-width', data: { confirm: 'Do you want to copy this text into your private library?' }, title: 'Make a copy of this text and add it to your personal text library.' %>
-    <% end %>
-
-    <%= link_to fa_icon("list") + " Vocabulary", text_path(@text) + '/vocabulary', class: 'button u-full-width', title: 'Show all the words that occur in the text in a handy table.' %>
-
-    <% if current_user.native_language_id != @text.language_id %>
-      <hr style="margin: 1em 0" />
-
-      <div class="row" style="margin-bottom: 1rem;">
-        <div class="one-half column" style="text-align: center">
-          <%= link_to fa_icon("toggle-on") + " Show Colors", '#', class: 'toggle-link u-full-width', title: 'Toggle Colors', id: 'colorToggle' %>
-        </div>
-        <div class="one-half column" style="text-align: center">
-          <%= link_to fa_icon("toggle-off") + " Only Underline", '#', class: 'toggle-link u-full-width', title: 'Toggle Underline or Full Color', id: 'underlineToggle' %>
-        </div>
-      </div>
-    <% end %>
-
-    <% if @text.public and @text.user %>
-      <hr style="margin: 1em 0;" />
-
-      <p style="font-size: 1.35rem; text-align: center; margin-bottom: 1rem;">
-        <b>Uploaded by:</b>
-        <a href="/u/<%= @text.user.id %>"><%= @text.user.name %></a>
-      </p>
-    <% end %>
+  <div class="two columns">
+    &nbsp;
   </div>
 </div>
-
-<br /><br /><br />
 
 <span id="meta_language" style="display: none;"><%= @text.language.name %></span>

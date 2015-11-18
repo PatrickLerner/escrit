@@ -3,8 +3,6 @@ class TextsController < ApplicationController
   include TextsHelper
   include WordsHelper
 
-  #autocomplete :text, :category, :full => true
-
   def autocomplete_text_category
     term = params[:term]
     if (params[:lang])
@@ -92,6 +90,10 @@ class TextsController < ApplicationController
     end
 
     redirect_to '/texts/' + @text.language.name
+  end
+
+  def index_language
+    @languages = Language.order(:name).all
   end
 
   def index hidden = false, public = false

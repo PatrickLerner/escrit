@@ -4,176 +4,148 @@
   <% content_for :title, '%s Texts' % [selected_language.name] %>
 <% end %>
 
-<% selection = if selected_language then selected_language.name else nil end %>
+<%= render 'texts/header', page_title: "#{current_language.name} Texts", mini: false %>
 
 <div class="row">
-  <div class="two-thirds column">
-    <h4>
-      <% if selected_language %>
-        <%= selected_language.name %>
+  <div class="nine columns">
+    <div class="button-group">
+      <% pr_class = 'button u-full-width' %>
+      <% ar_class = 'button u-full-width' %>
+      <% pu_class = 'button u-full-width' %>
+      <% if @public %>
+        <% pu_class += " button-primary" %>
+      <% elsif @hidden %>
+        <% ar_class += " button-primary" %>
+      <% else %>
+        <% pr_class += " button-primary" %>
       <% end %>
-      Texts
-    </h4>
+      <%= link_to 'Private', texts_path(selected_language.name.downcase), title: 'Show currently active texts.', class: pr_class %>
+      <%= link_to 'Archived', archived_texts_path(selected_language.name.downcase), title: 'Show currently active texts.', class: ar_class %>
+      <%= link_to 'Public', public_texts_path(selected_language.name.downcase), title: 'Show currently active texts.', class: pu_class %>
+    </div>
   </div>
-  <div class="one-third column" style="text-align: right; vertical-align: middle;">
-    <% if selected_language != nil %>
-      <a href="/texts" class="toggle-link">
-        <%= fa_icon 'language' %> Other Languages
-      </a>
-    <% end %>
+  <div class="three columns">
+    <%= link_to fa_icon('plus') + ' Add Text', new_text_path, title: 'Add a new text.', class: 'button button-primary u-full-width' %>
   </div>
 </div>
 
-<% if selected_language == nil %>
-  <%= render 'texts/language_choice', url_prefix: '/texts' %>
-<% else %>
-
-  <div class="row">
-    <div class="two-thirds column">
-      <div class="row">
-        <div class="nine columns">
-          <b>Show:</b>
-          <span style="margin-left: 2em; <% if not @public and not @hidden %>font-weight: bold<% end %>">
-            <%= link_to 'Private Texts', "/texts/" + selected_language.name.downcase, title: 'Show currently active texts.' %>
-          </span>
-
-          <span style="margin-left: 2em; <% if @hidden %>font-weight: bold<% end %>">
-            <%= link_to 'Archived Texts', "/texts/" + selected_language.name.downcase + "/archive", title: 'Show archived texts.' %>
-          </span>
-
-          <span style="margin-left: 2em; <% if @public %>font-weight: bold<% end %>">
-            <%= link_to 'Public Texts', "/texts/" + selected_language.name.downcase + "/public", title: 'Show public texts.' %>
-          </span>
-        </div>
-        <div class="three columns">
-          <% new_url = if selected_language then "/texts/" + selected_language.name.downcase + "/new" else new_text_path end %>
-          <%= link_to fa_icon("plus") + ' New Text', new_url, class: 'button button-primary u-full-width', title: 'Add a new text' %>
-        </div>
-      </div>
-
-      <% if @texts == [] %>
-        <% if @public %>
-          <p>It appears that no public texts in <%= selected_language.name %> have been added yet.</p>
-        <% elsif not @hidden %>
-          <p>It seems like you have not yet added any texts in <%= selected_language.name %>. Please feel free to add some that interest you. If you need inspiration, try looking online for newspapers, short stories, song lyrics or other media.</p>
-        <% else %>
-          <p>You seem to not have any archived texts in <%= selected_language.name %>.</p>
-        <% end %>
-
+<div class="row">
+  <div class="two-thirds column">
+    <% if @texts == [] %>
+      <% if @public %>
+        <p>It appears that no public texts in <%= selected_language.name %> have been added yet.</p>
+      <% elsif not @hidden %>
+        <p>It seems like you have not yet added any texts in <%= selected_language.name %>. Please feel free to add some that interest you. If you need inspiration, try looking online for newspapers, short stories, song lyrics or other media.</p>
+      <% else %>
+        <p>You seem to not have any archived texts in <%= selected_language.name %>.</p>
       <% end %>
-      <%
-        last_category = nil
-        category_id = 0
-        @texts.each do |category, texts|
-          category_id += 1
-          total_words = texts.map { |t| t.word_count }.inject(:+)
-      %>
-        <table class="u-full-width listing">
-          <thead>
-            <th colspan="2"><%= category %></th>
-            <th style="text-align: right">
-              <alias title="Total number of words in the category">
-                <%= number_with_precision total_words, precision: 0, delimiter: ',' %>
-              </alias>
-            </th>
-          </thead>
-          <tbody>
-            <% text_count = 0 %>
-            <% max_text_count = 5 %>
-            <% texts.each do |text| %>
-              <% text_count += 1 %>
+    <% end %>
 
-              <% if text_count <= max_text_count %>
-                <tr>
-              <% else %>
-                <tr style="display: none;" class="cat-<%= category_id %>">
-              <% end %>
+    <%
+      last_category = nil
+      category_id = 0
+      @texts.each do |category, texts|
+        category_id += 1
+        total_words = texts.map { |t| t.word_count }.inject(:+)
+    %>
+      <table class="u-full-width listing">
+        <thead>
+          <th colspan="2"><%= category %></th>
+          <th style="text-align: right">
+            <alias title="Total number of words in the category">
+              <%= number_with_precision total_words, precision: 0, delimiter: ',' %>
+            </alias>
+          </th>
+        </thead>
+        <tbody>
+          <% text_count = 0 %>
+          <% max_text_count = 5 %>
+          <% texts.each do |text| %>
+            <% text_count += 1 %>
 
-                <td class="centered" style="width: 2.5em; padding-right: 0">
-                  <% if text.public %>
-                    <alias title="This is a public text. Make a copy for you to see its status."><%= fa_icon 'star' %></alias>
-                  <% elsif current_user.native_language_id == selected_language.id %>
-                    <alias title="This is your native language, you should know all the words ;)"><%= fa_icon 'check' %></alias>
-                  <% elsif not text.completed %>
-                    <alias title="Not all words in this text have been rated yet."><%= fa_icon 'minus' %></alias>
-                  <% else %>
-                    <alias title="You have worked through this text and rated all the words within it."><%= fa_icon 'check' %></alias>
-                  <% end %>
-                </td>
-                <td style="padding-left: 0">
-                  <%= link_to text.title, text_path(text) %>
-                </td>
-                <td style="text-align: right">
-                  <alias title="Number of words in the text">
-                    <%= number_with_precision text.word_count, precision: 0, delimiter: ',' %>
-                  </alias>
-                </td>
-              </tr>
+            <% if text_count <= max_text_count %>
+              <tr>
+            <% else %>
+              <tr style="display: none;" class="cat-<%= category_id %>">
             <% end %>
-          </tbody>
-        </table>
-        <% if text_count > max_text_count %>
-            <div class="centered">
-              <a href="#" class="showMoreText" value="<%= category_id %>">
-                Show <%= text_count - max_text_count %> more <%= "text".pluralize(text_count - max_text_count) %>
-              </a>
-            </div>
-        <% end %>
+
+              <td class="centered" style="width: 2.5em; padding-right: 0">
+                <% if text.public %>
+                  <alias title="This is a public text. Make a copy for you to see its status."><%= fa_icon 'star' %></alias>
+                <% elsif current_user.native_language_id == selected_language.id %>
+                  <alias title="This is your native language, you should know all the words ;)"><%= fa_icon 'check' %></alias>
+                <% elsif not text.completed %>
+                  <alias title="Not all words in this text have been rated yet."><%= fa_icon 'minus' %></alias>
+                <% else %>
+                  <alias title="You have worked through this text and rated all the words within it."><%= fa_icon 'check' %></alias>
+                <% end %>
+              </td>
+              <td style="padding-left: 0">
+                <%= link_to text.title, text_path(text) %>
+              </td>
+              <td style="text-align: right">
+                <alias title="Number of words in the text">
+                  <%= number_with_precision text.word_count, precision: 0, delimiter: ',' %>
+                </alias>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <% if text_count > max_text_count %>
+          <div class="centered">
+            <a href="#" class="showMoreText" value="<%= category_id %>">
+              Show <%= text_count - max_text_count %> more <%= "text".pluralize(text_count - max_text_count) %>
+            </a>
+          </div>
       <% end %>
-    </div>
-    <div class="one-third column">
-      <% image_path = "sidebar/#{selected_language.name.downcase}.png" %>
-      <% if not FileTest.exist?("#{Rails.root}/app/assets/images/#{image_path}") %>
-        <% image_path = 'sidebar/_null.png' %>
-      <% end %>
-      <%= image_tag image_path, class: 'u-full-width' %>
-
-      <hr style="margin: 1em 0;" />
-
-      <div class="row no-wrap sidebar-counter">
-        <div class="one-half column centered">
-          <h4>
-            <%= number_with_precision @word_count, precision: 0, delimiter: ',' %>
-          </h4>
-          <span>
-            <%= "word".pluralize @word_count %> added.
-          </span>
-        </div>
-        <div class="one-half column centered">
-          <h4>
-            <%= number_with_precision @known_word_count, precision: 0, delimiter: ',' %>
-          </h4>
-          <span>
-            <alias title="Words with a rating of three or above are considered familiar. That is, you probably remember them more often than you forget them.">familiar <%= "word".pluralize @known_word_count %></alias>.
-          </span>
-        </div>
-      </div>
-
-      <div class="row no-wrap sidebar-counter">
-        <div class="one-half column centered">
-          <h4>
-            <%= number_with_precision @total_text_count, precision: 0, delimiter: ',' %>
-          </h4>
-          <span>
-            <%= "text".pluralize @total_text_count %> added.
-          </span>
-        </div>
-        <div class="one-half column centered">
-          <h4>
-            <%= number_with_precision @total_text_count_read, precision: 0, delimiter: ',' %>
-          </h4>
-          <span>
-            <%= "text".pluralize @total_text_count_read %> read.
-          </span>
-        </div>
-      </div>
-
-      <% if @word_count > 0 %>
-        <div class="centered" style="margin-top: 1.5em;">
-          <b><%= @compliment %></b>
-        </div>
-      <% end %>
-    </div>
+    <% end %>
   </div>
+  <div class="one-third column" style="text-align: right;">
+    <h5>Your Stats</h5>
 
-<% end %>
+    <div class="row no-wrap sidebar-counter">
+      <div class="one-half column">
+        <h4>
+          <%= number_with_precision @word_count, precision: 0, delimiter: ',' %>
+        </h4>
+        <span>
+          <%= "word".pluralize @word_count %> added.
+        </span>
+      </div>
+      <div class="one-half column">
+        <h4>
+          <%= number_with_precision @known_word_count, precision: 0, delimiter: ',' %>
+        </h4>
+        <span>
+          <alias title="Words with a rating of three or above are considered familiar. That is, you probably remember them more often than you forget them.">familiar <%= "word".pluralize @known_word_count %></alias>.
+        </span>
+      </div>
+    </div>
+
+    <div class="row no-wrap sidebar-counter">
+      <div class="one-half column">
+        <h4>
+          <%= number_with_precision @total_text_count, precision: 0, delimiter: ',' %>
+        </h4>
+        <span>
+          <%= "text".pluralize @total_text_count %> added.
+        </span>
+      </div>
+      <div class="one-half column">
+        <h4>
+          <%= number_with_precision @total_text_count_read, precision: 0, delimiter: ',' %>
+        </h4>
+        <span>
+          <%= "text".pluralize @total_text_count_read %> read.
+        </span>
+      </div>
+    </div>
+
+    <% if @word_count > 0 %>
+      <div style="margin-top: 0.5em;">
+        <b><%= @compliment %></b>
+      </div>
+    <% end %>
+  </div>
+</tr>

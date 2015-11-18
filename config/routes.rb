@@ -11,21 +11,25 @@ Rails.application.routes.draw do
   get '/home', to: 'welcome#home'
   get '/legal', to: 'welcome#legal_notice'
 
-  resources :languages
+  # Texts
+  get '/texts', to: 'texts#index_language', as: :language_choice_texts
   get '/texts/category(.:format)', to: 'texts#autocomplete_text_category', as: :autocomplete_text_category_texts
-  get '/texts/:id', to: 'texts#show', :constraints => { :id => /[0-9]+/ }
-  get '/texts/new', to: 'texts#new'
-  get '/texts/:language/new', to: 'texts#new', :constraints => { :language => /.+/ }
-  get '/texts/:language/archive', to: 'texts#index_hidden', :constraints => { :language => /.+/ }
-  get '/texts/:language/public', to: 'texts#index_public', :constraints => { :language => /.+/ }
+  get '/texts/:id', to: 'texts#show', :constraints => { :id => /[0-9]+/ }, as: :text
+  get '/texts/:language/new', to: 'texts#new', :constraints => { :language => /.+/ }, as: :new_text
+  get '/texts/:language/archive', to: 'texts#index_hidden', :constraints => { :language => /.+/ }, as: :archived_texts
+  get '/texts/:language/public', to: 'texts#index_public', :constraints => { :language => /.+/ }, as: :public_texts
+  get '/texts/:id/edit', to: 'texts#edit', :constraints => { :id => /.+/ }, as: :edit_text
+  get '/texts/:id/copy', to: 'texts#copy', :constraints => { :id => /.+/ }, as: :copy_text
+  get '/texts/:id/vocabulary', to: 'texts#vocabulary', :constraints => { :id => /.+/ }, as: :vocabulary_text
+  get '/texts/:language', to: 'texts#index', :constraints => { :language => /.+/ }, as: :texts
+  resources :texts
+
+  # Quick Reader
   get '/reader/:language', to: 'texts#reader', :constraints => { :language => /.+/ }
   get '/reader/', to: 'texts#reader'
   post '/reader/:language', to: 'texts#reader_preview', :constraints => { :language => /.+/ }
-  get '/texts/:id/edit', to: 'texts#edit', :constraints => { :id => /.+/ }
-  get '/texts/:id/copy', to: 'texts#copy', :constraints => { :id => /.+/ }
-  get '/texts/:id/vocabulary', to: 'texts#vocabulary', :constraints => { :id => /.+/ }
-  get '/texts/:language', to: 'texts#index', :constraints => { :language => /.+/ }
-  resources :texts
+
+  resources :languages
   get '/words/:language/:id', to: 'words#show', :constraints => { :id => /.+/ }
   patch '/words/:id', to: 'words#update', :constraints => { :id => /.+/ }
   get '/words/:language', to: 'words#index'
