@@ -49,7 +49,7 @@ initCategoryAutoComplete = ->
   $('#text_category').autocomplete
     source: (request, response) ->
       $.getJSON '/texts/category', {
-        lang: $('#text_language_id').val()
+        lang: text_language
         'term': $('#text_category').val()
       }, response
       return
@@ -220,16 +220,10 @@ underlineToggle = (newState) ->
     $('.w').removeClass 'underline'
 
 archiveToggle = (newState) ->
-  if newState
-    $('#text_hidden').prop 'checked', true
-  else
-    $('#text_hidden').prop 'checked', false
+  $('#text_hidden').prop 'checked', newState
 
 publicToggle = (newState) ->
-  if newState
-    $('#text_public').prop 'checked', true
-  else
-    $('#text_public').prop 'checked', false
+  $('#text_public').prop 'checked', newState
 
 initWordNumbers = ->
   i = 0
@@ -250,6 +244,11 @@ $ ->
   initToggleButton 'underlineToggle', underlineToggle
   initToggleButton 'archiveToggle', archiveToggle
   initToggleButton 'publicToggle', publicToggle
+
+  if $('#text_public').prop 'checked'
+    $('#publicToggle').click()
+  if $('#text_hidden').prop 'checked'
+    $('#archiveToggle').click()
 
   $('#buttons span').click (event) ->
     rating = event.target.innerHTML

@@ -32,22 +32,22 @@ module ApplicationHelper
   # Returns the currently selected language as an object (or nil if none
   # is selected)
   def current_language
-    if params[:language] != Rails.cache.fetch('selected_language')
+    if params[:language] != Rails.cache.fetch('selected_language') or (@text and @text.language and @text.language.name != Rails.cache.fetch('selected_language'))
       Rails.cache.delete('selected_language')
       Rails.cache.delete('selected_language_value')
     end
     Rails.cache.fetch('selected_language') do
-      if @text
-        @text.category.language.short_code
+      if @text and @text.language
+        @text.language.name
       else
         params[:language]
       end
     end
     Rails.cache.fetch('selected_language_value') do
       if params[:language]
-        Language.where("lower(short_code) = ?", params[:language].downcase)[0]
-      elsif @text
-        @text.category.language
+        Language.where("lower(name) = ?", params[:language].downcase)[0]
+      elsif @text and @text.language
+        @text.language
       end
     end
   end
