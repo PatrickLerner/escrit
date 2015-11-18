@@ -57,6 +57,7 @@
     </div>
     <div class="three columns">
       <%= link_to fa_icon("floppy-o") + ' Save Text', '', :class => 'button button-primary u-full-width', :onclick => "$('.text_form').submit(); return false;" %>
+      <%= link_to fa_icon("times") + " Delete", text_path(@text), method: :delete, data: { confirm: 'Are you absolutely certain?' }, title: 'Delete', class: 'button u-full-width button-delete' %>
     </div>
   </div>
 <% end %>
