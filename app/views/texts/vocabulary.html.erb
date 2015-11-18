@@ -5,8 +5,7 @@
   <section>
     <nav>
       <%= link_to fa_icon("chevron-left") + ' Back', texts_path(@text.language.name.downcase), class: 'button', title: 'Go back to overview' %>
-      <%= link_to fa_icon("list") + ' Text', text_path(@text), class: 'button ', title: 'See vocabulary used in this text' %>
-      <%= link_to fa_icon("pencil") + ' Edit', edit_text_path(@text), class: 'button ', title: 'Edit the text' %>
+      <%= link_to fa_icon("list") + ' Text', text_path(@text), class: 'button ', title: 'See the text' %>
     </nav>
     <h1><%= @text.title %></h1>
     <h6><%= @text.category %></h6>
