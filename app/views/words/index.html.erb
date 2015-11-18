@@ -1,5 +1,7 @@
 <% content_for :title, "#{current_language.name} Word List" %>
 
+<%= render 'texts/header_language_choice', url: '/words' %>
+
 <%= render 'texts/header', page_title: "#{current_language.name} Word List", mini: true %>
 
 <div class="row">

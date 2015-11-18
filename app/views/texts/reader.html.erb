@@ -1,5 +1,7 @@
 <% content_for :title, 'Quick Reader' %>
 
+<%= render 'texts/header_language_choice', url: '/reader' %>
+
 <%= render 'texts/header', page_title: "#{current_language.name} Quick Reader", mini: true %>
 
 <%= render 'texts/tagger' %>

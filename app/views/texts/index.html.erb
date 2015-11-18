@@ -4,6 +4,8 @@
   <% content_for :title, '%s Texts' % [selected_language.name] %>
 <% end %>
 
+<%= render 'texts/header_language_choice', url: '/texts' %>
+
 <%= render 'texts/header', page_title: "#{current_language.name} Texts", mini: false %>
 
 <div class="row">
