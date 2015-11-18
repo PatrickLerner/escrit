@@ -53,7 +53,7 @@
       </div>
     </div>
     <div class="three columns">
-      <%= link_to fa_icon("chevron-left") + ' Back', texts_path(current_language.name), class: 'button u-full-width', title: 'Go back to overview' %>
+      <%= link_to fa_icon("chevron-left") + ' Back', texts_path(current_language.name.downcase), class: 'button u-full-width', title: 'Go back to overview' %>
     </div>
     <div class="three columns">
       <%= link_to fa_icon("plus") + ' Add Text', '', :class => 'button button-primary u-full-width', :onclick => "$('.text_form').submit(); return false;" %>
