@@ -1,3 +1,13 @@
+.corner-ribbon {
+  display: none;
+}
+
+@media (min-width: 850px) {
+  .corner-ribbon {
+    display: block;
+  }
+}
+
 .sidebar-counter {
   margin-bottom: 1em;
   h4 {
