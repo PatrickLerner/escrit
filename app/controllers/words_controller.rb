@@ -3,6 +3,10 @@ class WordsController < ApplicationController
   include ApplicationHelper
   include TextsHelper
 
+  def index_language
+    @languages = Language.order(:name).all
+  end
+
   def index
     @languages = Language.order(:name).all
     

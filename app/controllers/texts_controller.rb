@@ -164,14 +164,12 @@ class TextsController < ApplicationController
   end
 
   def reader
-    if selected_language == nil
-      @services = []
-      @no_selected = true
-      @languages = Language.order(:name).all
-    else
-      @services = Service.where('(language_id=? or language_id=0) and user_id = ? and enabled = true', selected_language.id, current_user.id)
-      @services = [] if @services == nil
-    end
+    @services = Service.where('(language_id=? or language_id=0) and user_id = ? and enabled = true', selected_language.id, current_user.id)
+    @services = [] if @services == nil
+  end
+
+  def reader_language
+    @languages = Language.order(:name).all
   end
 
   def reader_preview
