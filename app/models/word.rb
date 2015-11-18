@@ -1,11 +1,6 @@
 class Word < ActiveRecord::Base
   belongs_to :language
   belongs_to :user
-  after_initialize :init
-
-  def init
-    self.rating ||= 0
-  end
 
   def self.determine_replacement_value word, replacements
     v = word
@@ -20,15 +15,15 @@ class Word < ActiveRecord::Base
     Word.determine_replacement_value read_attribute(:value), replacements
   end
 
-  def self.find_create language_id, word, user_id
+  def self.find_create language_id, word
     replacements = Replacement.where language_id: language_id
     word = Word.determine_replacement_value word.mb_chars.downcase.to_s, replacements
-    w = Word.find_by value: word, language_id: language_id, user_id: user_id
-    w = Word.new value: word if not w
+    w = Word.find_by value: word, language_id: language_id
+    w = Word.new value: word, language_id: language_id if not w
     return w
   end
 
-  def self.find_create_bulk language_id, words, user_id
+  def self.find_create_bulk language_id, words
     replacements = Replacement.where language_id: language_id
     words = words.map { |w|
       if w.match(/(.*)\|\|(.*)/)
@@ -40,7 +35,7 @@ class Word < ActiveRecord::Base
     remaining = words
     result = {}
 
-    list = Word.where value: words, language_id: language_id, user_id: user_id
+    list = Word.where value: words, language_id: language_id
     list.each do |res|
       remaining.delete res.value
       word = res.value.mb_chars.downcase.to_s
@@ -49,7 +44,7 @@ class Word < ActiveRecord::Base
 
     remaining.each do |rem|
       word = rem.mb_chars.downcase.to_s
-      result[word] = Word.new value: word, language_id: language_id, user_id: user_id
+      result[word] = Word.new value: word, language_id: language_id
     end
 
     return result

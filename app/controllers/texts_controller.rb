@@ -110,8 +110,8 @@ class TextsController < ApplicationController
 
       @total_text_count = Text.where(language_id: selected_language.id, user_id: current_user.id, public: false).count
       @total_text_count_read = Text.where(language_id: selected_language.id, user_id: current_user.id, completed: true, public: false).count
-      @known_word_count = Word.where('rating >= 3 and rating < 6 and language_id = ? and user_id = ?', selected_language.id, current_user.id).count
-      @word_count = Word.where('rating != 6 and language_id = ? and user_id = ?', selected_language.id, current_user.id).count
+      @known_word_count = Note.joins(:word).where('rating >= 3 and rating < 6 and language_id = ? and user_id = ?', selected_language.id, current_user.id).count
+      @word_count = Note.joins(:word).where('rating != 6 and language_id = ? and user_id = ?', selected_language.id, current_user.id).count
     end
     my_texts = [] if my_texts == nil
     @hidden = hidden
@@ -184,9 +184,9 @@ class TextsController < ApplicationController
     sp_words = WordsHelper.split_words params['text']
 
     uniq_words = WordsHelper.raw_words(params['text']).sort.uniq
-    words = Word.find_create_bulk selected_language.id, uniq_words, user.id
+    notes = Note.find_create_bulk selected_language.id, uniq_words, user.id
 
-    processed_text = process_text sp_words, words, selected_language.id, disabled_words
+    processed_text = process_text sp_words, notes, selected_language.id, disabled_words
 
     render :text => processed_text
   end
@@ -207,13 +207,13 @@ class TextsController < ApplicationController
     else
       if @user.native_language_id != @text.language_id
         uniq_words = (@text.raw_words + @text.raw_words_title + @text.raw_words_category).sort.uniq
-        words = Word.find_create_bulk @text.language_id, uniq_words, @user.id
+        notes = Note.find_create_bulk @text.language_id, uniq_words, @user.id
       else
-        words = {}
+        notes = {}
       end
-      @processed_text = process_text @text.split_words, words, @text.language_id, disabled_words
-      @processed_title = process_text @text.split_words_title, words, @text.language_id, disabled_words
-      @processed_category = process_text @text.split_words_category, words, @text.language_id, disabled_words
+      @processed_text = process_text @text.split_words, notes, @text.language_id, disabled_words
+      @processed_title = process_text @text.split_words_title, notes, @text.language_id, disabled_words
+      @processed_category = process_text @text.split_words_category, notes, @text.language_id, disabled_words
 
       @services = Service.where('(language_id=? or language_id=0) and user_id = ? and enabled = true', @text.language_id, current_user.id)
       @services = [] if @services == nil

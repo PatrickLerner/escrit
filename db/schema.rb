@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150930112516) do
+ActiveRecord::Schema.define(version: 20151118162235) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,18 @@ ActiveRecord::Schema.define(version: 20150930112516) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "notes", force: true do |t|
+    t.string   "value"
+    t.integer  "rating"
+    t.integer  "word_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "notes", ["user_id"], name: "index_notes_on_user_id", using: :btree
+  add_index "notes", ["word_id"], name: "index_notes_on_word_id", using: :btree
 
   create_table "replacements", force: true do |t|
     t.string   "value"
@@ -114,12 +126,9 @@ ActiveRecord::Schema.define(version: 20150930112516) do
 
   create_table "words", force: true do |t|
     t.text     "value"
-    t.text     "note"
-    t.integer  "rating"
     t.integer  "language_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id"
   end
 
 end

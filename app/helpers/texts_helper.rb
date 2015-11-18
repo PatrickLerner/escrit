@@ -38,7 +38,7 @@ module TextsHelper
     end
   end
 
-  def process_text split_words, words, language_id, disabled_words = false
+  def process_text split_words, notes, language_id, disabled_words = false
     processed = ''
     replacements = replacements = Replacement.where language_id: language_id
     split_words.each do |wstr|
@@ -54,14 +54,14 @@ module TextsHelper
         wname = nil
       end
 
-      if words.keys.include?(wstrrep) and not (/https?:\/\/[\S]+/.match(wstrlow))
-        w = words[wstrrep]
+      if notes.keys.include?(wstrrep) and not (/https?:\/\/[\S]+/.match(wstrlow))
+        w = notes[wstrrep]
         if disabled_words
           processed += '<span class="w s' + w.rating.to_s + '">' + wstr + '</span>'
         elsif wname != nil
-          processed += '<span class="w word s' + w.rating.to_s + '" value="' + w.replacement_value(replacements) + '" title="' + wname + '">' + wstr + '</span>'
+          processed += '<span class="w word s' + w.rating.to_s + '" value="' + w.word.replacement_value(replacements) + '" title="' + wname + '">' + wstr + '</span>'
         else
-          processed += '<span class="w word s' + w.rating.to_s + '" value="' + w.replacement_value(replacements) + '">' + wstr + '</span>'
+          processed += '<span class="w word s' + w.rating.to_s + '" value="' + w.word.replacement_value(replacements) + '">' + wstr + '</span>'
         end
       elsif /@https?:\/\/[\S]+/.match wstrlow and (wstrlow[-4..-1] == '.jpg' or wstrlow[-4..-1] == '.png')
         processed += '<div class="centered"><a href="' + wstr.mb_chars[1..-1] + '" data-lightbox="images" class="image-link"><img class="border" src="' + wstr.mb_chars[1..-1] + '" /></a></div>'

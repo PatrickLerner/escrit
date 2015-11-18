@@ -3,8 +3,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by id: params[:id]
-    @words = Word.joins(:language).where('user_id = ? and rating < 6', params[:id]).group('languages.name').order('languages.name asc').count
-    @words_familiar = Word.joins(:language).where('user_id = ? and rating < 6 and rating >= 3', params[:id]).group('languages.name').order('languages.name asc').count
+    @words = Note.joins(:word).joins('left join languages on languages.id = words.language_id').where('user_id = ? and rating < 6', params[:id]).group('languages.name').order('languages.name asc').count
+    @words_familiar = Note.joins(:word).joins('left join languages on languages.id = words.language_id').where('user_id = ? and rating < 6 and rating >= 3', params[:id]).group('languages.name').order('languages.name asc').count
     buddy = Buddy.find_by origin_id: current_user.id, destination_id: params[:id]
     @is_buddy = if buddy then true else false end
   end

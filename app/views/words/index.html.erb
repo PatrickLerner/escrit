@@ -9,7 +9,7 @@
     &nbsp;
   </div>
   <div class="ten columns">
-    <% if @words.count == 0 %>
+    <% if @notes.count == 0 %>
       <% if @search_term == nil || @search_term.split == '' %>
         <p>You seem to have no words in <%= @language_name %> yet. If you want to see your words in a different language, select it in the sidebar.</p>
       <% else %>
@@ -23,15 +23,15 @@
         <input type="text" name="q" class="u-full-width" placeholder="Search for a word" value="<%= @search_term %>" autocomplete="off">
       </form>
 
-      <%= will_paginate @words, class: 'pagination' %>
+      <%= will_paginate @notes, class: 'pagination' %>
       <div class="pagination_info">
-        <%= page_entries_info @words %>
+        <%= page_entries_info @notes %>
       </div>
     <% end %>
     <%
       current_date = nil
       open = false
-      @words.each { |w|
+      @notes.each { |w|
         w_date = w.created_at.strftime("%F")
         if w_date != current_date
           current_date = w_date
@@ -53,8 +53,8 @@
         end
     %>
       <tr>
-        <td><%= w.value %><%=  %></td>
-        <td><%= w.note %></td>
+        <td><%= w.word.value %><%=  %></td>
+        <td><%= w.value %></td>
         <td style="text-align: center"><span class="s<%= w.rating %> word-list-rating" title="<%= [ "Looked it up once.", "This time I'll remember it.", "I'm getting it now.", "Seems easy at this point.", "Know it in my sleep."][w.rating - 1] %>"><%= w.rating %></span></td>
       </tr>
     <% } %>
@@ -62,10 +62,10 @@
         </tbody>
       </table>
     <% end %>
-    <% if @words.count > 0 %>
-      <%= will_paginate @words, class: 'pagination' %>
+    <% if @notes.count > 0 %>
+      <%= will_paginate @notes, class: 'pagination' %>
       <div class="pagination_info">
-        <%= page_entries_info @words %>
+        <%= page_entries_info @notes %>
       </div>
     <% end %>
   </div>

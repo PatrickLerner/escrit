@@ -15,7 +15,7 @@ class StatisticsController < ApplicationController
       start_date = 0.day.ago.beginning_of_week.beginning_of_day + i.days
       end_date = 0.day.ago.beginning_of_week.end_of_day + i.days
 
-      new_words = Word.where(created_at: start_date..end_date, language_id: selected_language.id, user_id: current_user.id).length
+      new_words = Note.joins(:word).where(created_at: start_date..end_date, user_id: current_user.id).where('words.language_id = ?', selected_language.id).count
 
       @new_words_this_week_data += [new_words]
       @total_new_words_this_week += new_words
@@ -39,8 +39,8 @@ class StatisticsController < ApplicationController
       new_words = 0
       new_texts = 0
 
-      new_words = Word.where(created_at: start_date..end_date, language_id: selected_language.id, user_id: current_user.id).length
-      new_texts = Text.where(created_at: start_date..end_date, language_id: selected_language.id, user_id: current_user.id).length
+      new_words = Note.joins(:word).where(created_at: start_date..end_date, user_id: current_user.id).where('words.language_id = ?', selected_language.id).count
+      new_texts = Text.where(created_at: start_date..end_date, language_id: selected_language.id, user_id: current_user.id).count
 
       @new_words_data += [new_words]
       @new_texts_data += [new_texts]
@@ -73,7 +73,7 @@ class StatisticsController < ApplicationController
     @words_labels = []
     5.times { |i|
       rating = i + 1
-      word_count = Word.where('rating = ? and language_id = ? and user_id = ?', rating, selected_language.id, current_user.id).count
+      word_count = Note.joins(:word).where(rating: rating, user_id: current_user.id).where('words.language_id = ?', selected_language.id).count
       @words_data += [word_count.to_s]
       @words_labels += [rating.to_s]
     }

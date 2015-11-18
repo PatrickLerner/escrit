@@ -16,12 +16,13 @@ class WordsController < ApplicationController
       @language_name = lang.name
 
       if @search_term == nil || @search_term.split == ''
-        @words = Word.paginate(:page => params[:page], :per_page => 250).where 'user_id = ? and rating < 6 and language_id = ?', current_user.id, lang.id
+        @notes = Note.joins(:word).paginate(:page => params[:page], :per_page => 250).where 'user_id = ? and rating < 6 and language_id = ?', current_user.id, lang.id
       else
-        @words = Word.paginate(:page => params[:page], :per_page => 250).where 'user_id = ? and rating < 6 and language_id = ? and (value ilike ? or note ilike ?)', current_user.id, lang.id, "%#{@search_term}%", "%#{@search_term}%"
+        @notes = Note.joins(:word).paginate(:page => params[:page], :per_page => 250).where 'user_id = ? and rating < 6 and language_id = ? and (value ilike ? or note ilike ?)', current_user.id, lang.id, "%#{@search_term}%", "%#{@search_term}%"
       end
 
-      @words.map { |w|
+      @notes.map { |n|
+        w = n.word
         w.value.gsub! '..', ' ... '
         w.value.gsub! '...', ' ... '
         w.value.gsub! '_', ' '
@@ -31,48 +32,35 @@ class WordsController < ApplicationController
 
   def show
     lang = Language.where("lower(name) = ?", params[:language].downcase)[0]
-    @word = Word.find_by value: utf8downcase(params[:id]), language_id: lang.id, user_id: current_user.id
-    if @word
-      output = {
-        value: @word.value,
-        note: @word.note.strip,
-        language: @word.language.name,
-        rating: @word.rating
-      }
-    else
-      if selected_language
-        output = {
-          value: utf8downcase(params[:id]),
-          note: "",
-          language: selected_language.name,
-          rating: 0
-        }
-      else
-        output = params
-      end
-    end
-    render json: output
+    @word = Note.find_create lang.id, utf8downcase(params[:id]), current_user.id
+    render json: {
+      value: @word.word.value,
+      note: @word.value.strip,
+      language: @word.word.language.name,
+      rating: @word.rating
+    }
   end
 
   def update
     lang = Language.where("lower(name) = ?", params[:word][:language].downcase)[0]
-    @word = Word.find_by value: utf8downcase(params[:id]), language_id: lang.id, user_id: current_user.id
+    @note = Note.find_create lang.id, utf8downcase(params[:id]), current_user.id
+    @note.value = params[:word][:note].strip
+    @note.rating = params[:word][:rating]
+    
 
-    if not @word
-      @word = Word.new value: utf8downcase(params[:id]), language_id: lang.id, user_id: current_user.id
-      @word.save
-    end
-
-    params[:word][:language] = lang
-    params[:word][:note] = params[:word][:note].strip
-
-    if @word.update(word_params)
+    if @note.word.save and @note.save
       render plain: "ok"
     else
       render plain: "failure"
     end
 
-    @word.delete if @word.note == '' and @word.rating == 0
+    if @note.value == '' and @note.rating == 0
+      nodes = Node.where word_id: @note.word_id
+      if nodes.length <= 1
+        @note.word.delete
+      end
+      @note.delete
+    end
   end
 
   private
