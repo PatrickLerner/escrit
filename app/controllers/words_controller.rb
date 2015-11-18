@@ -44,10 +44,9 @@ class WordsController < ApplicationController
   def update
     lang = Language.where("lower(name) = ?", params[:word][:language].downcase)[0]
     @note = Note.find_create lang.id, utf8downcase(params[:id]), current_user.id
-    @note.value = params[:word][:note].strip
-    @note.rating = params[:word][:rating]
+    @note.value = params[:word][:note].strip if params[:word][:note]
+    @note.rating = params[:word][:rating] if params[:word][:rating]
     
-
     if @note.word.save and @note.save
       render plain: "ok"
     else

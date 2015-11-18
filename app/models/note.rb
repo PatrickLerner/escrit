@@ -30,7 +30,7 @@ class Note < ActiveRecord::Base
     remaining = words
     result = {}
 
-    list = Note.joins(:word).where('words.value in (?) and words.language_id = ? and user_id = ?', words, language_id, user_id)
+    list = Note.includes(:word).joins(:word).where('words.value in (?) and words.language_id = ? and user_id = ?', words, language_id, user_id)
     list.each do |res|
       remaining.delete res.word.value
       word = res.word.value.mb_chars.downcase.to_s
