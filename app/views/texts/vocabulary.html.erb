@@ -4,7 +4,7 @@
   <%= image_tag 'book.png', class: 'larger' %>
   <section>
     <nav>
-      <%= link_to fa_icon("chevron-left") + ' Back', texts_path(@text.language.name), class: 'button', title: 'Go back to overview' %>
+      <%= link_to fa_icon("chevron-left") + ' Back', texts_path(@text.language.name.downcase), class: 'button', title: 'Go back to overview' %>
       <%= link_to fa_icon("list") + ' Text', text_path(@text), class: 'button ', title: 'See vocabulary used in this text' %>
       <%= link_to fa_icon("pencil") + ' Edit', edit_text_path(@text), class: 'button ', title: 'Edit the text' %>
     </nav>
