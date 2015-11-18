@@ -1,14 +1,17 @@
 <% content_for :title, 'Vocabulary: %s (%s)' % [@text.title, @text.category] %>
 
-<h5 style="font-size: 1.6rem; font-style: italic; margin-bottom: 0; padding-left: 0.3rem;">
-  <%= @text.category %>
-</h5>
-
-<h4 style="margin-bottom: 0rem;">
-  Vocabulary: <%= @text.title %>
-</h4>
-
-<hr style="margin-top: 0.5rem; margin-bottom: 2rem;" />
+<header class="mini">
+  <%= image_tag 'book.png', class: 'larger' %>
+  <section>
+    <nav>
+      <%= link_to fa_icon("chevron-left") + ' Back', texts_path(@text.language.name), class: 'button', title: 'Go back to overview' %>
+      <%= link_to fa_icon("list") + ' Text', text_path(@text), class: 'button ', title: 'See vocabulary used in this text' %>
+      <%= link_to fa_icon("pencil") + ' Edit', edit_text_path(@text), class: 'button ', title: 'Edit the text' %>
+    </nav>
+    <h1><%= @text.title %></h1>
+    <h6><%= @text.category %></h6>
+  </section>
+</header>
 
 <div class="row" style="margin-top: 0;">
   <div class="two-thirds column">
@@ -34,8 +37,6 @@
     </table>
   </div>
   <div class="one-third column">
-    <%= link_to fa_icon("chevron-left") + " Back", text_path(@text), class: 'button button-primary u-full-width', title: 'Back to Overview' %>
-    <hr style="margin: 1em 0" />
     <div class="centered">
       <label>Show words with ratings:</label>
       <% 5.times { |i| %>
@@ -57,3 +58,5 @@
       $(this).css('opacity', 1);
   });
 </script>
+
+<span id="meta_language" style="display: none;"><%= @text.language.name %></span>
