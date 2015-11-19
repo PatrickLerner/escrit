@@ -1,2 +1,0 @@
-module ComplimentsHelper
-end

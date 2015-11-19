@@ -3,12 +3,6 @@ module ApplicationHelper
   def page_title(separator = " – ")
     [content_for(:title), 'escrit.еu'].compact.join(separator)
   end
-  
-  # converts a utf8 string into lower case
-  # (probably depricated)
-  def utf8downcase(text)
-    text.mb_chars.downcase.to_s
-  end
 
   # Returns a url to a user's profile picture
   # (utilizes Gravatar as the backend)

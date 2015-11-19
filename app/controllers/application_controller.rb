@@ -15,4 +15,10 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     '/home'
   end
+
+  # converts a utf8 string into lower case
+  # (probably depricated)
+  def utf8downcase text
+    text.mb_chars.downcase.to_s
+  end
 end

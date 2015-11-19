@@ -15,7 +15,13 @@
         <tr>
           <td><%= link_to replacement.value, edit_replacement_path(replacement), title: 'Edit Replacement Entry' %></td>
           <td><%= link_to replacement.replacement, edit_replacement_path(replacement), title: 'Edit Replacement Entry' %></td>
-          <td><%= replacement.language.name %></td>
+          <td>
+            <% if replacement.language %>
+              <%= replacement.language.name %>
+            <% else %>
+              All
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </table>

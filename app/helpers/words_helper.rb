@@ -1,7 +1,7 @@
 module WordsHelper
   # Just extract the words from a text
   def self.raw_words text
-    content = text.mb_chars.downcase.to_s
+    content = utf8downcase text
     content.scan(/[^#{WordsHelper.seperators}]+[^ \n\t]*[^#{WordsHelper.seperators}]+|[^#{WordsHelper.seperators}]+/)
   end
 

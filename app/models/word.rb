@@ -2,7 +2,8 @@ class Word < ActiveRecord::Base
   belongs_to :language
   belongs_to :user
 
-  def self.determine_replacement_value word, replacements
+  def self.determine_replacement_value word, language_id
+    replacements = Replacement.for_language language_id
     v = word
     replacements.each { |r|
       v = v.gsub r.value.downcase, r.replacement.downcase
@@ -11,26 +12,24 @@ class Word < ActiveRecord::Base
     v
   end
 
-  def replacement_value replacements
-    Word.determine_replacement_value read_attribute(:value), replacements
+  def replacement_value
+    Word.determine_replacement_value self.value, self.language_id
   end
 
   def self.find_create language_id, word
-    replacements = Replacement.where language_id: language_id
-    word = Word.determine_replacement_value word.mb_chars.downcase.to_s, replacements
+    word = Word.determine_replacement_value utf8downcase(word), language_id
     w = Word.find_by value: word, language_id: language_id
     w = Word.new value: word, language_id: language_id if not w
     return w
   end
 
   def self.find_create_bulk language_id, words
-    replacements = Replacement.where language_id: language_id
     words = words.map { |w|
       if w.match(/(.*)\|\|(.*)/)
         wparts = w.match(/(.*)\|\|(.*)/)
-        w = wparts[2].mb_chars.downcase.to_s
+        w = utf8downcase wparts[2]
       end
-      Word.determine_replacement_value w, replacements
+      Word.determine_replacement_value w, language_id
     }.uniq
     remaining = words
     result = {}
@@ -38,12 +37,12 @@ class Word < ActiveRecord::Base
     list = Word.where value: words, language_id: language_id
     list.each do |res|
       remaining.delete res.value
-      word = res.value.mb_chars.downcase.to_s
+      word = utf8downcase res.value
       result[word] = res
     end
 
     remaining.each do |rem|
-      word = rem.mb_chars.downcase.to_s
+      word = utf8downcase rem
       result[word] = Word.new value: word, language_id: language_id
     end
 

@@ -6,7 +6,7 @@ class TextsController < ApplicationController
   def autocomplete_text_category
     term = params[:term]
     lang = Language.where("lower(name) = ?", params[:lang].downcase)[0]
-    texts = Text.where('lower(category) like ? and user_id = ? and language_id = ?', "%#{term.mb_chars.downcase.to_s}%", current_user.id, lang.id).group('category').select('category').order('category asc')
+    texts = Text.where('lower(category) like ? and user_id = ? and language_id = ?', "%#{utf8downcase term}%", current_user.id, lang.id).group('category').select('category').order('category asc')
     cats = texts.map { |t| t.category }
     render :text => cats.to_json
   end

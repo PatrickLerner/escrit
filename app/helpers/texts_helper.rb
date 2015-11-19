@@ -40,17 +40,16 @@ module TextsHelper
 
   def process_text split_words, notes, language_id, disabled_words = false
     processed = ''
-    replacements = replacements = Replacement.where language_id: language_id
     split_words.each do |wstr|
-      wstrlow = wstr.mb_chars.downcase.to_s
+      wstrlow = utf8downcase wstr
       if wstrlow.match(/(.*)\|\|(.*)/)
         wparts = wstrlow.match(/(.*)\|\|(.*)/)
-        wstrlow = wparts[2].mb_chars.downcase.to_s
-        wstrrep = Word.determine_replacement_value wparts[2], replacements
+        wstrlow = utf8downcase wparts[2]
+        wstrrep = Word.determine_replacement_value wparts[2], language_id
         wstr = wparts[1]
         wname = wparts[2]
       else
-        wstrrep = Word.determine_replacement_value wstrlow, replacements
+        wstrrep = Word.determine_replacement_value wstrlow, language_id
         wname = nil
       end
 
@@ -59,9 +58,9 @@ module TextsHelper
         if disabled_words
           processed += '<span class="w s' + w.rating.to_s + '">' + wstr + '</span>'
         elsif wname != nil
-          processed += '<span class="w word s' + w.rating.to_s + '" value="' + w.word.replacement_value(replacements) + '" title="' + wname + '">' + wstr + '</span>'
+          processed += '<span class="w word s' + w.rating.to_s + '" value="' + w.word.replacement_value + '" title="' + wname + '">' + wstr + '</span>'
         else
-          processed += '<span class="w word s' + w.rating.to_s + '" value="' + w.word.replacement_value(replacements) + '">' + wstr + '</span>'
+          processed += '<span class="w word s' + w.rating.to_s + '" value="' + w.word.replacement_value + '">' + wstr + '</span>'
         end
       elsif /@https?:\/\/[\S]+/.match wstrlow and (wstrlow[-4..-1] == '.jpg' or wstrlow[-4..-1] == '.png')
         processed += '<div class="centered"><a href="' + wstr.mb_chars[1..-1] + '" data-lightbox="images" class="image-link"><img class="border" src="' + wstr.mb_chars[1..-1] + '" /></a></div>'
