@@ -21,4 +21,8 @@ class ApplicationController < ActionController::Base
   def utf8downcase text
     text.mb_chars.downcase.to_s
   end
+
+  def self.utf8downcase text
+    text.mb_chars.downcase.to_s
+  end
 end

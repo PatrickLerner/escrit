@@ -17,7 +17,7 @@ class Word < ActiveRecord::Base
   end
 
   def self.find_create language_id, word
-    word = Word.determine_replacement_value utf8downcase(word), language_id
+    word = Word.determine_replacement_value ApplicationController.utf8downcase(word), language_id
     w = Word.find_by value: word, language_id: language_id
     w = Word.new value: word, language_id: language_id if not w
     return w
@@ -27,7 +27,7 @@ class Word < ActiveRecord::Base
     words = words.map { |w|
       if w.match(/(.*)\|\|(.*)/)
         wparts = w.match(/(.*)\|\|(.*)/)
-        w = utf8downcase wparts[2]
+        w = ApplicationController.utf8downcase wparts[2]
       end
       Word.determine_replacement_value w, language_id
     }.uniq
@@ -37,12 +37,12 @@ class Word < ActiveRecord::Base
     list = Word.where value: words, language_id: language_id
     list.each do |res|
       remaining.delete res.value
-      word = utf8downcase res.value
+      word = ApplicationController.utf8downcase res.value
       result[word] = res
     end
 
     remaining.each do |rem|
-      word = utf8downcase rem
+      word = ApplicationController.utf8downcase rem
       result[word] = Word.new value: word, language_id: language_id
     end
 
