@@ -23,8 +23,8 @@
           	<a href="/"><%= image_tag "logo.png", :class => "navbar-logo" %></a>
           </li>
           <% lang = "" %>
-          <% if selected_language %>
-            <% lang = "/" + selected_language.name.downcase %>
+          <% if current_language %>
+            <% lang = "/" + current_language.name.downcase %>
           <% end %>
           <% if @text and @text.language %>
             <% lang = "/" + @text.language.name.downcase %>

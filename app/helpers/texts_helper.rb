@@ -21,23 +21,6 @@ module TextsHelper
     options
   end
 
-  # returns the currently selected language of the page (as an Object),
-  # or nil if none was selected
-  def selected_language
-    if params[:language] != Rails.cache.fetch('selected_language')
-      Rails.cache.delete('selected_language')
-      Rails.cache.delete('selected_language_value')
-    end
-    Rails.cache.fetch('selected_language') do
-      params[:language]
-    end
-    Rails.cache.fetch('selected_language_value') do
-      if params[:language]
-        Language.where("lower(name) = ?", params[:language].downcase)[0]
-      end
-    end
-  end
-
   def process_text split_words, notes, language_id, disabled_words = false
     processed = ''
     split_words.each do |wstr|

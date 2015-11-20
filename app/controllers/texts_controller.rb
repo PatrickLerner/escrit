@@ -1,5 +1,6 @@
 class TextsController < ApplicationController
   before_filter :authenticate_user!
+  include ApplicationHelper
   include TextsHelper
   include WordsHelper
 
@@ -96,22 +97,22 @@ class TextsController < ApplicationController
   def index hidden = false, public = false
     @languages = Language.order(:name).all
 
-    if selected_language == nil
+    if current_language == nil
       my_texts = []
       @total_text_count = 0
       @total_text_count_read = 0
       @total_text_count_public = 0
     else
       if public
-        my_texts = Text.where(language_id: selected_language.id, public: true).order('category asc, title asc')
+        my_texts = Text.where(language_id: current_language.id, public: true).order('category asc, title asc')
       else
-        my_texts = Text.where(language_id: selected_language.id, hidden: hidden, user_id: current_user.id, public: false).order('category asc, title asc')
+        my_texts = Text.where(language_id: current_language.id, hidden: hidden, user_id: current_user.id, public: false).order('category asc, title asc')
       end
 
-      @total_text_count = Text.where(language_id: selected_language.id, user_id: current_user.id, public: false).count
-      @total_text_count_read = Text.where(language_id: selected_language.id, user_id: current_user.id, completed: true, public: false).count
-      @known_word_count = Note.joins(:word).where('rating >= 3 and rating < 6 and language_id = ? and user_id = ?', selected_language.id, current_user.id).count
-      @word_count = Note.joins(:word).where('rating != 6 and language_id = ? and user_id = ?', selected_language.id, current_user.id).count
+      @total_text_count = Text.where(language_id: current_language.id, user_id: current_user.id, public: false).count
+      @total_text_count_read = Text.where(language_id: current_language.id, user_id: current_user.id, completed: true, public: false).count
+      @known_word_count = Note.joins(:word).where('rating >= 3 and rating < 6 and language_id = ? and user_id = ?', current_language.id, current_user.id).count
+      @word_count = Note.joins(:word).where('rating != 6 and language_id = ? and user_id = ?', current_language.id, current_user.id).count
     end
     my_texts = [] if my_texts == nil
     @hidden = hidden
@@ -138,8 +139,8 @@ class TextsController < ApplicationController
     @texts = @texts.sort
 
     @compliment = ""
-    if selected_language != nil and @word_count > 0
-      compliments = Compliment.where language_id: selected_language.id
+    if current_language != nil and @word_count > 0
+      compliments = Compliment.where language_id: current_language.id
       if compliments.count == 0
         compliments = Compliment.where language_id: 0
       end
@@ -164,7 +165,7 @@ class TextsController < ApplicationController
   end
 
   def reader
-    @services = Service.where('(language_id=? or language_id=0) and user_id = ? and enabled = true', selected_language.id, current_user.id)
+    @services = Service.where('(language_id=? or language_id=0) and user_id = ? and enabled = true', current_language.id, current_user.id)
     @services = [] if @services == nil
   end
 
@@ -184,9 +185,9 @@ class TextsController < ApplicationController
     sp_words = WordsHelper.split_words params['text']
 
     uniq_words = WordsHelper.raw_words(params['text']).sort.uniq
-    notes = Note.find_create_bulk selected_language.id, uniq_words, user.id
+    notes = Note.find_create_bulk current_language.id, uniq_words, user.id
 
-    processed_text = process_text sp_words, notes, selected_language.id, disabled_words
+    processed_text = process_text sp_words, notes, current_language.id, disabled_words
 
     render :text => processed_text
   end

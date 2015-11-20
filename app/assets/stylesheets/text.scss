@@ -1,5 +1,6 @@
 #other_language {
-  text-align: right;
+  text-align: center;
+  margin-bottom: 1em;
 
   a {
     color: black;
@@ -78,6 +79,11 @@ td > alias > i {
 }
 
 @media (min-width: 850px) {
+  #other_language {
+    text-align: right;
+    margin-bottom: -2em;
+  }
+
   #text_content {
     height: 25rem;
   }

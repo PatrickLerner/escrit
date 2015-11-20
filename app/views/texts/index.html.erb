@@ -1,7 +1,7 @@
-<% if selected_language == nil %>
+<% if current_language == nil %>
   <% content_for :title, 'Texts' %>
 <% else %>
-  <% content_for :title, '%s Texts' % [selected_language.name] %>
+  <% content_for :title, '%s Texts' % [current_language.name] %>
 <% end %>
 
 <%= render 'texts/header_language_choice', url: '/texts' %>
@@ -21,9 +21,9 @@
       <% else %>
         <% pr_class += " button-primary" %>
       <% end %>
-      <%= link_to 'Private', texts_path(selected_language.name.downcase), title: 'Show currently active texts.', class: pr_class %>
-      <%= link_to 'Archived', archived_texts_path(selected_language.name.downcase), title: 'Show currently active texts.', class: ar_class %>
-      <%= link_to 'Public', public_texts_path(selected_language.name.downcase), title: 'Show currently active texts.', class: pu_class %>
+      <%= link_to 'Private', texts_path(current_language.name.downcase), title: 'Show currently active texts.', class: pr_class %>
+      <%= link_to 'Archived', archived_texts_path(current_language.name.downcase), title: 'Show currently active texts.', class: ar_class %>
+      <%= link_to 'Public', public_texts_path(current_language.name.downcase), title: 'Show currently active texts.', class: pu_class %>
     </div>
   </div>
   <div class="three columns">
@@ -35,11 +35,11 @@
   <div class="two-thirds column">
     <% if @texts == [] %>
       <% if @public %>
-        <p>It appears that no public texts in <%= selected_language.name %> have been added yet.</p>
+        <p>It appears that no public texts in <%= current_language.name %> have been added yet.</p>
       <% elsif not @hidden %>
-        <p>It seems like you have not yet added any texts in <%= selected_language.name %>. Please feel free to add some that interest you. If you need inspiration, try looking online for newspapers, short stories, song lyrics or other media.</p>
+        <p>It seems like you have not yet added any texts in <%= current_language.name %>. Please feel free to add some that interest you. If you need inspiration, try looking online for newspapers, short stories, song lyrics or other media.</p>
       <% else %>
-        <p>You seem to not have any archived texts in <%= selected_language.name %>.</p>
+        <p>You seem to not have any archived texts in <%= current_language.name %>.</p>
       <% end %>
     <% end %>
 
@@ -74,7 +74,7 @@
               <td class="centered" style="width: 2.5em; padding-right: 0">
                 <% if text.public %>
                   <alias title="This is a public text. Make a copy for you to see its status."><%= fa_icon 'star' %></alias>
-                <% elsif current_user.native_language_id == selected_language.id %>
+                <% elsif current_user.native_language_id == current_language.id %>
                   <alias title="This is your native language, you should know all the words ;)"><%= fa_icon 'check' %></alias>
                 <% elsif not text.completed %>
                   <alias title="Not all words in this text have been rated yet."><%= fa_icon 'minus' %></alias>
