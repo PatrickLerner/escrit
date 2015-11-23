@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   get '/home', to: 'welcome#home'
   get '/legal', to: 'welcome#legal_notice'
 
+  # Categories
+  get '/texts/:id/category', to: 'categories#edit', constraints: { id: /.+/ }, as: :edit_category
+
   # Texts
   get '/texts', to: 'texts#index_language', as: :language_choice_texts
   get '/texts/category(.:format)', to: 'texts#autocomplete_text_category', as: :autocomplete_text_category_texts
@@ -18,10 +21,10 @@ Rails.application.routes.draw do
   get '/texts/:language/new', to: 'texts#new', constraints: { language: /.+/ }, as: :new_text
   get '/texts/:language/archive', to: 'texts#index_hidden', constraints: { language: /.+/ }, as: :archived_texts
   get '/texts/:language/public', to: 'texts#index_public', constraints: { language: /.+/ }, as: :public_texts
-  get '/texts/:id/edit', to: 'texts#edit', :constraints => { :id => /.+/ }, as: :edit_text
-  get '/texts/:id/copy', to: 'texts#copy', :constraints => { :id => /.+/ }, as: :copy_text
-  get '/texts/:id/vocabulary', to: 'texts#vocabulary', :constraints => { :id => /.+/ }, as: :vocabulary_text
-  get '/texts/:language', to: 'texts#index', :constraints => { :language => /.+/ }, as: :texts
+  get '/texts/:id/edit', to: 'texts#edit', constraints: { id: /.+/ }, as: :edit_text
+  get '/texts/:id/copy', to: 'texts#copy', constraints: { id: /.+/ }, as: :copy_text
+  get '/texts/:id/vocabulary', to: 'texts#vocabulary', constraints: { id: /.+/ }, as: :vocabulary_text
+  get '/texts/:language', to: 'texts#index', constraints: { language: /.+/ }, as: :texts
   resources :texts
 
   # Quick Reader

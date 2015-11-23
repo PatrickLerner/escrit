@@ -52,7 +52,9 @@
     %>
       <table class="u-full-width listing">
         <thead>
-          <th colspan="2"><%= category %></th>
+          <th colspan="2">
+            <%= link_to category, edit_category_path(texts[0]), class: 'category_link' %>
+          </th>
           <th style="text-align: right">
             <alias title="Total number of words in the category">
               <%= number_with_precision total_words, precision: 0, delimiter: ',' %>
