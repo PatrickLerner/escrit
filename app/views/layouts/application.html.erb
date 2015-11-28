@@ -46,6 +46,11 @@
               </ul>
             </li>
           <% end %>
+          <% if not user_signed_in? %>
+            <li class="navbar-item navbar-user">
+              <%= link_to fa_icon("user-plus") + " Sign Up", '/users/sign_up', class: 'navbar-link' %>
+            </li>
+          <% end %>
           <li class="navbar-item navbar-user">
             <% if user_signed_in? %>
               <%= link_to current_user.name, '/u/' + current_user.id.to_s, class: 'navbar-link navbar-submenu' %>
@@ -58,7 +63,7 @@
                 </li>
               </ul>
             <% else %>
-              <%= link_to fa_icon("sign-in") + " Login", new_user_session_path, class: 'navbar-link' %>
+              <%= link_to fa_icon("sign-in") + " Log In", new_user_session_path, class: 'navbar-link' %>
             <% end %>
           </li>
         </ul>
