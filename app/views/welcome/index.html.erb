@@ -129,9 +129,10 @@
 
   $('.flag')
     .mouseenter(function() {
-      lang_override = $(this).attr('title');
+      var lang = $(this).attr('title');
+      lang_override = lang;
       $('#lang_name').fadeOut(300, function() {
-        $('#lang_name').html(lang_override).fadeIn(300);
+        $('#lang_name').html(lang).fadeIn(300);
       })
       lang_i = 0;
     })
