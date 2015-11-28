@@ -64,30 +64,49 @@
 
 <hr style="margin: 3em 0;">
 
-<style type="text/css">
-  .tab-next, .tab-previous {
-    cursor: pointer;
-    font-size: 1.9em;
-    line-height: normal;
-  }
-  .tab-next:hover, .tab-previous:hover {
-    border: none;
-  }
-  blockquote {
-    background: #FAFAFA;
-    border: #ccc 1px solid;
-    margin: 0;
-    padding: 1em;
-  }
-  blockquote p {
-    margin-bottom: 1em;
-  }
-  blockquote span {
-    display: block;
-    font-size: 0.9em;
-    text-align: right;
-  }
-</style>
+<h4>Screenshots</h4>
+
+<div class="row">
+  <div class="three columns" class="centered">
+    <a href="http://patricklerner.com/escrit_screenshots/screen_1.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_1_thumb.png" /></a>
+  </div>
+  <div class="three columns" class="centered">
+    <a href="http://patricklerner.com/escrit_screenshots/screen_2.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_2_thumb.png" /></a>
+  </div>
+  <div class="three columns" class="centered">
+    <a href="http://patricklerner.com/escrit_screenshots/screen_3.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_3_thumb.png" /></a>
+  </div>
+  <div class="three columns" class="centered">
+    <a href="http://patricklerner.com/escrit_screenshots/screen_4.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_4_thumb.png" /></a>
+  </div>
+</div>
+<div class="row">
+  <div class="three columns" class="centered">
+    <a href="http://patricklerner.com/escrit_screenshots/screen_5.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_5_thumb.png" /></a>
+  </div>
+  <div class="three columns" class="centered">
+    <a href="http://patricklerner.com/escrit_screenshots/screen_6.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_6_thumb.png" /></a>
+  </div>
+  <div class="three columns" class="centered">
+    <a href="http://patricklerner.com/escrit_screenshots/screen_7.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_7_thumb.png" /></a>
+  </div>
+  <div class="three columns" class="centered">
+    <a href="http://patricklerner.com/escrit_screenshots/screen_8.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_8_thumb.png" /></a>
+  </div>
+</div>
+
+<hr style="margin: 3em 0;">
+
+<div class="row">
+  <div class="one-half column">
+    <h6 class="docs-header">Cookie Policy</h6>
+    <p>This website uses cookies and by using it you agree to cookies being saved on your computer. For more information about this, please refer to the <a href="/cookies">Cookie Policy</a>.</p>
+  </div>
+  <div class="one-half column">
+    <h6 class="docs-header">Legal Disclosure</h6>
+    <p>As required by German and EU law, you can find legal information about the operator of this website on the <a href="/legal">impressum or legal disclosure page</a>.</p>
+  </div>
+</div>
 
 <script type="text/javascript">
   var langs = [<%= (["'languages'"] * 5 + @languages.map {|l| "'#{l.name}'" }).join(',').html_safe %>];
@@ -141,47 +160,3 @@
     $('.row[data-tab-id=' + (id*1-1) + ']').show();
   });
 </script>
-
-<h4>Screenshots</h4>
-
-<div class="row">
-  <div class="three columns" class="centered">
-    <a href="<%= image_path "screenshots/screen_1.png" %>" data-lightbox="images" class="image-link"><img src="<%= image_path "screenshots/screen_1_thumb.png" %>" /></a>
-  </div>
-  <div class="three columns" class="centered">
-    <a href="<%= image_path "screenshots/screen_2.png" %>" data-lightbox="images" class="image-link"><img src="<%= image_path "screenshots/screen_2_thumb.png" %>" /></a>
-  </div>
-  <div class="three columns" class="centered">
-    <a href="<%= image_path "screenshots/screen_3.png" %>" data-lightbox="images" class="image-link"><img src="<%= image_path "screenshots/screen_3_thumb.png" %>" /></a>
-  </div>
-  <div class="three columns" class="centered">
-    <a href="<%= image_path "screenshots/screen_3.png" %>" data-lightbox="images" class="image-link"><img src="<%= image_path "screenshots/screen_3_thumb.png" %>" /></a>
-  </div>
-</div>
-<div class="row">
-  <div class="three columns" class="centered">
-    <a href="<%= image_path "screenshots/screen_4.png" %>" data-lightbox="images" class="image-link"><img src="<%= image_path "screenshots/screen_4_thumb.png" %>" /></a>
-  </div>
-  <div class="three columns" class="centered">
-    <a href="<%= image_path "screenshots/screen_5.png" %>" data-lightbox="images" class="image-link"><img src="<%= image_path "screenshots/screen_5_thumb.png" %>" /></a>
-  </div>
-  <div class="three columns" class="centered">
-    <a href="<%= image_path "screenshots/screen_6.png" %>" data-lightbox="images" class="image-link"><img src="<%= image_path "screenshots/screen_6_thumb.png" %>" /></a>
-  </div>
-  <div class="three columns" class="centered">
-    <a href="<%= image_path "screenshots/screen_3.png" %>" data-lightbox="images" class="image-link"><img src="<%= image_path "screenshots/screen_3_thumb.png" %>" /></a>
-  </div>
-</div>
-
-<hr style="margin: 3em 0;">
-
-<div class="row">
-  <div class="one-half column">
-    <h6 class="docs-header">Cookie Policy</h6>
-    <p>This website uses cookies and by using it you agree to cookies being saved on your computer. For more information about this, please refer to the <a href="/cookies">Cookie Policy</a>.</p>
-  </div>
-  <div class="one-half column">
-    <h6 class="docs-header">Legal Disclosure</h6>
-    <p>As required by German and EU law, you can find legal information about the operator of this website on the <a href="/legal">impressum or legal disclosure page</a>.</p>
-  </div>
-</div>
