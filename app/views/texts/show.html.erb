@@ -22,6 +22,20 @@
 
 <div class="row">
   <div class="two columns">
+    <% if current_user.native_language_id != @text.language_id %>
+      <div class="stat-block centered">
+        <h4 style="margin-bottom: 0;" id="unratedWords">
+          0
+        </h4>
+        unrated <span id="unratedWordsPlural">words</span>.
+      </div>
+      <div class="stat-block centered" style="margin-top: 1em;">
+        <h4 style="margin-bottom: 0;" id="averageRating">
+          0.0
+        </h4>
+        <alias title="The text's rating is the average rating across all words. It therefore is ranked from 0 (knowing no words at all) to 5 (knowing all words perfectly).">average rating</alias>.
+      </div>
+    <% end %>
     &nbsp;
   </div>
   <div class="eight columns">
