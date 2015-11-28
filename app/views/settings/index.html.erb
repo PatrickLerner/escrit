@@ -1,6 +1,6 @@
 <% content_for :title, 'Settings' %>
 
-<h4>Settings</h4>
+<h1>Settings</h1>
 
 <div class="row">
   <div class="two-thirds column">
@@ -14,7 +14,7 @@
     </div>
 
     <% if current_user.admin? %>
-      <p><center><h5>Admin Settings</h5></center></p>
+      <p><center><h4>Admin Settings</h4></center></p>
       <div class="row">
         <div class="one-half column centered">
           <a href="/compliments" class="button u-full-width"><%= fa_icon("heart") %> Compliments</a>
