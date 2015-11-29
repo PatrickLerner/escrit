@@ -8,6 +8,7 @@ class RegistrationController < Devise::RegistrationsController
       ukrainian = Language.find_by(name: 'Ukrainian').id
       latvian = Language.find_by(name: 'Latvian').id
       spanish = Language.find_by(name: 'Spanish').id
+      french = Language.find_by(name: 'French').id
 
       if resource.persisted? # user is created successfuly
         Service.create!([
@@ -22,7 +23,8 @@ class RegistrationController < Devise::RegistrationsController
           {name: "bab.la", short_name: "bab.la", url: "http://en.bab.la/dictionary/russian-english/{query}", language_id: russian, user_id: resource.id, enabled: true},
           {name: "Yandex EN<=>UA", short_name: "yandex", url: "https://translate.yandex.com/?text={query}&lang=uk-en", language_id: ukrainian, user_id: resource.id, enabled: true},
           {name: "Lingea EN<=>LV", short_name: "lingea", url: "http://www.dict.com/?t=lv&set=_enlv&w={query}", language_id: latvian, user_id: resource.id, enabled: true},
-          {name: "sd!ct", short_name: "Span!shD!ct", url: "http://www.spanishdict.com/translate/{query}", language_id: spanish, user_id: resource.id}
+          {name: "sd!ct", short_name: "Span!shD!ct", url: "http://www.spanishdict.com/translate/{query}", language_id: spanish, user_id: resource.id},
+          {name: "schoLingua.com", short_name: "sling", url: "http://www.scholingua.com/en/fr/conjugation/{query}", language_id: french, user_id: resource.id, enabled: true},
         ])
       end
     end
