@@ -7,6 +7,7 @@ class RegistrationController < Devise::RegistrationsController
       russian = Language.find_by(name: 'Russian').id
       ukrainian = Language.find_by(name: 'Ukrainian').id
       latvian = Language.find_by(name: 'Latvian').id
+      spanish = Language.find_by(name: 'Spanish').id
 
       if resource.persisted? # user is created successfuly
         Service.create!([
@@ -20,12 +21,11 @@ class RegistrationController < Devise::RegistrationsController
           {name: "Yandex EN<=>RU", short_name: "yandex", url: "https://translate.yandex.com/?text={query}&lang=ru-en", language_id: russian, user_id: resource.id, enabled: true},
           {name: "bab.la", short_name: "bab.la", url: "http://en.bab.la/dictionary/russian-english/{query}", language_id: russian, user_id: resource.id, enabled: true},
           {name: "Yandex EN<=>UA", short_name: "yandex", url: "https://translate.yandex.com/?text={query}&lang=uk-en", language_id: ukrainian, user_id: resource.id, enabled: true},
-          {name: "Lingea EN<=>LV", short_name: "lingea", url: "http://www.dict.com/?t=lv&set=_enlv&w={query}", language_id: latvian, user_id: resource.id, enabled: true}
+          {name: "Lingea EN<=>LV", short_name: "lingea", url: "http://www.dict.com/?t=lv&set=_enlv&w={query}", language_id: latvian, user_id: resource.id, enabled: true},
+          {name: "sd!ct", short_name: "Span!shD!ct", url: "http://www.spanishdict.com/translate/{query}", language_id: spanish, user_id: resource.id}
         ])
       end
     end
-
-
 
     def after_update_path_for(resource)
       '/u/' + resource.id.to_s
