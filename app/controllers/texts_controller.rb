@@ -57,12 +57,8 @@ class TextsController < ApplicationController
     @text = Text.new(text_params)
     @text.user_id = current_user.id
     @text.public = false unless current_user.admin?
-    @text.category = @text.category.strip
-    @text.content = @text.content.strip
-    @text.title = @text.title.strip
 
     if @text.save
-      @text.update_word_count
       @text.save
       redirect_to @text
     else
@@ -136,7 +132,7 @@ class TextsController < ApplicationController
       end
       @texts[category] = texts
     }
-    @texts = @texts.sort
+    #@texts = @texts.sort
 
     @compliment = ""
     if current_language != nil and @word_count > 0
@@ -182,12 +178,10 @@ class TextsController < ApplicationController
     user = User.find_by id: user_id
     disabled_words = (user_id != current_user.id)
 
-    sp_words = WordsHelper.split_words params['text']
-
     uniq_words = WordsHelper.raw_words(params['text']).sort.uniq
     notes = Note.find_create_bulk current_language.id, uniq_words, user.id
 
-    processed_text = process_text sp_words, notes, current_language.id, disabled_words
+    processed_text = process_text params['text'], notes, current_language.id, disabled_words
 
     render :text => processed_text
   end
@@ -212,9 +206,9 @@ class TextsController < ApplicationController
       else
         notes = {}
       end
-      @processed_text = process_text @text.split_words, notes, @text.language_id, disabled_words
-      @processed_title = process_text @text.split_words_title, notes, @text.language_id, disabled_words
-      @processed_category = process_text @text.split_words_category, notes, @text.language_id, disabled_words
+      @processed_text = process_text @text.content, notes, @text.language_id, disabled_words
+      @processed_title = process_text @text.title, notes, @text.language_id, disabled_words
+      @processed_category = process_text @text.category, notes, @text.language_id, disabled_words
 
       @services = Service.where('(language_id=? or language_id=0) and user_id = ? and enabled = true', @text.language_id, current_user.id)
       @services = [] if @services == nil
@@ -237,10 +231,6 @@ class TextsController < ApplicationController
       params[:text].delete :bulk_update
       
       if @text.update(text_params)
-        @text.category = @text.category.strip
-        @text.content = @text.content.strip
-        @text.title = @text.title.strip
-        @text.update_word_count
         @text.save
         if text_params[:completed]
           render plain: "ok"

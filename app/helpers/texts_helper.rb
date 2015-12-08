@@ -21,43 +21,47 @@ module TextsHelper
     options
   end
 
-  def process_text split_words, notes, language_id, disabled_words = false
-    processed = ''
-    split_words.each do |wstr|
-      wstrlow = utf8downcase wstr
-      if wstrlow.match(/(.*)\|\|(.*)/)
-        wparts = wstrlow.match(/(.*)\|\|(.*)/)
-        wstrlow = utf8downcase wparts[2]
-        wstrrep = Word.determine_replacement_value wparts[2], language_id
-        wstr = wparts[1]
-        wname = wparts[2]
+  def process_text input, notes, language_id, disabled_words = false
+    processed = input
+    # tag words
+    processed = processed.gsub(Text::WORD_REGEX) { |word|
+      if word.include? '||'
+        split = word.split '||'
+        word = split[0]
+        word_value = utf8downcase split[1..-1].join('||')
       else
-        wstrrep = Word.determine_replacement_value wstrlow, language_id
-        wname = nil
+        word_value = utf8downcase word
       end
 
-      if notes.keys.include?(wstrrep) and not (/https?:\/\/[\S]+/.match(wstrlow))
-        w = notes[wstrrep]
-        if disabled_words
-          processed += '<span class="w s' + w.rating.to_s + '">' + wstr + '</span>'
-        elsif wname != nil
-          processed += '<span class="w word s' + w.rating.to_s + '" value="' + w.word.replacement_value + '" title="' + wname + '">' + wstr + '</span>'
-        else
-          processed += '<span class="w word s' + w.rating.to_s + '" value="' + w.word.replacement_value + '">' + wstr + '</span>'
-        end
-      elsif /@https?:\/\/[\S]+/.match wstrlow and (wstrlow[-4..-1] == '.jpg' or wstrlow[-4..-1] == '.png')
-        processed += '<div class="centered"><a href="' + wstr.mb_chars[1..-1] + '" data-lightbox="images" class="image-link"><img class="border" src="' + wstr.mb_chars[1..-1] + '" /></a></div>'
-      elsif /https?:\/\/[\S]+/.match wstrlow and (wstrlow[-4..-1] == '.jpg' or wstrlow[-4..-1] == '.png')
-        processed += '<div class="centered"><a href="' + wstr.mb_chars + '" data-lightbox="images" class="image-link"><img src="' + wstr.mb_chars + '" /></a></div>'
-      elsif /https?:\/\/[\S]+/.match wstrlow and (wstrlow[-4..-1] == '.mp3')
-        processed += '<div><audio src="' + wstr.mb_chars + '" preload="none"></audio></div>'
-      elsif /https?:\/\/www\.youtube\.com\/watch\?v=[A-Za-z0-9]+/.match wstrlow
-        youtube_id = wstr.mb_chars.split("=").last
-        processed += '<div class="embed-container"><iframe src="//www.youtube.com/embed/' + youtube_id + '"></iframe></div>'
+      word_lower = utf8downcase word
+      word_value = Word.determine_replacement_value word_value, language_id
+      rating = notes[word_value].rating
+
+      # image with @ prefix
+      if /@https?:\/\/[\S]+/.match word_lower and (word_lower[-4..-1] == '.jpg' or word_lower[-4..-1] == '.png')
+        '<div class="u-centered"><a href="' + word.mb_chars[1..-1] + '" data-lightbox="images" class="image-link"><img class="border" src="' + word.mb_chars[1..-1] + '" /></a></div>'
+
+      # image with no prefix
+      elsif /https?:\/\/[\S]+/.match word_lower and (word_lower[-4..-1] == '.jpg' or word_lower[-4..-1] == '.png')
+        '<div class="u-centered"><a href="' + word.mb_chars + '" data-lightbox="images" class="image-link"><img src="' + word.mb_chars + '" /></a></div>'
+
+      # mp3 files
+      elsif /https?:\/\/[\S]+/.match word_lower and (word_lower[-4..-1] == '.mp3')
+        '<div><audio src="' + word.mb_chars + '" preload="none"></audio></div>'
+
+      # youtube videos
+      elsif /https?:\/\/www\.youtube\.com\/watch\?v=[A-Za-z0-9]+/.match word_lower
+        youtube_id = word.mb_chars.split("=").last
+        '<div class="embed-container"><iframe src="//www.youtube.com/embed/' + youtube_id + '"></iframe></div>'
+
+      # normal words
+      elsif not disabled_words
+        "<span class='w word s#{rating}' title='#{word_value}' value='#{word_value}'>#{word}</span>"
       else
-        processed += wstr
+        "<span class='w s#{rating}' title='#{word_value}' value='#{word_value}'>#{word}</span>"
       end
-    end
+    }
+    # convert headers
     processed = processed.gsub(/^([#]+)[ \t]*(.*)[\n]*/, "\\1 \\2\n\n")
     processed = processed.gsub(/\r/, '')
     paragraphs = processed.split(/[\n]{2,}/)
@@ -65,8 +69,8 @@ module TextsHelper
     processed = if paragraphs.count > 1
       paragraphs.map { |p|
         if p[0] == '#'
-          p = p.gsub(/^##[ \t]*(.*)[\n]*/, '<h6 class="docs-header">\1</h6>')
-          p = p.gsub(/^#[ \t]*(.*)[\n]*/, '<h5>\1</h5>')
+          p = p.gsub(/^##[ \t]*(.*)[\n]*/, '<h3>\1</h3>')
+          p = p.gsub(/^#[ \t]*(.*)[\n]*/, '<h2>\1</h2>')
         elsif not (/<div/.match p)
           '<p>' + p + '</p>'
         else

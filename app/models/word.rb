@@ -1,6 +1,8 @@
 class Word < ActiveRecord::Base
   belongs_to :language
   belongs_to :user
+  has_many :notes
+  has_many :occurrences
 
   def self.determine_replacement_value word, language_id
     replacements = Replacement.for_language language_id

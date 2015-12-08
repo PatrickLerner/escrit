@@ -9,6 +9,11 @@ class Text < ActiveRecord::Base
   validates :content, length: { minimum: 4, maximum: 10000 }
   validates :language_id, presence: true
 
+  before_save :fix_formatting
+  after_save :update_occurrences
+
+  WORD_REGEX = /@?\p{Alpha}[\p{Alpha}\-\|\.:\/\?=0-9%_]+[\p{Alpha}0-9]|\p{Alpha}+/i
+
   # returns if the given user is allowed to update the text
   # admins are allowed to update all texts, other users only their own
   # and only if their text has not been made public
@@ -28,31 +33,94 @@ class Text < ActiveRecord::Base
     return sum_rating.to_f / raw.count.to_f
   end
 
-  def update_word_count
-    write_attribute 'word_count', self.raw_words.count
-  end
-
   def raw_words
     WordsHelper.raw_words read_attribute(:content)
-  end
-
-  def split_words
-    WordsHelper.split_words read_attribute(:content)
   end
 
   def raw_words_title
     WordsHelper.raw_words read_attribute(:title)
   end
 
-  def split_words_title
-    WordsHelper.split_words read_attribute(:title)
-  end
-
   def raw_words_category
     WordsHelper.raw_words read_attribute(:category)
   end
 
-  def split_words_category
-    WordsHelper.split_words read_attribute(:category)
+  def scan_words
+    self.content.downcase.gsub(URI.regexp){
+      ''
+    }.scan(Text::WORD_REGEX).map { |w|
+      Word.determine_replacement_value ApplicationController.utf8downcase(w), self.language_id
+    }.sort.uniq
+  end
+
+  def unique_word_count
+    Occurrence.where(text: self).count
+  end
+
+  def unique_words
+    Word.joins(:occurrences).where('occurrences.text_id = ?', self.id).map { |word|
+      word.value
+    }
+  end
+
+  def content_processed
+    process self.content
+  end
+
+  def fix_input input
+    out = input
+    repl = [
+      ['ä', 'ä'],
+      ['ë', 'ë'],
+      ['ï', 'ï'],
+      ['ö', 'ö'],
+      ['ü', 'ü'],
+      ['Ä', 'Ä'],
+      ['Ë', 'Ë'],
+      ['Ï', 'Ï'],
+      ['Ö', 'Ö'],
+      ['Ü', 'Ü']
+    ]
+    repl.each { |r|
+      out = out.gsub r[0], r[1]
+    }
+    out.strip
+  end
+
+  def fix_formatting
+    self.category = fix_input self.category
+    self.title = fix_input self.title
+    self.content = fix_input self.content
+  end
+
+  def update_occurrences
+    current_words = self.scan_words
+    previous_words = self.unique_words
+
+    gained_words = current_words - previous_words
+    lost_words = previous_words - current_words
+
+    # add gained words
+    new_words = Word.find_create_bulk self.language_id, gained_words
+    new_words.each { |value, word|
+      word.save if word.new_record?
+      occurrence = Occurrence.new word: word, text: self
+      occurrence.save
+    }
+
+    # remove lost occurances and words (if no occurances remain for it)
+    removed_words = Word.find_create_bulk self.language_id, lost_words
+    removed_words.each { |value, word|
+      occurrence = Occurrence.find_by word: word, text: self
+      occurrence.destroy if occurrence
+
+      # if the word is not referenced by occurances in texts or by definitions
+      # of users, then it may now also be deleted permanently from the system
+      if word.occurrences.count == 0 and word.notes.count == 0
+        word.destroy
+      end
+    }
+
+    write_attribute 'word_count', self.unique_word_count
   end
 end
