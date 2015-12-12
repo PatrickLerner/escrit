@@ -1,0 +1,15 @@
+.content {
+  .word-list-rating, .vocabulary-rating {
+    width: 1.5em;
+    display: inline-block;
+    text-align: center;
+    border: gray 1px solid;
+  }
+
+  .pagination {
+    text-align: center;
+    padding: 0.3em 0.6em;
+    margin-bottom: 0.5em;
+    cursor: default;
+  }
+}

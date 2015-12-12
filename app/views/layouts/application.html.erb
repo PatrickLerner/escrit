@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title><%= page_title.html_safe %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,400italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -12,68 +12,99 @@
 </head>
 <body>
   <% if Rails.env.development? %>
-    <div class="corner-ribbon top-left sticky dark-blue shadow">Dev Version</div>
+    <div class="corner-ribbon top-left green-accent shadow">Dev Version</div>
   <% end %>
 
-  <div class="container" style="margin-bottom: 6em;">
-    <nav class="navbar">
-      <div class="container">
-        <ul class="navbar-list">
-          <li class="navbar-item">
-          	<a href="/"><%= image_tag "logo.png", :class => "navbar-logo" %></a>
-          </li>
-          <% lang = "" %>
-          <% if current_language %>
-            <% lang = "/" + current_language.name.downcase %>
+  <nav class="navbar">
+    <input type="checkbox" id="show-menu" role="button">
+    <label for="show-menu" class="show-menu">Show Menu</label>
+    <ul id="menu">
+      <li>
+        <a href="/"><%= image_tag "logo.png", class: "navbar-logo" %></a>
+      </li>
+      
+      <% if user_signed_in? %>
+        <li>
+          <a href="/home">Home</a>
+        </li>
+        <li>
+          <% if controller_name == 'texts' and action_name == 'index'  %>
+            <% text_url = '/texts' %>
+          <% else %>
+            <% text_url = '/texts' + language_link_suffix %>
           <% end %>
-          <% if @text and @text.language %>
-            <% lang = "/" + @text.language.name.downcase %>
-          <% end %>
-          <% if user_signed_in? %>
-            <li class="navbar-item"><a class="navbar-link" href="/home">Home</a></li>
-            <li class="navbar-item">
-              <% if controller_name == 'texts' and action_name == 'index'  %>
-                <% text_url = '/texts' %>
-              <% else %>
-                <% text_url = '/texts' + lang %>
-              <% end %>
-              <a class="navbar-link navbar-submenu" href="<%= text_url %>">Reading</a>
-              <ul>
-                <li class="navbar-item"><a class="navbar-link" href="<%= text_url %>"><%= fa_icon('book') %> Texts</a></li>
-                <li class="navbar-item"><a class="navbar-link" href="/reader<%= lang %>"><%= fa_icon('magic') %> Quick Reader</a></li>
-                <li class="navbar-item"><a class="navbar-link" href="/statistics<%= lang %>"><%= fa_icon("bar-chart") %> Statistics</a></li>
-                <li class="navbar-item"><a class="navbar-link" href="/words<%= lang %>"><%= fa_icon("list") %> Word List</a></li>
-              </ul>
+          <a href="<%= text_url %>">Reading ￬</a>
+          <ul class="hidden">
+            <li>
+              <a href="<%= text_url %>"><%= fa_icon 'book' %> Texts</a>
             </li>
-          <% end %>
-          <% if not user_signed_in? %>
-            <li class="navbar-item navbar-user">
-              <%= link_to fa_icon("user-plus") + " Sign Up", '/users/sign_up', class: 'navbar-link' %>
+            <li>
+              <a href="/reader<%= language_link_suffix %>">
+                <%= fa_icon 'magic' %> Quick Reader
+              </a>
             </li>
-          <% end %>
-          <li class="navbar-item navbar-user">
-            <% if user_signed_in? %>
-              <%= link_to current_user.name, '/u/' + current_user.id.to_s, class: 'navbar-link navbar-submenu' %>
-              <ul>
-                <li class="navbar-item"><%= link_to fa_icon("user") + ' Your Profile', '/u/' + current_user.id.to_s, class: 'navbar-link' %></li>
-                <li class="navbar-item"><a class="navbar-link" href="/settings"><%= fa_icon("wrench") %> Settings</a></li>
-                <li class="navbar-item"><a href="/help" class="navbar-link" ><%= fa_icon("life-ring") %> Help</a></li>
-                <li class="navbar-item">
-                  <%= link_to fa_icon("sign-out") + " Logout", :destroy_user_session, method: :delete, class: 'navbar-link' %>
-                </li>
-              </ul>
-            <% else %>
-              <%= link_to fa_icon("sign-in") + " Log In", new_user_session_path, class: 'navbar-link' %>
-            <% end %>
-          </li>
-        </ul>
-      </div>
-    </nav>
+            <li>
+              <a href="/statistics<%= language_link_suffix %>">
+                <%= fa_icon 'bar-chart' %> Statistics
+              </a>
+            </li>
+            <li>
+              <a href="/words<%= language_link_suffix %>">
+                <%= fa_icon 'list' %> Word List
+              </a>
+            </li>
+          </ul>
+        </li>
+      <% else %>
+        <li>
+          <a href="/users/sign_up">
+            <%= fa_icon 'user-plus' %> Sign Up
+          </a>
+        </li>
+      <% end %>
 
-    <div class="docs-section" id="intro">
+      <li class="right">
+        <% if user_signed_in? %>
+          <a href="/u/<%= current_user.id %>"><%= current_user.name %> ￬</a>
+          <ul class="hidden">
+            <li>
+              <a href="/u/<%= current_user.id %>">
+                <%= fa_icon 'user' %> Your Profile
+              </a>
+            </li>
+            <li>
+              <a href="/settings">
+                <%= fa_icon("wrench") %> Settings
+              </a>
+            </li>
+            <li>
+              <a href="/help">
+                <%= fa_icon("life-ring") %> Help
+              </a>
+            </li>
+            <li>
+              <%= link_to fa_icon("sign-out") + " Logout", :destroy_user_session, method: :delete, class: 'navbar-link' %>
+            </li>
+          </ul>
+        <% else %>
+          <%= link_to fa_icon("sign-in") + " Log In", new_user_session_path, class: 'navbar-link' %>
+        <% end %>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <div class="content">
 	    <%= yield %>
 	  </div>
   </div>
+
+  <footer>
+    <a href="/cookies">Cookie Policy</a> : 
+    <a href="/legal">Legal Disclosure</a>
+    <div>&copy; 2015 escrit.eu</div>
+  </footer>
+
   <% if Rails.env.production? %>
     <%= render 'layouts/footer' %>
   <% end %>

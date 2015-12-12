@@ -92,6 +92,7 @@ class TextsController < ApplicationController
 
   def index hidden = false, public = false
     @languages = Language.order(:name).all
+    @selected_category = params[:c]
 
     if current_language == nil
       my_texts = []

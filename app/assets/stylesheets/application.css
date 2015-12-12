@@ -14,5 +14,7 @@
  *= require font-awesome
  *= require lightbox
  *= require jquery-ui
+ *= require_tree ./_reset
+ *= require_tree ./_base
  *= require_tree .
  */

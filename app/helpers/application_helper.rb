@@ -49,4 +49,14 @@ module ApplicationHelper
   def language_icon language
     "sidebar/#{language.downcase}.png"
   end
+
+  def language_link_suffix
+    if current_language
+      '/' + current_language.name.downcase
+    elsif @text and @text.language
+      '/' + @text.language.name.downcase
+    else
+      ''
+    end
+  end
 end

@@ -1,5 +1,5 @@
 <div style="text-align: center; margin: 7em 0;">
-  <img src="<%= image_path "logo.png" %>" />
+  <img src="<%= image_path "logo-i.png" %>" />
   <h4>Learn <span id="lang_name">languages</span> by reading texts. For free.</h4>
 </div>
 
@@ -15,7 +15,7 @@
         <% if l == nil %>
           &nbsp;
         <% else %>
-          <%= image_tag "flags/#{l.name.downcase}.png", title: l.name, class: 'flag', style: 'vertical-align: middle; height: 2em;' %>
+          <%= image_tag "languages/#{l.name.downcase}/flag.png", title: l.name, class: 'flag', style: 'vertical-align: middle; height: 2em;' %>
         <% end %>
       </div>
     <% } %>

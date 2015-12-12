@@ -1,0 +1,29 @@
+.content {
+  .button-group {
+    border: 1px solid #bbb;
+    display: inline-block;
+    margin-bottom: 1em;
+    width: 100%;
+    overflow: hidden;
+
+    .button {
+      border: none;
+      border-radius: 0;
+      margin-bottom: 0;
+      width: 100%;
+      margin: 0;
+    }
+  }
+}
+
+@media (min-width: 850px) {
+  .content {
+    .button-group {
+      width: auto;
+
+      .button {
+        width: auto;
+      }
+    }
+  }
+}

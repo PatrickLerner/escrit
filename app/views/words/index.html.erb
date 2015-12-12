@@ -2,7 +2,7 @@
 
 <%= render 'texts/header_language_choice', url: '/words' %>
 
-<%= render 'texts/header', page_title: "#{current_language.name} Word List", mini: true %>
+<h1><%= current_language.name %> Word List</h1>
 
 <div class="row">
   <div class="one column">
@@ -46,7 +46,7 @@
         <thead>
           <th style="width: 40%">Word</th>
           <th style="width: 50%">Note</th>
-          <th class="centered">Rating</th>
+          <th class="u-centered">Rating</th>
         </thead>
         <tbody>
     <%
@@ -55,7 +55,7 @@
       <tr>
         <td><%= w.word.value %><%=  %></td>
         <td><%= w.value %></td>
-        <td style="text-align: center"><span class="s<%= w.rating %> word-list-rating" title="<%= [ "Looked it up once.", "This time I'll remember it.", "I'm getting it now.", "Seems easy at this point.", "Know it in my sleep."][w.rating - 1] %>"><%= w.rating %></span></td>
+        <td class="u-centered"><span class="s<%= w.rating %> word-list-rating" title="<%= [ "Looked it up once.", "This time I'll remember it.", "I'm getting it now.", "Seems easy at this point.", "Know it in my sleep."][w.rating - 1] %>"><%= w.rating %></span></td>
       </tr>
     <% } %>
     <% if open %>

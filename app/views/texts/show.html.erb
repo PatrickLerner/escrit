@@ -2,46 +2,53 @@
 
 <%= render 'texts/tagger' %>
 
-<header class="mini">
-  <%= image_tag 'book.png', class: 'larger' %>
-  <section>
-    <nav>
-      <%= link_to fa_icon('chevron-left') + ' Back', texts_path(@text.language.name.downcase), class: 'button', title: 'Go back to overview' %>
-      <%= link_to fa_icon('list') + ' Vocab', vocabulary_text_path(@text), class: 'button', title: 'See vocabulary used in this text' %>
-      <% if @text.public %>
-        <%= link_to fa_icon('clone') + ' Copy', copy_text_path(@text), class: 'button', data: { confirm: 'Do you want to copy this text into your private library?' }, title: 'Make a copy of this text and add it to your personal text library.' %>
-      <% end %>
-      <% if @text.is_allowed_to_update current_user %>
-        <%= link_to fa_icon('pencil') + ' Edit', edit_text_path(@text), class: 'button ', title: 'Edit the text' %>
-      <% end %>
-    </nav>
-    <h1><%= @processed_title %></h1>
-    <h6><%= @processed_category %></h6>
-  </section>
+<header class="textHeader">
+  <h6><%= @processed_category %></h6>
+  <h1><%= @processed_title %></h1>
 </header>
 
 <div class="row">
-  <div class="two columns">
+  <div class="nine columns">
+    <%= @processed_text %>
+  </div>
+  <div class="three columns">
+    <%= link_to fa_icon('chevron-left') + ' Back', texts_path(@text.language.name.downcase), class: 'button u-full-width', title: 'Go back to overview' %>
+    <!--<%= link_to fa_icon('list') + ' Vocab', vocabulary_text_path(@text), class: 'button u-full-width', title: 'See vocabulary used in this text' %>-->
+    <% if @text.public %>
+      <%= link_to fa_icon('clone') + ' Copy', copy_text_path(@text), class: 'button u-full-width', data: { confirm: 'Do you want to copy this text into your private library?' }, title: 'Make a copy of this text and add it to your personal text library.' %>
+    <% end %>
+    <% if @text.is_allowed_to_update current_user %>
+      <%= link_to fa_icon('pencil') + ' Edit', edit_text_path(@text), class: 'button u-full-width', title: 'Edit the text' %>
+    <% end %>
+
+    <hr style="margin: 3rem 0;" />
+
     <% if current_user.native_language_id != @text.language_id %>
-      <div class="stat-block centered">
-        <h4 style="margin-bottom: 0;" id="unratedWords">
-          0
-        </h4>
-        unrated <span id="unratedWordsPlural">words</span>.
+      <div class="row">
+        <div class="one-half column">
+          <div class="stat-block">
+            <h4 style="margin-bottom: 0;" id="unratedWords">
+              0
+            </h4>
+            unrated <span id="unratedWordsPlural">words</span>
+          </div>
+        </div>
+        <div class="one-half column">
+          <div class="stat-block">
+            <h4 style="margin-bottom: 0;">
+              <%= number_with_precision @text.word_count, precision: 0, delimiter: ',' %>
+            </h4>
+            unique words
+          </div>
+        </div>
       </div>
-      <div class="stat-block centered" style="margin-top: 1em;">
+      <div class="stat-block">
         <h4 style="margin-bottom: 0;" id="averageRating">
           0.0
         </h4>
-        <alias title="The text's rating is the average rating across all words. It therefore is ranked from 0 (knowing no words at all) to 5 (knowing all words perfectly).">average rating</alias>.
+        <alias title="The text's rating is the average rating across all words. It therefore is ranked from 0 (knowing no words at all) to 5 (knowing all words perfectly).">average rating</alias>
       </div>
     <% end %>
-    &nbsp;
-  </div>
-  <div class="eight columns">
-    <%= @processed_text %>
-  </div>
-  <div class="two columns">
     &nbsp;
   </div>
 </div>
