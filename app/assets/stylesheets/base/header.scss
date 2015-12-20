@@ -30,7 +30,7 @@ header {
     background-size: cover;
   }
 
-  @each $lang in czech, danish, german, icelandic, russian, swedish {
+  @each $lang in czech, danish, dutch, english, french, german, greek, hungarian, icelandic, italian, latvian, norwegian, polish, portuguese, romanian, russian, spanish, swedish, ukrainian {
     .#{$lang} {
       background-image: image-url('languages/#{$lang}/background.jpg');
     }

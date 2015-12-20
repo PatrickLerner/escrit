@@ -13,9 +13,21 @@ header.large
         | Private library
 div.container
   div.buttons.right
-    = link_to 'Private', texts_path(current_language.name.downcase), title: 'Show currently active texts.', class: 'button'
-    = link_to 'Archived', archived_texts_path(current_language.name.downcase), title: 'Show currently active texts.', class: 'button'
-    = link_to 'Public', public_texts_path(current_language.name.downcase), title: 'Show currently active texts.', class: 'button'
+    - if not @public and not @hidden
+      = link_to 'Private', texts_path(current_language.name.downcase), title: 'Show currently active texts.', class: 'button button-primary'
+    - else
+      = link_to 'Private', texts_path(current_language.name.downcase), title: 'Show currently active texts.', class: 'button'
+    
+    - if @hidden
+      = link_to 'Archived', archived_texts_path(current_language.name.downcase), title: 'Show currently active texts.', class: 'button button-primary'
+    - else
+      = link_to 'Archived', archived_texts_path(current_language.name.downcase), title: 'Show currently active texts.', class: 'button'
+
+    - if @public
+      = link_to 'Public', public_texts_path(current_language.name.downcase), title: 'Show currently active texts.', class: 'button button-primary'
+    - else
+      = link_to 'Public', public_texts_path(current_language.name.downcase), title: 'Show currently active texts.', class: 'button'
+    
     = link_to fa_icon('plus') + ' New text', new_text_path(current_language), class: 'button right'
 
   - if @texts == []
@@ -33,7 +45,10 @@ div.container
     table.u-full-width.listing
       thead
         th colspan="2"
-          = link_to category, edit_category_path(texts[0]), class: 'category_link'
+          - if not @public or current_user.admin?
+            = link_to category, edit_category_path(texts[0]), class: 'category_link'
+          - else
+            = category
         th style="text-align: right"
           alias title="Total number of words in the category"
             = number_with_precision total_words, precision: 0, delimiter: ','
