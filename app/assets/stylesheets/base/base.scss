@@ -26,9 +26,11 @@ footer {
     color: #777;
     text-decoration: none;
     padding: 0 .5rem;
+    border: 0;
 
     &:hover {
       color: black;
+      border: 0;
     }
   }
   div {

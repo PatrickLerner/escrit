@@ -30,9 +30,9 @@ div.container
     
     = link_to fa_icon('plus') + ' New text', new_text_path(current_language), class: 'button right'
 
-  - if @texts == []
+  - if @texts == {}
     - if @public
-      p It appears that no public texts in <%= current_language.name %> have been added yet.
+      p= "It appears that no public texts in #{current_language.name} have been added yet."
     - elsif not @hidden
       p= "It seems like you have not yet added any texts in #{current_language.name}. Please feel free to add some that interest you. If you need inspiration, try looking online for newspapers, short stories, song lyrics or other media."
     - else
