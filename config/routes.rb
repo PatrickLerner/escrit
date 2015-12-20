@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get '/texts/:id/copy', to: 'texts#copy', constraints: { id: /.+/ }, as: :copy_text
   get '/texts/:id/vocabulary', to: 'texts#vocabulary', constraints: { id: /.+/ }, as: :vocabulary_text
   get '/texts/:language', to: 'texts#index', constraints: { language: /.+/ }, as: :texts
+  post '/texts/:language', to: 'texts#create', constraints: { language: /.+/ }
   resources :texts
 
   # Quick Reader
