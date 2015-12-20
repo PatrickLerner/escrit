@@ -20,6 +20,15 @@ h6 { font-size: 1.5rem; line-height: 1.6;  }
   h6 { font-size: 1.5rem; }
 }
 
+.image-link img {
+  max-width: 60%;
+
+  &.border {
+    border: 1px solid #ccc;
+    padding: 1px;
+  }
+}
+
 img {
   max-width: 100%;
 }
