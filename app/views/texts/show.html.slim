@@ -14,7 +14,7 @@ header.large
         - back_link = texts_path(current_language) + '/archive'
       - else
         - back_link = texts_path(current_language)
-      = link_to fa_icon('chevron-left') + ' Go Back', back_link, class: 'button'
+      = link_to fa_icon('chevron-left') + ' Back', "#{back_link}\##{@text.category}", class: 'button', title: 'Go back to overview'
       = link_to fa_icon('pencil') + ' Edit Text', edit_text_path(@text), class: 'button'
   = @processed_text
 

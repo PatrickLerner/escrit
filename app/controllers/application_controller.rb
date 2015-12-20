@@ -3,6 +3,9 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  # this is needed to prevent XHR request form using layouts
+  layout proc { false if request.xhr? }
+
   before_filter :redirect_subdomain
 
   # always redirect away from the www-version of the site to the plain url one

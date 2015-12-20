@@ -53,12 +53,11 @@ table.listing {
     padding-right: 0;
     padding-left: 0;
   }
-  td:last-child {
-    text-align: right;
-  }
-  td:first-child {
-    text-align: center;
-    width: 2.5em;
+  &.texts {
+    td:first-child {
+      text-align: center;
+      width: 2.5em;
+    }
   }
   .fa-check {
     color: #0FC55C;

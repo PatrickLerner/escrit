@@ -91,70 +91,63 @@ class TextsController < ApplicationController
   end
 
   def index hidden = false, public = false
-    @languages = Language.order(:name).all
-    @selected_category = params[:c]
+    selected_category = params[:c]
 
     if current_language == nil
       my_texts = []
-      @total_text_count = 0
-      @total_text_count_read = 0
-      @total_text_count_public = 0
     else
       if public
-        my_texts = Text.where(language_id: current_language.id, public: true).order('category asc, title asc')
+        my_texts = Text.where(language: current_language, public: true, category: selected_category).order('category asc, title asc')
       else
-        my_texts = Text.where(language_id: current_language.id, hidden: hidden, user_id: current_user.id, public: false).order('category asc, title asc')
+        my_texts = Text.where(language: current_language, hidden: hidden, user: current_user, public: false, category: selected_category).order('category asc, title asc')
       end
-
-      @total_text_count = Text.where(language_id: current_language.id, user_id: current_user.id, public: false).count
-      @total_text_count_read = Text.where(language_id: current_language.id, user_id: current_user.id, completed: true, public: false).count
-      @known_word_count = Note.joins(:word).where('rating >= 3 and rating < 6 and language_id = ? and user_id = ?', current_language.id, current_user.id).count
-      @word_count = Note.joins(:word).where('rating != 6 and language_id = ? and user_id = ?', current_language.id, current_user.id).count
     end
-    my_texts = [] if my_texts == nil
     @hidden = hidden
     @public = public
 
-    @texts = {}
-    my_texts.each do |t|
-      @texts[t.category] = [] if not @texts.has_key? t.category
-      @texts[t.category] += [t]
+    if my_texts.any?
+      @texts = {}
+      my_texts.each do |t|
+        @texts[t.category] = [] if not @texts.has_key? t.category
+        @texts[t.category] += [t]
+      end
+
+      @texts.each { |category, texts|
+        texts.sort! do |a, b|
+          if a.title == b.title
+            0
+          elsif [a.title, b.title].natural_sort[0] == a.title
+            -1
+          else
+            1
+          end
+        end
+        @texts[category] = texts
+      }
+      @texts = @texts.sort.to_h
+    else
+      @texts = {}
     end
 
-    @texts.each { |category, texts|
-      texts.sort! do |a, b|
-        if a.title == b.title
-          0
-        elsif [a.title, b.title].natural_sort[0] == a.title
-          -1
-        else
-          1
-        end
-      end
-      @texts[category] = texts
-    }
-    #@texts = @texts.sort
+    if public
+      @categories = Text.where(public: true, language: current_language).select('category, count(texts.id) as count').group(:category).map { |t| [t.category, t.count] }.to_h
+    else
+      @categories = Text.where(user: current_user, hidden: hidden, public: false, language: current_language).select('category, count(texts.id) as count').group(:category).map { |t| [t.category, t.count] }.to_h
+    end
 
-    @compliment = ""
-    if current_language != nil and @word_count > 0
-      compliments = Compliment.where language_id: current_language.id
-      if compliments.count == 0
-        compliments = Compliment.where language_id: 0
-      end
-      if compliments.count > 0
-        @compliment = compliments.sample.value
-      end
+    if selected_category
+      render 'index_texts'
+    else
+      render 'index'
     end
   end
 
   def index_hidden
     index true
-    render 'index'
   end
 
   def index_public
     index false, true
-    render 'index'
   end
 
   def new

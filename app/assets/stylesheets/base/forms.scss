@@ -20,6 +20,20 @@
     }
   }
 }
+@media screen and (max-width : 760px) {
+  .buttons {
+    .button,
+    button,
+    input[type="submit"],
+    input[type="reset"],
+    input[type="button"] {
+      display: block;
+      width: 100%;
+      margin: 0.5rem 0;
+      float: none;
+    }
+  }
+}
 
 .button,
 button,

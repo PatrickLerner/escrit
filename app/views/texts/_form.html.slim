@@ -44,7 +44,7 @@
               | Make text public
 
     div.three.columns
-      = link_to fa_icon('chevron-left') + ' Back', texts_path(current_language.name.downcase), class: 'button u-full-width', title: 'Go back to overview'
+      = link_to fa_icon('chevron-left') + ' Back', "#{texts_path(current_language.name.downcase)}\##{@text.category}", class: 'button u-full-width', title: 'Go back to overview'
     div.three.columns
       - if @text.persisted?
         = link_to fa_icon('floppy-o') + ' Save Text', '', class: 'button button-primary u-full-width', onclick: "$('.text_form').submit(); return false;"

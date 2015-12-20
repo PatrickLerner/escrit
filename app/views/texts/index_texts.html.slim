@@ -1,0 +1,33 @@
+- @texts.each do |category, texts|
+  - total_words = texts.map { |t| t.word_count }.inject(:+)
+  table.u-full-width.listing.texts
+    thead
+      th colspan="2"
+        - if not @public or current_user.admin?
+          = link_to category, edit_category_path(texts[0]), class: 'category_link'
+        - else
+          = category
+      th.right
+        alias title="Total number of words in the category"
+          = number_with_precision total_words, precision: 0, delimiter: ','
+    tbody
+      - texts.each do |text|
+        tr
+          td.centered style="width: 2.5em; padding-right: 0"
+            - if text.public
+              alias title="This is a public text. Make a copy for you to see its status."
+                = fa_icon 'star'
+            - elsif current_user.native_language_id == current_language.id
+              alias title="This is your native language, you should know all the words ;)"
+              = fa_icon 'check'
+            - elsif not text.completed
+              alias title="Not all words in this text have been rated yet."
+                = fa_icon 'minus'
+            - else
+              alias title="You have worked through this text and rated all the words within it."
+                = fa_icon 'check'
+          td style="padding-left: 0"
+            = link_to text.title, text_path(text)
+          td.right
+            alias title="Number of words in the text"
+              = number_with_precision text.word_count, precision: 0, delimiter: ','
