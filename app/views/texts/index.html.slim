@@ -6,11 +6,11 @@ header.large
     h1= "#{current_language.name} texts"
     h2
       - if @public
-        | Public Library
+        | Public library
       - elsif @hidden
-        | Private Library (Archived)
+        | Private library (archived)
       - else
-        | Private Library
+        | Private library
 div.container
   div.buttons.right
     = link_to 'Private', texts_path(current_language.name.downcase), title: 'Show currently active texts.', class: 'button'

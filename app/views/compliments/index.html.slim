@@ -1,0 +1,26 @@
+- content_for :title, 'Compliments'
+
+header
+  .container
+    h1 List of compliments
+    h2 Admin settings
+
+.container
+  .buttons
+    .right
+      = link_to fa_icon('chevron-left') + ' Back', settings_path, class: 'button', title: 'Back to Settings'
+      = link_to fa_icon('plus') + ' Add New', new_compliment_path, class: 'button button-primary', title: 'Add a new compliment'
+  p Compliments are small text snippets shown in the sidebar to motivate users to continue on with their language learning process.
+  table.u-full-width
+    tr
+      th Compliment
+      th Language
+    - @compliments.each do |compliment|
+      tr
+        td
+          = link_to compliment.value, edit_compliment_path(compliment), title: 'Edit Compliment Entry'
+        td
+          - if compliment.language
+            = compliment.language.name
+          - else
+            | All

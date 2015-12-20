@@ -1,0 +1,57 @@
+- content_for :title, 'Edit User Profile'
+
+header
+  .container
+    h1 Edit User Profile
+
+.container
+  = form_for resource, as: resource_name, url: registration_path(resource_name), method: :put, html: { class: 'profile_form' } do |f|
+    - if @user.errors.any?
+      #error_explanation
+        h5
+          = pluralize(@user.errors.count, 'error')
+          |  prohibited your changes from being saved: 
+        ul
+          - @user.errors.full_messages.each do |msg|
+            li
+              = msg
+    .row
+      .one-third.column
+        = f.label :name
+        = f.text_field :name, autofocus: true, class: 'u-full-width'
+      .one-third.column
+        = f.label :email
+        = f.email_field :email, class: 'u-full-width'
+      .one-third.column
+        = f.label :native_language_id, 'Native Language:'
+        = f.select :native_language_id, options_for_select([["-", 0]] + language_options, @user.native_language_id), {}, :class => 'u-full-width'
+    = f.label :about
+    = f.text_area :about, placeholder: 'About Me', style: 'height: 15em;', class: 'u-full-width'
+    - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+      div
+        | Currently waiting confirmation for: 
+        = resource.unconfirmed_email
+    .row
+      .one-half.column
+        = f.label :password
+        = f.password_field :password, autocomplete: 'off', class: 'u-full-width', placeholder: '(leave blank if you don\'t want to change it)'
+      .one-half.column
+        = f.label :password_confirmation
+        = f.password_field :password_confirmation, autocomplete: 'off', class: 'u-full-width', placeholder: '(leave blank if you don\'t want to change it)'
+    = f.label :current_password
+    = f.password_field :current_password, autocomplete: 'off', class: 'u-full-width', placeholder: '(we need your current password to confirm your changes)'
+    label
+      | Profile Picture
+    p
+      | To change your profile picture, please go to 
+      a[href="https://gravatar.com/"]
+        | Gravatar
+      |  and register with the email address you have set in your user profile.
+
+    .row
+      .six.columns
+        == "&nbsp;"
+      .three.columns
+        = link_to fa_icon('chevron-left') + ' Back', "/u/#{@user.id}", class: 'button u-full-width', title: 'Back to Settings'
+      .three.columns
+        = link_to fa_icon('floppy-o') + ' Update Profile', '', class: 'button button-primary u-full-width', onclick: "$('.profile_form').submit(); return false;"

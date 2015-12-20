@@ -1,0 +1,55 @@
+- if @service.persisted?
+  - form_url = service_path(@service)
+  - form_method = :patch
+- else
+  - form_url = services_path
+  - form_method = :post
+
+p
+  | Here you can add the details of the new service you want to add. The URL mask must contain a placeholder where the word is inserted into, specify where this placeholder goes with '{query}'. For example if looking up the word 'testword' gives you a URL like 
+  u http://example.com/?q=testword
+  | , then you need to put 
+  u http://example.com/?q={query}
+  |  as the URL Mask in this form.
+
+= form_for :service, url: form_url, method: form_method, html: { class: 'service_form' } do |f|
+  - if @service.errors.any?
+    #error_explanation
+      h6
+        = pluralize(@service.errors.count, 'error')
+        |  prohibited this language from being saved: 
+      ul
+        - @service.errors.full_messages.each do |msg|
+          li
+            = msg
+  .row
+    .two-thirds.column
+      = f.label :name, 'Name:'
+      = f.text_field :name, class: 'u-full-width'
+    .one-third.column
+      = f.label :short_name, 'Short Name:'
+      = f.text_field :short_name, class: 'u-full-width'
+  .row
+    .two-thirds.column
+      = f.label :url, 'URL Mask:'
+      = f.text_field :url, class: 'u-full-width'
+      p.warning Your URL Mask does not without the {query} placeholder! 
+    .one-third.column
+      = f.label :language_id, 'Language:'
+      = f.select :language_id, options_for_select([['All', 0]] + language_options, @service.language_id), {}, class: 'u-full-width'
+  label
+    = f.check_box :enabled
+    span
+      |  Enable this service for usage when reading text.
+  .row
+    .six.columns
+      == "&nbsp;"
+    .three.columns
+      = link_to fa_icon('chevron-left') + ' Back', services_path, class: 'button u-full-width', title: 'Go back to overview'
+    .three.columns
+      - if @service.persisted?
+        = link_to fa_icon('floppy-o') + ' Save', '', class: 'button button-primary u-full-width', onclick: "$('.service_form').submit(); return false;"
+        = link_to fa_icon('times') + ' Delete', service_path(@service), method: :delete, data: { confirm: 'Are you absolutely certain?' }, title: 'Delete', class: 'button button-delete u-full-width'
+      - else
+        = link_to fa_icon('plus') + ' Add', '', class: 'button button-primary u-full-width', onclick: "$('.service_form').submit(); return false;"
+

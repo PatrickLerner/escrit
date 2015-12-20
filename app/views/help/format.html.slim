@@ -1,0 +1,94 @@
+- content_for :title, 'How do I format a text?'
+
+header
+  .container
+    h1 How do I format a text?
+    h2 Help
+.container
+  .buttons
+    .right
+      = link_to fa_icon("chevron-left") + " Back to Overview", '/help', class: 'button button-primary u-full-width', title: 'Back to Help Overview'
+  
+  h3 Plain Text
+  p
+    | You do not need to use anything special to use text in escrit. All you need to do is copy and paste it in and it should mostly be alright. If you want to be a bit more fancy, consider the following options to make your texts more usable and nicer to look at.
+  p
+    | A line break in a text is treated as just that, a line break. If you want to create paragraphs with spacing between them, simple have two line breaks instead of one at the end of a paragraph before the next one begins.
+  
+  h3 Headers
+  p
+    | escrit also supports adding subheaders to your text. This can be accomplished simply by putting a hashtag (
+    code
+      | #
+    | ) in front of a line, turning it into a header. An additional, smaller header is also formatted and is rendered when a line is prefixed by two hashtags (
+    code
+      | ##
+    | ).
+  table.u-full-width
+    thead
+      tr
+        th
+          | Raw Text
+        th
+          | Formatted Text
+    tbody
+      tr
+        td[style="font-family: monospace;"]
+          | # Test Header
+        td
+          h5
+            | Test Header
+      tr
+        td[style="font-family: monospace;"]
+          | ## Small Header
+        td
+          h6.docs-header
+            | Small Header
+  
+  h3 Images / Youtube
+  p
+    | Both images and Youtube videos can be embedded into the site, simply by pasting a URL into a new line of the text. Make sure nothing comes before or after the URL in the text and it is the only thing in that line and it should be rendered embedded into the text as soon as you save and view your text.
+  strong
+    | Border Around Images
+  p
+    | To add a border around an image, prefix the address with an 
+    code
+      | @
+    | -character before the http. For example by writing 
+    code
+      | @http://example.com/image.jpg
+    | .
+  
+  h3 Bold / Italic
+  p
+    | Text segments can be styled to be bold or italic by encapsulating them in special characters. For bold text, those are two asterisks (
+    code
+      | **
+    | ), and for italic those are two underscores (
+    code
+      | __
+    | ). If you put these characters before and after the text that is supposed to be styled, then it will be rendered as such.
+  table.u-full-width
+    thead
+      tr
+        th
+          | Raw Text
+        th
+          | Formatted Text
+    tbody
+      tr
+        td[style="font-family: monospace;"]
+          | This is **a test**.
+        td
+          | This is 
+          b
+            | a test
+          | .
+      tr
+        td[style="font-family: monospace;"]
+          | This is __another test__.
+        td
+          | This is 
+          i
+            | another test
+          | .

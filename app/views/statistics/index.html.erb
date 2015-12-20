@@ -39,7 +39,7 @@
   <h5>Completed Texts</h5>
   <p>
     <div class="u-centered">
-      You have finished reading a total of <%= number_with_precision @total_read_texts, precision: 0, delimiter: ',' %> <%= "text".pluralize @total_read_texts %> with a combined total word count of <%= number_with_precision @total_read_words, precision: 0, delimiter: ',' %> <%= "word".pluralize @total_read_words %> (can include words more than once).
+      You have finished reading <%= number_with_precision @total_read_texts, precision: 0, delimiter: ',' %> <%= "text".pluralize @total_read_texts %> with a combined total word count of <%= number_with_precision @total_read_words, precision: 0, delimiter: ',' %> <%= "word".pluralize @total_read_words %> (can include words more than once).
     </div>
   </p>
 
@@ -49,10 +49,13 @@
       <canvas id="newTexts"></canvas>
       <p>
         <div class="u-centered">
-          In the last <%= pluralize(@new_texts_count, "week") %> you added on average <%= number_with_precision(@new_texts_average, precision: 2, delimiter: ',') %> new texts per week.
+          In the last <%= @new_words_data.count %> weeks:
         </div>
         <div class="u-centered">
-          In your best week in the last <%= @new_texts_data.count %> weeks, you added <%= number_with_precision @new_texts_data.max, precision: 0, delimiter: ',' %> new <%= "text".pluralize @new_texts_data.max %>.
+          You added on average <%= number_with_precision(@new_texts_average, precision: 2, delimiter: ',') %> new texts per week.
+        </div>
+        <div class="u-centered">
+          In your best week you added <%= number_with_precision @new_texts_data.max, precision: 0, delimiter: ',' %> new <%= "text".pluralize @new_texts_data.max %>.
         </div>
       </p>
     </div>
@@ -61,10 +64,13 @@
       <canvas id="newWords"></canvas>
       <p>
         <div class="u-centered">
-          In the last <%= pluralize(@new_words_count, "week") %> you added on average <%= number_with_precision(@new_words_average, precision: 2, delimiter: ',') %> new words per week.
+          In the last <%= @new_words_data.count %> weeks:
         </div>
         <div class="u-centered">
-          In your best week in the last <%= @new_words_data.count %> weeks, you added <%= number_with_precision @new_words_data.max, precision: 0, delimiter: ',' %> new <%= "word".pluralize @new_words_data.max %>.
+          On average you added <%= number_with_precision(@new_words_average, precision: 2, delimiter: ',') %> new words per week.
+        </div>
+        <div class="u-centered">
+          In your best week you added <%= number_with_precision @new_words_data.max, precision: 0, delimiter: ',' %> new <%= "word".pluralize @new_words_data.max %>.
         </div>
       </p>
     </div>

@@ -1,0 +1,35 @@
+- content_for :title, 'Services'
+
+header
+  .container
+    h1 List of services
+    h2 Settings
+
+.container
+  .buttons
+    .right
+      = link_to fa_icon("chevron-left") + " Back", settings_path, class: 'button', title: 'Back to Settings'
+      = link_to fa_icon("plus") + ' Add New', new_service_path, class: 'button button-primary', title: 'Add a new service'
+  p
+    | Services are shortcuts from within this website to interact with another website. In most cases these services will be dictionaries, translation services or similar things than can then be rapidly accessed when you are working on your text.
+  table.u-full-width
+    tr
+      th Name
+      th Short Name
+      th Language
+    - @services.each do |service|
+      tr
+        - if service.enabled
+          td
+            = link_to service.name, edit_service_path(service), title: 'Edit Service Entry'
+        - else
+          td.disabled_entry
+            | (
+            = link_to service.name, edit_service_path(service), title: 'Edit Service Entry'
+            | ) 
+        td= service.short_name
+        td
+          - if service.language
+            = service.language.name
+          - else
+            | All

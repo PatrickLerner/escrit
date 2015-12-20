@@ -1,7 +1,7 @@
 - @text.errors.any?
   div.error-report
     h1
-      = "#{pluralize @text.errors.count, "error"} prohibited this text from being saved:"
+      = "#{pluralize @text.errors.count, 'error'} prohibited this text from being saved:"
     ul
       - @text.errors.full_messages.each do |msg|
         li= msg
@@ -44,9 +44,13 @@
               | Make text public
 
     div.three.columns
-      = link_to fa_icon("chevron-left") + ' Back', texts_path(current_language.name.downcase), class: 'button u-full-width', title: 'Go back to overview'
+      = link_to fa_icon('chevron-left') + ' Back', texts_path(current_language.name.downcase), class: 'button u-full-width', title: 'Go back to overview'
     div.three.columns
-      = link_to fa_icon("plus") + ' Add Text', '', :class => 'button button-primary u-full-width', :onclick => "$('.text_form').submit(); return false;"
+      - if @text.persisted?
+        = link_to fa_icon('floppy-o') + ' Save Text', '', class: 'button button-primary u-full-width', onclick: "$('.text_form').submit(); return false;"
+        = link_to fa_icon('times') + ' Delete', text_path(@text), method: :delete, data: { confirm: 'Are you absolutely certain?' }, title: 'Delete', class: 'button button-delete u-full-width'
+      - else
+        = link_to fa_icon('plus') + ' Add Text', '', class: 'button button-primary u-full-width', onclick: "$('.text_form').submit(); return false;"
 
-span id="meta_language" style="display: none;"
+span#meta_language style="display: none;"
   = current_language.name

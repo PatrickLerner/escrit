@@ -1,0 +1,109 @@
+- content_for :title, 'How do I use keyboard shortcuts?'
+
+header
+  .container
+    h1 How do I use keyboard shortcuts?
+    h2 Help
+.container
+  .buttons
+    .right
+      = link_to fa_icon("chevron-left") + " Back to Overview", '/help', class: 'button button-primary u-full-width', title: 'Back to Help Overview'
+  
+  p Please note that shortcuts only work while you have a word selected and the input field for notes selected.
+  
+  h3 Rating Words
+  p After selecting a word, you can add a note to it to remember its meaning, grammatical sense or any information you think would be useful. Additionally you are able to rate the word on a scale from 0 to 5.
+  p To more quickly rate a word you can use the following shortcuts instead of clicking the buttons:
+  table.u-full-width
+    thead
+      tr
+        th Function
+        th Shortcut
+    tbody
+      tr
+        td Set the rating to 0
+        td
+          code ⌃ Ctrl
+          |  + 
+          code 0
+      tr
+        td Set the rating to 1
+        td
+          code ⌃ Ctrl
+          |  + 
+          code 1
+      tr
+        td Set the rating to 2
+        td
+          code ⌃ Ctrl
+          |  + 
+          code 2
+      tr
+        td Set the rating to 3
+        td
+          code ⌃ Ctrl
+          |  + 
+          code 3
+      tr
+        td Set the rating to 4
+        td
+          code ⌃ Ctrl
+          |  + 
+          code 4
+      tr
+        td Set the rating to 5
+        td
+          code ⌃ Ctrl
+          |  + 
+          code 5
+      tr
+        td Mark the word to be ignored
+        td
+          code ⌃ Ctrl
+          |  + 
+          code 6
+      tr
+        td Increase the rating by one
+        td
+          code ⇧ Shift
+          |  + 
+          code ↑ Up
+      tr
+        td Decrease the rating by one
+        td
+          code ⇧ Shift
+          |  + 
+          code ↓ Down
+  
+  h3  Navigation in the text
+  p  To make it somewhat faster to read a text you can use shortcuts to jump from one word to the the next.
+  table.u-full-width
+    thead
+      tr
+        th Function
+        th Shortcut
+    tbody
+      tr
+        td Select next word that is not marked known
+        td
+          code ↹ Tab
+      tr
+        td Select previous word that is not marked known
+        td
+          code ⌥ Alt/Opt
+          |  + 
+          code ↹ Tab
+      tr
+        td Select previous word
+        td
+          code ⇧ Shift
+          |  + 
+          code ↹ Tab
+      tr
+        td Select next word
+        td
+          code ⌥ Alt/Opt
+          |  + 
+          code ⇧ Shift
+          |  + 
+          code ↹ Tab

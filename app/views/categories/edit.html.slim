@@ -2,18 +2,18 @@
 
 header.large
   div class=["image", current_language.name.downcase]
-  div.container
+  .container
     h1= "Edit #{current_language.name} category"
     h2== "&nbsp;"
-div.container
+.container
   - @text.errors.any?
-    div.error-report
+    .error-report
       h1
         = "#{pluralize @text.errors.count, "error"} prohibited this text from being saved:"
       ul
         - @text.errors.full_messages.each do |msg|
           li= msg
-  = form_for :text, url: text_path(@text), html: { method: :patch, class: 'text_form' } do |f|
+  = form_for :text, url: text_path(@text), method: :patch, html: { class: 'text_form' } do |f|
     = f.label :category, 'Category'
     = f.text_field :category, class: 'u-full-width', placeholder: 'Category', autocomplete: :off
 
@@ -22,28 +22,28 @@ div.container
     = f.check_box :bulk_update, style: 'display: none', checked: true
     = f.text_field :language_id, value: current_language.id, style: 'display: none'
 
-    div.row
-      div.six.columns
-        div.row style="margin-bottom: 1em;"
-          div.six.columns
+    .row
+      .six.columns
+        .row style="margin-bottom: 1em;"
+          .six.columns
             a href="#" id="archiveToggle" class="toggle-link"
               = fa_icon 'toggle-off'
               == "&nbsp"
               | Archive this text
-          div.six.columns
+          .six.columns
             - if current_user.admin?
               a href="#" id="publicToggle" class="toggle-link"
                 = fa_icon 'toggle-off'
                 == "&nbsp"
                 | Make text public
-      div.three.columns
+      .three.columns
         = link_to fa_icon("chevron-left") + ' Back', texts_path(@text.language.name.downcase), class: 'button u-full-width', title: 'Go back to overview'
-      div.three.columns
+      .three.columns
         = link_to fa_icon("floppy-o") + ' Update Texts', '', :class => 'button button-primary u-full-width', :onclick => "$('.text_form').submit(); return false;"
 
   hr style="margin: 1em 0"
 
   p= "You are editing the category name and archival status for all #{@text.language.name} texts that are currently categorized as '#{@text.category}' and set to be #{if @hidden then "archived" else "not archived" end}#{if @public then " and public" else "" end} (#{@total_texts} texts in total)."
 
-  span id="meta_language" style="display: none;"
+  span#meta_language style="display: none;"
     = current_language.name

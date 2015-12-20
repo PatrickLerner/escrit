@@ -10,7 +10,7 @@ class Text < ActiveRecord::Base
   validates :content, length: { minimum: 4, maximum: 10000 }
   validates :language_id, presence: true
 
-  before_save :fix_formatting
+  before_save :normalize_unicode
   after_save :update_occurrences
 
   WORD_REGEX = /@?\p{Alpha}[\p{Alpha}\-\|\.:\/\?=0-9%_]+[\p{Alpha}0-9]|\p{Alpha}+/i
@@ -80,30 +80,10 @@ class Text < ActiveRecord::Base
     process self.content
   end
 
-  def fix_input input
-    out = input
-    repl = [
-      ['ä', 'ä'],
-      ['ë', 'ë'],
-      ['ï', 'ï'],
-      ['ö', 'ö'],
-      ['ü', 'ü'],
-      ['Ä', 'Ä'],
-      ['Ë', 'Ë'],
-      ['Ï', 'Ï'],
-      ['Ö', 'Ö'],
-      ['Ü', 'Ü']
-    ]
-    repl.each { |r|
-      out = out.gsub r[0], r[1]
-    }
-    out.strip
-  end
-
-  def fix_formatting
-    self.category = fix_input self.category
-    self.title = fix_input self.title
-    self.content = fix_input self.content
+  def normalize_unicode
+    self.title = Unicode.normalize_KC(self.title).strip
+    self.category = Unicode.normalize_KC(self.category).strip
+    self.content = Unicode.normalize_KC(self.content).strip
   end
 
   def update_occurrences

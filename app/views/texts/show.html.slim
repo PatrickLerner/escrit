@@ -2,13 +2,19 @@
 
 header.large
   div class=["image", current_language.name.downcase]
-  div.container
+  .container
     h1= @processed_title
     h2= @processed_category
-div.container
-  div.buttons
-    div.right
-      = link_to fa_icon('chevron-left') + ' Go Back', texts_path(current_language), class: 'button'
+.container
+  .buttons
+    .right
+      - if @text.public
+        - back_link = texts_path(current_language) + '/public'
+      - elsif @text.hidden
+        - back_link = texts_path(current_language) + '/archive'
+      - else
+        - back_link = texts_path(current_language)
+      = link_to fa_icon('chevron-left') + ' Go Back', back_link, class: 'button'
       = link_to fa_icon('pencil') + ' Edit Text', edit_text_path(@text), class: 'button'
   = @processed_text
 
