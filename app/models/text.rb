@@ -1,5 +1,6 @@
 class Text < ActiveRecord::Base
   include WordsHelper
+  include ActionView::Helpers::TextHelper
 
   belongs_to :language
   belongs_to :user
@@ -61,6 +62,18 @@ class Text < ActiveRecord::Base
     Word.joins(:occurrences).where('occurrences.text_id = ?', self.id).map { |word|
       word.value
     }
+  end
+
+  def content_cleaned
+    self.content.gsub(URI.regexp, '').strip
+  end
+
+  def excerpt
+    t = self.content_cleaned
+    ["\n", ' '].each_with_index do |sep, i|
+      t = truncate(t, length: 300 - i, separator: sep)
+    end
+    t
   end
 
   def content_processed

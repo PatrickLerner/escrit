@@ -1,31 +1,49 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.1.8'
-gem 'sqlite3'
-gem 'sass-rails', '~> 4.0.3'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.0.0'
+gem 'rails'
+gem 'pg'
+gem 'sass-rails'
+gem 'uglifier'
+gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'turbolinks'
-gem 'jbuilder', '~> 2.0'
-gem 'sdoc', '~> 0.4.0',          group: :doc
-gem 'spring',        group: :development
+gem 'jbuilder'
 gem 'kramdown'
 gem "font-awesome-rails"
-gem 'naturalsort', :require => 'natural_sort_kernel'
+gem 'naturalsort', require: 'natural_sort_kernel'
 gem 'jquery-turbolinks'
 gem 'seed_dump'
 gem 'lightbox2-rails'
 gem 'devise'
-gem 'will_paginate', '~> 3.0.6'
+gem 'will_paginate'
 gem 'chronic_duration'
 gem 'audiojs'
 gem 'rails4-autocomplete'
-
-gem 'quiet_assets', group: :development
+gem 'unicode'
+gem 'slim-rails'
 
 group :production do
-  gem 'pg'
   gem 'puma'
+end
+
+group :development, :test do
+  gem 'byebug'
+  gem 'factory_girl'
+  gem 'factory_girl_rails'
+end
+
+group :test do
+  gem 'faker'
+  gem 'capybara'
+  gem 'guard-rspec'
+  gem 'launchy'
+  gem 'shoulda'
+  gem 'database_cleaner'
+end
+
+group :development do
+  gem 'web-console', '~> 2.0'
+  gem 'spring'
+  gem 'quiet_assets'
 end

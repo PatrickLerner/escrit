@@ -1,0 +1,172 @@
+.navbar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 100;
+  background: $color_lighter;
+  height: $navbar_height;
+
+  a, a:hover {
+    border: 0;
+  }
+
+  /*Strip the ul of padding and list styling*/
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+  }
+
+  #menu {
+    top: 0;
+    left: 0;
+    right: 0;
+
+    .fa {
+      width: 1.2em;
+      text-align: center;
+    }
+  }
+
+  li.right {
+    float: right;
+  }
+
+  /*Create a horizontal list with spacing*/
+  li {
+    display:inline-block;
+    float: left;
+    margin: 0;
+
+    img {
+      max-height: $navbar_height;
+      padding: 1.5rem;
+    }
+
+    /*Style for menu links*/
+    a {
+      display: block;
+      min-width: 100px;
+      height: $navbar_height;
+      text-align: center;
+      line-height: $navbar_height;
+      color: $color_darker;
+      background: $color_lighter;
+      text-decoration: none;
+    }
+  }
+
+  /*Hover state for top level links*/
+  li:hover a {
+    background: $color_lighter;
+    color: $color_accent;
+  }
+
+  /*Style for dropdown links*/
+  li:hover ul {
+    min-width: 160px;
+
+    a {
+      background: $color_lighter;
+      color: $color_darker;
+      height: 40px;
+      line-height: 40px;
+
+      /*Hover state for dropdown links*/
+      &:hover {
+        background: $color_lighter;
+        color: $color_accent;
+      }
+    }
+  }
+
+  /*Hide dropdown links until they are needed*/
+  li ul {
+    display: none;
+
+    /*Make dropdown links vertical*/
+    li {
+      display: block;
+      float: none;
+
+      /*Prevent text wrapping*/
+      a {
+        width: auto;
+        min-width: 100px;
+        padding: 0 20px;
+      }
+    }
+  }
+
+  ul li ul li a {
+    text-align: left;
+  }
+
+  /*Display the dropdown on hover*/
+  ul li a:hover + .hidden, .hidden:hover {
+    display: block;
+  }
+
+  /*Style 'show menu' label button and hide it by default*/
+  .show-menu {
+    text-decoration: none;
+    color: $color_dark;
+    background: $color_lighter;
+    text-align: center;
+    padding: 0;
+    display: none;
+    height: $navbar_height;
+    line-height: $navbar_height;
+    margin: 0;
+  }
+
+  input[type=checkbox]:checked ~ .show-menu:after {
+    content: 'Hide Menu';
+    position: absolute;
+    background: $color_lighter;
+    top: 0;
+    left: 0;
+    right: 0;
+    //bottom: 0;
+  }
+
+  /*Hide checkbox*/
+  input[type=checkbox] {
+      display: none;
+  }
+
+  /*Show menu when invisible checkbox is checked*/
+  input[type=checkbox]:checked ~ #menu{
+      display: block;
+  }
+}
+
+/*Responsive Styles*/
+
+@media screen and (max-width : 760px){
+  .navbar {
+    /*Make dropdown links appear inline*/
+    ul {
+      position: static;
+      display: none;
+    }
+    /*Make all menu links full width*/
+    ul li, li a {
+      width: 100%;
+    }
+    /*Display 'show menu' link*/
+    .show-menu {
+      display:block;
+    }
+  }
+  #menu {
+    &>li:last-child {
+      border-bottom: 1px solid $color_light;
+    }
+  }
+  .navbar .container {
+    width: 100%;
+  }
+}

@@ -1,0 +1,60 @@
+- content_for :title, "#{current_language.name} texts"
+
+header.large
+  div class=["image", current_language.name.downcase]
+  div.container
+    h1= "#{current_language.name} texts"
+    h2
+      - if @public
+        | Public Library
+      - elsif @hidden
+        | Private Library (Archived)
+      - else
+        | Private Library
+div.container
+  div.buttons.right
+    = link_to 'Private', texts_path(current_language.name.downcase), title: 'Show currently active texts.', class: 'button'
+    = link_to 'Archived', archived_texts_path(current_language.name.downcase), title: 'Show currently active texts.', class: 'button'
+    = link_to 'Public', public_texts_path(current_language.name.downcase), title: 'Show currently active texts.', class: 'button'
+    = link_to fa_icon('plus') + ' New text', new_text_path(current_language), class: 'button right'
+
+  - if @texts == []
+    - if @public
+      p It appears that no public texts in <%= current_language.name %> have been added yet.
+    - elsif not @hidden
+      p= "It seems like you have not yet added any texts in #{current_language.name}. Please feel free to add some that interest you. If you need inspiration, try looking online for newspapers, short stories, song lyrics or other media."
+    - else
+      p= "You seem to not have any archived texts in #{current_language.name}."
+
+  - category_id = 0
+  - @texts.each do |category, texts|
+    - category_id += 1
+    - total_words = texts.map { |t| t.word_count }.inject(:+)
+    table.u-full-width.listing
+      thead
+        th colspan="2"
+          = link_to category, edit_category_path(texts[0]), class: 'category_link'
+        th style="text-align: right"
+          alias title="Total number of words in the category"
+            = number_with_precision total_words, precision: 0, delimiter: ','
+      tbody
+        - texts.each do |text|
+          tr
+            td.centered style="width: 2.5em; padding-right: 0"
+              - if text.public
+                alias title="This is a public text. Make a copy for you to see its status."
+                  = fa_icon 'star'
+              - elsif current_user.native_language_id == current_language.id
+                alias title="This is your native language, you should know all the words ;)"
+                = fa_icon 'check'
+              - elsif not text.completed
+                alias title="Not all words in this text have been rated yet."
+                  = fa_icon 'minus'
+              - else
+                alias title="You have worked through this text and rated all the words within it."
+                  = fa_icon 'check'
+            td style="padding-left: 0"
+              = link_to text.title, text_path(text)
+            td style="text-align: right"
+              alias title="Number of words in the text"
+                = number_with_precision text.word_count, precision: 0, delimiter: ','

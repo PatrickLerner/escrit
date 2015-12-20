@@ -1,0 +1,20 @@
+- content_for :title, 'Settings'
+
+header
+  .container
+    h1= 'Settings'
+.container
+  .row
+    .one-half.column.centered
+      = link_to fa_icon("cogs") + ' Services', '/services', class: 'button u-full-width'
+    .one-half.column.centered
+      = link_to fa_icon("user") + ' User Profile', "/u/#{current_user.id}", class: 'button u-full-width'
+
+  - if current_user.admin?
+    h4.u-centered Admin Settings
+    .row
+      .one-half.column.centered
+        = link_to fa_icon("heart") + ' Compliments', '/compliments', class: 'button u-full-width'
+        = link_to fa_icon("flag") + ' Languages', '/languages', class: 'button u-full-width'
+      .one-half.column.centered
+        = link_to fa_icon("magic") + ' Replacements', '/replacements', class: 'button u-full-width'

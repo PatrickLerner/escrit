@@ -1,163 +1,165 @@
-<div style="text-align: center; margin: 7em 0;">
-  <img src="<%= image_path "logo-i.png" %>" />
-  <h4>Learn <span id="lang_name">languages</span> by reading texts. For free.</h4>
-</div>
+<div class="container">
+  <div style="text-align: center; margin: 7em 0;">
+    <img src="<%= image_path "logo-i.png" %>" />
+    <h4>Learn <span id="lang_name">languages</span> by reading texts. For free.</h4>
+  </div>
 
-<% max_tab_id = 0 %>
-<% @languages.to_a.sort{ |x,y| y.texts.count <=> x.texts.count }.in_groups_of(8, nil).to_a.each_with_index { |splice, i| %>
-  <% max_tab_id = i %>
-  <div class="row" data-tab-id="<%= i %>">
-    <div class="two columns" style="text-align: center">
-      <a data-tab-id="<%= i %>" class="tab-previous"><%= fa_icon 'chevron-left' %></a>
-    </div>
-    <% splice.each { |l| %>
-      <div class="one columns" style="text-align: center">
-        <% if l == nil %>
-          &nbsp;
-        <% else %>
-          <%= image_tag "languages/#{l.name.downcase}/flag.png", title: l.name, class: 'flag', style: 'vertical-align: middle; height: 2em;' %>
-        <% end %>
+  <% max_tab_id = 0 %>
+  <% @languages.to_a.sort{ |x,y| y.texts.count <=> x.texts.count }.in_groups_of(8, nil).to_a.each_with_index { |splice, i| %>
+    <% max_tab_id = i %>
+    <div class="row" data-tab-id="<%= i %>">
+      <div class="two columns" style="text-align: center">
+        <a data-tab-id="<%= i %>" class="tab-previous"><%= fa_icon 'chevron-left' %></a>
       </div>
-    <% } %>
-    <div class="two columns" style="text-align: center">
-      <a data-tab-id="<%= i %>" class="tab-next"><%= fa_icon 'chevron-right' %></a>
+      <% splice.each { |l| %>
+        <div class="one columns" style="text-align: center">
+          <% if l == nil %>
+            &nbsp;
+          <% else %>
+            <%= image_tag "languages/#{l.name.downcase}/flag.png", title: l.name, class: 'flag', style: 'vertical-align: middle; height: 2em;' %>
+          <% end %>
+        </div>
+      <% } %>
+      <div class="two columns" style="text-align: center">
+        <a data-tab-id="<%= i %>" class="tab-next"><%= fa_icon 'chevron-right' %></a>
+      </div>
+    </div>
+  <% } %>
+
+  <hr style="margin: 3em 0;">
+
+  <h4>What is escit?</h4>
+  <div class="row">
+    <div class="two-thirds column">
+      <p><b>escit</b>.eu allows you to read texts in a foreign language to further your understanding of grammar and extend your vocabulary. It is not a replacement for text books or other language learning tools, but an ideal supplement for your learning if you want to be exposed to entertaining and engaging content of your own choice in a foreign language rather than boring dialoges from a dusty textbook.</p>
+    </div>
+    <div class="one-third column">
+      <blockquote>
+        <p>
+          <b>escrit</b> <i>m</i> (Old French)<br />
+          1. writing(s) (written work)
+        </p>
+        <span>
+          <b>Source:</b> <a href="https://en.wiktionary.org/wiki/escrit#Old_French" target="blank">Wiktionary</a>
+        </span>
+      </blockquote>
     </div>
   </div>
-<% } %>
 
-<hr style="margin: 3em 0;">
+  <hr style="margin: 3em 0;">
 
-<h4>What is escit?</h4>
-<div class="row">
-  <div class="two-thirds column">
-    <p><b>escit</b>.eu allows you to read texts in a foreign language to further your understanding of grammar and extend your vocabulary. It is not a replacement for text books or other language learning tools, but an ideal supplement for your learning if you want to be exposed to entertaining and engaging content of your own choice in a foreign language rather than boring dialoges from a dusty textbook.</p>
+  <h4>How does it work?</h4>
+  <div class="row">
+    <div class="one-third column" style="text-align: center;">
+      <%= image_tag 'notepad.png' %>
+    </div>
+    <div class="two-thirds column">
+      <h5>1. Register an account</h5>
+      <p>It's as easy as clicking <a href="/users/sign_up">here</a> and filling out a simple form.</p>
+      <h5>2. Find something to read about</h5>
+      <p>Find something that you are passionate and excited about such as a hobby or an interest of yours (e.g. fairy tales, history). Just import any text you already have or look through the public library (work in progress) for something in your foreign language.</p>
+      <h5>3. Start reading</h5>
+      <p>Begin to read. Click on words to find tools to look them up in dictionaries and enter a definition for them.</p>
+    </div>
   </div>
-  <div class="one-third column">
-    <blockquote>
-      <p>
-        <b>escrit</b> <i>m</i> (Old French)<br />
-        1. writing(s) (written work)
-      </p>
-      <span>
-        <b>Source:</b> <a href="https://en.wiktionary.org/wiki/escrit#Old_French" target="blank">Wiktionary</a>
-      </span>
-    </blockquote>
-  </div>
-</div>
 
-<hr style="margin: 3em 0;">
+  <hr style="margin: 3em 0;">
 
-<h4>How does it work?</h4>
-<div class="row">
-  <div class="one-third column" style="text-align: center;">
-    <%= image_tag 'notepad.png' %>
-  </div>
-  <div class="two-thirds column">
-    <h5>1. Register an account</h5>
-    <p>It's as easy as clicking <a href="/users/sign_up">here</a> and filling out a simple form.</p>
-    <h5>2. Find something to read about</h5>
-    <p>Find something that you are passionate and excited about such as a hobby or an interest of yours (e.g. fairy tales, history). Just import any text you already have or look through the public library (work in progress) for something in your foreign language.</p>
-    <h5>3. Start reading</h5>
-    <p>Begin to read. Click on words to find tools to look them up in dictionaries and enter a definition for them.</p>
-  </div>
-</div>
+  <h4>Screenshots</h4>
 
-<hr style="margin: 3em 0;">
+  <div class="row">
+    <div class="three columns" class="centered">
+      <a href="http://patricklerner.com/escrit_screenshots/screen_1.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_1_thumb.png" /></a>
+    </div>
+    <div class="three columns" class="centered">
+      <a href="http://patricklerner.com/escrit_screenshots/screen_2.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_2_thumb.png" /></a>
+    </div>
+    <div class="three columns" class="centered">
+      <a href="http://patricklerner.com/escrit_screenshots/screen_3.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_3_thumb.png" /></a>
+    </div>
+    <div class="three columns" class="centered">
+      <a href="http://patricklerner.com/escrit_screenshots/screen_4.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_4_thumb.png" /></a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="three columns" class="centered">
+      <a href="http://patricklerner.com/escrit_screenshots/screen_5.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_5_thumb.png" /></a>
+    </div>
+    <div class="three columns" class="centered">
+      <a href="http://patricklerner.com/escrit_screenshots/screen_6.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_6_thumb.png" /></a>
+    </div>
+    <div class="three columns" class="centered">
+      <a href="http://patricklerner.com/escrit_screenshots/screen_7.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_7_thumb.png" /></a>
+    </div>
+    <div class="three columns" class="centered">
+      <a href="http://patricklerner.com/escrit_screenshots/screen_8.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_8_thumb.png" /></a>
+    </div>
+  </div>
 
-<h4>Screenshots</h4>
+  <hr style="margin: 3em 0;">
 
-<div class="row">
-  <div class="three columns" class="centered">
-    <a href="http://patricklerner.com/escrit_screenshots/screen_1.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_1_thumb.png" /></a>
+  <div class="row">
+    <div class="one-half column">
+      <h6 class="docs-header">Cookie Policy</h6>
+      <p>This website uses cookies and by using it you agree to cookies being saved on your computer. For more information about this, please refer to the <a href="/cookies">Cookie Policy</a>.</p>
+    </div>
+    <div class="one-half column">
+      <h6 class="docs-header">Legal Disclosure</h6>
+      <p>As required by German and EU law, you can find legal information about the operator of this website on the <a href="/legal">impressum or legal disclosure page</a>.</p>
+    </div>
   </div>
-  <div class="three columns" class="centered">
-    <a href="http://patricklerner.com/escrit_screenshots/screen_2.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_2_thumb.png" /></a>
-  </div>
-  <div class="three columns" class="centered">
-    <a href="http://patricklerner.com/escrit_screenshots/screen_3.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_3_thumb.png" /></a>
-  </div>
-  <div class="three columns" class="centered">
-    <a href="http://patricklerner.com/escrit_screenshots/screen_4.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_4_thumb.png" /></a>
-  </div>
-</div>
-<div class="row">
-  <div class="three columns" class="centered">
-    <a href="http://patricklerner.com/escrit_screenshots/screen_5.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_5_thumb.png" /></a>
-  </div>
-  <div class="three columns" class="centered">
-    <a href="http://patricklerner.com/escrit_screenshots/screen_6.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_6_thumb.png" /></a>
-  </div>
-  <div class="three columns" class="centered">
-    <a href="http://patricklerner.com/escrit_screenshots/screen_7.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_7_thumb.png" /></a>
-  </div>
-  <div class="three columns" class="centered">
-    <a href="http://patricklerner.com/escrit_screenshots/screen_8.png" data-lightbox="images" class="image-link"><img src="http://patricklerner.com/escrit_screenshots/screen_8_thumb.png" /></a>
-  </div>
-</div>
 
-<hr style="margin: 3em 0;">
+  <script type="text/javascript">
+    var langs = [<%= (["'languages'"] * 5 + @languages.map {|l| "'#{l.name}'" }).join(',').html_safe %>];
+    var lang_override = '';
+    var lang_i = 0;
 
-<div class="row">
-  <div class="one-half column">
-    <h6 class="docs-header">Cookie Policy</h6>
-    <p>This website uses cookies and by using it you agree to cookies being saved on your computer. For more information about this, please refer to the <a href="/cookies">Cookie Policy</a>.</p>
-  </div>
-  <div class="one-half column">
-    <h6 class="docs-header">Legal Disclosure</h6>
-    <p>As required by German and EU law, you can find legal information about the operator of this website on the <a href="/legal">impressum or legal disclosure page</a>.</p>
-  </div>
-</div>
-
-<script type="text/javascript">
-  var langs = [<%= (["'languages'"] * 5 + @languages.map {|l| "'#{l.name}'" }).join(',').html_safe %>];
-  var lang_override = '';
-  var lang_i = 0;
-
-  function changeLanguage() {
-    if (lang_override == '') {
-      lang_i += 1;
-      if (lang_i == langs.length)
-        lang_i = 0;
-      if ($('#lang_name').html() != langs[lang_i])
-        $('#lang_name').fadeOut(1000, function() {
-          $('#lang_name').html(langs[lang_i]).fadeIn(1000);
-        });
+    function changeLanguage() {
+      if (lang_override == '') {
+        lang_i += 1;
+        if (lang_i == langs.length)
+          lang_i = 0;
+        if ($('#lang_name').html() != langs[lang_i])
+          $('#lang_name').fadeOut(1000, function() {
+            $('#lang_name').html(langs[lang_i]).fadeIn(1000);
+          });
+      }
+      setTimeout(changeLanguage, 3000);
     }
-    setTimeout(changeLanguage, 3000);
-  }
-  changeLanguage();
+    changeLanguage();
 
-  $('.flag')
-    .mouseenter(function() {
-      var lang = $(this).attr('title');
-      lang_override = lang;
-      $('#lang_name').fadeOut(300, function() {
-        $('#lang_name').html(lang).fadeIn(300);
+    $('.flag')
+      .mouseenter(function() {
+        var lang = $(this).attr('title');
+        lang_override = lang;
+        $('#lang_name').fadeOut(300, function() {
+          $('#lang_name').html(lang).fadeIn(300);
+        })
+        lang_i = 0;
       })
-      lang_i = 0;
-    })
-    .mouseleave(function() {
-      lang_override = '';
+      .mouseleave(function() {
+        lang_override = '';
+      });
+
+
+    for (var i = <%= max_tab_id %>; i > 0; i--) {
+      $('.row[data-tab-id=' + i + ']').hide();
+    }
+
+    $('.tab-next').click(function () {
+      var id = $(this).attr('data-tab-id');
+      $('.row[data-tab-id=' + id + ']').hide();
+      if (id == <%= max_tab_id %>)
+        id = -1;
+      $('.row[data-tab-id=' + (id*1+1) + ']').show();
     });
 
-
-  for (var i = <%= max_tab_id %>; i > 0; i--) {
-    $('.row[data-tab-id=' + i + ']').hide();
-  }
-
-  $('.tab-next').click(function () {
-    var id = $(this).attr('data-tab-id');
-    $('.row[data-tab-id=' + id + ']').hide();
-    if (id == <%= max_tab_id %>)
-      id = -1;
-    $('.row[data-tab-id=' + (id*1+1) + ']').show();
-  });
-
-  $('.tab-previous').click(function () {
-    var id = $(this).attr('data-tab-id');
-    $('.row[data-tab-id=' + id + ']').hide();
-    if (id == 0)
-      id = <%= max_tab_id %> + 1;
-    $('.row[data-tab-id=' + (id*1-1) + ']').show();
-  });
-</script>
+    $('.tab-previous').click(function () {
+      var id = $(this).attr('data-tab-id');
+      $('.row[data-tab-id=' + id + ']').hide();
+      if (id == 0)
+        id = <%= max_tab_id %> + 1;
+      $('.row[data-tab-id=' + (id*1-1) + ']').show();
+    });
+  </script>
+</div>

@@ -1,0 +1,37 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6em;
+  line-height: 1.6;
+  font-weight: 400;
+  font-family: "Ubuntu", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: $color_darker;
+}
+
+.content {
+}
+
+footer {
+  text-align: center;
+  margin: 5rem 0;
+  font-size: 1.4rem;
+
+  a {
+    color: #777;
+    text-decoration: none;
+    padding: 0 .5rem;
+
+    &:hover {
+      color: black;
+    }
+  }
+  div {
+    color: #555;
+  }
+}

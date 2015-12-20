@@ -1,37 +1,39 @@
-    <% op = language_options(true).map { |l| l[0] } %>
+<% op = language_options(true).map { |l| l[0] } %>
 
-    <% if op.length > 0 %>
-      <h6 class="docs-header">Select one of your current languages...</h6>
-      <p>
-        <div class="row">
-          <% op.in_groups(6, false).to_a.each { |splice| %>
-            <div class="two columns">
-              <% splice.each { |lang| %>
-                <% image_path = "languages/#{lang.downcase}/flag.png" %>
-                <%= link_to image_tag(image_path, style: 'height: 30px; margin-bottom: 0.5em') + '<br>'.html_safe + lang, url_prefix + '/' + lang.downcase, class: 'button u-full-width', style: 'line-height: 1em; height: auto; padding: 1em 0;' %>
-              <% } %>
-            </div>
-          <% } %>
-        </div>
-      </p>
-
-      <h6 class="docs-header">... or try a new language ...</h6>
-    <% else %>
-      <h6 class="docs-header">Chose the language in which you want to start ...</h6>
-    <% end %>
+<div class="container">
+  <% if op.length > 0 %>
+    <h6 class="docs-header">Select one of your current languages...</h6>
     <p>
       <div class="row">
-        <% @languages.reject{|l| op.include? l.name }.in_groups(6, false).to_a.each { |splice| %>
+        <% op.in_groups(6, false).to_a.each { |splice| %>
           <div class="two columns">
             <% splice.each { |lang| %>
-              <% image_path = "languages/#{lang.name.downcase}/flag.png" %>
-              <%= link_to image_tag(image_path, style: 'height: 16px; vertical-align: middle; margin-top: -5px;') + ' ' + lang.name, url_prefix + '/' + lang.name.downcase, class: 'button u-full-width', style: 'padding: 0 1em;; text-align: left;' %>
+              <% image_path = "languages/#{lang.downcase}/flag.png" %>
+              <%= link_to image_tag(image_path, style: 'height: 30px; margin-bottom: 0.5em') + '<br>'.html_safe + lang, url_prefix + '/' + lang.downcase, class: 'button u-full-width', style: 'line-height: 1em; height: auto; padding: 1em 0;' %>
             <% } %>
           </div>
         <% } %>
       </div>
     </p>
-    <hr style="margin: 2em 0;">
-    <div class="footer">
-      Missing a language? Shoot me an <a href="mailto:patricklerner@me.com">email</a> or a <a href="https://www.reddit.com/message/compose/?to=zqom">message on reddit</a>.
+
+    <h6 class="docs-header">... or try a new language ...</h6>
+  <% else %>
+    <h6 class="docs-header">Chose the language in which you want to start ...</h6>
+  <% end %>
+  <p>
+    <div class="row">
+      <% @languages.reject{|l| op.include? l.name }.in_groups(6, false).to_a.each { |splice| %>
+        <div class="two columns">
+          <% splice.each { |lang| %>
+            <% image_path = "languages/#{lang.name.downcase}/flag.png" %>
+            <%= link_to image_tag(image_path, style: 'height: 16px; vertical-align: middle; margin-top: -5px;') + ' ' + lang.name, url_prefix + '/' + lang.name.downcase, class: 'button u-full-width', style: 'padding: 0 1em;; text-align: left;' %>
+          <% } %>
+        </div>
+      <% } %>
     </div>
+  </p>
+  <hr style="margin: 2em 0;">
+  <div class="footer">
+    Missing a language? Shoot me an <a href="mailto:patricklerner@me.com">email</a> or a <a href="https://www.reddit.com/message/compose/?to=zqom">message on reddit</a>.
+  </div>
+</div>

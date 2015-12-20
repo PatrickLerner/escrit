@@ -1,0 +1,13 @@
+- content_for :title, 'Home'
+
+header
+  .container
+    h1= "Hello, #{@user.name}!"
+.container
+  .row
+    .two-thirds.column
+      p It is very nice to see you (back) on this website. If you want to get started reading, please just go to the 'Reading' menu above where you will find hopefully some interesting texts. If not, you can of course add some new ones of your own.
+      p Good luck learning your languages and enjoy yourself.
+    .one-third.column
+      = image_tag avatar_url(@user), class: 'profile-picture u-full-width'
+
