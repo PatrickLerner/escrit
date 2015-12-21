@@ -7,6 +7,13 @@ header
     h2= @processed_category
 .container
   .buttons
+    - if current_user.native_language_id != @text.language_id
+      span.button
+        = fa_icon 'paragraph'
+        |  
+        span style="margin-bottom: 0;" id="unratedWords" 0
+        |  unrated 
+        span id="unratedWordsPlural" words
     .right
       - if @text.public
         - back_link = texts_path(current_language) + '/public'
