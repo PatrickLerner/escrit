@@ -1,0 +1,10 @@
+.progress {
+  background-color: hsl(0, 0%, 88%);
+
+  .current {
+    background-color: $color_accent;
+    border: $color_accent 1px solid;
+    height: 0.5rem;
+    margin-bottom: 0.3em;
+  }
+}
