@@ -54,7 +54,7 @@ class WordsController < ApplicationController
     end
 
     if @note.value == '' and @note.rating == 0
-      nodes = Node.where word_id: @note.word_id
+      nodes = Node.where word: @note.word
       if nodes.length <= 1
         @note.word.delete
       end
