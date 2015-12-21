@@ -1,5 +1,4 @@
 - @texts.each do |category, texts|
-  - total_words = texts.map { |t| if t.word_count.nil? then 0 else t.word_count end }.inject(:+)
   table.u-full-width.listing.texts
     thead
       th colspan="2"
@@ -7,9 +6,7 @@
           = link_to category, edit_category_path(texts[0]), class: 'category_link'
         - else
           = category
-      th.right
-        alias title="Total number of words in the category"
-          = number_with_precision total_words, precision: 0, delimiter: ','
+      th.right unique words
     tbody
       - texts.each do |text|
         tr
@@ -29,5 +26,5 @@
           td style="padding-left: 0"
             = link_to text.title, text_path(text)
           td.right
-            alias title="Number of words in the text"
+            alias title="Number of uniqe words in the text"
               = number_with_precision text.word_count, precision: 0, delimiter: ','
