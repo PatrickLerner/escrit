@@ -27,7 +27,7 @@ class TextsController < ApplicationController
     else
       if @user.native_language_id != @text.language_id
         uniq_words = (@text.raw_words + @text.raw_words_title + @text.raw_words_category).sort.uniq
-        @words = Note.find_create_bulk @text.language_id, uniq_words, @user.id
+        @words = Note.find_create_bulk @text.language, uniq_words, @user
         @words = @words.sort
         @words.map { |k, w|
           w.word.value.gsub! '..', ' ... '
@@ -196,13 +196,13 @@ class TextsController < ApplicationController
     else
       if @user.native_language_id != @text.language_id
         uniq_words = (@text.raw_words + @text.raw_words_title + @text.raw_words_category).sort.uniq
-        notes = Note.find_create_bulk @text.language_id, uniq_words, @user.id
+        notes = Note.find_create_bulk @text.language, uniq_words, @user
       else
         notes = {}
       end
-      @processed_text = process_text @text.content, notes, @text.language_id, disabled_words
-      @processed_title = process_text @text.title, notes, @text.language_id, disabled_words
-      @processed_category = process_text @text.category, notes, @text.language_id, disabled_words
+      @processed_text = process_text @text.content, notes, @text.language, disabled_words
+      @processed_title = process_text @text.title, notes, @text.language, disabled_words
+      @processed_category = process_text @text.category, notes, @text.language, disabled_words
 
       @services = Service.where('(language_id=? or language_id=0) and user_id = ? and enabled = true', @text.language_id, current_user.id)
       @services = [] if @services == nil

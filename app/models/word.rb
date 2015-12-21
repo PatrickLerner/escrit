@@ -4,8 +4,8 @@ class Word < ActiveRecord::Base
   has_many :notes
   has_many :occurrences
 
-  def self.determine_replacement_value word, language_id
-    replacements = Replacement.for_language language_id
+  def self.determine_replacement_value word, language
+    replacements = language.replacements
     v = word
     replacements.each { |r|
       v = v.gsub r.value.downcase, r.replacement.downcase
@@ -15,28 +15,28 @@ class Word < ActiveRecord::Base
   end
 
   def replacement_value
-    Word.determine_replacement_value self.value, self.language_id
+    Word.determine_replacement_value self.value, self.language
   end
 
-  def self.find_create language_id, word
+  def self.find_create language, word
     word = Word.determine_replacement_value ApplicationController.utf8downcase(word), language_id
-    w = Word.find_by value: word, language_id: language_id
-    w = Word.new value: word, language_id: language_id if not w
+    w = Word.find_by value: word, language: language
+    w = Word.new value: word, language: language if not w
     return w
   end
 
-  def self.find_create_bulk language_id, words
+  def self.find_create_bulk language, words
     words = words.map { |w|
       if w.match(/(.*)\|\|(.*)/)
         wparts = w.match(/(.*)\|\|(.*)/)
         w = ApplicationController.utf8downcase wparts[2]
       end
-      Word.determine_replacement_value w, language_id
+      Word.determine_replacement_value w, language
     }.uniq
     remaining = words
     result = {}
 
-    list = Word.where value: words, language_id: language_id
+    list = Word.where value: words, language: language
     list.each do |res|
       remaining.delete res.value
       word = ApplicationController.utf8downcase res.value
@@ -45,7 +45,7 @@ class Word < ActiveRecord::Base
 
     remaining.each do |rem|
       word = ApplicationController.utf8downcase rem
-      result[word] = Word.new value: word, language_id: language_id
+      result[word] = Word.new value: word, language: language
     end
 
     return result

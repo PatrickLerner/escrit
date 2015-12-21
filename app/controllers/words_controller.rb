@@ -32,7 +32,7 @@ class WordsController < ApplicationController
 
   def show
     lang = Language.where("lower(name) = ?", params[:language].downcase)[0]
-    @word = Note.find_create lang.id, utf8downcase(params[:id]), current_user.id
+    @word = Note.find_create lang, utf8downcase(params[:id]), current_user
     render json: {
       value: @word.word.value,
       note: @word.value.strip,
@@ -43,7 +43,7 @@ class WordsController < ApplicationController
 
   def update
     lang = Language.where("lower(name) = ?", params[:word][:language].downcase)[0]
-    @note = Note.find_create lang.id, utf8downcase(params[:id]), current_user.id
+    @note = Note.find_create lang, utf8downcase(params[:id]), current_user
     @note.value = params[:word][:note].strip if params[:word][:note]
     @note.rating = params[:word][:rating] if params[:word][:rating]
     

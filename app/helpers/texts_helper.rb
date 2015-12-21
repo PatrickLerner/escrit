@@ -21,7 +21,7 @@ module TextsHelper
     options
   end
 
-  def process_text input, notes, language_id, disabled_words = false
+  def process_text input, notes, language, disabled_words = false
     processed = input
     # tag words
     processed = processed.gsub(Text::WORD_REGEX) { |word|
@@ -34,7 +34,7 @@ module TextsHelper
       end
 
       word_lower = utf8downcase word
-      word_value = Word.determine_replacement_value word_value, language_id
+      word_value = Word.determine_replacement_value word_value, language
       rating = notes[word_value].rating
 
       # image with @ prefix

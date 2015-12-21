@@ -3,6 +3,7 @@ class Language < ActiveRecord::Base
   has_many :words
   has_many :texts
   has_many :compliments
+  has_many :replacements
 
   def to_param
     self.name.downcase

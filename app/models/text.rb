@@ -50,7 +50,7 @@ class Text < ActiveRecord::Base
     self.content.downcase.gsub(URI.regexp){
       ''
     }.scan(Text::WORD_REGEX).map { |w|
-      Word.determine_replacement_value ApplicationController.utf8downcase(w), self.language_id
+      Word.determine_replacement_value ApplicationController.utf8downcase(w), self.language
     }.sort.uniq
   end
 
@@ -94,7 +94,7 @@ class Text < ActiveRecord::Base
     lost_words = previous_words - current_words
 
     # add gained words
-    new_words = Word.find_create_bulk self.language_id, gained_words
+    new_words = Word.find_create_bulk self.language, gained_words
     new_words.each do |value, word|
       word.save if word.new_record?
       occurrence = Occurrence.new word: word, text: self
@@ -102,7 +102,7 @@ class Text < ActiveRecord::Base
     end
 
     # remove lost occurances and words (if no occurances remain for it)
-    removed_words = Word.find_create_bulk self.language_id, lost_words
+    removed_words = Word.find_create_bulk self.language, lost_words
     removed_words.each do |value, word|
       occurrence = Occurrence.find_by word: word, text: self
       occurrence.destroy if occurrence
