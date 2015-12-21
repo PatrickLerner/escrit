@@ -95,15 +95,15 @@ class Text < ActiveRecord::Base
 
     # add gained words
     new_words = Word.find_create_bulk self.language_id, gained_words
-    new_words.each { |value, word|
+    new_words.each do |value, word|
       word.save if word.new_record?
       occurrence = Occurrence.new word: word, text: self
       occurrence.save
-    }
+    end
 
     # remove lost occurances and words (if no occurances remain for it)
     removed_words = Word.find_create_bulk self.language_id, lost_words
-    removed_words.each { |value, word|
+    removed_words.each do |value, word|
       occurrence = Occurrence.find_by word: word, text: self
       occurrence.destroy if occurrence
 
@@ -112,8 +112,10 @@ class Text < ActiveRecord::Base
       if word.occurrences.count == 0 and word.notes.count == 0
         word.destroy
       end
-    }
-
-    write_attribute 'word_count', self.unique_word_count
+    end
+    
+    if self.word_count != self.unique_word_count
+      self.update(word_count: self.unique_word_count)
+    end
   end
 end
