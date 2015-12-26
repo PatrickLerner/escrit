@@ -1,0 +1,24 @@
+- content_for :title, 'Languages'
+
+header
+  .container
+    h1 List of languages
+    h2 Admin settings
+
+.container
+  .buttons
+    .right
+      = link_to fa_icon('chevron-left') + ' Back', settings_path, class: 'button', title: 'Back to Settings'
+      = link_to fa_icon('plus') + ' Add New', new_language_path, class: 'button button-primary', title: 'Add a new language'
+  p Here you can see a list of all languages which are available in the system. Users can asign those languages to their texts to keep vocabulary separate between different languages.
+  table.u-full-width
+    tr
+      th Language
+      th.right Texts
+      th.right Words
+    - @languages.each do |language|
+      tr
+        td
+          = link_to language.name, edit_language_path(language), title: 'Edit language entry'
+        td.right= number_with_precision language.texts.count, precision: 0, delimiter: ','
+        td.right= number_with_precision language.words.count, precision: 0, delimiter: ','

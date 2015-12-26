@@ -14,12 +14,12 @@ header
   table.u-full-width
     tr
       th Compliment
-      th Language
+      th.right Language
     - @compliments.each do |compliment|
       tr
         td
           = link_to compliment.value, edit_compliment_path(compliment), title: 'Edit Compliment Entry'
-        td
+        td.right
           - if compliment.language
             = compliment.language.name
           - else

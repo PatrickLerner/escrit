@@ -60,19 +60,24 @@
 
   /*Hover state for top level links*/
   li:hover a {
-    background: $color_lighter;
     color: $color_accent;
+    background: $color_lighter;
   }
 
   /*Style for dropdown links*/
-  li:hover ul {
+  li ul {
     min-width: 160px;
 
     a {
-      background: $color_lighter;
-      color: $color_darker;
       height: 40px;
       line-height: 40px;
+    }
+  }
+  /*Style for dropdown links*/
+  li:hover ul {
+    a {
+      background: $color_lighter;
+      color: $color_darker;
 
       /*Hover state for dropdown links*/
       &:hover {
@@ -85,6 +90,8 @@
   /*Hide dropdown links until they are needed*/
   li ul {
     display: none;
+    border: 1px solid #ccc;
+    border-top: 0;
 
     /*Make dropdown links vertical*/
     li {
@@ -134,12 +141,12 @@
 
   /*Hide checkbox*/
   input[type=checkbox] {
-      display: none;
+    display: none;
   }
 
   /*Show menu when invisible checkbox is checked*/
   input[type=checkbox]:checked ~ #menu{
-      display: block;
+    display: block;
   }
 }
 
@@ -159,6 +166,9 @@
     /*Display 'show menu' link*/
     .show-menu {
       display:block;
+    }
+    li ul {
+      display: block;
     }
   }
   #menu {

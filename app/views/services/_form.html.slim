@@ -17,7 +17,7 @@ p
     #error_explanation
       h6
         = pluralize(@service.errors.count, 'error')
-        |  prohibited this language from being saved: 
+        |  prohibited this service from being saved: 
       ul
         - @service.errors.full_messages.each do |msg|
           li
@@ -52,4 +52,3 @@ p
         = link_to fa_icon('times') + ' Delete', service_path(@service), method: :delete, data: { confirm: 'Are you absolutely certain?' }, title: 'Delete', class: 'button button-delete u-full-width'
       - else
         = link_to fa_icon('plus') + ' Add', '', class: 'button button-primary u-full-width', onclick: "$('.service_form').submit(); return false;"
-
