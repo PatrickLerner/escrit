@@ -1,0 +1,26 @@
+- content_for :title, 'Replacements'
+
+header
+  .container
+    h1 List of replacements
+    h2 Admin settings
+
+.container
+  .buttons
+    .right
+      = link_to fa_icon('chevron-left') + ' Back', settings_path, class: 'button', title: 'Back to Settings'
+      = link_to fa_icon('plus') + ' Add New', new_replacement_path, class: 'button button-primary', title: 'Add a new language'
+  table.u-full-width
+    tr
+      th Value
+      th Replacement
+      th Language
+    - @replacements.each do |replacement|
+      tr
+        td= link_to replacement.value, edit_replacement_path(replacement), title: 'Edit Replacement Entry'
+        td= link_to replacement.replacement, edit_replacement_path(replacement), title: 'Edit Replacement Entry'
+        td
+          - if replacement.language
+            = replacement.language.name
+          - else
+            | All 

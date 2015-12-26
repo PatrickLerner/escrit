@@ -18,7 +18,6 @@ header
       th.right Words
     - @languages.each do |language|
       tr
-        td
-          = link_to language.name, edit_language_path(language), title: 'Edit language entry'
+        td= link_to language.name, edit_language_path(language), title: 'Edit language entry'
         td.right= number_with_precision language.texts.count, precision: 0, delimiter: ','
         td.right= number_with_precision language.words.count, precision: 0, delimiter: ','

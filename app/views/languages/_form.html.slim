@@ -4,9 +4,6 @@
 - else
   - form_url = languages_path
   - form_method = :post
-
-p Here you can add the details of the new language you want to add.
-
 = form_for :language, url: form_url, method: form_method, html: { class: 'language_form' } do |f|
   - if @language.errors.any?
     #error_explanation
