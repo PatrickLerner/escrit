@@ -69,8 +69,9 @@ module TextsHelper
     processed = if paragraphs.count > 1
       paragraphs.map { |p|
         if p[0] == '#'
-          p = p.gsub(/^##[ \t]*(.*)[\n]*/, '<h3>\1</h3>')
-          p = p.gsub(/^#[ \t]*(.*)[\n]*/, '<h2>\1</h2>')
+          p = p.gsub(/^###[ \t]*(.*)[\n]*/, '<h5>\1</h5>')
+          p = p.gsub(/^##[ \t]*(.*)[\n]*/, '<h4>\1</h4>')
+          p = p.gsub(/^#[ \t]*(.*)[\n]*/, '<h3>\1</h3>')
         elsif not (/<div/.match p)
           '<p>' + p + '</p>'
         else
