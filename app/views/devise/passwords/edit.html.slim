@@ -1,16 +1,21 @@
-h4
-  | Change your password
-= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
-  = f.hidden_field :reset_password_token
-  .row
-    .two-thirds.column
-      = devise_error_messages!
-      p
-        = f.label :password, "New password"
-        = f.password_field :password, autofocus: true, autocomplete: "off", class: "u-full-width"
-      p
-        = f.label :password_confirmation, "Confirm new password"
-        = f.password_field :password_confirmation, autocomplete: "off", class: "u-full-width"
-    .one-third.column
-      = f.submit "Change my password", class: "u-full-width button-primary"
-      = render "devise/shared/links"
+- content_for :title, 'Change your password'
+
+header
+  .container
+    h1 Change your password
+
+.container
+  = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
+    = f.hidden_field :reset_password_token
+    .row
+      .two-thirds.column
+        = devise_error_messages!
+        p
+          = f.label :password, "New password"
+          = f.password_field :password, autofocus: true, autocomplete: "off", class: "u-full-width"
+        p
+          = f.label :password_confirmation, "Confirm new password"
+          = f.password_field :password_confirmation, autocomplete: "off", class: "u-full-width"
+      .one-third.column
+        = f.submit "Change my password", class: "u-full-width button-primary"
+        = render "devise/shared/links"
