@@ -52,7 +52,7 @@ class Text < ActiveRecord::Base
     }
   end
 
-  def rated_words user
+  def rated_words_count user
     Word.joins(:occurrences).joins('INNER JOIN "notes" ON "notes"."word_id" = "words"."id"').where('occurrences.text_id = ? AND notes.rating <> 0 AND notes.rating <> 6 AND notes.user_id = ?', self.id, user.id).count
   end
 
