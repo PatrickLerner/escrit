@@ -40,7 +40,7 @@ updateCharCount = ->
   if $('#text_content').length != 0
     count = $('#text_content').val().length
     $('#character_count').text(count.toLocaleString('en-US'))
-    if count > 10000
+    if count > 15000
       $('#character_count').css('color', 'red')
     else
       $('#character_count').css('color', '')

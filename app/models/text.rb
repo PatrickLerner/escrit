@@ -7,7 +7,7 @@ class Text < ActiveRecord::Base
   default_scope { joins(:language) }
   validates :category, length: { minimum: 4 }
   validates :title, length: { minimum: 4 }
-  validates :content, length: { minimum: 4, maximum: 10000 }
+  validates :content, length: { minimum: 4, maximum: 15000 }
   validates :language_id, presence: true
 
   before_save :normalize_unicode
