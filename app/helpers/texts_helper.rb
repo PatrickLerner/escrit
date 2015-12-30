@@ -72,6 +72,8 @@ module TextsHelper
           p = p.gsub(/^###[ \t]*(.*)[\n]*/, '<h5>\1</h5>')
           p = p.gsub(/^##[ \t]*(.*)[\n]*/, '<h4>\1</h4>')
           p = p.gsub(/^#[ \t]*(.*)[\n]*/, '<h3>\1</h3>')
+        elsif p[0] == '>'
+          p = p.gsub(/^>[ \t]*(.*)[\n]*/, '<blockquote>\1</blockquote>')
         elsif not (/<div/.match p)
           '<p>' + p + '</p>'
         else
@@ -84,6 +86,8 @@ module TextsHelper
     processed = processed.gsub(/\n/, "<br />")
     processed = processed.gsub(/\*\*(.*?)\*\*/, '<strong>\1</strong>')
     processed = processed.gsub(/__(.*?)__/, '<em>\1</em>')
+    processed = processed.gsub(/\-\-\-[\-]*[\n]*/, '<hr />')
+    processed = processed.gsub(/==[=]*[\n]*/, '<hr />')
     processed = processed.gsub(/\(\((.*?)\)\)/, '<span class="hint">(\1)</span>')
     processed.html_safe
   end
