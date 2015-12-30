@@ -6,7 +6,7 @@
           = link_to category, edit_category_path(texts[0]), class: 'category_link'
         - else
           = category
-      th.right unique words
+      th.right new words
     tbody
       - texts.each do |text|
         tr
@@ -27,4 +27,7 @@
             = link_to text.title, text_path(text)
           td.right
             alias title="Number of uniqe words in the text"
-              = number_with_precision text.word_count, precision: 0, delimiter: ','
+              - if text.completed
+                | 0
+              - else
+                = number_with_precision (text.word_count - text.rated_words_count(current_user)), precision: 0, delimiter: ','
