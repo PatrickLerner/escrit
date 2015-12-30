@@ -54,11 +54,11 @@ class WordsController < ApplicationController
     end
 
     if @note.value == '' and @note.rating == 0
-      nodes = Node.where word: @note.word
+      nodes = Note.where word: @note.word
       if nodes.length <= 1
         @note.word.delete
       end
-      @note.delete
+      Note.where(word: @note.word, user: current_user).delete_all
     end
   end
 
