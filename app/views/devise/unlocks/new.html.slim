@@ -1,8 +1,10 @@
 - content_for :title, 'Resend unlock instructions'
 
 header
+  div.image.bar
   .container
     h1 Resend unlock instructions
+    h2== "&nbsp;"
 
 .container
   = form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f|

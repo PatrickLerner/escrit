@@ -1,8 +1,10 @@
 - content_for :title, 'Sign In'
 
 header
+  div.image.bar
   .container
     h1 Sign In
+    h2== "&nbsp;"
 
 .container
   = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
