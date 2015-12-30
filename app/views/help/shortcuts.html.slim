@@ -1,6 +1,7 @@
 - content_for :title, 'How do I use keyboard shortcuts?'
 
 header
+  div.image.europe
   .container
     h1 How do I use keyboard shortcuts?
     h2 Help
@@ -9,7 +10,7 @@ header
     .right
       = link_to fa_icon("chevron-left") + " Back to Overview", '/help', class: 'button button-primary u-full-width', title: 'Back to Help Overview'
   
-  p Please note that shortcuts only work while you have a word selected and the input field for notes selected.
+  p Please note that shortcuts only work after you have selected a word in a text. They also only work if the input field for notes is currently selected in your browser, which should automatically be the case after clicking on a word.
   
   h3 Rating Words
   p After selecting a word, you can add a note to it to remember its meaning, grammatical sense or any information you think would be useful. Additionally you are able to rate the word on a scale from 0 to 5.
@@ -17,7 +18,7 @@ header
   table.u-full-width
     thead
       tr
-        th Function
+        th[style="width: 50%"] Function
         th Shortcut
     tbody
       tr
@@ -80,7 +81,7 @@ header
   table.u-full-width
     thead
       tr
-        th Function
+        th[style="width: 50%"] Function
         th Shortcut
     tbody
       tr

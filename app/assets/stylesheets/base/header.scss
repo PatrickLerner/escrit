@@ -36,6 +36,10 @@ header {
     }
   }
 
+  .europe  { background-image: image-url('europe.jpg'); }
+  .factory { background-image: image-url('factory.jpg'); }
+  .bar     { background-image: image-url('bar.jpg'); }
+
   img {
     height: 20rem;
     margin-top: -4rem;
