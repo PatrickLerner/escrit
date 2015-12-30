@@ -165,17 +165,16 @@ class TextsController < ApplicationController
 
   def reader_preview
     if params[:user] and current_user.admin?
-      user_id = params[:user]
+      user = User.find params[:user]
     else
-      user_id = current_user.id
+      user = current_user
     end
-    user = User.find_by id: user_id
-    disabled_words = (user_id != current_user.id)
+    disabled_words = (user != current_user)
 
     uniq_words = WordsHelper.raw_words(params['text']).sort.uniq
-    notes = Note.find_create_bulk current_language.id, uniq_words, user.id
+    notes = Note.find_create_bulk current_language, uniq_words, user
 
-    processed_text = process_text params['text'], notes, current_language.id, disabled_words
+    processed_text = process_text params['text'], notes, current_language, disabled_words
 
     render :text => processed_text
   end

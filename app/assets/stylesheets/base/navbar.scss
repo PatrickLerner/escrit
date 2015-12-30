@@ -43,6 +43,8 @@
     img {
       max-height: $navbar_height;
       padding: 1.5rem;
+      margin-top: -1px;
+      vertical-align: middle;
     }
 
     /*Style for menu links*/

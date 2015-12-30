@@ -1,0 +1,29 @@
+- content_for :title, 'Quick Reader'
+
+header.large
+  div class=["image", current_language.name.downcase]
+  div.container
+    h1 Quick Reader
+    h2= current_language.name
+
+.container
+  textarea#preview_text[style="width: 100%; height: 10em; margin-bottom: 0;" placeholder="Write or paste your text in here."]
+  .row
+    .nine.columns
+      |  The Quick Reader is a way to quickly read a text or a passage using escrit in the same way you would read a normal text, but it does not require you to add or save the text into the system first. 
+    .three.columns
+      = link_to fa_icon("eye") + ' Read Text', '', :class => 'button button-primary u-full-width', :id => 'preview_btn'
+  hr[style="margin: 1em 0"]
+  .row
+    .two.columns
+      |    
+    #text.eight.columns
+
+    .two.columns
+      |    
+  span#meta_language[style="display: none;"]
+    = current_language.name
+  span#meta_no_patch[style="display: none;"]
+    | true
+
+=render 'tagger'
