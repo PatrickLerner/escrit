@@ -14,13 +14,7 @@ header.large
     .three.columns
       = link_to fa_icon("eye") + ' Read Text', '', :class => 'button button-primary u-full-width', :id => 'preview_btn'
   hr[style="margin: 1em 0"]
-  .row
-    .two.columns
-      |    
-    #text.eight.columns
-
-    .two.columns
-      |    
+  #text    
   span#meta_language[style="display: none;"]
     = current_language.name
   span#meta_no_patch[style="display: none;"]
