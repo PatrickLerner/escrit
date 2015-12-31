@@ -16,9 +16,9 @@ class WordsController < ApplicationController
       @language_name = lang.name
 
       if @search_term == nil || @search_term.split == ''
-        @notes = Note.includes(:word).joins(:word).order('words.created_at DESC').paginate(:page => params[:page], :per_page => 250).where 'user_id = ? and rating < 6 and language_id = ?', current_user.id, lang.id
+        @notes = Note.includes(:word).joins(:word).order('notes.created_at DESC').paginate(page: params[:page], per_page: 250).where 'user_id = ? and rating < 6 and language_id = ?', current_user.id, lang.id
       else
-        @notes = Note.includes(:word).joins(:word).order('words.created_at DESC').paginate(:page => params[:page], :per_page => 250).where 'user_id = ? and rating < 6 and language_id = ? and (words.value ilike ? or notes.value ilike ?)', current_user.id, lang.id, "%#{@search_term}%", "%#{@search_term}%"
+        @notes = Note.includes(:word).joins(:word).order('notes.created_at DESC').paginate(page: params[:page], per_page: 250).where('user_id = ? and rating < 6 and language_id = ? and (words.value ilike ? or notes.value ilike ?)', current_user.id, lang.id, "%#{@search_term}%", "%#{@search_term}%")
       end
     end
   end
