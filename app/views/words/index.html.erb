@@ -59,7 +59,7 @@
         end
     %>
       <tr>
-        <td><%= w.word.value %><%=  %></td>
+        <td><%= link_to w.word.value_clean, edit_word_path(current_language, w.word.value) %></td>
         <td><%= w.value %></td>
         <td style="text-align: center"><span class="s<%= w.rating %> list-rating" title="<%= [ "Looked it up once.", "This time I'll remember it.", "I'm getting it now.", "Seems easy at this point.", "Know it in my sleep."][w.rating - 1] %>"><%= w.rating %></span></td>
       </tr>

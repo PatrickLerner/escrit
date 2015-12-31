@@ -35,6 +35,11 @@ en:
         one:   user
         few:   users
         other: users
+      occurrence:
+        zero:  occurrences
+        one:   occurrence
+        few:   occurrences
+        other: occurrences
     page_entries_info:
       single_page:
         zero:  "No %{model} found"

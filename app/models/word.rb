@@ -18,6 +18,13 @@ class Word < ActiveRecord::Base
     Word.determine_replacement_value self.value, self.language
   end
 
+  def value_clean
+    val = self.value
+    val = val.gsub '..', ' ... '
+    val = val.gsub '...', ' ... '
+    val = val.gsub '_', ' '
+  end
+
   def self.find_create language, word
     word = Word.determine_replacement_value ApplicationController.utf8downcase(word), language
     w = Word.find_by value: word, language: language

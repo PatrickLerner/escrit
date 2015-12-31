@@ -1,0 +1,24 @@
+- content_for :title, "#{current_language.name} word: #{@word.value_clean}"
+
+header
+  div.image.europe
+  .container
+    h1= @word.value_clean
+    h2
+      -if @note and @note.value != ''
+        = @note.value
+      - else
+        == "(No note for this word yet)"
+.container
+  - @occurrences.each do |oc|
+    - if oc.text.user == current_user and not oc.text.public
+      h5
+        = link_to oc.text.category, texts_path(current_language) + '#' + oc.text.category
+        |  - 
+        = link_to oc.text.title, oc.text
+      ul
+        - oc.text.occurrences(@word.value).each do |oc|
+          li= oc
+  = will_paginate @occurrences, class: 'pagination'
+  .pagination_info
+    = page_entries_info @occurrences

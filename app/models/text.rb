@@ -10,6 +10,8 @@ class Text < ActiveRecord::Base
   validates :content, length: { minimum: 4, maximum: 15000 }
   validates :language_id, presence: true
 
+  has_many :occurrences, dependent: :delete_all
+
   before_save :normalize_unicode
   after_save :update_occurrences
 
@@ -34,8 +36,12 @@ class Text < ActiveRecord::Base
     WordsHelper.raw_words read_attribute(:category)
   end
 
-  def scan_words
-    self.content.downcase.gsub(URI.regexp){
+  def scan_words_content
+    scan_words self.content
+  end
+
+  def scan_words text
+    text.downcase.gsub(URI.regexp){
       ''
     }.scan(Text::WORD_REGEX).map { |w|
       Word.determine_replacement_value ApplicationController.utf8downcase(w), self.language
@@ -83,7 +89,7 @@ class Text < ActiveRecord::Base
   end
 
   def update_occurrences
-    current_words = self.scan_words
+    current_words = self.scan_words_content
     previous_words = self.unique_words
 
     gained_words = current_words - previous_words
@@ -113,5 +119,39 @@ class Text < ActiveRecord::Base
     if self.word_count != self.unique_word_count
       self.update(word_count: self.unique_word_count)
     end
+  end
+
+  def occurrences word
+    self.content.split(/(?<=[^\.][\.\?!][^\.])|(?<=[\n])/).select { |line|
+      if line.downcase.include? word
+        words = scan_words ApplicationController.utf8downcase(line)
+        words = words.map do |word|
+          word = Word.determine_replacement_value word, self.language
+          if word.include? '||'
+            split = word.split '||'
+            word = split[1..-1].join('||')
+          end
+          word
+        end
+        words.include? word
+      else
+        false
+      end
+    }.map { |line|
+      line.gsub(Text::WORD_REGEX) { |token|
+        token_val = Word.determine_replacement_value token, self.language
+        if token_val.include? '||'
+          split = token_val.split '||'
+          token = split[0]
+          token_val = ApplicationController.utf8downcase split[1..-1].join('||')
+        end
+
+        if word == token_val
+          '<strong>' + token + '</strong>'
+        else
+          token
+        end
+      }.html_safe
+    }
   end
 end

@@ -34,9 +34,10 @@ Rails.application.routes.draw do
   post '/reader/:language', to: 'texts#reader_preview', constraints: { language: /.+/ }
 
   # Words
+  get '/words/:language/:id/edit', to: 'words#edit', constraints: { id: /.+/ }, as: :edit_word
   get '/words/:language/:id', to: 'words#show', constraints: { id: /.+/ }
   patch '/words/:id', to: 'words#update', constraints: { id: /.+/ }
-  get '/words/:language', to: 'words#index'
+  get '/words/:language', to: 'words#index', as: :words
   get '/words', to: 'words#index_language'
 
   # Other
