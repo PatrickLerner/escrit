@@ -1,0 +1,83 @@
+<% content_for :title, "#{current_language.name} word list" %>
+
+<header class="large">
+  <div class="image <%= current_language.name.downcase %>"></div>
+  <div class="container">
+    <h1><%= current_language.name %> word list</h1>
+    <h2>&nbsp;</h2>
+  </div>
+</header>
+
+<div class="container">
+
+<div class="row">
+  <div class="one column">
+    &nbsp;
+  </div>
+  <div class="ten columns">
+    <% if @notes.count == 0 %>
+      <% if @search_term == nil || @search_term.split == '' %>
+        <p>You seem to have no words in <%= @language_name %> yet. If you want to see your words in a different language, select it in the sidebar.</p>
+      <% else %>
+        <form action="/words/<%= @language_name.downcase %>" method="get">
+          <input type="text" name="q" class="u-full-width" placeholder="Search for a word" value="<%= @search_term %>" autocomplete="off">
+        </form>
+        <p>No <%= @language_name %> words match your search phrase "<%= @search_term %>".</p>
+      <% end %>
+    <% else %>
+      <form action="/words/<%= @language_name.downcase %>" method="get">
+        <input type="text" name="q" class="u-full-width" placeholder="Search for a word" value="<%= @search_term %>" autocomplete="off">
+      </form>
+
+      <%= will_paginate @notes, class: 'pagination' %>
+      <div class="pagination_info">
+        <%= page_entries_info @notes %>
+      </div>
+    <% end %>
+    <%
+      current_date = nil
+      open = false
+      @notes.each { |w|
+        w_date = w.created_at.strftime("%F")
+        if w_date != current_date
+          current_date = w_date
+          if open
+    %>
+        </tbody>
+      </table>
+        <% end
+        open = true %>
+        <h5><%= current_date %></h5>
+      <table class="u-full-width">
+        <thead>
+          <th style="width: 40%">Word</th>
+          <th style="width: 50%">Note</th>
+          <th class="centered">Rating</th>
+        </thead>
+        <tbody>
+    <%
+        end
+    %>
+      <tr>
+        <td><%= w.word.value %><%=  %></td>
+        <td><%= w.value %></td>
+        <td style="text-align: center"><span class="s<%= w.rating %> list-rating" title="<%= [ "Looked it up once.", "This time I'll remember it.", "I'm getting it now.", "Seems easy at this point.", "Know it in my sleep."][w.rating - 1] %>"><%= w.rating %></span></td>
+      </tr>
+    <% } %>
+    <% if open %>
+        </tbody>
+      </table>
+    <% end %>
+    <% if @notes.count > 0 %>
+      <%= will_paginate @notes, class: 'pagination' %>
+      <div class="pagination_info">
+        <%= page_entries_info @notes %>
+      </div>
+    <% end %>
+  </div>
+  <div class="one column">
+    &nbsp;
+  </div>
+</div>
+
+</div>

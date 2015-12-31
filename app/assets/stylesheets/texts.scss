@@ -21,6 +21,13 @@ $s6_color: inherit;
 .s5 { background-color: $s5_color; }
 .s6 { background-color: $s6_color; }
 
+.list-rating {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: inline-block;
+  border: 1px solid #ccc;
+}
+
 .current_word {
   border-bottom: 1px solid rgba(0, 0, 0, 0.8);;
 }
