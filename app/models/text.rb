@@ -123,8 +123,9 @@ class Text < ActiveRecord::Base
 
   def occurrences word
     self.content.split(/(?<=[^\.][\.\?!][^\.])|(?<=[\n])/).select { |line|
+      line = ApplicationController.utf8downcase(line)
       if line.downcase.include? word
-        words = scan_words ApplicationController.utf8downcase(line)
+        words = scan_words line
         words = words.map do |word|
           word = Word.determine_replacement_value word, self.language
           if word.include? '||'
@@ -139,7 +140,7 @@ class Text < ActiveRecord::Base
       end
     }.map { |line|
       line.gsub(Text::WORD_REGEX) { |token|
-        token_val = Word.determine_replacement_value token, self.language
+        token_val = Word.determine_replacement_value ApplicationController.utf8downcase(token), self.language
         if token_val.include? '||'
           split = token_val.split '||'
           token = split[0]
