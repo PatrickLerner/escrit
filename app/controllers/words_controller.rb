@@ -12,6 +12,7 @@ class WordsController < ApplicationController
     
     if params[:language]
       @search_term = params['q']
+      @search_term = '' if not @search_term
       lang = Language.where("lower(name) = ?", params[:language].downcase)[0]
       @language_name = lang.name
 
@@ -35,9 +36,29 @@ class WordsController < ApplicationController
   end
 
   def edit
-    @word = Word.find_by value: params[:id]
+    @word = Word.find_by value: params[:id], language: current_language
     @note = Note.find_by word: @word, user: current_user
     @occurrences = Occurrence.includes(:text).joins(:text).where('word_id = ? AND texts.user_id = ? AND texts.public = FALSE', @word.id, current_user.id).paginate(page: params[:page], per_page: 20)
+  end
+
+  def vocab_set
+    @word = Word.find_by value: params[:id], language: current_language
+    @note = Note.find_by word: @word, user: current_user
+    if @note.update_column('vocabulary', true)
+      render plain: "ok"
+    else
+      render plain: "failure"
+    end
+  end
+
+  def vocab_unset
+    @word = Word.find_by value: params[:id], language: current_language
+    @note = Note.find_by word: @word, user: current_user
+    if @note.update_column('vocabulary', false)
+      render plain: "ok"
+    else
+      render plain: "failure"
+    end
   end
 
   def update
@@ -45,6 +66,7 @@ class WordsController < ApplicationController
     @note = Note.find_create lang, utf8downcase(params[:id]), current_user
     @note.value = params[:word][:note].strip if params[:word][:note]
     @note.rating = params[:word][:rating] if params[:word][:rating]
+    @note.updated_at = DateTime.now
     
     if @note.word.save and @note.save
       render plain: "ok"

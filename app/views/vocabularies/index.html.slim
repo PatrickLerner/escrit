@@ -1,0 +1,29 @@
+- content_for :title, "#{current_language.name} vocabulary trainer"
+
+header
+  div class=["image", current_language.name.downcase]
+  div.container
+    h1= "#{current_language.name} vocabulary trainer"
+    h2== "&nbsp;"
+
+.container
+  - if @word
+    .u-centered
+      span.u-nodisplay#wordvalue= @word.word.replacement_value
+      h1= @word.word.value_clean
+      h4.u-hidden id="answer"
+        = @word.value
+    .buttons.u-centered#vocabButtons
+      #before
+        a.button.button-primary id="showAnswer" Show answer
+      #after.u-nodisplay
+        a.button.button-primary id="correctAnswer"
+          = fa_icon 'check', text: 'Correct answer'
+        a.button id="incorrectAnswer"
+          = fa_icon 'times', text: 'Incorrect answer'
+  - else
+    .u-centered
+      h4 No more vocabulary left to train
+
+span id="meta_language" style="display: none;"
+  = current_language.name

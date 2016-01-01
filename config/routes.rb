@@ -35,10 +35,16 @@ Rails.application.routes.draw do
 
   # Words
   get '/words/:language/:id/edit', to: 'words#edit', constraints: { id: /.+/ }, as: :edit_word
+  get '/words/:language/:id/set', to: 'words#vocab_set', constraints: { id: /.+/ }, as: :set_vocab_word
+  get '/words/:language/:id/unset', to: 'words#vocab_unset', constraints: { id: /.+/ }, as: :unset_vocab_word
   get '/words/:language/:id', to: 'words#show', constraints: { id: /.+/ }
   patch '/words/:id', to: 'words#update', constraints: { id: /.+/ }
   get '/words/:language', to: 'words#index', as: :words
   get '/words', to: 'words#index_language'
+
+  # Vocabulary
+  get '/vocabulary/:language', to: 'vocabularies#index', constraints: { id: /.+/ }, as: :vocabulary
+  get '/vocabulary', to: 'vocabulary#index_language', as: :vocabularies
 
   # Other
   resources :languages

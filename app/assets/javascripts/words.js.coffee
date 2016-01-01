@@ -3,9 +3,21 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
-	$('#language_words').change ->
-		selected = $('#language_words option').filter(':selected').text()
-		if selected is $('#language_words option').filter(':first').text()
-			window.location.href = "/words"
-		else
-			window.location.href = "/words/" + selected.toLowerCase()
+  $('.toggleVocabulary').click (event) ->
+    language = $('#meta_language').html()
+    obj = $(event.target)
+    word = obj.attr 'value'
+    if obj.hasClass 'fa-minus'
+      obj.addClass 'fa-check'
+      obj.removeClass 'fa-minus'
+      $.ajax
+        type: 'get'
+        url: '/words/' + language + '/' + word + '/set'
+        async: true
+    else
+      obj.addClass 'fa-minus'
+      obj.removeClass 'fa-check'
+      $.ajax
+        type: 'get'
+        url: '/words/' + language + '/' + word + '/unset'
+        async: true

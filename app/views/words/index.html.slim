@@ -1,0 +1,52 @@
+- content_for :title, "#{current_language.name} word list"
+
+header.large
+  div class=["image", current_language.name.downcase]
+  div.container
+    h1= "#{current_language.name} word list"
+    h2== "&nbsp;"
+
+.container
+  - if @notes.count == 0
+    - if @search_term == nil || @search_term.split == ''
+      p= "You seem to have no words in #{@language_name} yet. If you want to see your words in a different language, select it in the sidebar."
+    - else
+      form action="/words/#{@language_name.downcase}" method="get"
+        input type="text" name="q" class="u-full-width" placeholder="Search for a word" value="#{@search_term}" autocomplete="off"
+      p= "No #{@language_name} words match your search phrase \"#{@search_term}\"."
+  - else
+    form action="/words/#{@language_name.downcase}" method="get"
+      input type="text" name="q" class="u-full-width" placeholder="Search for a word" value="#{@search_term}" autocomplete="off"
+
+    = will_paginate @notes, class: 'pagination'
+    div class="pagination_info"
+      = page_entries_info @notes
+
+    
+    table.u-full-width.listing
+      thead
+        th style="width: 35%" Word
+        th style="width: 45%" Note
+        th.u-centered Rating
+        th.u-centered Vocab
+      tbody
+        - @notes.each do |w|
+          tr
+            td= link_to w.word.value_clean, edit_word_path(current_language, w.word.value)
+            td= w.value
+            td.u-centered
+              span class=["s#{w.rating}", "list-rating"] title=[[ "Looked it up once.", "This time I'll remember it.", "I'm getting it now.", "Seems easy at this point.", "Know it in my sleep."][w.rating - 1]]
+                = w.rating
+            td.u-centered
+              - if w.vocabulary
+                = fa_icon 'check', value: w.word.replacement_value, class: 'toggleVocabulary'
+              - else
+                = fa_icon 'minus', value: w.word.replacement_value, class: 'toggleVocabulary'
+
+  - if @notes.count > 0
+    = will_paginate @notes, class: 'pagination'
+    div.pagination_info
+      = page_entries_info @notes
+
+span id="meta_language" style="display: none;"
+  = current_language.name.downcase

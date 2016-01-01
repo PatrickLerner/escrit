@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151231131300) do
+ActiveRecord::Schema.define(version: 20151231191257) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,9 +55,11 @@ ActiveRecord::Schema.define(version: 20151231131300) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "vocabulary"
   end
 
   add_index "notes", ["user_id"], name: "index_notes_on_user_id", using: :btree
+  add_index "notes", ["vocabulary"], name: "index_notes_on_vocabulary", using: :btree
   add_index "notes", ["word_id"], name: "index_notes_on_word_id", using: :btree
 
   create_table "occurrences", force: true do |t|

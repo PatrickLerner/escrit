@@ -36,7 +36,11 @@ html
                 li= link_to fa_icon('book') + ' Text', text_url
                 li= link_to fa_icon('magic') + ' Quick Reader', "/reader#{lang}"
                 li= link_to fa_icon('bar-chart') + ' Statistics', "/statistics#{lang}"
+            li
+              = link_to 'Learn ￬', "/vocabulary#{lang}"
+              ul.hidden
                 li= link_to fa_icon('list') + ' Word List', "/words#{lang}"
+                li= link_to fa_icon('graduation-cap') + ' Vocab. Trainer', "/vocabulary#{lang}"
             li.right
               = link_to 'Patrick ￬', "/u/#{current_user.id}"
               ul.hidden
