@@ -7,13 +7,15 @@ header.large
     h2= current_language.name
 
 .container
-  - if @word
+  #no-vocab.u-nodisplay
     .u-centered
-      span.u-nodisplay#wordvalue= @word.word.replacement_value
-      h1= @word.word.value_clean
-      h4.u-hidden id="answer"
-        = @word.value
-    .buttons.u-centered#vocabButtons
+      h4 No more vocabulary left to train
+  #vocab.u-nodisplay
+    .u-centered
+      #wordvalue.u-nodisplay
+      h1#word
+      h4#note.u-hidden
+    #vocabButtons.buttons.u-centered
       #before
         a.button.button-primary id="showAnswer" Show answer
       #after.u-nodisplay
@@ -21,9 +23,14 @@ header.large
           = fa_icon 'check', text: 'Correct answer'
         a.button id="incorrectAnswer"
           = fa_icon 'times', text: 'Incorrect answer'
-  - else
-    .u-centered
-      h4 No more vocabulary left to train
+    #buttons.buttons.u-centered.u-nodisplay
+      span.button.s0 0
+      span.button.s1 1
+      span.button.s2 2
+      span.button.s3 3
+      span.button.s4 4
+      span.button.s5 5
+      span.button.s6== "/"
 
 span id="meta_language" style="display: none;"
   = current_language.name

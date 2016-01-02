@@ -1,3 +1,12 @@
+.container:after,
+.buttons,
+.row:after,
+.u-cf {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 .u-full-width {
   width: 100%;
 }
@@ -21,13 +30,4 @@
 }
 .u-nodisplay {
   display: none;
-}
-
-.container:after,
-.buttons,
-.row:after,
-.u-cf {
-  content: "";
-  display: table;
-  clear: both;
 }
