@@ -35,7 +35,6 @@ html
               ul.hidden
                 li= link_to fa_icon('book') + ' Text', text_url
                 li= link_to fa_icon('magic') + ' Quick Reader', "/reader#{lang}"
-                li= link_to fa_icon('bar-chart') + ' Statistics', "/statistics#{lang}"
             li
               = link_to 'Learn ￬', "/vocabulary#{lang}"
               ul.hidden
@@ -45,6 +44,7 @@ html
               = link_to 'Patrick ￬', "/u/#{current_user.id}"
               ul.hidden
                 li= link_to fa_icon('user') + ' Your Profile', "/u/#{current_user.id}"
+                li= link_to fa_icon('bar-chart') + ' Statistics', "/statistics#{lang}"
                 li= link_to fa_icon('wrench') + ' Settings', '/settings'
                 li= link_to fa_icon('life-ring') + ' Help', '/help'
                 li= link_to fa_icon('sign-out') + ' Sign Out', destroy_user_session_path, method: :delete

@@ -3,8 +3,8 @@
 header.large
   div class=["image", current_language.name.downcase]
   div.container
-    h1= "#{current_language.name} word list"
-    h2== "&nbsp;"
+    h1 Word list
+    h2= current_language.name
 
 .container
   - if @notes.count == 0

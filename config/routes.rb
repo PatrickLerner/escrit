@@ -44,7 +44,7 @@ Rails.application.routes.draw do
 
   # Vocabulary
   get '/vocabulary/:language', to: 'vocabularies#index', constraints: { id: /.+/ }, as: :vocabulary
-  get '/vocabulary', to: 'vocabulary#index_language', as: :vocabularies
+  get '/vocabulary', to: 'vocabularies#index_language', as: :vocabularies
 
   # Other
   resources :languages

@@ -3,13 +3,12 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
-  language = $('#meta_language').html().toLowerCase()
-
   $('#showAnswer').click ->
     $('#answer').fadeTo 500, 1
     $('#vocabButtons #before').fadeOut 300, ->
       $('#vocabButtons #after').fadeIn(300)
   $('#correctAnswer').click ->
+    language = $('#meta_language').html().toLowerCase()
     wordvalue = $('#wordvalue').html().toLowerCase()
     $.ajax
       type: 'PATCH'
@@ -20,4 +19,5 @@ $ ->
       async: false
     window.location.replace "/vocabulary/#{language}"
   $('#incorrectAnswer').click ->
+    language = $('#meta_language').html().toLowerCase()
     window.location.replace "/vocabulary/#{language}"
