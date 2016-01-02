@@ -67,7 +67,7 @@ class WordsController < ApplicationController
     @note = Note.find_create lang, utf8downcase(params[:id]), current_user
     @note.value = params[:word][:note].strip if params[:word][:note]
     @note.rating = params[:word][:rating] if params[:word][:rating]
-    @note.updated_at = DateTime.now
+    @note.updated_at = DateTime.now if params[:word][:note]
     
     if @note.word.save and @note.save
       render plain: "ok"

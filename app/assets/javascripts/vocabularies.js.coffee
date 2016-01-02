@@ -4,20 +4,33 @@
 
 vocabulary_words = []
 current_word = {}
+changed = false
+new_ratings = {}
+
+setRating = (rating) ->
+  current_word['rating'] = rating
+  changed = true
+  $('#word').attr 'class', ''
+  $('#word').addClass "s#{current_word['rating']}"
+  $('#buttons span').css('opacity', 0.5)
+  $("#buttons .s#{current_word['rating']}").css('opacity', 1)
 
 refreshVocabulary = ->
   language = $('#meta_language').html().toLowerCase()
+  changed = false
   $.getJSON "/vocabulary/#{language}.json", (data) ->
     vocabulary_words = data
     $('#count').html vocabulary_words.length
     if vocabulary_words.length == 0
-      $('#no-vocab').show();
-      $('#vocab').hide();
+      $('#no-vocab').show()
+      $('#vocab').hide()
+      $('#buttons').fadeTo 0, 0
     else
-      $('#vocab').show();
-      $('#no-vocab').hide();
+      $('#vocab').show()
+      $('#no-vocab').hide()
       $('#vocabButtons #before').show()
       $('#vocabButtons #after').hide()
+      $('#buttons').fadeTo 0, 0
       $('#note').fadeTo 0, 0
       # if we still have more than one word, lets not do the last word again
       if vocabulary_words.length > 1
@@ -28,28 +41,40 @@ refreshVocabulary = ->
       $.getJSON "/words/#{language}/#{p}", (data) ->
         current_word = data
         $('#wordvalue').html current_word['value']
-        $('#word').html current_word['value_clean']
+        $('#word').html "<a href='/words/#{language}/#{current_word['value']}/edit' target='_blank'>#{current_word['value_clean']}</a>"
         $('#note').html current_word['note']
+        if new_ratings.hasOwnProperty(current_word['value'])
+          setRating new_ratings[current_word['value']]
+        else
+          setRating current_word['rating']
 
 $ ->
   if ($('body').attr('data-controller') != 'vocabularies') || ($('body').attr('data-action') != 'index')
     return
+  language = $('#meta_language').html().toLowerCase()
   refreshVocabulary()
 
+  $('#vocab h1').mouseover ->
+    $('#buttons').fadeTo 300, 1
   $('#showAnswer').click ->
     $('#note').fadeTo 500, 1
     $('#vocabButtons #before').fadeOut 300, ->
       $('#vocabButtons #after').fadeIn(300)
   $('#correctAnswer').click ->
-    language = $('#meta_language').html().toLowerCase()
     wordvalue = $('#wordvalue').html().toLowerCase()
     $.ajax
       type: 'PATCH'
       url: '/words/' + wordvalue
       data:
         'word[language]': language
-        #'word[rating]': rating
+        'word[rating]': current_word['rating']
+        'word[note]': current_word['note']
       async: false
     refreshVocabulary()
   $('#incorrectAnswer').click ->
+    if changed
+      new_ratings[current_word['value']] = current_word['rating']
     refreshVocabulary()
+  $('#buttons span').click ->
+    rating = $(this).attr('value')
+    setRating(rating)

@@ -1,16 +1,27 @@
 - content_for :title, "#{current_language.name} vocabulary trainer"
 
-header.large
+header
   div class=["image", current_language.name.downcase]
   div.container
-    h1 Vocabulary trainer
-    h2= current_language.name
+    h1= "#{current_language.name} vocabulary trainer"
+    h2
+      span#count
+      |  words left in the queue
+      == "&nbsp;"
 
 .container
   #no-vocab.u-nodisplay
     .u-centered
       h4 No more vocabulary left to train
   #vocab.u-nodisplay
+    #buttons.buttons.u-centered.u-hidden
+      span.s0 value="0" 0
+      span.s1 value="1" 1
+      span.s2 value="2" 2
+      span.s3 value="3" 3
+      span.s4 value="4" 4
+      span.s5 value="5" 5
+      span.s6 value="6"== "/"
     .u-centered
       #wordvalue.u-nodisplay
       h1#word
@@ -23,17 +34,6 @@ header.large
           = fa_icon 'check', text: 'Correct answer'
         a.button id="incorrectAnswer"
           = fa_icon 'times', text: 'Incorrect answer'
-    #buttons.buttons.u-centered.u-nodisplay
-      span.button.s0 0
-      span.button.s1 1
-      span.button.s2 2
-      span.button.s3 3
-      span.button.s4 4
-      span.button.s5 5
-      span.button.s6== "/"
-  .u-centered
-    span#count
-    |  words left in the queue
 
 span id="meta_language" style="display: none;"
   = current_language.name
