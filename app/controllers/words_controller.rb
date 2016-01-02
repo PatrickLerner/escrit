@@ -29,6 +29,7 @@ class WordsController < ApplicationController
     @word = Note.find_create lang, utf8downcase(params[:id]), current_user
     render json: {
       value: @word.word.value,
+      value_clean: @word.word.value_clean,
       note: @word.value.strip,
       language: @word.word.language.name,
       rating: @word.rating

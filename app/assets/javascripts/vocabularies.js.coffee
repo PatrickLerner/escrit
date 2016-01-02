@@ -21,15 +21,17 @@ refreshVocabulary = ->
       if vocabulary_words.length > 1
         index = vocabulary_words.indexOf(current_word.value)
         vocabulary_words.splice(index, 1)
+
       p = vocabulary_words[Math.floor(Math.random() * vocabulary_words.length)]
       $.getJSON "/words/#{language}/#{p}", (data) ->
         current_word = data
-        console.log vocabulary_words
         $('#wordvalue').html current_word['value']
-        $('#word').html current_word['value']
+        $('#word').html current_word['value_clean']
         $('#note').html current_word['note']
 
 $ ->
+  if ($('body').attr('data-controller') != 'vocabularies') || ($('body').attr('data-action') != 'index')
+    return
   refreshVocabulary()
 
   $('#showAnswer').click ->
@@ -45,7 +47,7 @@ $ ->
       data:
         'word[language]': language
         #'word[rating]': rating
-      async: true
+      async: false
     refreshVocabulary()
   $('#incorrectAnswer').click ->
     refreshVocabulary()
