@@ -17,6 +17,7 @@ refreshVocabulary = ->
       $('#no-vocab').hide();
       $('#vocabButtons #before').show()
       $('#vocabButtons #after').hide()
+      $('#note').fadeTo 0, 0
       # if we still have more than one word, lets not do the last word again
       if vocabulary_words.length > 1
         index = vocabulary_words.indexOf(current_word.value)
