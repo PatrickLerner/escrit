@@ -9,6 +9,7 @@ refreshVocabulary = ->
   language = $('#meta_language').html().toLowerCase()
   $.getJSON "/vocabulary/#{language}.json", (data) ->
     vocabulary_words = data
+    $('#count').html vocabulary_words.length
     if vocabulary_words.length == 0
       $('#no-vocab').show();
       $('#vocab').hide();
