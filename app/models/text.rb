@@ -123,11 +123,10 @@ class Text < ActiveRecord::Base
 
   def occurrences word
     self.content.split(/(?<=[^\.][\.\?!][^\.])|(?<=[\n])/).select { |line|
-      line = ApplicationController.utf8downcase(line)
+      line = Word.determine_replacement_value ApplicationController.utf8downcase(line), self.language
       if line.downcase.include? word
         words = scan_words line
         words = words.map do |word|
-          word = Word.determine_replacement_value word, self.language
           if word.include? '||'
             split = word.split '||'
             word = split[1..-1].join('||')
