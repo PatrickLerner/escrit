@@ -16,6 +16,7 @@ setRating = (rating) ->
   $("#buttons .s#{current_word['rating']}").css('opacity', 1)
 
 refreshVocabulary = ->
+  $('#vocab').hide()
   language = $('#meta_language').html().toLowerCase()
   changed = false
   $.getJSON "/vocabulary/#{language}.json", (data) ->
