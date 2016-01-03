@@ -16,7 +16,7 @@ setRating = (rating) ->
   $("#buttons .s#{current_word['rating']}").css('opacity', 1)
 
 refreshVocabulary = ->
-  $('#word').html ''
+  $('#word').html '&nbsp;'
   $('#note').fadeTo 0, 0
   $('#buttons').fadeTo 0, 0
   $('#vocabButtons #before').show()
