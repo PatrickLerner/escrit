@@ -16,7 +16,11 @@ setRating = (rating) ->
   $("#buttons .s#{current_word['rating']}").css('opacity', 1)
 
 refreshVocabulary = ->
-  $('#vocab').hide()
+  $('#word').html ''
+  $('#note').fadeTo 0, 0
+  $('#buttons').fadeTo 0, 0
+  $('#vocabButtons #before').show()
+  $('#vocabButtons #after').hide()
   language = $('#meta_language').html().toLowerCase()
   changed = false
   $.getJSON "/vocabulary/#{language}.json", (data) ->
@@ -25,14 +29,9 @@ refreshVocabulary = ->
     if vocabulary_words.length == 0
       $('#no-vocab').show()
       $('#vocab').hide()
-      $('#buttons').fadeTo 0, 0
     else
       $('#vocab').show()
       $('#no-vocab').hide()
-      $('#vocabButtons #before').show()
-      $('#vocabButtons #after').hide()
-      $('#buttons').fadeTo 0, 0
-      $('#note').fadeTo 0, 0
       # if we still have more than one word, lets not do the last word again
       if vocabulary_words.length > 1
         index = vocabulary_words.indexOf(current_word.value)
