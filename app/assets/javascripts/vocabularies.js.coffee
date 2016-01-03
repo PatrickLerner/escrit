@@ -16,37 +16,38 @@ setRating = (rating) ->
   $("#buttons .s#{current_word['rating']}").css('opacity', 1)
 
 refreshVocabulary = ->
-  $('#word').html '&nbsp;'
-  $('#note').fadeTo 0, 0
-  $('#buttons').fadeTo 0, 0
-  $('#vocabButtons #before').show()
-  $('#vocabButtons #after').hide()
-  language = $('#meta_language').html().toLowerCase()
-  changed = false
-  $.getJSON "/vocabulary/#{language}.json", (data) ->
-    vocabulary_words = data
-    $('#count').html vocabulary_words.length
-    if vocabulary_words.length == 0
-      $('#no-vocab').show()
-      $('#vocab').hide()
-    else
-      $('#vocab').show()
-      $('#no-vocab').hide()
-      # if we still have more than one word, lets not do the last word again
-      if vocabulary_words.length > 1
-        index = vocabulary_words.indexOf(current_word.value)
-        vocabulary_words.splice(index, 1)
+  $('#vocabButtons #after').fadeOut 300, ->
+    $('#vocabButtons #before').fadeIn 300
+  $('#note').fadeTo 300, 0
+  $('#word').fadeTo 300, 0, ->
+    $('#buttons').fadeTo 0, 0
+    language = $('#meta_language').html().toLowerCase()
+    changed = false
+    $.getJSON "/vocabulary/#{language}.json", (data) ->
+      vocabulary_words = data
+      $('#count').html vocabulary_words.length
+      if vocabulary_words.length == 0
+        $('#no-vocab').show()
+        $('#vocab').hide()
+      else
+        $('#vocab').show()
+        $('#no-vocab').hide()
+        # if we still have more than one word, lets not do the last word again
+        if vocabulary_words.length > 1
+          index = vocabulary_words.indexOf(current_word.value)
+          vocabulary_words.splice(index, 1)
 
-      p = vocabulary_words[Math.floor(Math.random() * vocabulary_words.length)]
-      $.getJSON "/words/#{language}/#{p}", (data) ->
-        current_word = data
-        $('#wordvalue').html current_word['value']
-        $('#word').html "<a href='/words/#{language}/#{current_word['value']}/edit' target='_blank'>#{current_word['value_clean']}</a>"
-        $('#note').html current_word['note']
-        if new_ratings.hasOwnProperty(current_word['value'])
-          setRating new_ratings[current_word['value']]
-        else
-          setRating current_word['rating']
+        p = vocabulary_words[Math.floor(Math.random() * vocabulary_words.length)]
+        $.getJSON "/words/#{language}/#{p}", (data) ->
+          current_word = data
+          $('#wordvalue').html current_word['value']
+          $('#word').html "<a href='/words/#{language}/#{current_word['value']}/edit' target='_blank'>#{current_word['value_clean']}</a>"
+          $('#note').html current_word['note']
+          $('#word').fadeTo 300, 1
+          if new_ratings.hasOwnProperty(current_word['value'])
+            setRating new_ratings[current_word['value']]
+          else
+            setRating current_word['rating']
 
 $ ->
   if ($('body').attr('data-controller') != 'vocabularies') || ($('body').attr('data-action') != 'index')
