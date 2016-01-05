@@ -11,6 +11,9 @@ header
     .right
       = link_to fa_icon('chevron-left') + ' Back', settings_path, class: 'button', title: 'Back to Settings'
       = link_to fa_icon('plus') + ' Add New', new_languageartwork_path, class: 'button button-primary', title: 'Add a new artwork'
+
+  blockquote Click the headers to toggle between large and compact displays. Remember it is important that it looks good on both.
+
   - @languageartworks.each do |art|
     header
       div.image style="background-image: url('#{art.image.url}');"
@@ -20,12 +23,10 @@ header
 
 script
   | var myTimeout;
-  | $('header').mouseenter(function() {
-  |     head = $(this);
-  |     myTimeout = setTimeout(function() {
-  |       head.addClass('large');
-  |     }, 1000);
-  | }).mouseleave(function() {
-  |     clearTimeout(myTimeout);
-  |     $(this).removeClass('large');
+  | $('header').click(function() {
+  |   head = $(this);
+  |   if (head.hasClass('large'))
+  |     head.removeClass('large');
+  |   else
+  |     head.addClass('large');
   | });
