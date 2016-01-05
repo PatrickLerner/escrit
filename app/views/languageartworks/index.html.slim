@@ -11,13 +11,21 @@ header
     .right
       = link_to fa_icon('chevron-left') + ' Back', settings_path, class: 'button', title: 'Back to Settings'
       = link_to fa_icon('plus') + ' Add New', new_languageartwork_path, class: 'button button-primary', title: 'Add a new artwork'
-  table.u-full-width
-    tr
-      th Artwork
-      th.right Language
-    - @languageartworks.each do |art|
-      tr
-        td
-          = link_to image_tag(art.image.url, style: 'width: 300px'), edit_languageartwork_path(art), class: 'image-link'
-        td.right
-          = art.language.name
+  - @languageartworks.each do |art|
+    header
+      div.image style="background-image: url(#{art.image.url});"
+      .container
+        h1= link_to art.language.name, edit_languageartwork_path(art), style: 'color: white'
+        h2= link_to 'Edit', edit_languageartwork_path(art), style: 'color: white'
+
+script
+  | var myTimeout;
+  | $('header').mouseenter(function() {
+  |     head = $(this);
+  |     myTimeout = setTimeout(function() {
+  |       head.addClass('large');
+  |     }, 1000);
+  | }).mouseleave(function() {
+  |     clearTimeout(myTimeout);
+  |     $(this).removeClass('large');
+  | });
