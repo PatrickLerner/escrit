@@ -6,5 +6,18 @@ header
     h1 Edit language artwork
     h2 Settings
 
+
 .container
   = render 'form'
+  h1 Preview
+
+header.large
+  div.image style="background-image: url(#{@languageartwork.image.url});"
+  .container
+    h1 Large Header
+    h2 Sub Header
+header
+  div.image style="background-image: url(#{@languageartwork.image.url});"
+  .container
+    h1 Small Header
+    h2 Sub Header

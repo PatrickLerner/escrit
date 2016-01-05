@@ -15,7 +15,6 @@
         - @languageartwork.errors.full_messages.each do |msg|
           li
             = msg
-  - if @languageartwork.persisted?
     = image_tag @languageartwork.image.url, style: 'width: 600px; margin: auto;', class: 'border'
   = f.label :image, 'Artwork:'
   = f.file_field :image
