@@ -16,6 +16,7 @@ setRating = (rating) ->
   $("#buttons .s#{current_word['rating']}").css('opacity', 1)
 
 refreshVocabulary = ->
+  $('#exampleSentence').html ''
   $('#vocabButtons #after').fadeOut 300, ->
     $('#vocabButtons #before').fadeIn 300
   $('#note').fadeTo 300, 0
@@ -41,7 +42,7 @@ refreshVocabulary = ->
         $.getJSON "/words/#{language}/#{p}", (data) ->
           current_word = data
           $('#wordvalue').html current_word['value']
-          $('#word').html "<a href='/words/#{language}/#{current_word['value']}/edit' target='_blank'>#{current_word['value_clean']}</a>"
+          $('#word').html current_word['value_clean']
           $('#note').html current_word['note']
           $('#word').fadeTo 300, 1
           if new_ratings.hasOwnProperty(current_word['value'])
@@ -61,6 +62,10 @@ $ ->
     $('#note').fadeTo 500, 1
     $('#vocabButtons #before').fadeOut 300, ->
       $('#vocabButtons #after').fadeIn(300)
+  $('#word').click ->
+    wordvalue = $('#wordvalue').html().toLowerCase()
+    $.getJSON "/words/#{language}/#{wordvalue}/sentence", (data) ->
+      $('#exampleSentence').html "<blockquote>#{data['value']}</blockquote>"
   $('#correctAnswer').click ->
     wordvalue = $('#wordvalue').html().toLowerCase()
     $.ajax
@@ -69,7 +74,6 @@ $ ->
       data:
         'word[language]': language
         'word[rating]': current_word['rating']
-        'word[note]': current_word['note']
       async: false
     refreshVocabulary()
   $('#incorrectAnswer').click ->

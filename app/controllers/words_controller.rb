@@ -24,6 +24,19 @@ class WordsController < ApplicationController
     end
   end
 
+  def sentence
+    @word = Word.find_by value: params[:id], language: current_language
+    oc = Occurrence.includes(:text).joins(:text).where('word_id = ? AND texts.user_id = ? AND texts.public = FALSE', @word.id, current_user.id).sample
+    if oc
+      sentence = "#{oc.text.occurrences(@word.value).sample}<br><i>(#{oc.text.title} - #{oc.text.category})</i>"
+    else
+      sentence = 'Could not find any example sentence for this word in your library.'
+    end
+    render json: {
+      value: sentence
+    }
+  end
+
   def show
     lang = Language.where("lower(name) = ?", params[:language].downcase)[0]
     @word = Note.find_create lang, utf8downcase(params[:id]), current_user
@@ -67,7 +80,7 @@ class WordsController < ApplicationController
     @note = Note.find_create lang, utf8downcase(params[:id]), current_user
     @note.value = params[:word][:note].strip if params[:word][:note]
     @note.rating = params[:word][:rating] if params[:word][:rating]
-    @note.updated_at = DateTime.now if params[:word][:note]
+    @note.updated_at = DateTime.now
     
     if @note.word.save and @note.save
       render plain: "ok"

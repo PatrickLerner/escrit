@@ -37,6 +37,7 @@ Rails.application.routes.draw do
 
   # Words
   get '/words/:language/:id/edit', to: 'words#edit', constraints: { id: /.+/ }, as: :edit_word
+  get '/words/:language/:id/sentence', to: 'words#sentence', constraints: { id: /.+/ }
   get '/words/:language/:id/set', to: 'words#vocab_set', constraints: { id: /.+/ }, as: :set_vocab_word
   get '/words/:language/:id/unset', to: 'words#vocab_unset', constraints: { id: /.+/ }, as: :unset_vocab_word
   get '/words/:language/:id', to: 'words#show', constraints: { id: /.+/ }
