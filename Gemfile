@@ -22,6 +22,7 @@ gem 'audiojs'
 gem 'rails4-autocomplete'
 gem 'unicode'
 gem 'slim-rails'
+gem 'paperclip'
 
 group :production do
   gem 'puma'
