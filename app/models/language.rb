@@ -16,7 +16,7 @@ class Language < ActiveRecord::Base
 
   def current_language_artwork_style
     if self.current_language_artwork
-      "background-image: url(\"#{self.current_language_artwork.image.url}\");"
+      "background-image: url('#{self.current_language_artwork.image.url}');"
     end
   end
 end
