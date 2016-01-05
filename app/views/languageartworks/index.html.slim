@@ -13,7 +13,7 @@ header
       = link_to fa_icon('plus') + ' Add New', new_languageartwork_path, class: 'button button-primary', title: 'Add a new artwork'
   - @languageartworks.each do |art|
     header
-      div.image style="background-image: url(#{art.image.url});"
+      div.image style="background-image: url(\"#{art.image.url}\");"
       .container
         h1= link_to art.language.name, edit_languageartwork_path(art), style: 'color: white'
         h2= link_to 'Edit', edit_languageartwork_path(art), style: 'color: white'
