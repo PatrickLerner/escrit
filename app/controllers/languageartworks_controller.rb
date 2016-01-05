@@ -5,7 +5,7 @@ class LanguageartworksController < ApplicationController
     @languageartwork = LanguageArtwork.new(languageartwork_params)
  
     if @languageartwork.save
-      redirect_to languageartworks_path
+      redirect_to edit_languageartwork_path(@languageartwork)
     else
       render 'new'
     end
@@ -34,7 +34,7 @@ class LanguageartworksController < ApplicationController
     @languageartwork = LanguageArtwork.find_by id: params[:id]
    
     if @languageartwork.update(languageartwork_params)
-      redirect_to languageartworks_path
+      redirect_to edit_languageartwork_path(@languageartwork)
     else
       render 'edit'
     end
