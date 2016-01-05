@@ -1,0 +1,34 @@
+- if @languageartwork.persisted?
+  - form_url = languageartwork_path(@languageartwork)
+  - form_method = :patch
+- else
+  - form_url = languageartworks_path
+  - form_method = :post
+
+= form_for :languageartwork, url: form_url, method: form_method, html: { class: 'languageartwork_form', multipart: true } do |f|
+  - if @languageartwork.errors.any?
+    #error_explanation
+      h6
+        = pluralize(@languageartwork.errors.count, 'error')
+        |  prohibited this language artwork from being saved: 
+      ul
+        - @languageartwork.errors.full_messages.each do |msg|
+          li
+            = msg
+  - if @languageartwork.persisted?
+    = image_tag @languageartwork.image.url, style: 'width: 600px; margin: auto;', class: 'border'
+  = f.label :image, 'Artwork:'
+  = f.file_field :image
+  = f.label :language_id, 'Language:'
+  = f.select :language_id, options_for_select(language_options, @languageartwork.language_id), {}, class: 'u-full-width'
+  .row
+    .six.columns
+      == "&nbsp;"
+    .three.columns
+      = link_to fa_icon('chevron-left') + ' Back', languageartworks_path, class: 'button u-full-width', title: 'Go back to overview'
+    .three.columns
+      - if @languageartwork.persisted?
+        = link_to fa_icon('floppy-o') + ' Save', '', class: 'button button-primary u-full-width', onclick: "$('.languageartwork_form').submit(); return false;"
+        = link_to fa_icon('times') + ' Delete', languageartwork_path(@languageartwork), method: :delete, data: { confirm: 'Are you absolutely certain?' }, title: 'Delete', class: 'button button-delete u-full-width'
+      - else
+        = link_to fa_icon('plus') + ' Add', '', class: 'button button-primary u-full-width', onclick: "$('.languageartwork_form').submit(); return false;"

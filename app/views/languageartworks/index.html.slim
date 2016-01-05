@@ -1,0 +1,23 @@
+- content_for :title, 'Language artworks'
+
+header
+  div.image.factory
+  .container
+    h1 List of language artworks
+    h2 Admin settings
+
+.container
+  .buttons
+    .right
+      = link_to fa_icon('chevron-left') + ' Back', settings_path, class: 'button', title: 'Back to Settings'
+      = link_to fa_icon('plus') + ' Add New', new_languageartwork_path, class: 'button button-primary', title: 'Add a new artwork'
+  table.u-full-width
+    tr
+      th Artwork
+      th.right Language
+    - @languageartworks.each do |art|
+      tr
+        td
+          = link_to image_tag(art.image.url, style: 'width: 300px'), edit_languageartwork_path(art), class: 'image-link'
+        td.right
+          = art.language.name

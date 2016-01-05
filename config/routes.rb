@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'languageartworks/index'
+
   devise_for :users, controllers: { registrations: 'registration'}
   get 'statistics/index'
 
@@ -50,6 +52,7 @@ Rails.application.routes.draw do
   resources :languages
   resources :services
   resources :compliments
+  resources :languageartworks
   resources :replacements
   get '/settings', to: 'settings#index'
   get '/statistics', to: 'statistics#index_language'

@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151231191257) do
+ActiveRecord::Schema.define(version: 20160105183851) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "buddies", force: true do |t|
+  create_table "buddies", force: :cascade do |t|
     t.integer  "origin_id"
     t.integer  "destination_id"
     t.datetime "created_at"
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20151231191257) do
   add_index "buddies", ["destination_id"], name: "index_buddies_on_destination_id", using: :btree
   add_index "buddies", ["origin_id"], name: "index_buddies_on_origin_id", using: :btree
 
-  create_table "categories", force: true do |t|
+  create_table "categories", force: :cascade do |t|
     t.text     "title"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -35,21 +35,33 @@ ActiveRecord::Schema.define(version: 20151231191257) do
 
   add_index "categories", ["language_id"], name: "index_categories_on_language_id", using: :btree
 
-  create_table "compliments", force: true do |t|
+  create_table "compliments", force: :cascade do |t|
     t.text     "value"
     t.integer  "language_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "languages", force: true do |t|
+  create_table "language_artworks", force: :cascade do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.integer  "language_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "language_artworks", ["language_id"], name: "index_language_artworks_on_language_id", using: :btree
+
+  create_table "languages", force: :cascade do |t|
     t.text     "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "notes", force: true do |t|
-    t.string   "value"
+  create_table "notes", force: :cascade do |t|
+    t.string   "value",      limit: 255
     t.integer  "rating"
     t.integer  "word_id"
     t.integer  "user_id"
@@ -62,7 +74,7 @@ ActiveRecord::Schema.define(version: 20151231191257) do
   add_index "notes", ["vocabulary"], name: "index_notes_on_vocabulary", using: :btree
   add_index "notes", ["word_id"], name: "index_notes_on_word_id", using: :btree
 
-  create_table "occurrences", force: true do |t|
+  create_table "occurrences", force: :cascade do |t|
     t.integer  "word_id"
     t.integer  "text_id"
     t.datetime "created_at"
@@ -72,9 +84,9 @@ ActiveRecord::Schema.define(version: 20151231191257) do
   add_index "occurrences", ["text_id"], name: "index_occurrences_on_text_id", using: :btree
   add_index "occurrences", ["word_id"], name: "index_occurrences_on_word_id", using: :btree
 
-  create_table "replacements", force: true do |t|
-    t.string   "value"
-    t.string   "replacement"
+  create_table "replacements", force: :cascade do |t|
+    t.string   "value",       limit: 255
+    t.string   "replacement", limit: 255
     t.integer  "language_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -82,7 +94,7 @@ ActiveRecord::Schema.define(version: 20151231191257) do
 
   add_index "replacements", ["language_id"], name: "index_replacements_on_language_id", using: :btree
 
-  create_table "services", force: true do |t|
+  create_table "services", force: :cascade do |t|
     t.text     "name"
     t.text     "short_name"
     t.text     "url"
@@ -95,7 +107,7 @@ ActiveRecord::Schema.define(version: 20151231191257) do
 
   add_index "services", ["language_id"], name: "index_services_on_language_id", using: :btree
 
-  create_table "texts", force: true do |t|
+  create_table "texts", force: :cascade do |t|
     t.text     "title"
     t.text     "content"
     t.text     "category"
@@ -113,7 +125,7 @@ ActiveRecord::Schema.define(version: 20151231191257) do
   add_index "texts", ["category_id"], name: "index_texts_on_category_id", using: :btree
   add_index "texts", ["language_id"], name: "index_texts_on_language_id", using: :btree
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.text     "email",                  default: "", null: false
     t.text     "encrypted_password",     default: "", null: false
     t.text     "reset_password_token"
@@ -136,11 +148,12 @@ ActiveRecord::Schema.define(version: 20151231191257) do
   add_index "users", ["native_language_id"], name: "index_users_on_native_language_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "words", force: true do |t|
+  create_table "words", force: :cascade do |t|
     t.text     "value"
     t.integer  "language_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_foreign_key "language_artworks", "languages"
 end
