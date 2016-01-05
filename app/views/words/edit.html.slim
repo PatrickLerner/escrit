@@ -1,7 +1,7 @@
 - content_for :title, "#{current_language.name} word: #{@word.value_clean}"
 
 header
-  div.image.europe
+  div.image.europe style=current_language.current_language_artwork_style
   .container
     h1= @word.value_clean
     h2

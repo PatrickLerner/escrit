@@ -1,7 +1,7 @@
 - content_for :title, 'Vocabulary: %s (%s)' % [@text.title, @text.category]
 
 header
-  div class=["image", current_language.name.downcase]
+  div.image.europe style=current_language.current_language_artwork_style
   .container
     h1= @text.title
     h2= @text.category

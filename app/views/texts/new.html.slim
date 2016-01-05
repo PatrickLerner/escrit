@@ -1,7 +1,7 @@
 - content_for :title, "Create new #{current_language.name} text"
 
 header
-  div class=["image", current_language.to_param]
+  div.image.europe style=current_language.current_language_artwork_style
   div.container
     h1= "Create new #{current_language.name} text"
     h2== '&nbsp;'
