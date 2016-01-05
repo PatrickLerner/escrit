@@ -20,13 +20,3 @@ header
       .container
         h1= link_to art.language.name, edit_languageartwork_path(art), style: 'color: white'
         h2= link_to 'Edit', edit_languageartwork_path(art), style: 'color: white'
-
-script
-  | var myTimeout;
-  | $('header').click(function() {
-  |   head = $(this);
-  |   if (head.hasClass('large'))
-  |     head.removeClass('large');
-  |   else
-  |     head.addClass('large');
-  | });

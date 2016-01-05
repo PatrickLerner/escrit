@@ -16,7 +16,7 @@ header
 div.container
   div.row
     div.one-third.column
-      div style="text-align: center;"
+      .u-centered
         = image_tag avatar_url(@user), class: 'profile-picture', style: 'margin-bottom: 1em;'
 
         - if @user == current_user
