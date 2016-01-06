@@ -1,5 +1,5 @@
 $ ->
-  if $('body').attr('data-controller') == 'welcome'
+  if $('body').attr('data-controller') == 'welcome' || ($('body').attr('data-controller') == 'texts' && $('body').attr('data-action') == 'show')
     return
   $('header').click ->
     head = $(this)
