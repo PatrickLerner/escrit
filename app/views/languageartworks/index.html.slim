@@ -14,9 +14,9 @@ header
 
   blockquote Click the headers to toggle between large and compact displays. Remember it is important that it looks good on both.
 
-  - @languageartworks.each do |art|
-    header
-      div.image style="background-image: url('#{art.image.url}');"
-      .container
-        h1= link_to art.language.name, edit_languageartwork_path(art), style: 'color: white'
-        h2= link_to 'Edit', edit_languageartwork_path(art), style: 'color: white'
+- @languageartworks.each do |art|
+  header
+    div.image style="background-image: url('#{art.image.url}');"
+    .container
+      h1= link_to art.language.name, edit_languageartwork_path(art), style: 'color: white'
+      h2= link_to 'Edit', edit_languageartwork_path(art), style: 'color: white'
