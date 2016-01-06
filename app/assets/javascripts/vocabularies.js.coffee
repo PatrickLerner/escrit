@@ -12,7 +12,7 @@ setRating = (rating) ->
   changed = true
   $('#word').attr 'class', ''
   $('#word').addClass "s#{current_word['rating']}"
-  $('#buttons span').css('opacity', 0.5)
+  $('#buttons span.w').css('opacity', 0.5)
   $("#buttons .s#{current_word['rating']}").css('opacity', 1)
 
 refreshVocabulary = ->
@@ -42,6 +42,9 @@ refreshVocabulary = ->
         $.getJSON "/words/#{language}/#{p}", (data) ->
           current_word = data
           $('#wordvalue').html current_word['value']
+          $('.toggleVocabulary').attr 'value', current_word['value']
+          $('.toggleVocabulary').removeClass 'fa-minus'
+          $('.toggleVocabulary').addClass 'fa-check'
           $('#word').html current_word['value_clean']
           $('#note').html current_word['note']
           $('#word').fadeTo 300, 1
@@ -58,14 +61,17 @@ $ ->
 
   $('#vocab h1').mouseover ->
     $('#buttons').fadeTo 300, 1
+
   $('#showAnswer').click ->
     $('#note').fadeTo 500, 1
     $('#vocabButtons #before').fadeOut 300, ->
       $('#vocabButtons #after').fadeIn(300)
+
   $('#word').click ->
     wordvalue = $('#wordvalue').html().toLowerCase()
     $.getJSON "/words/#{language}/#{wordvalue}/sentence", (data) ->
       $('#exampleSentence').html "<blockquote>#{data['value']}</blockquote>"
+
   $('#correctAnswer').click ->
     wordvalue = $('#wordvalue').html().toLowerCase()
     $.ajax
@@ -76,10 +82,12 @@ $ ->
         'word[rating]': current_word['rating']
       async: false
     refreshVocabulary()
+
   $('#incorrectAnswer').click ->
     if changed
       new_ratings[current_word['value']] = current_word['rating']
     refreshVocabulary()
-  $('#buttons span').click ->
+
+  $('#buttons span.w').click ->
     rating = $(this).attr('value')
     setRating(rating)

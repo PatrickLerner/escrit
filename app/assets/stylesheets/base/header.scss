@@ -8,6 +8,15 @@ header {
   position: relative;
   margin-top: $navbar_height;
 
+  a {
+    color: white;
+
+    &:hover {
+      color: white;
+      border-color: white;
+    }
+  }
+
   &.large {
     padding: 12rem 0 10rem 0;
 

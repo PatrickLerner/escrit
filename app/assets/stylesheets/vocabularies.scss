@@ -3,20 +3,20 @@
     color: black;
     border: 0;
   }
+  
   #word {
     display: inline-block;
     cursor: pointer;
   }
+
   #buttons {
     span {
       display: inline-block;
-      width: 25px;
+      height: 26px;
+      width: 26px;
       border: 1px solid black;
       cursor: pointer;
       margin: 0 0.3rem;
     }
-  }
-  #exampleSentence {
-    text-align: left;
   }
 }
