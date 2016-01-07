@@ -69,9 +69,11 @@ table.listing {
   }
 }
 
-.fa-check {
-  color: #0FC55C;
-}
-.fa-minus {
-  color: #D24149;
+table.listing, .toggleVocabulary {
+  .fa-check, &.fa-check {
+    color: #0FC55C;
+  }
+  .fa-minus, &.fa-minus {
+    color: #D24149;
+  }
 }

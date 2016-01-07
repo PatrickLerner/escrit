@@ -6,6 +6,7 @@ vocabulary_words = []
 current_word = {}
 changed = false
 new_ratings = {}
+disabledLinks = true
 
 setRating = (rating) ->
   current_word['rating'] = rating
@@ -14,6 +15,12 @@ setRating = (rating) ->
   $('#word').addClass "s#{current_word['rating']}"
   $('#buttons span.w').css('opacity', 0.5)
   $("#buttons .s#{current_word['rating']}").css('opacity', 1)
+
+disableButtons = ->
+  disabledLinks = true
+
+enableButtons = ->
+  disabledLinks = false
 
 refreshVocabulary = ->
   $('#exampleSentence').html ''
@@ -52,6 +59,7 @@ refreshVocabulary = ->
             setRating new_ratings[current_word['value']]
           else
             setRating current_word['rating']
+          enableButtons()
 
 $ ->
   if ($('body').attr('data-controller') != 'vocabularies') || ($('body').attr('data-action') != 'index')
@@ -60,19 +68,28 @@ $ ->
   refreshVocabulary()
 
   $('#vocab h1').mouseover ->
+    return if disabledLinks
     $('#buttons').fadeTo 300, 1
 
   $('#showAnswer').click ->
+    return if disabledLinks
+    disableButtons()
     $('#note').fadeTo 500, 1
     $('#vocabButtons #before').fadeOut 300, ->
       $('#vocabButtons #after').fadeIn(300)
+    enableButtons()
 
   $('#word').click ->
+    return if disabledLinks
+    disableButtons()
     wordvalue = $('#wordvalue').html().toLowerCase()
     $.getJSON "/words/#{language}/#{wordvalue}/sentence", (data) ->
       $('#exampleSentence').html "<blockquote>#{data['value']}</blockquote>"
+      enableButtons()
 
   $('#correctAnswer').click ->
+    return if disabledLinks
+    disableButtons()
     wordvalue = $('#wordvalue').html().toLowerCase()
     $.ajax
       type: 'PATCH'
@@ -84,10 +101,13 @@ $ ->
     refreshVocabulary()
 
   $('#incorrectAnswer').click ->
+    return if disabledLinks
+    disableButtons()
     if changed
       new_ratings[current_word['value']] = current_word['rating']
     refreshVocabulary()
 
   $('#buttons span.w').click ->
+    return if disabledLinks
     rating = $(this).attr('value')
     setRating(rating)
