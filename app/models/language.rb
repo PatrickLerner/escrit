@@ -11,9 +11,11 @@ class Language < ActiveRecord::Base
   end
 
   def current_artwork
-    start_date = Date.parse "2000-01-19 00:00:00 +0100"
-    index = (DateTime.now - start_date).to_i % self.artworks.count
-    self.artworks.limit(1).offset(index).first
+    if self.artworks.count > 0
+      start_date = Date.parse "2000-01-19 00:00:00 +0100"
+      index = (DateTime.now - start_date).to_i % self.artworks.count
+      self.artworks.limit(1).offset(index).first
+    end
   end
 
   def current_artwork_style
