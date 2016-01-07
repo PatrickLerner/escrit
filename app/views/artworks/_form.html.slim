@@ -1,0 +1,32 @@
+- if @artwork.persisted?
+  - form_url = artwork_path(@artwork)
+  - form_method = :patch
+- else
+  - form_url = artworks_path
+  - form_method = :post
+
+= form_for :artwork, url: form_url, method: form_method, html: { class: 'artwork_form', multipart: true } do |f|
+  - if @artwork.errors.any?
+    #error_explanation
+      h6
+        = pluralize(@artwork.errors.count, 'error')
+        |  prohibited this artwork from being saved: 
+      ul
+        - @artwork.errors.full_messages.each do |msg|
+          li
+            = msg
+  = f.label :image, 'Artwork:'
+  = f.file_field :image
+  = f.label :language_id, 'Language:'
+  = f.select :language_id, options_for_select(language_options, @artwork.language_id), {}, class: 'u-full-width'
+  .row
+    .six.columns
+      == "&nbsp;"
+    .three.columns
+      = link_to fa_icon('chevron-left') + ' Back', artworks_path, class: 'button u-full-width', title: 'Go back to overview'
+    .three.columns
+      - if @artwork.persisted?
+        = link_to fa_icon('floppy-o') + ' Save', '', class: 'button button-primary u-full-width', onclick: "$('.artwork_form').submit(); return false;"
+        = link_to fa_icon('times') + ' Delete', artwork_path(@artwork), method: :delete, data: { confirm: 'Are you absolutely certain?' }, title: 'Delete', class: 'button button-delete u-full-width'
+      - else
+        = link_to fa_icon('plus') + ' Add', '', class: 'button button-primary u-full-width', onclick: "$('.artwork_form').submit(); return false;"

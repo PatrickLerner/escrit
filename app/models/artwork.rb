@@ -1,4 +1,4 @@
-class LanguageArtwork < ActiveRecord::Base
+class Artwork < ActiveRecord::Base
   belongs_to :language
 
   has_attached_file :image

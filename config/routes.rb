@@ -53,7 +53,7 @@ Rails.application.routes.draw do
   resources :languages
   resources :services
   resources :compliments
-  resources :languageartworks
+  resources :artworks
   resources :replacements
   get '/settings', to: 'settings#index'
   get '/statistics', to: 'statistics#index_language'
