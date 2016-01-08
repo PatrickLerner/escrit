@@ -77,3 +77,13 @@ table.listing, .toggleVocabulary {
     color: #D24149;
   }
 }
+
+.cat-button {
+  color: black;
+  width: 5rem;
+  display: inline-block;
+
+  &:hover {
+    border: 0
+  }
+}

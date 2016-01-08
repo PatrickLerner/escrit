@@ -1,30 +1,32 @@
 - @texts.each do |category, texts|
-  table.u-full-width.listing.texts
-    thead
-      th colspan="2"
-        - if not @public or current_user.admin?
-          = link_to category, edit_category_path(texts[0]), class: 'category_link'
-        - else
-          = category
-      th.right new words
-    tbody
-      - texts.each do |text|
-        tr
-          td.centered style="width: 2.5em; padding-right: 0"
-            - if current_user.native_language_id == current_language.id
-              alias title="This is your native language, you should know all the words ;)"
-              = fa_icon 'check'
-            - elsif text.completed or (text.public and (text.word_count - text.rated_words_count(current_user)) == 0)
-              alias title="You have worked through this text and rated all the words within it."
-                = fa_icon 'check'
+  .row
+    .three.columns.u-right
+      - if not @public or current_user.admin?
+        h3
+          = link_to fa_icon('chevron-left'), texts_path(current_language), class: 'cat-button'
+          = link_to fa_icon('pencil'), edit_category_path(texts[0]), class: 'cat-button'
+    .nine.columns
+      h3= category
+  - texts.each do |text|
+    .row
+      .three.columns
+        h5.u-right style="margin-bottom: 0"
+          alias title="Number of new words in the text"
+            - if not text.public and text.completed
+              | 0
             - else
-              alias title="Not all words in this text have been rated yet."
-                = fa_icon 'minus'
-          td style="padding-left: 0"
-            = link_to text.title, text_path(text)
-          td.right
-            alias title="Number of uniqe words in the text"
-              - if not text.public and text.completed
-                | 0
-              - else
-                = number_with_precision (text.word_count - text.rated_words_count(current_user)), precision: 0, delimiter: ','
+              = number_with_precision (text.word_count - text.rated_words_count(current_user)), precision: 0, delimiter: ','
+            |  new words
+      .eight.columns
+        h5 style="margin-bottom: 0"
+          = link_to text.title, text_path(text)
+      .one.column
+        - if current_user.native_language_id == current_language.id
+          alias title="This is your native language, you should know all the words ;)"
+          = fa_icon 'check'
+        - elsif text.completed or (text.public and (text.word_count - text.rated_words_count(current_user)) == 0)
+          alias title="You have worked through this text and rated all the words within it."
+            = fa_icon 'check'
+        - else
+          alias title="Not all words in this text have been rated yet."
+            = fa_icon 'minus'

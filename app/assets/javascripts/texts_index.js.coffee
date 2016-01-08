@@ -1,9 +1,10 @@
 $ ->
   loadCategory = (name) ->
-    $.ajax({
-      url: '?c=' + name
-    }).done (data) ->
-      $('#text-list').html(data);
+    if name != ''
+      $.ajax({
+        url: '?c=' + name
+      }).done (data) ->
+        $('#text-list').html(data);
 
   $('.category_link').click ->
     loadCategory($(this).attr('data-name'))
