@@ -30,16 +30,17 @@ div.container
     
     = link_to fa_icon('plus') + ' New text', new_text_path(current_language), class: 'button right'
 
-  #text-list
-    .row
-      .offset-by-three.nine.columns
-        h3 Categories
-    - @categories.each do |name, count|
+  .row
+    .five.columns
       .row
-        .three.columns
-          h5.u-right style="margin-bottom: 0"
-            = count
-            |  texts
-        .nine.columns
-          h5 style="margin-bottom: 0"
+        .offset-by-two.ten.columns
+          h3 Categories
+      - @categories.each do |name, count|
+        .row
+          .two.columns
+            .u-right
+              = count
+          .nine.columns
             = link_to name, "\##{name}", 'data-name': name, class: 'category_link'
+    .seven.columns
+      #text-list
