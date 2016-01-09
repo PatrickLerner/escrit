@@ -10,6 +10,9 @@ $ ->
     $('.image', head).animate({
       'opacity': 1
     }, 2000);
+    $('h1, h2', head).animate({
+      'opacity': 0
+    }, 2000);
 
   small = (head) ->
     head.animate({
@@ -19,6 +22,9 @@ $ ->
     $('.image', head).animate({
       'opacity': 0.4
     }, 2000);
+    $('h1, h2', head).animate({
+      'opacity': 1
+    }, 2000);
 
   large = (head) ->
     head.animate({
@@ -27,6 +33,9 @@ $ ->
     }, 2000);
     $('.image', head).animate({
       'opacity': 0.4
+    }, 2000);
+    $('h1, h2', head).animate({
+      'opacity': 1
     }, 2000);
 
   $('header').click ->
