@@ -45,7 +45,7 @@ html
                     - langs.each do |lang|
                       li= link_to image_tag("languages/#{lang.downcase}/flag.png", style: 'height: 16px; margin: 0; padding: 0;') + " #{lang}", "/#{current_lang_prefix}/#{lang.downcase}"
             li.right
-              = link_to 'Patrick ￬', "/u/#{current_user.id}"
+              = link_to current_user.name + ' ￬', "/u/#{current_user.id}"
               ul.hidden
                 li= link_to fa_icon('user') + ' Your Profile', "/u/#{current_user.id}"
                 li= link_to fa_icon('bar-chart') + ' Statistics', "/statistics#{lang}"
