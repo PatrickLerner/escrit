@@ -22,6 +22,8 @@ $s6_color: inherit;
 .s6 { background-color: $s6_color; }
 
 .list-rating {
+  text-align: center;
+  font-weight: normal;
   width: 2.5rem;
   height: 2.5rem;
   display: inline-block;

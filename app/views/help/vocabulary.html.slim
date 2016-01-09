@@ -1,0 +1,79 @@
+- content_for :title, 'How does the Vocabulary Trainer work?'
+
+header
+  div.image.europe
+  .container
+    h1 How does the vocabulary trainer work?
+    h2 Help
+.container
+  .buttons
+    .right
+      = link_to fa_icon("chevron-left") + " Back to Overview", '/help', class: 'button button-primary u-full-width', title: 'Back to Help Overview'
+  p While it is not strictly necessary to explicitly learn vocabulary, as intensive and expansive reading can aid very quickly in acquiring vocabulary without additional effort, it can oftentimes be rather beneficial to study a specific subset of useful words you want to remember a bit more intensely. For this purpose escrit offers a vocabulary trainer which challenges you to remember selected words in regular intervals, to keep them in your memory.
+
+  h3 Adding words to the vocabulary trainer
+  p
+    | There are two ways to add words to your vocabulary list: Firstly, you can simply go to the 'Word List' and add any word you wish by clicking the 
+    code= fa_icon 'minus'
+    |  symbol, so that it turns into a 
+    code= fa_icon 'check'
+    |  symbol, which indicates that it is designated for learning.
+  p
+    | Secondly, you can access the vocabulary for any given text by clicking on the button with the 
+    code= fa_icon 'paragraph'
+    |  symbol (which also indicates the number of unrated words). From here, you can also add words to your vocabulary list in the same manner as for the global list.
+
+  h3 How to use the vocabulary trainer?
+  p Using the vocabulary trainer is rather simple, when there are words ready for review, you will be shown the word in the language you are learning and asked to think of the meaning of the word. Once you think of the answer, click the 'Show Answer' button to reveal the note you made for the word.
+
+  blockquote
+    = fa_icon 'lightbulb-o'
+    |  Tip: Train your pronunciation by reading the foreign word out loud while going through your vocabulary.
+
+  p After the answer is revealed, click either click 'Correct Answer', if you thought of the right answer, or 'Incorrect Answer' if you could not. Don't worry at all if you did not get it correct, just be honest and continue learning. An incorrect word will be shown again to you a bit later, until you answer it correctly. Correctly answered words will only be shown a few days later.
+
+  h4 Review interval by rating
+  p
+    | How often a word is shown to you, depends entirely upon the rating you assigned to it. The higher the rating (i.e. the more you feel you know the word), the less frequent it will show up in your reviews. Please keep in mind that words that are set to be ignored (rated with the 
+    span.s6.list-rating== '/'
+    | -button) will never show up in reviews, so take note of the rating when adding words to your vocabulary.
+
+  table.u-full-width
+    thead
+      tr
+        th.u-centered: span.s0.list-rating 0
+        th.u-centered: span.s1.list-rating 1
+        th.u-centered: span.s2.list-rating 2
+        th.u-centered: span.s3.list-rating 3
+        th.u-centered: span.s4.list-rating 4
+        th.u-centered: span.s5.list-rating 5
+        th.u-centered: span.s6.list-rating== '/'
+    tbody
+      tr
+        td.u-centered
+          div every
+          = "#{Note::VOCAB_REVIEW_INTERVAL_0} days"
+        td.u-centered
+          div every
+          = "#{Note::VOCAB_REVIEW_INTERVAL_1} days"
+        td.u-centered
+          div every
+          = "#{Note::VOCAB_REVIEW_INTERVAL_2} days"
+        td.u-centered
+          div every
+          = "#{Note::VOCAB_REVIEW_INTERVAL_3} days"
+        td.u-centered
+          div every
+          = "#{Note::VOCAB_REVIEW_INTERVAL_4} days"
+        td.u-centered
+          div every
+          = "#{Note::VOCAB_REVIEW_INTERVAL_5} days"
+        td.u-centered
+          div never
+          == '&nbsp;'
+
+  h4 Changing the rating
+  p You can change the rating of a word while going through the vocabulary, simply by moving your mouse over the word until the rating buttons are displayed above the word. From here you can simply click them to change the rating, or remove the word from the vocabulary list.
+
+  h4 Example sentences
+  p Sometimes it can be useful to see a word used in context instead of in isolation. If you want to get a hint what a word could mean, simply click on it and you will be shown an example sentence where it is used extracted from one of the texts in your library. If the word shows up in multiple text, feel free to click the word again to get a different example sentence.
