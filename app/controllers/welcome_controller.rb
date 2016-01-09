@@ -13,6 +13,6 @@ class WelcomeController < ApplicationController
 
   def home
     @user = current_user
-    @compliment = current_user.compliments.sample.value
+    @compliment = current_user.compliments.sample
   end
 end

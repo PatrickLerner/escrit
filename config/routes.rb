@@ -32,7 +32,7 @@ Rails.application.routes.draw do
 
   # Quick Reader
   get '/reader', to: 'texts#reader_language', as: :language_choice_reader
-  get '/reader/:language', to: 'texts#reader', constraints: { language: /.+/ }
+  get '/reader/:language', to: 'texts#reader', constraints: { language: /.+/ }, as: :reader
   post '/reader/:language', to: 'texts#reader_preview', constraints: { language: /.+/ }
 
   # Words

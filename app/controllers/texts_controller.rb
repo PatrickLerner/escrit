@@ -162,16 +162,7 @@ class TextsController < ApplicationController
     @text = Text.new
   end
 
-  def reader
-    @services = Service.where('(language_id=? or language_id=0) and user_id = ? and enabled = true', current_language.id, current_user.id)
-    @services = [] if @services == nil
-  end
-
-  def reader_language
-    @languages = Language.order(:name).all
-  end
-
-  def reader_preview
+  def render_text text
     if params[:user] and current_user.admin?
       user = User.find params[:user]
     else
@@ -179,12 +170,30 @@ class TextsController < ApplicationController
     end
     disabled_words = (user != current_user)
 
-    uniq_words = WordsHelper.raw_words(params['text']).sort.uniq
+    uniq_words = WordsHelper.raw_words(text).sort.uniq
     notes = Note.find_create_bulk current_language, uniq_words, user
 
-    processed_text = process_text params['text'], notes, current_language, disabled_words
+    processed_text = process_text text, notes, current_language, disabled_words
 
-    render :text => processed_text
+    return processed_text
+  end
+
+  def reader
+    @services = Service.where('(language_id=? or language_id=0) and user_id = ? and enabled = true', current_language.id, current_user.id)
+    @services = [] if @services == nil
+
+    if params[:q]
+      @param_text = render_text params[:q]
+      @param_text_raw = params[:q]
+    end
+  end
+
+  def reader_language
+    @languages = Language.order(:name).all
+  end
+
+  def reader_preview
+    render text: render_text(params['text'])
   end
 
   def show

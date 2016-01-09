@@ -2,7 +2,7 @@
 
 - content_for :header_image_class, 'bar'
 - content_for :header_title, "Hello, #{@user.name}!"
-- content_for :header_subtitle, @compliment
+- content_for :header_subtitle, link_to(@compliment.value, reader_path(@compliment.language) + "?q=#{@compliment.value}").html_safe
 
 .container
   .row
