@@ -59,6 +59,7 @@ class WordsController < ApplicationController
     @word = Word.find_by value: params[:id], language: current_language
     @note = Note.find_by word: @word, user: current_user
     if @note.update_column('vocabulary', true)
+      @note.update_review_at!
       render plain: "ok"
     else
       render plain: "failure"
@@ -80,7 +81,7 @@ class WordsController < ApplicationController
     @note = Note.find_create lang, utf8downcase(params[:id]), current_user
     @note.value = params[:word][:note].strip if params[:word][:note]
     @note.rating = params[:word][:rating] if params[:word][:rating]
-    @note.updated_at = DateTime.now
+    @note.update_review_at! if params[:word][:reviewed]
     
     if @note.word.save and @note.save
       render plain: "ok"
@@ -99,6 +100,6 @@ class WordsController < ApplicationController
 
   private
     def word_params
-      params.require(:word).permit(:language, :note, :rating)
+      params.require(:word).permit(:language, :note, :rating, :reviewed)
     end
 end

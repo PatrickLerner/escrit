@@ -11,10 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160105183851) do
+ActiveRecord::Schema.define(version: 20160109000658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "artworks", force: :cascade do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.integer  "language_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "artworks", ["language_id"], name: "index_artworks_on_language_id", using: :btree
 
   create_table "buddies", force: :cascade do |t|
     t.integer  "origin_id"
@@ -42,18 +54,6 @@ ActiveRecord::Schema.define(version: 20160105183851) do
     t.datetime "updated_at"
   end
 
-  create_table "language_artworks", force: :cascade do |t|
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
-    t.integer  "language_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-  end
-
-  add_index "language_artworks", ["language_id"], name: "index_language_artworks_on_language_id", using: :btree
-
   create_table "languages", force: :cascade do |t|
     t.text     "name"
     t.datetime "created_at"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20160105183851) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "vocabulary"
+    t.datetime "review_at"
   end
 
   add_index "notes", ["user_id"], name: "index_notes_on_user_id", using: :btree
@@ -155,5 +156,5 @@ ActiveRecord::Schema.define(version: 20160105183851) do
     t.datetime "updated_at"
   end
 
-  add_foreign_key "language_artworks", "languages"
+  add_foreign_key "artworks", "languages"
 end

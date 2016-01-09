@@ -3,6 +3,7 @@ class Note < ActiveRecord::Base
   belongs_to :user
 
   after_initialize :init
+  before_save :check_vocab_set
 
   def init
     self.rating ||= 0
@@ -22,8 +23,14 @@ class Note < ActiveRecord::Base
     next_review += 13.days if self.rating == 4
     next_review += 31.days if self.rating == 5
     next_review += 31.days if self.rating == 6
-        
-    self.update(review_at: next_review)
+
+    self.update_column('review_at', next_review)
+  end
+
+  def check_vocab_set
+    if self.vocabulary_changed?
+      update_review_at!
+    end
   end
 
   def self.find_create language, word, user

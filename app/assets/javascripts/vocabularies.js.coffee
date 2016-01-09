@@ -5,7 +5,6 @@
 vocabulary_words = []
 current_word = {}
 changed = false
-new_ratings = {}
 disabledLinks = true
 
 setRating = (rating) ->
@@ -55,10 +54,7 @@ refreshVocabulary = ->
           $('#word').html current_word['value_clean']
           $('#note').html current_word['note']
           $('#word').fadeTo 300, 1
-          if new_ratings.hasOwnProperty(current_word['value'])
-            setRating new_ratings[current_word['value']]
-          else
-            setRating current_word['rating']
+          setRating current_word['rating']
           enableButtons()
 
 $ ->
@@ -96,18 +92,24 @@ $ ->
       url: '/words/' + wordvalue
       data:
         'word[language]': language
-        'word[rating]': current_word['rating']
+        'word[reviewed]': true
       async: false
     refreshVocabulary()
 
   $('#incorrectAnswer').click ->
     return if disabledLinks
     disableButtons()
-    if changed
-      new_ratings[current_word['value']] = current_word['rating']
     refreshVocabulary()
 
   $('#buttons span.w').click ->
     return if disabledLinks
     rating = $(this).attr('value')
     setRating(rating)
+    wordvalue = $('#wordvalue').html().toLowerCase()
+    $.ajax
+      type: 'PATCH'
+      url: '/words/' + wordvalue
+      data:
+        'word[language]': language
+        'word[rating]': rating
+      async: true
