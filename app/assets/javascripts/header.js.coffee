@@ -4,6 +4,11 @@ $ ->
   $('.alert, .notice').click ->
     $(this).slideUp 1000
 
+  autoHideNotice = ->
+    $('.notice').slideUp 1000
+
+  setTimeout autoHideNotice, 5000
+
   if $('body').attr('data-controller') == 'welcome' || ($('body').attr('data-controller') == 'texts' && $('body').attr('data-action') == 'show')
     return
 

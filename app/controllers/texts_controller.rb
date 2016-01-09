@@ -198,14 +198,13 @@ class TextsController < ApplicationController
 
   def show
     if params[:user] and current_user.admin?
-      user_id = params[:user]
+      @user = User.find_by id: params[:user]
     else
-      user_id = current_user.id
+      @user = current_user
     end
-    @user = User.find_by id: user_id
-    disabled_words = (user_id != current_user.id)
-
     @text = Text.find_by id: params[:id]
+
+    disabled_words = (@user != current_user) || (@text.language_id == @user.native_language_id)
     
     if @text == nil or (@text.user_id != current_user.id and not current_user.admin? and not @text.public)
       redirect_to texts_path

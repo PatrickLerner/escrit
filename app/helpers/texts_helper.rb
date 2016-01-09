@@ -28,7 +28,7 @@ module TextsHelper
 
       word_lower = utf8downcase word
       word_value = Word.determine_replacement_value word_value, language
-      rating = notes[word_value].rating
+      rating = notes[word_value].rating if notes[word_value]
 
       # image with @ prefix
       if /@https?:\/\/[\S]+/.match word_lower and (word_lower[-4..-1] == '.jpg' or word_lower[-4..-1] == '.png')
