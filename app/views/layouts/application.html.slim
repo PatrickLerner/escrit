@@ -20,10 +20,6 @@ html
           - lang = '/' + current_language.name.downcase
         - if @text and @text.language
           - lang = '/' + @text.language.name.downcase
-        - if controller_name == 'texts' and action_name == 'index'
-          - text_url = '/texts'
-        - else
-          - text_url = '/texts' + lang
         input#show-menu type="checkbox" role="button"
         label.show-menu for="show-menu" Show Menu
         ul#menu
@@ -31,15 +27,23 @@ html
           - if user_signed_in?
             li= link_to 'Home', '/home'
             li
-              = link_to 'Reading ￬', text_url
+              = link_to 'Reading ￬', "/texts#{lang}"
               ul.hidden
-                li= link_to fa_icon('book') + ' Texts', text_url
+                li= link_to fa_icon('book') + ' Texts', "/texts#{lang}"
                 li= link_to fa_icon('magic') + ' Quick Reader', "/reader#{lang}"
             li
               = link_to "Learn ￬".html_safe, "/vocabulary#{lang}"
               ul.hidden
                 li= link_to fa_icon('list') + ' Word List', "/words#{lang}"
                 li= link_to fa_icon('graduation-cap') + ' Vocab. Trainer ' + vocab_words, "/vocabulary#{lang}"
+            - if current_lang_prefix
+              li
+                = link_to image_tag("languages/#{current_language.to_param}/flag.png", style: 'height: 16px; margin: 0; padding: 0;') + " #{current_language.name}", "/#{current_lang_prefix}"
+                - langs = language_options(true).map { |l| l[0] }
+                - if langs.count > 1
+                  ul.hidden
+                    - langs.each do |lang|
+                      li= link_to image_tag("languages/#{lang.downcase}/flag.png", style: 'height: 16px; margin: 0; padding: 0;') + " #{lang}", "/#{current_lang_prefix}/#{lang.downcase}"
             li.right
               = link_to 'Patrick ￬', "/u/#{current_user.id}"
               ul.hidden

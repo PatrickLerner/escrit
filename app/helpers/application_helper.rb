@@ -68,4 +68,18 @@ module ApplicationHelper
       end
     end
   end
+
+  def current_lang_prefix
+    if controller_name == 'words' and action_name == 'index'
+      'words'
+    elsif controller_name == 'vocabularies' and action_name == 'index'
+      'vocabulary'
+    elsif controller_name == 'statistics' and action_name == 'index'
+      'statistics'
+    elsif controller_name == 'texts' and %w[index index_hidden index_public].include? action_name
+      'texts'
+    elsif controller_name == 'texts' and action_name == 'reader'
+      'reader'
+    end
+  end
 end

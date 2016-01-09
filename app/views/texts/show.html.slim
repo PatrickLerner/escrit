@@ -22,7 +22,10 @@ header
       - else
         - back_link = texts_path(current_language)
       = link_to fa_icon('chevron-left') + ' Back', "#{back_link}\##{@text.category}", class: 'button', title: 'Go back to overview'
-      = link_to fa_icon('pencil') + ' Edit Text', edit_text_path(@text), class: 'button'
+      - if @text.is_allowed_to_update current_user
+        = link_to fa_icon('pencil') + ' Edit Text', edit_text_path(@text), class: 'button'
+      - if @text.public
+        = link_to fa_icon('copy', text: 'Copy'), copy_text_path(@text), class: 'button', data: { confirm: 'Do you want to copy this text into your private library?' }, title: 'Make a copy of this text and add it to your personal text library.'
   = @processed_text
 
 span id="meta_language" style="display: none;"

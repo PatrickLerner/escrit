@@ -20,7 +20,7 @@
         - if current_user.native_language_id == current_language.id
           alias title="This is your native language, you should know all the words ;)"
           = fa_icon 'check'
-        - elsif text.completed or (text.public and (text.word_count - text.rated_words_count(current_user)) == 0)
+        - elsif (not text.public and text.completed) or (text.public and ((text.word_count - text.rated_words_count(current_user)) == 0))
           alias title="You have worked through this text and rated all the words within it."
             = fa_icon 'check'
         - else
