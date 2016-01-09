@@ -77,9 +77,9 @@ class TextsController < ApplicationController
   end
 
   def destroy
-    @text = Text.find_by id: params[:id], user_id: current_user.id
+    @text = Text.find_by id: params[:id]
     
-    if not @text.public or current_user.admin?
+    if @text.is_allowed_to_update current_user
       @text.destroy
     end
 
