@@ -3,11 +3,12 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  has_many :buddies, foreign_key: "origin_id", class_name: "Buddy"
+  has_many :services
+  has_many :texts
   
   validates :name, presence: true
-
-  has_many :texts
-  has_many :buddies, foreign_key: "origin_id", class_name: "Buddy"
 
   def valid_password?(password)
     if ::Rails.env == "development"

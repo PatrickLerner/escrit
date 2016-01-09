@@ -4,12 +4,13 @@ class Text < ActiveRecord::Base
 
   belongs_to :language
   belongs_to :user
-  validates :category, length: { minimum: 4 }
-  validates :title, length: { minimum: 4 }
-  validates :content, length: { minimum: 4, maximum: 15000 }
-  validates :language_id, presence: true
-
   has_many :occurrences, dependent: :delete_all
+
+  validates :category, presence: true
+  validates :content, presence: true, length: { minimum: 4, maximum: 15000 }
+  validates :language, presence: true
+  validates :title, presence: true
+  validates :user, presence: true
 
   before_save :normalize_unicode
   after_save :update_occurrences

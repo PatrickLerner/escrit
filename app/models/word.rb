@@ -4,6 +4,10 @@ class Word < ActiveRecord::Base
   has_many :notes
   has_many :occurrences
 
+  validates :value, presence: true
+  validates :language, presence: true
+  validates :value, uniqueness: { scope: :language_id }
+
   def self.determine_replacement_value word, language
     replacements = language.replacements
     v = word

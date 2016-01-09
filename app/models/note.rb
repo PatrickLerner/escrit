@@ -2,6 +2,13 @@ class Note < ActiveRecord::Base
   belongs_to :word
   belongs_to :user
 
+  validates :rating, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 6 }
+  validates :user, presence: true
+  validates :value, presence: true
+  validates :word, presence: true
+  validates :word, uniqueness: { scope: :user_id }
+  validates_uniqueness_of :word_id, scope: :user_id
+  
   after_initialize :init
   before_save :check_vocab_set
 
