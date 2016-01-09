@@ -3,6 +3,7 @@ class WelcomeController < ApplicationController
 
   def index
     @languages = Language.order('name asc').all
+    redirect_to home_path if user_signed_in?
   end
 
   def cookie_policy
