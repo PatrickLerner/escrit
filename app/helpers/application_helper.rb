@@ -59,4 +59,13 @@ module ApplicationHelper
       ''
     end
   end
+
+  def vocab_words
+    if current_language
+      count = Note.vocabulary_for_review(current_user, current_language).count
+      if count > 0
+        content_tag(:span, count, class: 'highlight')
+      end
+    end
+  end
 end

@@ -33,6 +33,10 @@ class Note < ActiveRecord::Base
     self.update_column('review_at', next_review)
   end
 
+  def self.vocabulary_for_review user, language
+    Note.includes(:word).joins(:word).where('notes.user_id = ? AND words.language_id = ? AND vocabulary = TRUE AND rating < 6 AND notes.review_at < ?', user.id, language.id, DateTime.now)
+  end
+
   def check_vocab_set
     if self.vocabulary_changed?
       update_review_at!

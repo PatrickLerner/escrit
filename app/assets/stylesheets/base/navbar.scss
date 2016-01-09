@@ -7,6 +7,14 @@
   background: $color_lighter;
   height: $navbar_height;
 
+  .highlight {
+    background: $color_accent;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    color: white;
+    margin-left: 1rem;
+  }
+
   a, a:hover {
     border: 0;
   }
@@ -68,7 +76,7 @@
 
   /*Style for dropdown links*/
   li ul {
-    min-width: 160px;
+    min-width: 150px;
 
     a {
       height: 40px;

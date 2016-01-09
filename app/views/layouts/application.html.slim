@@ -36,10 +36,10 @@ html
                 li= link_to fa_icon('book') + ' Texts', text_url
                 li= link_to fa_icon('magic') + ' Quick Reader', "/reader#{lang}"
             li
-              = link_to 'Learn ￬', "/vocabulary#{lang}"
+              = link_to "Learn ￬".html_safe, "/vocabulary#{lang}"
               ul.hidden
                 li= link_to fa_icon('list') + ' Word List', "/words#{lang}"
-                li= link_to fa_icon('graduation-cap') + ' Vocab. Trainer', "/vocabulary#{lang}"
+                li= link_to fa_icon('graduation-cap') + ' Vocab. Trainer ' + vocab_words, "/vocabulary#{lang}"
             li.right
               = link_to 'Patrick ￬', "/u/#{current_user.id}"
               ul.hidden
