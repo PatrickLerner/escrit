@@ -60,7 +60,7 @@ class TextsController < ApplicationController
 
     if @text.save
       @text.save
-      redirect_to @text, 'New text has been successfully added.'
+      redirect_to @text, notice: 'New text has been successfully added.'
     else
       if @text.language
         params[:language] = @text.language.name
