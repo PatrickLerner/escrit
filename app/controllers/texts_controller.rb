@@ -23,7 +23,7 @@ class TextsController < ApplicationController
     @text = Text.find_by id: params[:id]
     
     if @text == nil or (@text.user_id != current_user.id and not current_user.admin? and not @text.public)
-      redirect_to texts_path
+      redirect_to texts_path, alert: 'You are not allowed to do that.'
     else
       if @user.native_language_id != @text.language_id
         uniq_words = (@text.raw_words + @text.raw_words_title + @text.raw_words_category).sort.uniq
@@ -42,14 +42,14 @@ class TextsController < ApplicationController
     @text = Text.find_by id: params[:id]
     
     if @text == nil or (@text.user_id != current_user.id and not current_user.admin? and not @text.public)
-      redirect_to texts_path
+      redirect_to texts_path, alert: 'You are not allowed to do that.'
     else
       @new_text = @text.dup
       @new_text.user_id = current_user.id
       @new_text.public = false
       @new_text.hidden = false
       @new_text.save
-      redirect_to text_path(@new_text)
+      redirect_to text_path(@new_text), notice: 'Text has been successfully copied into your library.'
     end
   end
 
@@ -91,7 +91,7 @@ class TextsController < ApplicationController
     end
     url += '#' + @text.category
 
-    redirect_to url, 'Text has been successfully deleted.'
+    redirect_to url, notice: 'Text has been successfully deleted.'
   end
 
   def index_language
@@ -207,7 +207,7 @@ class TextsController < ApplicationController
     disabled_words = (@user != current_user) || (@text.language_id == @user.native_language_id)
     
     if @text == nil or (@text.user_id != current_user.id and not current_user.admin? and not @text.public)
-      redirect_to texts_path
+      redirect_to texts_path, alert: 'You are not allowed to do that.'
     else
       if @user.native_language_id != @text.language_id
         uniq_words = (@text.raw_words + @text.raw_words_title + @text.raw_words_category).sort.uniq
