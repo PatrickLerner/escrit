@@ -13,7 +13,7 @@ class AddReviewAtToNote < ActiveRecord::Migration
       next_review += 31.days if note.rating == 5
       next_review += 31.days if note.rating == 6
           
-      self.update(review_at: next_review)
+      note.update(review_at: next_review)
     end
   end
 end
