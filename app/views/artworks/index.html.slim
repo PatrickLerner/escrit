@@ -15,7 +15,7 @@ header
   blockquote Click the headers to toggle between large and compact displays. Remember it is important that it looks good on both.
 
 - @artworks.each do |art|
-  header
+  header.preview
     div.image style="background-image: url('#{art.image.url}');"
     .container
       h1= link_to art.language.name, edit_artwork_path(art)
