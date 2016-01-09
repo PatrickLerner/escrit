@@ -1,52 +1,41 @@
 class ReplacementsController < ApplicationController
   before_filter :authenticate_user!
-  
-  def create
-    redirect_to settings_path if not current_user.admin?
+  before_filter :user_admin!
 
+  def create
     @replacement = Replacement.new(replacement_params)
  
     if @replacement.save
-      redirect_to replacements_path
+      redirect_to replacements_path, notice: 'New replacement has been successfully added.'
     else
       render 'new'
     end
   end
 
   def edit
-    redirect_to settings_path if not current_user.admin?
-
     @replacement = Replacement.find_by id: params[:id]
   end
 
   def destroy
-    redirect_to settings_path if not current_user.admin?
-
     @replacement = Replacement.find(params[:id])
     @replacement.destroy
    
-    redirect_to replacements_path
+    redirect_to replacements_path, notice: 'Replacement has been successfully deleted.'
   end
 
   def index
-    redirect_to settings_path if not current_user.admin?
-
     @replacements = Replacement.order(:language_id)
   end
 
   def new
-    redirect_to settings_path if not current_user.admin?
-
     @replacement = Replacement.new
   end
 
   def update
-    redirect_to settings_path if not current_user.admin?
-    
     @replacement = Replacement.find_by id: params[:id]
    
     if @replacement.update(replacement_params)
-      redirect_to replacements_path
+      redirect_to replacements_path, notice: 'Replacement has been successfully updated.'
     else
       render 'edit'
     end

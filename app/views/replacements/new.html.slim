@@ -1,10 +1,8 @@
 - content_for :title, 'New replacement'
 
-header
-  div.image.factory
-  .container
-    h1 New replacement
-    h2 Settings
+- content_for :header_image_class, 'factory'
+- content_for :header_title, 'New replacement'
+- content_for :header_subtitle, 'Admin settings'
 
 .container
   = render 'form'

@@ -30,12 +30,12 @@ html
               = link_to 'Reading ￬', "/texts#{lang}"
               ul.hidden
                 li= link_to fa_icon('book') + ' Texts', "/texts#{lang}"
-                li= link_to fa_icon('magic') + ' Quick Reader', "/reader#{lang}"
+                li= link_to fa_icon('magic') + ' Quick reader', "/reader#{lang}"
             li
               = link_to "Learn ￬".html_safe, "/vocabulary#{lang}"
               ul.hidden
-                li= link_to fa_icon('list') + ' Word List', "/words#{lang}"
-                li= link_to fa_icon('graduation-cap') + ' Vocab. Trainer ' + vocab_words, "/vocabulary#{lang}"
+                li= link_to fa_icon('list') + ' Word list', "/words#{lang}"
+                li= link_to fa_icon('graduation-cap') + ' Vocab. trainer ' + vocab_words, "/vocabulary#{lang}"
             - if current_lang_prefix
               li
                 = link_to image_tag("languages/#{current_language.to_param}/flag.png", style: 'height: 16px; margin: 0; padding: 0;') + " #{current_language.name}", "/#{current_lang_prefix}"
@@ -47,20 +47,34 @@ html
             li.right
               = link_to current_user.name + ' ￬', "/u/#{current_user.id}"
               ul.hidden
-                li= link_to fa_icon('user') + ' Your Profile', "/u/#{current_user.id}"
+                li= link_to fa_icon('user') + ' Your profile', "/u/#{current_user.id}"
                 li= link_to fa_icon('bar-chart') + ' Statistics', "/statistics#{lang}"
                 li= link_to fa_icon('wrench') + ' Settings', '/settings'
                 li= link_to fa_icon('life-ring') + ' Help', '/help'
-                li= link_to fa_icon('sign-out') + ' Sign Out', destroy_user_session_path, method: :delete
+                li= link_to fa_icon('sign-out') + ' Sign out', destroy_user_session_path, method: :delete
           - else
-            li= link_to 'Sign In', new_user_session_path
-            li= link_to 'Sign Up', new_user_registration_path
+            li= link_to 'Sign in', new_user_session_path
+            li= link_to 'Sign up', new_user_registration_path
+
+    - if header[:title]
+      header class=header[:class]
+        div.image class=header[:image_class] style=header[:image_style]
+        .container
+          h1= header[:title].html_safe
+          - if header[:subtitle_large]
+            h4= header[:subtitle_large].html_safe
+          - else
+            h2= (header[:subtitle] || "&nbsp;").html_safe
+
     - if notice
-      p.notice
-        = notice
+      .notice
+        .container
+          = notice
     - if alert
-      p.alert
-        = alert
+      .alert
+        .container
+          = alert
+
     = yield
     footer
       = link_to 'Cookie Policy', '/cookies'

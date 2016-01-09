@@ -3,15 +3,12 @@
 - else
   - content_for :title, '%s (User)' % [@user.name]
 
-header
-  div.image.bar
-  div.container
-    h1= @user.name
-    h2
-      - if @user.admin?
-        | Most Serene Administrator
-      - else
-        | Citizen
+- content_for :header_image_class, 'bar'
+- content_for :header_title, @user.name
+- if @user.admin?
+  - content_for :header_subtitle, 'Most Serene Administrator'
+- else
+  - content_for :header_subtitle, 'Citizen'
 
 div.container
   div.row

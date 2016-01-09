@@ -28,4 +28,8 @@ class ApplicationController < ActionController::Base
   def self.utf8downcase text
     text.mb_chars.downcase.to_s
   end
+
+  def user_admin!
+    redirect_to home_path, alert: 'You must be an administrator to do this!' if not current_user.admin?
+  end
 end

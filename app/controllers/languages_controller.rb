@@ -1,52 +1,41 @@
 class LanguagesController < ApplicationController
   before_filter :authenticate_user!
-  
-  def create
-    redirect_to settings_path if not current_user.admin?
+  before_filter :user_admin!
 
+  def create
     @language = Language.new(language_params)
  
     if @language.save
-      redirect_to languages_path
+      redirect_to languages_path, notice: 'New language has been successfully added.'
     else
       render 'new'
     end
   end
 
   def edit
-    redirect_to settings_path if not current_user.admin?
-
     @language = Language.where("lower(name) = ?", params[:id].downcase)[0]
   end
 
   def destroy
-    redirect_to settings_path if not current_user.admin?
-
     @language = Language.find(params[:id])
     @language.destroy
    
-    redirect_to languages_path
+    redirect_to languages_path, notice: 'Language has been successfully deleted.'
   end
 
   def index
-    redirect_to settings_path if not current_user.admin?
-
     @languages = Language.order(:name)
   end
 
   def new
-    redirect_to settings_path if not current_user.admin?
-
     @language = Language.new
   end
 
   def update
-    redirect_to settings_path if not current_user.admin?
-    
     @language = Language.find(params[:id])
    
     if @language.update(language_params)
-      redirect_to languages_path
+      redirect_to languages_path, notice: 'Language has been successfully updated.'
     else
       render 'edit'
     end

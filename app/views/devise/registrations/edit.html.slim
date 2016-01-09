@@ -1,10 +1,8 @@
 - content_for :title, 'Edit User Profile'
 
-header
-  div.image.bar
-  .container
-    h1 Edit User Profile
-    h2== "&nbsp;"
+- content_for :header_image_class, 'bar'
+- content_for :header_title, 'Edit profile'
+- content_for :header_subtitle, 'Settings'
 
 .container
   = form_for resource, as: resource_name, url: registration_path(resource_name), method: :put, html: { class: 'profile_form' } do |f|

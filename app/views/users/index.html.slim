@@ -1,10 +1,8 @@
 - content_for :title, 'List of Users'
 
-header
-  div.image.bar
-  div.container
-    h1 List of Users
-    h2 Citizens
+- content_for :header_image_class, 'bar'
+- content_for :header_title, 'List of Users'
+- content_for :header_subtitle, 'Citizens'
 
 div.container
   table.u-full-width

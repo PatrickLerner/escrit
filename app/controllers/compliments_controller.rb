@@ -1,11 +1,12 @@
 class ComplimentsController < ApplicationController
   before_filter :authenticate_user!
-  
+  before_filter :user_admin!
+    
   def create
     @compliment = Compliment.new(compliment_params)
  
     if @compliment.save
-      redirect_to compliments_path
+      redirect_to compliments_path, notice: 'New compliment has been successfully added.'
     else
       render 'new'
     end
@@ -19,7 +20,7 @@ class ComplimentsController < ApplicationController
     @compliment = Compliment.find_by id: params[:id]
     @compliment.destroy
    
-    redirect_to compliments_path
+    redirect_to compliments_path, notice: 'Compliment has been successfully deleted.'
   end
 
   def index
@@ -34,7 +35,7 @@ class ComplimentsController < ApplicationController
     @compliment = Compliment.find_by id: params[:id]
    
     if @compliment.update(compliment_params)
-      redirect_to compliments_path
+      redirect_to compliments_path, notice: 'Compliment has been successfully updated.'
     else
       render 'edit'
     end

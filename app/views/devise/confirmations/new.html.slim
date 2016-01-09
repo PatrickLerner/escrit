@@ -1,10 +1,7 @@
 - content_for :title, 'Resend confirmation instructions'
 
-header
-  div.image.bar
-  .container
-    h1 Resend confirmation instructions
-    h2== "&nbsp;"
+- content_for :header_image_class, 'bar'
+- content_for :header_title, 'Resend confirmation instructions'
 
 .container
   = form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|

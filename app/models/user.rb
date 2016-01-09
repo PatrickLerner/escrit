@@ -16,4 +16,10 @@ class User < ActiveRecord::Base
       super
     end
   end
+
+  def languages
+    Text.group(:language_id).select('language_id, sum(id) as sum').where(user_id: self.id, public: false).includes(:language).map do |text|
+      text.language
+    end
+  end
 end

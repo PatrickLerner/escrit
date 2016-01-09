@@ -1,10 +1,9 @@
 - content_for :title, 'Settings'
 
-header
-  div.image.factory
-  .container
-    h1 Settings
-    h2 «Trash it, change it, mail - upgrade it»
+- content_for :header_image_class, 'factory'
+- content_for :header_title, 'Settings'
+- content_for :header_subtitle, '«Trash it, change it, mail - upgrade it»'
+
 .container
   .row
     .one-half.column.centered

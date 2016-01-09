@@ -1,4 +1,9 @@
 $ ->
+  $('.alert, .notice').slideDown 1000
+
+  $('.alert, .notice').click ->
+    $(this).slideUp 1000
+
   if $('body').attr('data-controller') == 'welcome' || ($('body').attr('data-controller') == 'texts' && $('body').attr('data-action') == 'show')
     return
 

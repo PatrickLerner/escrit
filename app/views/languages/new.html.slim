@@ -1,10 +1,8 @@
 - content_for :title, 'New language'
 
-header
-  div.image.factory
-  .container
-    h1 New language
-    h2 Settings
+- content_for :header_image_class, 'factory'
+- content_for :header_title, 'New language'
+- content_for :header_subtitle, 'Admin settings'
 
 .container
   = render 'form'

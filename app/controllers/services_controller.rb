@@ -1,12 +1,12 @@
 class ServicesController < ApplicationController
   before_filter :authenticate_user!
-  
+
   def create
     @service = Service.new(service_params)
     @service.user_id = current_user.id
  
     if @service.save
-      redirect_to services_path
+      redirect_to services_path, notice: 'New service has been successfully added.'
     else
       render 'new'
     end
@@ -20,7 +20,7 @@ class ServicesController < ApplicationController
     @service = Service.find_by id: params[:id], user_id: current_user.id
     @service.destroy
    
-    redirect_to services_path
+    redirect_to services_path, notice: 'Service has been successfully deleted.'
   end
 
   def index
@@ -44,7 +44,7 @@ class ServicesController < ApplicationController
     @service = Service.find_by id: params[:id], user_id: current_user.id
     
     if @service.update(service_params)
-      redirect_to services_path
+      redirect_to services_path, notice: 'Service has been successfully updated.'
     else
       render 'edit'
     end

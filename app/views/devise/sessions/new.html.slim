@@ -1,10 +1,7 @@
 - content_for :title, 'Sign In'
 
-header
-  div.image.bar
-  .container
-    h1 Sign In
-    h2== "&nbsp;"
+- content_for :header_image_class, 'bar'
+- content_for :header_title, 'Sign in'
 
 .container
   = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
@@ -21,5 +18,5 @@ header
               span
                 |  Remember me
       .one-third.column
-        = f.submit "Log In", class: "button-primary u-full-width"
+        = f.submit "Sign in", class: "button-primary u-full-width"
         = render "devise/shared/links"

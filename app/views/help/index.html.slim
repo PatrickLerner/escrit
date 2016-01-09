@@ -1,10 +1,10 @@
 - content_for :title, 'Help'
 
-header.large
-  div.image.bottlemessage
-  .container
-    h1 Help
-    h2 «Won't you please, please help me?»
+- content_for :header_class, 'large'
+- content_for :header_image_class, 'bottlemessage'
+- content_for :header_title, 'Help'
+- content_for :header_subtitle, "«Won't you please, please help me?»"
+
 .container
   .row
     .one-half.column
@@ -21,3 +21,10 @@ header.large
       h4 Learning
       ul
         li= link_to "How does the vocabulary trainer work?", '/help/vocabulary'
+  hr
+  .footer
+    | Do you need any help? Shoot me an 
+    = link_to 'email', 'mailto:patricklerner@me.com'
+    |  or a 
+    = link_to 'message on reddit', 'https://www.reddit.com/message/compose/?to=zqom'
+    | .

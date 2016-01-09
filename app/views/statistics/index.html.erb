@@ -1,12 +1,8 @@
 <% content_for :title, "Statistics for #{current_language.name}" %>
 
-<header class="large">
-  <div class="image europe" style="<%= current_language.current_artwork_style %>"></div>
-  <div class="container">
-    <h1>Statistics</h1>
-    <h2><%= current_language.name %></h2>
-  </div>
-</header>
+<% content_for :header_image_style, current_language.current_artwork_style %>
+<% content_for :header_title, 'Statistics' %>
+<% content_for :header_subtitle, current_language.name %>
 
 <div class="container">
   <div class="row">

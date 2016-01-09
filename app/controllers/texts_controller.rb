@@ -60,7 +60,7 @@ class TextsController < ApplicationController
 
     if @text.save
       @text.save
-      redirect_to @text
+      redirect_to @text, 'New text has been successfully added.'
     else
       if @text.language
         params[:language] = @text.language.name
@@ -91,7 +91,7 @@ class TextsController < ApplicationController
     end
     url += '#' + @text.category
 
-    redirect_to url
+    redirect_to url, 'Text has been successfully deleted.'
   end
 
   def index_language
@@ -219,7 +219,7 @@ class TextsController < ApplicationController
   def update
     @text = Text.find_by :id => params[:id]
 
-    if params[:completed] and not current_user.id == @text.id
+    if params[:completed] and ((current_user.id != @text.id) or @text.public)
       render plain: "not allowed"
     elsif not @text.public or current_user.admin?
       if text_params[:public] and not current_user.admin?
@@ -228,21 +228,21 @@ class TextsController < ApplicationController
 
       if text_params[:bulk_update]
         Text.where(category: @text.category, language_id: @text.language_id, public: @text.public, hidden: @text.hidden).update_all(category: text_params['category'], public: text_params['public'], hidden: text_params['hidden'])
+        return redirect_to texts_path(current_language), notice: 'Category has been successfully updated.'
       end
-      params[:text].delete :bulk_update
       
       if @text.update(text_params)
         @text.save
         if text_params[:completed]
           render plain: "ok"
         else
-          redirect_to @text
+          redirect_to @text, notice: 'Text has been successfully updated'
         end
       else
         render 'edit'
       end
     else
-      redirect_to @text
+      redirect_to @text, alert: 'Text could not be updated!'
     end
   end
 

@@ -1,14 +1,13 @@
 - content_for :title, "#{current_language.name} word: #{@word.value_clean}"
 
-header
-  div.image.europe style=current_language.current_artwork_style
-  .container
-    h1= @word.value_clean
-    h2
-      -if @note and @note.value != ''
-        = @note.value
-      - else
-        == "(No note for this word yet)"
+- content_for :header_image_class, 'europe'
+- content_for :header_image_style, current_language.current_artwork_style
+- content_for :header_title, @word.value_clean
+-if @note and @note.value != ''
+  - content_for :header_subtitle,  @note.value
+- else
+  - content_for :header_subtitle, '(No note for this word yet)'
+
 .container
   - @occurrences.each do |oc|
     - if oc.text.user == current_user and not oc.text.public

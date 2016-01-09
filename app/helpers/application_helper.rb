@@ -4,6 +4,17 @@ module ApplicationHelper
     [content_for(:title), 'escrit.еu'].compact.join(separator)
   end
 
+  def header
+    {
+      title: content_for(:header_title),
+      subtitle: content_for(:header_subtitle),
+      subtitle_large: content_for(:header_subtitle_large),
+      image_class: content_for(:header_image_class),
+      class: content_for(:header_class),
+      image_style: content_for(:header_image_style)
+    }
+  end
+
   # Returns a url to a user's profile picture
   # (utilizes Gravatar as the backend)
   def avatar_url(user, size = 256)

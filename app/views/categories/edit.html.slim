@@ -1,10 +1,9 @@
 - content_for :title, "Edit #{current_language.name} category"
 
-header
-  div class=["image", current_language.name.downcase]
-  .container
-    h1= "Edit #{current_language.name} category"
-    h2== "&nbsp;"
+- content_for :header_image_class, 'europe'
+- content_for :header_image_style, current_language.current_artwork_style
+- content_for :header_title, "Edit #{current_language.name} category"
+
 .container
   - @text.errors.any?
     .error-report

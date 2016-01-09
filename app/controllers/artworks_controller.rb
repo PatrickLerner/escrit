@@ -1,11 +1,12 @@
 class ArtworksController < ApplicationController
   before_filter :authenticate_user!
-  
+  before_filter :user_admin!
+    
   def create
     @artwork = Artwork.new(artwork_params)
  
     if @artwork.save
-      redirect_to edit_artwork_path(@artwork)
+      redirect_to edit_artwork_path(@artwork), notice: 'New artwork has been successfully added.'
     else
       render 'new'
     end
@@ -19,7 +20,7 @@ class ArtworksController < ApplicationController
     @artwork = Artwork.find_by id: params[:id]
     @artwork.destroy
    
-    redirect_to artworks_path
+    redirect_to artworks_path, notice: 'Artwork has been successfully deleted.'
   end
 
   def index
@@ -34,7 +35,7 @@ class ArtworksController < ApplicationController
     @artwork = Artwork.find_by id: params[:id]
    
     if @artwork.update(artwork_params)
-      redirect_to edit_artwork_path(@artwork)
+      redirect_to edit_artwork_path(@artwork), notice: 'Artwork has been successfully updated.'
     else
       render 'edit'
     end

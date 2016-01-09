@@ -1,9 +1,9 @@
 - content_for :title, 'Home'
 
-header
-  div.image.europe
-  .container
-    h1= "Hello, #{@user.name}!"
+- content_for :header_image_class, 'bar'
+- content_for :header_title, "Hello, #{@user.name}!"
+- content_for :header_subtitle, @compliment
+
 .container
   .row
     .two-thirds.column

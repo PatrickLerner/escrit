@@ -1,10 +1,8 @@
 - content_for :title, 'Edit service'
 
-header
-  div.image.factory
-  .container
-    h1 Edit service
-    h2 Settings
+- content_for :header_image_class, 'factory'
+- content_for :header_title, 'Edit service'
+- content_for :header_subtitle, 'Admin settings'
 
 .container
   = render 'form'

@@ -4,7 +4,6 @@ class Text < ActiveRecord::Base
 
   belongs_to :language
   belongs_to :user
-  default_scope { joins(:language) }
   validates :category, length: { minimum: 4 }
   validates :title, length: { minimum: 4 }
   validates :content, length: { minimum: 4, maximum: 15000 }

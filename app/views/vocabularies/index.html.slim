@@ -1,13 +1,9 @@
 - content_for :title, "#{current_language.name} vocabulary trainer"
 
-header
-  div.image.europe style=current_language.current_artwork_style
-  div.container
-    h1= "#{current_language.name} vocabulary trainer"
-    h2
-      span#count 0
-      |  words left in the queue
-      == "&nbsp;"
+- content_for :header_image_class, 'europe'
+- content_for :header_image_style, current_language.current_artwork_style
+- content_for :header_title, "#{current_language.name} vocabulary trainer"
+- content_for :header_subtitle, '<span id="count">0</span> words left in the queue'.html_safe
 
 .container
   #no-vocab.u-nodisplay

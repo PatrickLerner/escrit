@@ -1,10 +1,9 @@
 - content_for :title, "#{current_language.name} word list"
 
-header
-  div.image.europe style=current_language.current_artwork_style
-  div.container
-    h1 Word list
-    h2= current_language.name
+- content_for :header_image_class, 'europe'
+- content_for :header_image_style, current_language.current_artwork_style
+- content_for :header_title, 'Word list'
+- content_for :header_subtitle, current_language.name
 
 .container
   - if @notes.count == 0
