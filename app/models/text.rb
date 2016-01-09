@@ -115,6 +115,12 @@ class Text < ActiveRecord::Base
         word.destroy
       end
     end
+
+    Occurrence.where(text: self).includes(:word).each do |o|
+      if o.word.nil?
+        o.delete
+      end
+    end
     
     if self.word_count != self.unique_word_count
       self.update(word_count: self.unique_word_count)
