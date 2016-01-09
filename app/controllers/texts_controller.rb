@@ -83,7 +83,12 @@ class TextsController < ApplicationController
       @text.destroy
     end
 
-    redirect_to '/texts/' + @text.language.name
+    url = '/texts/' + @text.language.name.downcase
+    url += '/public' if @text.public
+    url += '/archive' if @text.hidden
+    url += '#' + @text.category
+
+    redirect_to url
   end
 
   def index_language
