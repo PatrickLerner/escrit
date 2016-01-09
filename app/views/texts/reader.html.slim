@@ -1,8 +1,8 @@
-- content_for :title, 'Quick Reader'
+- content_for :title, 'Quick reader'
 
 - content_for :header_image_class, 'europe'
 - content_for :header_image_style, current_language.current_artwork_style
-- content_for :header_title, 'Quick Reader'
+- content_for :header_title, 'Quick reader'
 - content_for :header_subtitle, current_language.name
 
 .container
@@ -10,7 +10,7 @@
     = @param_text_raw
   .row
     .nine.columns
-      |  The Quick Reader is a way to quickly read a text or a passage using escrit in the same way you would read a normal text, but it does not require you to add or save the text into the system first. 
+      |  The quick reader is a way to quickly read a text or a passage using escrit in the same way you would read a normal text, but it does not require you to add or save the text into the system first. 
     .three.columns
       = link_to fa_icon("eye") + ' Read text', '', class: 'button button-primary u-full-width', id: 'preview_btn'
   hr[style="margin: 1em 0"]

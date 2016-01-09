@@ -6,7 +6,6 @@ RSpec.describe Note, type: :model do
     expect(note).to be_valid
   end
 
-  it { is_expected.to validate_presence_of(:value) }
   it { is_expected.to validate_presence_of(:user) }
   it { is_expected.to validate_presence_of(:word) }
   it { is_expected.to validate_presence_of(:rating) }
