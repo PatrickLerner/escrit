@@ -57,8 +57,8 @@ module ApplicationHelper
     end
   end
 
-  def language_icon language
-    "sidebar/#{language.downcase}.png"
+  def flag_icon_path language
+    "languages/#{language.name.downcase}/flag.png"
   end
 
   def language_link_suffix
@@ -73,7 +73,7 @@ module ApplicationHelper
 
   def vocab_words
     if current_language
-      count = Note.vocabulary_for_review(current_user, current_language).count
+      count = Note.vocabulary_for_review_count(current_user, current_language)
       if count > 0
         content_tag(:span, count, class: 'highlight')
       end

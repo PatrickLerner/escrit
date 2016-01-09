@@ -5,19 +5,14 @@
 - content_for :header_subtitle, 'Citizens'
 
 div.container
-  table.u-full-width
-    tbody
-      - @users.in_groups_of(3, nil).to_a.each do |splice|
-        tr
-          - splice.each do |user|
-            td[style="width: 3em;"]
-              - if user
-                = link_to image_tag(avatar_url(user, 48), class: 'profile-picture', style: 'width: 2.5rem; height: 2.5rem; max-width: 2.5rem;'), '/u/' + user.id.to_s
-            td[style="padding-left: 0;"]
-              - if user
-                - name = user.name
-                - name += ' (Admin)' if user.admin
-                = link_to name, '/u/' + user.id.to_s
+  - @users.in_groups_of(4, false).to_a.each do |splice|
+    .row style='margin-bottom: 2rem'
+      - splice.each do |user|
+        .three.columns.u-centered
+          div= link_to image_tag(avatar_url(user, 256), class: 'u-full-width profile-picture'), '/u/' + user.id.to_s, class: 'image-link'
+          - name = user.name
+          - name += ' (Admin)' if user.admin
+          div= link_to name, '/u/' + user.id.to_s
   = will_paginate @words, class: 'pagination'
   .pagination_info
     = page_entries_info @words

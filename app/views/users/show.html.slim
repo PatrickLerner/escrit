@@ -17,7 +17,7 @@ div.container
         = image_tag avatar_url(@user), class: 'profile-picture', style: 'margin-bottom: 1em;'
 
         - if @user == current_user
-          = link_to fa_icon("user") + ' Edit Your Profile', edit_user_registration_path, class: 'button u-full-width'
+          = link_to fa_icon("user") + ' Edit your profile', edit_user_registration_path, class: 'button u-full-width'
     div.two-thirds.column
       p
         = "This User has been a member of this website since #{@user.created_at.strftime("%d %B %Y")} (#{ ChronicDuration.output( (Time.now - @user.created_at), weeks: true, format: :long, units: 2)}). "

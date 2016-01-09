@@ -18,8 +18,12 @@ class User < ActiveRecord::Base
   end
 
   def languages
-    Text.group(:language_id).select('language_id, sum(id) as sum').where(user_id: self.id, public: false).includes(:language).map do |text|
+    Text.group(:language_id).select('language_id, sum(id) as sum').where(user_id: self.id, public: false).includes(:language).map { |text|
       text.language
-    end
+    }.sort { |a, b| a.name <=> b.name }
+  end
+
+  def compliments
+    Compliment.where(language: self.languages)
   end
 end
