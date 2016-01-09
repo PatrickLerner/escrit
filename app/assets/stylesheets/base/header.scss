@@ -45,9 +45,10 @@ header {
     }
   }
 
-  .europe  { background-image: image-url('europe.jpg'); }
-  .factory { background-image: image-url('factory.jpg'); }
-  .bar     { background-image: image-url('bar.jpg'); }
+  .europe        { background-image: image-url('europe.jpg'); }
+  .factory       { background-image: image-url('factory.jpg'); }
+  .bar           { background-image: image-url('bar.jpg'); }
+  .bottlemessage { background-image: image-url('bottlemessage.jpg') }
 
   img {
     height: 20rem;
