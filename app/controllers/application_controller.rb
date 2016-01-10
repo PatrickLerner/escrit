@@ -32,4 +32,15 @@ class ApplicationController < ActionController::Base
   def user_admin!
     redirect_to home_path, alert: 'You must be an administrator to do this!' if not current_user.admin?
   end
+
+  alias_method :devise_current_user, :current_user
+  def current_user
+    if params[:user].blank? && devise_current_user.admin?
+      user = devise_current_user
+    else
+      user = User.find(params[:user])
+      user.real = false
+    end
+    user
+  end
 end

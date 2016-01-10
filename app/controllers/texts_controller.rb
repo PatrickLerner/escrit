@@ -13,21 +13,14 @@ class TextsController < ApplicationController
   end
 
   def vocabulary
-    if params[:user] and current_user.admin?
-      user_id = params[:user]
-    else
-      user_id = current_user.id
-    end
-    @user = User.find_by id: user_id
-
-    @text = Text.find_by id: params[:id]
+    @text = Text.find params[:id]
     
     if @text == nil or (@text.user_id != current_user.id and not current_user.admin? and not @text.public)
       redirect_to texts_path, alert: 'You are not allowed to do that.'
     else
-      if @user.native_language_id != @text.language_id
+      if current_user.native_language_id != @text.language_id
         uniq_words = (@text.raw_words + @text.raw_words_title + @text.raw_words_category).sort.uniq
-        @words = Note.find_create_bulk @text.language, uniq_words, @user
+        @words = Note.find_create_bulk @text.language, uniq_words, current_user
         @words = @words.sort
         @words.map { |k, w|
           w.word.value.gsub! '..', ' ... '
@@ -70,14 +63,14 @@ class TextsController < ApplicationController
   end
 
   def edit
-    @text = Text.find_by id: params[:id]
+    @text = Text.find params[:id]
     if not @text.is_allowed_to_update current_user
       @text = nil
     end
   end
 
   def destroy
-    @text = Text.find_by id: params[:id]
+    @text = Text.find params[:id]
     
     if @text.is_allowed_to_update current_user
       @text.destroy
@@ -163,21 +156,17 @@ class TextsController < ApplicationController
   end
 
   def show
-    if params[:user] and current_user.admin?
-      @user = User.find_by id: params[:user]
-    else
-      @user = current_user
-    end
-    @text = Text.find_by id: params[:id]
+    @text = Text.find params[:id]
 
-    disabled_words = (@user != current_user) || (@text.language_id == @user.native_language_id)
+    disabled_words = true if not current_user.real?
+    disabled_words = true if current_user.native_language_id == current_language.id
     
     if @text == nil or (@text.user_id != current_user.id and not current_user.admin? and not @text.public)
       redirect_to texts_path, alert: 'You are not allowed to do that.'
     else
-      if @user.native_language_id != @text.language_id
+      if current_user.native_language_id != current_language.id
         uniq_words = (@text.raw_words + @text.raw_words_title + @text.raw_words_category).sort.uniq
-        notes = Note.find_create_bulk @text.language, uniq_words, @user
+        notes = Note.find_create_bulk @text.language, uniq_words, current_user
       else
         notes = {}
       end
@@ -191,7 +180,7 @@ class TextsController < ApplicationController
   end
 
   def update
-    @text = Text.find_by :id => params[:id]
+    @text = Text.find params[:id]
 
     if params[:completed] and ((current_user.id != @text.id) or @text.public)
       render plain: "not allowed"

@@ -10,6 +10,12 @@ class User < ActiveRecord::Base
   
   validates :name, presence: true
 
+  attr_writer :real
+
+  def real?
+    @real
+  end
+
   def valid_password?(password)
     if ::Rails.env == "development"
       true
