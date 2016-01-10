@@ -48,12 +48,3 @@ $ ->
 
   initToggleButton 'archiveToggle', archiveToggle
   initToggleButton 'publicToggle', publicToggle
-
-  $('#preview_btn').bind 'click', (evt) ->
-    text = $('#preview_text').val()
-    $.post('#', text: text).done (data) ->
-      $('#text').html data
-      $('.word').click word_link
-      initWordNumbers()
-      return
-    false
