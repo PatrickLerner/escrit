@@ -49,9 +49,9 @@ module TextsHelper
 
       # normal words
       elsif not disabled_words
-        "<span class='w word s#{rating}' title='#{word_value}' value='#{word_value}'>#{word}</span>"
+        "<span class='w word s#{rating}' title='#{word}' value='#{word_value}'>#{word}</span>"
       else
-        "<span class='w s#{rating}' title='#{word_value}' value='#{word_value}'>#{word}</span>"
+        "<span class='w s#{rating}' title='#{word}' value='#{word_value}'>#{word}</span>"
       end
     }
     # convert headers

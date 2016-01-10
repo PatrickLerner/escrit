@@ -45,6 +45,9 @@
       box-shadow: 0;
       outline: none;
     }
+    &.dirty {
+      border-bottom-color: red;
+    }
   }
   #description {
     margin-top: 0.5em;
