@@ -31,9 +31,9 @@ Rails.application.routes.draw do
   resources :texts
 
   # Quick Reader
-  get '/reader', to: 'texts#reader_language', as: :language_choice_reader
-  get '/reader/:language', to: 'texts#reader', constraints: { language: /.+/ }, as: :reader
-  post '/reader/:language', to: 'texts#reader_preview', constraints: { language: /.+/ }
+  get '/reader', to: 'reader#index_language', as: :language_choice_reader
+  get '/reader/:language', to: 'reader#index', constraints: { language: /.+/ }, as: :reader
+  post '/reader/:language', to: 'reader#preview', constraints: { language: /.+/ }
 
   # Words
   get '/words/:language/:id/edit', to: 'words#edit', constraints: { id: /.+/ }, as: :edit_word
