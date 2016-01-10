@@ -35,11 +35,11 @@ class ApplicationController < ActionController::Base
 
   alias_method :devise_current_user, :current_user
   def current_user
-    if params[:user].blank? && devise_current_user.admin?
-      user = devise_current_user
-    else
+    if !params[:user].blank? && devise_current_user && devise_current_user.admin?
       user = User.find(params[:user])
       user.real = false
+    else
+      user = devise_current_user
     end
     user
   end
