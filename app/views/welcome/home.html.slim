@@ -10,8 +10,8 @@
       p It is very nice to see you (back) on this website. There is always a lot to do when learning a language, so get started! :)
 
       h4 Activities
-      - if current_user.languages.count > 0
-        ul
+      ul
+        - if current_user.languages.count > 0
           - current_user.languages.each do |lang|
             - vocab = Note.vocabulary_for_review_count current_user, lang
             - if vocab > 0
@@ -26,6 +26,11 @@
               = " You could "
               = link_to "read something in #{lang.name}", texts_path(lang)
               | .
+        - else
+          li
+            | Why not get started 
+            = link_to 'reading your first text', language_choice_texts_path
+            |  in your foreign language?
 
     .one-third.column
       = image_tag avatar_url(@user), class: 'profile-picture u-full-width'
