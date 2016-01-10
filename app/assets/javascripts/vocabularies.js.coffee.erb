@@ -6,6 +6,14 @@ vocabulary_words = []
 current_word = {}
 changed = false
 disabledLinks = true
+durations = [
+  '<%= Note::VOCAB_REVIEW_INTERVAL_0 %> days',
+  '<%= Note::VOCAB_REVIEW_INTERVAL_1 %> days',
+  '<%= Note::VOCAB_REVIEW_INTERVAL_2 %> days',
+  '<%= Note::VOCAB_REVIEW_INTERVAL_3 %> days',
+  '<%= Note::VOCAB_REVIEW_INTERVAL_4 %> days',
+  '<%= Note::VOCAB_REVIEW_INTERVAL_5 %> days'
+]
 
 setRating = (rating) ->
   current_word['rating'] = rating
@@ -14,6 +22,7 @@ setRating = (rating) ->
   $('#word').addClass "s#{current_word['rating']}"
   $('#buttons span.w').css('opacity', 0.5)
   $("#buttons .s#{current_word['rating']}").css('opacity', 1)
+  $('#correctAnswer').attr('title', "Will show up in #{durations[rating]} again.")
 
 disableButtons = ->
   disabledLinks = true
