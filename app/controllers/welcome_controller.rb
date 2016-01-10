@@ -14,6 +14,10 @@ class WelcomeController < ApplicationController
 
   def home
     @user = current_user
-    @compliment = current_user.compliments.sample
+    if current_user.compliments.size > 0
+      @compliment = current_user.compliments.sample
+    else
+      @compliment = Compliment.new(value: 'Nice to have you onbaord!', language: Language.find_by(name: 'English'))
+    end
   end
 end
