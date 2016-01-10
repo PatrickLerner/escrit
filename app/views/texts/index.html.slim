@@ -34,16 +34,16 @@ div.container
     h3 No texts available.
   - else
     .row
-      .five.columns
-        .row
+      .four.columns
+        .row.norawp
           .offset-by-two.ten.columns
             h3 Categories
         - @categories.each do |name, count|
-          .row
+          .row.nowrap
             .two.columns
               .u-right
                 = count
             .nine.columns
               = link_to name, "\##{name}", 'data-name': name, class: 'category_link'
-      .seven.columns
+      .eight.columns
         #text-list
