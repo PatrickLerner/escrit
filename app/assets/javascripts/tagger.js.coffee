@@ -268,7 +268,6 @@ $ ->
     $('.lookup').fadeOut 400
     last_word = ''
     return
-  return
 
   $('#preview_btn').bind 'click', (evt) ->
     text = $('#preview_text').val()
@@ -278,3 +277,4 @@ $ ->
       initWordNumbers()
       return
     false
+  return
