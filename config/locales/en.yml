@@ -40,6 +40,11 @@ en:
         one:   occurrence
         few:   occurrences
         other: occurrences
+      note:
+        zero:  words
+        one:   word
+        few:   words
+        other: words
     page_entries_info:
       single_page:
         zero:  "No %{model} found"
