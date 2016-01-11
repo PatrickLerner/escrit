@@ -12,11 +12,16 @@
   p Here you can see a list of all languages which are available in the system. Users can asign those languages to their texts to keep vocabulary separate between different languages.
   table.u-full-width
     tr
-      th Language
+      th colspan="2" Language
       th.right Texts
       th.right Words
     - @languages.each do |language|
       tr
+        td.u-centered style="width: 30px"
+          - if language.voice and language.voice != ''
+            = fa_icon 'volume-up'
+          - else
+            = fa_icon 'ban'
         td= link_to language.name, edit_language_path(language), title: 'Edit language entry'
         td.right= number_with_precision language.texts.count, precision: 0, delimiter: ','
         td.right= number_with_precision language.words.count, precision: 0, delimiter: ','

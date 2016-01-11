@@ -54,7 +54,6 @@
       padding: 1.5rem;
       margin-top: -1px;
       vertical-align: middle;
-      display: none;
     }
 
     /*Style for menu links*/
@@ -166,6 +165,10 @@
 
 @media screen and (max-width : 760px) {
   .navbar {
+    li img {
+      display: none;
+    }
+    
     li.right {
       float: none;
       &:last-child {

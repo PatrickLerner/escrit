@@ -28,12 +28,16 @@ class WordsController < ApplicationController
     @word = Word.find_by value: params[:id], language: current_language
     oc = Occurrence.includes(:text).joins(:text).where('word_id = ? AND texts.user_id = ? AND texts.public = FALSE', @word.id, current_user.id).sample
     if oc
-      sentence = "#{oc.text.occurrences(@word.value).sample}<br><i>(#{oc.text.title} - #{oc.text.category})</i>"
+      sample = oc.text.occurrences(@word.value).sample
+      raw = ActionView::Base.full_sanitizer.sanitize(sample)
+      sentence = "#{sample}<br><i>(#{oc.text.title} - #{oc.text.category})</i>"
     else
       sentence = 'Could not find any example sentence for this word in your library.'
+      raw = ''
     end
     render json: {
-      value: sentence
+      value: sentence,
+      raw: raw
     }
   end
 

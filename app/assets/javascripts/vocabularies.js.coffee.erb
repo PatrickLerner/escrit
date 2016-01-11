@@ -14,6 +14,8 @@ durations = [
   '<%= Note::VOCAB_REVIEW_INTERVAL_4 %> days',
   '<%= Note::VOCAB_REVIEW_INTERVAL_5 %> days'
 ]
+meta_language_voice = false
+meta_language_voice_rate = false
 
 setRating = (rating) ->
   current_word['rating'] = rating
@@ -66,6 +68,15 @@ refreshVocabulary = ->
           setRating current_word['rating']
           enableButtons()
 
+speak = (text) ->
+  meta_language_voice = $('#meta_language_voice').html()
+  meta_language_voice_rate = $('#meta_language_voice_rate').html()
+  if meta_language_voice != '' and text != ''
+    rate = parseFloat(meta_language_voice_rate)
+    if !rate or rate < 0.3 or rate > 3
+      rate = 1
+    responsiveVoice.speak text, meta_language_voice, { rate: rate }
+
 $ ->
   if ($('body').attr('data-controller') != 'vocabularies') || ($('body').attr('data-action') != 'index')
     return
@@ -83,6 +94,7 @@ $ ->
     $('#vocabButtons #before').fadeOut 300, ->
       $('#vocabButtons #after').fadeIn(300)
     enableButtons()
+    speak current_word['value']
 
   $('#word').click ->
     return if disabledLinks
