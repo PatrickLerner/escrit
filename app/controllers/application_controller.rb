@@ -40,6 +40,7 @@ class ApplicationController < ActionController::Base
       user.real = false
     else
       user = devise_current_user
+      user.real = true
     end
     user
   end
