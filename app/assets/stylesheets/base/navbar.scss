@@ -47,12 +47,14 @@
     display:inline-block;
     float: left;
     margin: 0;
+    background: white;
 
     img {
       max-height: $navbar_height;
       padding: 1.5rem;
       margin-top: -1px;
       vertical-align: middle;
+      display: none;
     }
 
     /*Style for menu links*/
@@ -164,6 +166,12 @@
 
 @media screen and (max-width : 760px) {
   .navbar {
+    li.right {
+      float: none;
+      &:last-child {
+        padding-bottom: 20px;
+      }
+    }
     /*Make dropdown links appear inline*/
     ul {
       position: static;
@@ -177,8 +185,23 @@
     .show-menu {
       display:block;
     }
+    li a {
+      padding: 20px 20px 10px 20px;
+      line-height: 1rem;
+      height: auto;
+      text-align: left;
+    }
     li ul {
       display: block;
+      border: 0;
+      a {
+        height: 30px;
+      }
+    }
+    li ul, li {
+      &:last-child {
+        margin-bottom: 20px;
+      }
     }
   }
   #menu {
