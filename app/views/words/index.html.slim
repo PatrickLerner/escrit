@@ -7,12 +7,12 @@
 
 .container
   - if @notes.count == 0
-    - if @search_term == nil || @search_term.split == ''
-      p= "You seem to have no words in #{@language_name} yet. If you want to see your words in a different language, select it in the sidebar."
+    - if @search_term.nil? || @search_term.strip == ''
+      h4= "You seem to have no words in #{@language_name} yet."
     - else
       form action="/words/#{@language_name.downcase}" method="get"
         input type="text" name="q" class="u-full-width" placeholder="Search for a word" value="#{@search_term}" autocomplete="off"
-      p= "No #{@language_name} words match your search phrase \"#{@search_term}\"."
+      h4= "No #{@language_name} words match your search phrase \"#{@search_term}\"."
   - else
     form action="/words/#{@language_name.downcase}" method="get"
       input type="text" name="q" class="u-full-width" placeholder="Search for a word" value="#{@search_term}" autocomplete="off"

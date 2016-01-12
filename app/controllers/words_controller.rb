@@ -16,7 +16,7 @@ class WordsController < ApplicationController
       lang = Language.where("lower(name) = ?", params[:language].downcase)[0]
       @language_name = lang.name
 
-      if @search_term == nil || @search_term.split == ''
+      if @search_term == nil || @search_term.strip == ''
         @notes = Note.includes(:word).joins(:word).order('notes.created_at DESC').paginate(page: params[:page], per_page: 250).where 'user_id = ? and rating < 6 and language_id = ?', current_user.id, lang.id
       else
         @notes = Note.includes(:word).joins(:word).order('notes.created_at DESC').paginate(page: params[:page], per_page: 250).where('user_id = ? and rating < 6 and language_id = ? and (words.value ilike ? or notes.value ilike ?)', current_user.id, lang.id, "%#{@search_term}%", "%#{@search_term}%")
