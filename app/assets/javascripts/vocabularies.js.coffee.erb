@@ -16,6 +16,7 @@ durations = [
 ]
 meta_language_voice = false
 meta_language_voice_rate = false
+after = false
 
 setRating = (rating) ->
   current_word['rating'] = rating
@@ -33,6 +34,7 @@ enableButtons = ->
   disabledLinks = false
 
 refreshVocabulary = ->
+  after = false
   $('#exampleSentence').html ''
   $('#vocabButtons #after').fadeOut 300, ->
     $('#vocabButtons #before').fadeIn 300
@@ -93,6 +95,7 @@ $ ->
     $('#note').fadeTo 500, 1
     $('#vocabButtons #before').fadeOut 300, ->
       $('#vocabButtons #after').fadeIn(300)
+    after = true
     enableButtons()
     speak current_word['value']
 
@@ -103,6 +106,7 @@ $ ->
     $.getJSON "/words/#{language}/#{wordvalue}/sentence", (data) ->
       $('#exampleSentence').html "<blockquote>#{data['value']}</blockquote>"
       enableButtons()
+    speak current_word['value'] if after
 
   $('#correctAnswer').click ->
     return if disabledLinks
