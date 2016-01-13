@@ -17,7 +17,7 @@ class LanguagesController < ApplicationController
   end
 
   def destroy
-    @language = Language.find(params[:id])
+    @language = Language.where("lower(name) = ?", params[:id].downcase)[0]
     @language.destroy
    
     redirect_to languages_path, notice: 'Language has been successfully deleted.'
@@ -32,7 +32,7 @@ class LanguagesController < ApplicationController
   end
 
   def update
-    @language = Language.find(params[:id])
+    @language = Language.where("lower(name) = ?", params[:id].downcase)[0]
    
     if @language.update(language_params)
       redirect_to languages_path, notice: 'Language has been successfully updated.'
