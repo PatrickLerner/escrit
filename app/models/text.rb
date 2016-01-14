@@ -128,7 +128,14 @@ class Text < ActiveRecord::Base
   end
 
   def occurrences word
-    self.content.split(/(?<=[^\.][\.\?!][^\.])|(?<=[\n])/).select { |line|
+    x = self.content.split(/(?<=[^\.][\.\?!][^\.])|(?<=[\n])/).reduce([]) { |a, el|
+      if (a != nil) && (a[-1] != nil) && (a[-1].scan(Text::WORD_REGEX).length == 1)
+        a << ((a.pop + "\n" + el).strip)
+      else
+        a << (el.strip)
+      end
+    }
+    x.select { |line|
       line = Word.determine_replacement_value ApplicationController.utf8downcase(line), self.language
       if line.downcase.include? word
         words = scan_words line
