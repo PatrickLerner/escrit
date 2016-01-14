@@ -80,6 +80,6 @@ html
     footer
       = link_to 'Cookie Policy', '/cookies'
       = link_to 'Legal Disclosure', '/legal'
-      div &copy; 2015 escrit.eu
+      div= "&copy; #{Time.now.year} escrit.eu".html_safe
     - if Rails.env.production?
       = render 'layouts/footer'
