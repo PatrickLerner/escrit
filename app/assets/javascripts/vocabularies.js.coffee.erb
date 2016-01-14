@@ -57,7 +57,8 @@ refreshVocabulary = ->
           index = vocabulary_words.indexOf(current_word.value)
           vocabulary_words.splice(index, 1)
 
-        p = vocabulary_words[Math.floor(Math.random() * vocabulary_words.length)]
+        max = Math.min(50, vocabulary_words.length)
+        p = vocabulary_words[Math.floor(Math.random() * max)]
         $.getJSON "/words/#{language}/#{p}", (data) ->
           current_word = data
           $('#wordvalue').html current_word['value']
