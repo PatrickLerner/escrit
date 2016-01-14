@@ -13,6 +13,39 @@
   box-sizing: border-box;
 }
 
+.only-tiny   { display: none; }
+.only-small  { display: none; }
+.only-medium { display: none; }
+.only-large  { display: none; }
+.min-tiny    { display: none; }
+.min-small   { display: none; }
+.min-medium  { display: none; }
+.min-large   { display: none; }
+.max-tiny    { display: block; }
+.max-small   { display: block; }
+.max-medium  { display: block; }
+.max-large   { display: block; }
+
+// tiny
+@media (max-width: 400px) {
+  .only-tiny { display: block; }
+}
+// small
+@media (min-width: 400px) {
+  .max-tiny, .only-tiny { display: none; }
+  .only-small, .min-small { display: block; }
+}
+// medium
+@media (min-width: 550px) {
+  .max-small, .only-small { display: none; }
+  .only-medium, .min-medium { display: block; }
+}
+// large
+@media screen and (min-width : 760px) {
+  .max-medium, .only-medium { display: none; }
+  .only-large, .min-large { display: block; }
+}
+
 /* For devices larger than 400px */
 @media (min-width: 400px) {
   .container {

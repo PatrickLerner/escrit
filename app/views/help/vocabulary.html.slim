@@ -38,39 +38,79 @@
     span.s6.list-rating== '/'
     | -button) will never show up in reviews, so take note of the rating when adding words to your vocabulary.
 
-  table.u-full-width
-    thead
-      tr
-        th.u-centered: span.s0.list-rating 0
-        th.u-centered: span.s1.list-rating 1
-        th.u-centered: span.s2.list-rating 2
-        th.u-centered: span.s3.list-rating 3
-        th.u-centered: span.s4.list-rating 4
-        th.u-centered: span.s5.list-rating 5
-        th.u-centered: span.s6.list-rating== '/'
-    tbody
-      tr
-        td.u-centered
-          div every
-          = "#{Note::VOCAB_REVIEW_INTERVAL_0} days"
-        td.u-centered
-          div every
-          = "#{Note::VOCAB_REVIEW_INTERVAL_1} days"
-        td.u-centered
-          div every
-          = "#{Note::VOCAB_REVIEW_INTERVAL_2} days"
-        td.u-centered
-          div every
-          = "#{Note::VOCAB_REVIEW_INTERVAL_3} days"
-        td.u-centered
-          div every
-          = "#{Note::VOCAB_REVIEW_INTERVAL_4} days"
-        td.u-centered
-          div every
-          = "#{Note::VOCAB_REVIEW_INTERVAL_5} days"
-        td.u-centered
-          div never
-          == '&nbsp;'
+  .min-medium
+    table.u-full-width
+      thead
+        tr
+          th.u-centered: span.s0.list-rating 0
+          th.u-centered: span.s1.list-rating 1
+          th.u-centered: span.s2.list-rating 2
+          th.u-centered: span.s3.list-rating 3
+          th.u-centered: span.s4.list-rating 4
+          th.u-centered: span.s5.list-rating 5
+          th.u-centered: span.s6.list-rating== '/'
+      tbody
+        tr
+          td.u-centered
+            div every
+            = "#{Note::VOCAB_REVIEW_INTERVAL_0} days"
+          td.u-centered
+            div every
+            = "#{Note::VOCAB_REVIEW_INTERVAL_1} days"
+          td.u-centered
+            div every
+            = "#{Note::VOCAB_REVIEW_INTERVAL_2} days"
+          td.u-centered
+            div every
+            = "#{Note::VOCAB_REVIEW_INTERVAL_3} days"
+          td.u-centered
+            div every
+            = "#{Note::VOCAB_REVIEW_INTERVAL_4} days"
+          td.u-centered
+            div every
+            = "#{Note::VOCAB_REVIEW_INTERVAL_5} days"
+          td.u-centered
+            div never
+            == '&nbsp;'
+  .max-small
+    table.u-full-width
+      thead
+        tr
+          th.u-centered: span.s0.list-rating 0
+          th.u-centered: span.s1.list-rating 1
+          th.u-centered: span.s2.list-rating 2
+          th.u-centered: span.s3.list-rating 3
+      tbody
+        tr
+          td.u-centered
+            div every
+            = "#{Note::VOCAB_REVIEW_INTERVAL_0} days"
+          td.u-centered
+            div every
+            = "#{Note::VOCAB_REVIEW_INTERVAL_1} days"
+          td.u-centered
+            div every
+            = "#{Note::VOCAB_REVIEW_INTERVAL_2} days"
+          td.u-centered
+            div every
+            = "#{Note::VOCAB_REVIEW_INTERVAL_3} days"
+    table.u-full-width
+      thead
+        tr
+          th.u-centered: span.s4.list-rating 4
+          th.u-centered: span.s5.list-rating 5
+          th.u-centered: span.s6.list-rating== '/'
+      tbody
+        tr
+          td.u-centered
+            div every
+            = "#{Note::VOCAB_REVIEW_INTERVAL_4} days"
+          td.u-centered
+            div every
+            = "#{Note::VOCAB_REVIEW_INTERVAL_5} days"
+          td.u-centered
+            div never
+            == '&nbsp;'
 
   h4 Changing the rating
   p You can change the rating of a word while going through the vocabulary, simply by moving your mouse over the word until the rating buttons are displayed above the word. From here you can simply click them to change the rating, or remove the word from the vocabulary list.
