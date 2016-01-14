@@ -8,8 +8,6 @@ class WordsController < ApplicationController
   end
 
   def index
-    @languages = Language.order(:name).all
-    
     if params[:language]
       @search_term = params['q']
       @search_term = '' if not @search_term

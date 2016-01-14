@@ -1,7 +1,11 @@
 class ArtworksController < ApplicationController
   before_filter :authenticate_user!
   before_filter :user_admin!
-    
+  
+  def index_language
+    @languages = Language.order(:name).all
+  end
+
   def create
     @artwork = Artwork.new(artwork_params)
  
@@ -24,7 +28,8 @@ class ArtworksController < ApplicationController
   end
 
   def index
-    @artworks = Artwork.joins(:language).order('languages.name asc').all
+    lang = Language.where("lower(name) = ?", params[:language].downcase)[0]
+    @artworks = lang.artworks.joins(:language).order('languages.name asc')
   end
 
   def new

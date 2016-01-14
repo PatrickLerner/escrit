@@ -49,11 +49,15 @@ Rails.application.routes.draw do
   get '/vocabulary/:language', to: 'vocabularies#index', constraints: { id: /.+/ }, as: :vocabulary
   get '/vocabulary', to: 'vocabularies#index_language', as: :vocabularies
 
+  # Artworks
+  get '/artworks', to: 'artworks#index_language', as: :language_choice_artwork
+  get '/artworks/:language', to: 'artworks#index', constraints: { language: /[^0-9]+/ }, as: :artworks_index
+  resources :artworks
+
   # Other
   resources :languages
   resources :services
   resources :compliments
-  resources :artworks
   resources :replacements
   get '/settings', to: 'settings#index'
   get '/statistics', to: 'statistics#index_language'
