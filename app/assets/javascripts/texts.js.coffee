@@ -27,6 +27,8 @@ initTextNewAndEdit = ->
   initCategoryAutoComplete()
 
 initToggleButton = (id, f) ->
+  if f() == true
+    $('#' + id + ' i').attr 'class', 'fa fa-toggle-on'
   $('#' + id).click ->
     if $('#' + id + ' i').hasClass('fa-toggle-on')
       $('#' + id + ' i').attr 'class', 'fa fa-toggle-off'
@@ -37,10 +39,16 @@ initToggleButton = (id, f) ->
     false
 
 archiveToggle = (newState) ->
-  $('#text_hidden').prop 'checked', newState
+  if newState == undefined
+    $('#text_hidden').prop 'checked'
+  else
+    $('#text_hidden').prop 'checked', newState
 
 publicToggle = (newState) ->
-  $('#text_public').prop 'checked', newState
+  if newState == undefined
+    $('#text_public').prop 'checked'
+  else
+    $('#text_public').prop 'checked', newState
 
 $ ->
   initAudioJS()
