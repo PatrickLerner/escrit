@@ -56,7 +56,12 @@ Rails.application.routes.draw do
 
   # Other
   resources :languages
-  resources :services
+  resources :services do
+    member do
+      get :publish
+      get :copy
+    end
+  end
   resources :compliments
   resources :replacements
   get '/settings', to: 'settings#index'

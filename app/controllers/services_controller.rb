@@ -1,5 +1,6 @@
 class ServicesController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :user_admin!, only: [ :publish ]
 
   def create
     @service = Service.new(service_params)
@@ -13,11 +14,31 @@ class ServicesController < ApplicationController
   end
 
   def edit
+    if current_user.admin?
+      @service = Service.find_by id: params[:id]
+    else
+      @service = Service.find_by id: params[:id], user_id: current_user.id
+    end
+  end
+
+  def publish
     @service = Service.find_by id: params[:id], user_id: current_user.id
+    Service.create name: @service.name, short_name: @service.short_name, url: @service.url, language_id: @service.language_id, user_id: 0, enabled: true
+    redirect_to services_path
+  end
+
+  def copy
+    @service = Service.find_by id: params[:id], user_id: 0
+    Service.create name: @service.name, short_name: @service.short_name, url: @service.url, language_id: @service.language_id, user_id: current_user.id, enabled: true
+    redirect_to services_path
   end
 
   def destroy
-    @service = Service.find_by id: params[:id], user_id: current_user.id
+    if current_user.admin?
+      @service = Service.find_by id: params[:id]
+    else
+      @service = Service.find_by id: params[:id], user_id: current_user.id
+    end
     @service.destroy
    
     redirect_to services_path, notice: 'Service has been successfully deleted.'
@@ -34,6 +55,17 @@ class ServicesController < ApplicationController
         a.name <=> b.name
       end
     }
+
+    public_services = Service.where(user_id: 0)
+    @public_services = public_services.sort { |a, b|
+      l_a = if a.language then a.language.name else "All" end
+      l_b = if b.language then b.language.name else "All" end
+      if (l_a <=> l_b) != 0
+        l_a <=> l_b
+      else
+        a.name <=> b.name
+      end
+    }
   end
 
   def new
@@ -41,7 +73,11 @@ class ServicesController < ApplicationController
   end
 
   def update
-    @service = Service.find_by id: params[:id], user_id: current_user.id
+    if current_user.admin?
+      @service = Service.find_by id: params[:id]
+    else
+      @service = Service.find_by id: params[:id], user_id: current_user.id
+    end
     
     if @service.update(service_params)
       redirect_to services_path, notice: 'Service has been successfully updated.'

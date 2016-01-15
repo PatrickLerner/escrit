@@ -1,3 +1,11 @@
+.table-button {
+  border: 0;
+  color: black;
+
+  &:hover {
+    border: 0;
+  }
+}
 .buttons {
   margin-bottom: 2rem;
   width: 100%;

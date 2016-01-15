@@ -13,9 +13,11 @@
     | Services are shortcuts from within this website to interact with another website. In most cases these services will be dictionaries, translation services or similar things than can then be rapidly accessed when you are working on your text.
   table.u-full-width
     tr
-      th Name
-      th Short Name
+      th style="width: 40%" Name
+      th style="width: 25%" Short Name
       th Language
+      - if current_user.admin?
+        th.u-centered style="width: 10%"
     - @services.each do |service|
       tr
         - if service.enabled
@@ -32,3 +34,33 @@
             = service.language.name
           - else
             | All
+        - if current_user.admin?
+          td
+            = link_to fa_icon('users'), publish_service_path(service), title: 'Publish this service as a default for all users', class: 'table-button'
+  h4 Default services
+  p These services are useful defaults you might use to enhance your own collection.
+  table.u-full-width
+    tr
+      th style="width: 40%" Name
+      th style="width: 25%" Short Name
+      th Language
+      th style="width: 10%"
+    - @public_services.each do |service|
+      tr
+        td
+          - if current_user.admin?
+            = link_to service.name, edit_service_path(service), title: 'Edit Service Entry'
+          - else
+            = service.name
+        td
+          - if current_user.admin?
+            = link_to service.short_name, edit_service_path(service), title: 'Edit Service Entry'
+          - else
+            = service.short_name
+        td
+          - if service.language
+            = service.language.name
+          - else
+            | All
+        td
+          = link_to fa_icon('copy'), copy_service_path(service), title: 'Copy this template to your personal services', class: 'table-button'
