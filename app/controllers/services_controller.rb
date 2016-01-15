@@ -56,8 +56,18 @@ class ServicesController < ApplicationController
       end
     }
 
-    public_services = Service.where(user_id: 0)
-    @public_services = public_services.sort { |a, b|
+    @public_services = Service.where(user_id: 0)
+
+    @services.each do |service|
+      @public_services = @public_services.select do |pservice|
+        (service.name != pservice.name) ||
+        (service.short_name != pservice.short_name) ||
+        (service.url != pservice.url) ||
+        (service.language_id != pservice.language_id)
+      end
+    end
+
+    @public_services = @public_services.sort { |a, b|
       l_a = if a.language then a.language.name else "All" end
       l_b = if b.language then b.language.name else "All" end
       if (l_a <=> l_b) != 0
