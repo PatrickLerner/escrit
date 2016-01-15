@@ -59,11 +59,15 @@ class ServicesController < ApplicationController
     @public_services = Service.where(user_id: 0)
 
     @services.each do |service|
+      before = @public_services.count
       @public_services = @public_services.select do |pservice|
         (service.name != pservice.name) ||
         (service.short_name != pservice.short_name) ||
         (service.url != pservice.url) ||
         (service.language_id != pservice.language_id)
+      end
+      if before > @public_services.count
+        service.published = true
       end
     end
 
