@@ -70,6 +70,7 @@ class ServicesController < ApplicationController
 
   def new
     @service = Service.new
+    @service.enabled = true
   end
 
   def update
