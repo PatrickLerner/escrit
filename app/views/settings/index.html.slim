@@ -6,17 +6,19 @@
 
 .container
   .row
-    .one-half.column.centered
-      = link_to fa_icon("cogs") + ' Services', '/services', class: 'button u-full-width'
-    .one-half.column.centered
-      = link_to fa_icon("user") + ' User Profile', "/u/#{current_user.id}", class: 'button u-full-width'
-
+    .one-third.column.centered
+      = link_to fa_icon("cogs 2x") + 'Services', '/services', class: 'button button-2x u-full-width'
+    .one-third.column.centered
+      = link_to fa_icon("user 2x") + 'User Profile', "/u/#{current_user.id}", class: 'button button-2x u-full-width'
+    .one-third.column.centered
+      = link_to fa_icon("volume-up 2x") + 'Audio Settings', "/settings/audio", class: 'button button-2x u-full-width'
   - if current_user.admin?
     h4.u-centered Admin Settings
     .row
-      .one-half.column.centered
-        = link_to fa_icon("heart") + ' Compliments', '/compliments', class: 'button u-full-width'
-        = link_to fa_icon("flag") + ' Languages', '/languages', class: 'button u-full-width'
-      .one-half.column.centered
-        = link_to fa_icon("magic") + ' Replacements', '/replacements', class: 'button u-full-width'
-        = link_to fa_icon("picture-o") + ' Language Artworks', '/artworks', class: 'button u-full-width'
+      .one-third.column.centered
+        = link_to fa_icon("flag 2x") + 'Languages', '/languages', class: 'button button-2x u-full-width'
+        = link_to fa_icon("heart 2x") + 'Compliments', '/compliments', class: 'button button-2x u-full-width'
+      .one-third.column.centered
+        = link_to fa_icon("magic 2x") + 'Replacements', '/replacements', class: 'button button-2x u-full-width'
+      .one-third.column.centered
+        = link_to fa_icon("picture-o 2x") + 'Artworks', '/artworks', class: 'button button-2x u-full-width'

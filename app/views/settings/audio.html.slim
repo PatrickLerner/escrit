@@ -1,0 +1,35 @@
+- content_for :title, 'Audio'
+
+- content_for :header_image_class, 'factory'
+- content_for :header_title, 'Audio'
+- content_for :header_subtitle, 'Settings'
+
+.container
+  - form_url = settings_path
+  - form_method = :patch
+  = form_for :user, url: form_url, method: form_method, html: { class: 'audio_form' } do |f|
+    - if @user.errors.any?
+      #error_explanation
+        h6
+          = pluralize(@user.errors.count, 'error')
+          |  prohibited these settings from being saved: 
+        ul
+          - @user.errors.full_messages.each do |msg|
+            li
+              = msg
+    = f.label :audio_rate, 'Audio Rate:'
+    .row
+      .one-half.column
+        = f.range_field :audio_rate, min: 0, max: 200, class: 'u-full-width'
+        .u-right#audio_rate= "#{@user.audio_rate}%"
+      .one-half.column
+        p This is the speech rate of the text to speech voice used in the vocabulary. Use the "Test Audio" button to see how it sounds as a preview. Set it to 0 to disable audio output completely.
+    .row style="margin-top: 2rem;"
+      .three.columns
+        == "&nbsp;"
+      .three.columns
+        = link_to fa_icon('chevron-left') + ' Back', settings_path, class: 'button u-full-width', title: 'Go back to overview'
+      .three.columns
+        = link_to fa_icon('volume-up') + ' Test Audio', '#', class: 'button u-full-width', id: 'test_audio'
+      .three.columns
+        = link_to fa_icon('floppy-o') + ' Save', '', class: 'button button-primary u-full-width', onclick: "$('.audio_form').submit(); return false;"

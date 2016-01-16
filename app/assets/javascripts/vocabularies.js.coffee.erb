@@ -16,6 +16,7 @@ durations = [
 ]
 meta_language_voice = false
 meta_language_voice_rate = false
+meta_audio_rate = false
 after = false
 
 setRating = (rating) ->
@@ -74,10 +75,9 @@ refreshVocabulary = ->
 speak = (text) ->
   meta_language_voice = $('#meta_language_voice').html()
   meta_language_voice_rate = $('#meta_language_voice_rate').html()
-  if meta_language_voice != '' and text != ''
-    rate = parseFloat(meta_language_voice_rate)
-    if !rate or rate < 0.3 or rate > 3
-      rate = 1
+  meta_audio_rate = $('#meta_audio_rate').html()
+  if meta_language_voice != '' and text != '' and meta_audio_rate > 0
+    rate = parseFloat(meta_language_voice_rate * (meta_audio_rate/100))
     responsiveVoice.speak text, meta_language_voice, { rate: rate }
 
 $ ->

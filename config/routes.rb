@@ -65,7 +65,9 @@ Rails.application.routes.draw do
   end
   resources :compliments
   resources :replacements
+  get "/settings/:page", to: "settings#show"
   get '/settings', to: 'settings#index'
+  patch '/settings', to: 'settings#update'
   get '/statistics', to: 'statistics#index_language'
   get '/statistics/:language', to: 'statistics#index', constraints: { language: /.+/ }
   get '/u/:id', to: 'users#show'
