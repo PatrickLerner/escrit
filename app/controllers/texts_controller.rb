@@ -9,7 +9,7 @@ class TextsController < ApplicationController
     lang = Language.where("lower(name) = ?", params[:lang].downcase)[0]
     texts = Text.where('lower(category) like ? and user_id = ? and language_id = ?', "%#{utf8downcase term}%", current_user.id, lang.id).group('category').select('category').order('category asc')
     cats = texts.map { |t| t.category }
-    render :text => cats.to_json
+    render text: cats.to_json
   end
 
   def vocabulary
@@ -156,13 +156,16 @@ class TextsController < ApplicationController
   end
 
   def show
-    @text = Text.find params[:id]
+    @text = Text.find_by id: params[:id]
+    if @text.nil?
+      return redirect_to language_choice_texts_path, alert: 'This text does not exist.'
+    end
 
     disabled_words = true if not current_user.real?
     disabled_words = true if current_user.native_language_id == current_language.id
     
     if @text == nil or (@text.user_id != current_user.id and not current_user.admin? and not @text.public)
-      redirect_to texts_path, alert: 'You are not allowed to do that.'
+      redirect_to language_choice_texts_path, alert: 'You are not allowed to do that.'
     else
       if current_user.native_language_id != current_language.id
         uniq_words = (@text.raw_words + @text.raw_words_title + @text.raw_words_category).sort.uniq
