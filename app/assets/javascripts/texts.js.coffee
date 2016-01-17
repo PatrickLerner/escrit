@@ -12,6 +12,7 @@ updateCharCount = ->
       $('#character_count').css('color', '')
 
 initCategoryAutoComplete = ->
+  text_language = $('#meta_language').html()
   $('#text_category').autocomplete
     source: (request, response) ->
       $.getJSON '/texts/category', {

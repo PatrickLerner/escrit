@@ -87,3 +87,13 @@ table.listing, .toggleVocabulary {
     border: 0
   }
 }
+
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+  border: inherit;
+  background: #17A4A2;
+}
+
+.ui-menu .ui-menu-item {
+  padding: 1px 1em 1px .4em;
+  font-size: 1.6rem;
+}
