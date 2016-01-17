@@ -6,6 +6,12 @@ escrit.eu is a little private project I have been working on for the past few mo
 
 The website is a tool that supports language learners in their endeavour to further their knowledge of vocabulary and grammar, primarily through extensive and intensive reading. It allows them to look up words in a text they provide (or pick from publicly available ones) to and save translations for words. In this project they acquire new vocabulary without much effort. The learning effort is, however, also extended by a build-in vocabulary trainer that allows the users to learn specific vocabulary more intensely as well.
 
+# Setup
+
+The application requires an active PostgreSQL server for all of production, development and testing. You can set the credentials for the user who accesses the server via the environment variables `ESCRIT_DATABASE_USER` and `ESCRIT_DATABASE_PASSWORD` while the database names need to be called `escrit_X` where `X` is mode in which rails operates (production, development, test).
+
+You further must set two randomly generated strings as the secrets to the environment variables `SECRET_KEY_BASE` and `DEVISE_SECRET_KEY`. For production use you must also set credentials to a gmail account used to send emails when required. `GMAIL_USERNAME`, `GMAIL_PASSWORD` and `GMAIL_DOMAIN` (default `=escrit.eu`).
+
 # Source Code
 
 The source code is not released under any open source license and all rights retain with the author(s). Redistribution or modification without permission is not permitted.
