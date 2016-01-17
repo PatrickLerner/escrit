@@ -40,7 +40,7 @@ class Note < ActiveRecord::Base
   end
 
   def self.vocabulary_for_review user, language
-    Note.includes(:word).joins(:word).where('notes.user_id = ? AND words.language_id = ? AND vocabulary = TRUE AND rating < 6 AND notes.review_at < ?', user.id, language.id, DateTime.now)
+    Note.includes(:word).joins(:word).where('notes.user_id = ? AND words.language_id = ? AND vocabulary = TRUE AND rating < 6 AND notes.review_at < ?', user.id, language.id, DateTime.now).order(:review_at)
   end
 
   def self.vocabulary_for_review_count user, language
