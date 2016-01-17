@@ -33,7 +33,7 @@ p
     .two-thirds.column
       = f.label :url, 'URL Mask:'
       = f.text_field :url, class: 'u-full-width'
-      p.warning Your URL Mask does not without the {query} placeholder! 
+      p.warning Your URL Mask does not work without the {query} placeholder! 
     .one-third.column
       = f.label :language_id, 'Language:'
       = f.select :language_id, options_for_select([['All', 0]] + language_options, @service.language_id), {}, class: 'u-full-width'
