@@ -15,10 +15,9 @@ Rails.application.routes.draw do
 
   # Categories
   get '/texts/:id/category', to: 'categories#edit', constraints: { id: /.+/ }, as: :edit_category
-
+  get '/category', to: 'categories#autocomplete_text_category', as: :autocomplete_category_texts
   # Texts
   get '/texts', to: 'texts#index_language', as: :language_choice_texts
-  get '/texts/category(.:format)', to: 'texts#autocomplete_text_category', as: :autocomplete_text_category_texts
   get '/texts/:id', to: 'texts#show', constraints: { id: /[0-9]+/ }, as: :text
   get '/texts/:language/new', to: 'texts#new', constraints: { language: /.+/ }, as: :new_text
   get '/texts/:language/archive', to: 'texts#index_hidden', constraints: { language: /.+/ }, as: :archived_texts

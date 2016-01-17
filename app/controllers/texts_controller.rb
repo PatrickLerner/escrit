@@ -4,14 +4,6 @@ class TextsController < ApplicationController
   include TextsHelper
   include WordsHelper
 
-  def autocomplete_text_category
-    term = params[:term]
-    lang = Language.where("lower(name) = ?", params[:lang].downcase)[0]
-    texts = Text.where('lower(category) like ? and user_id = ? and language_id = ?', "%#{utf8downcase term}%", current_user.id, lang.id).group('category').select('category').order('category asc')
-    cats = texts.map { |t| t.category }
-    render text: cats.to_json
-  end
-
   def vocabulary
     @text = Text.find params[:id]
     

@@ -15,7 +15,7 @@ initCategoryAutoComplete = ->
   text_language = $('#meta_language').html()
   $('#text_category').autocomplete
     source: (request, response) ->
-      $.getJSON '/texts/category', {
+      $.getJSON '/category', {
         lang: text_language
         'term': $('#text_category').val()
       }, response
