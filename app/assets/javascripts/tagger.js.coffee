@@ -135,6 +135,13 @@ word_link = (event) ->
         $('.lookup #rword').html last_word_case
         $('.lookup #lword').val data['note']
         last_word_val = data['note']
+      if data['vocabulary']
+        $('.toggleVocabulary').removeClass 'fa-minus'
+        $('.toggleVocabulary').addClass 'fa-check'
+      else
+        $('.toggleVocabulary').addClass 'fa-minus'
+        $('.toggleVocabulary').removeClass 'fa-check'
+      $('#buttons .toggleVocabulary').attr 'value', last_word
       refreshWordRating cw, cw_case, data['rating']
       if !isMobile
         $('.lookup #lword').focus()

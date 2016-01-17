@@ -47,7 +47,8 @@ class WordsController < ApplicationController
       value_clean: @word.word.value_clean,
       note: @word.value.strip,
       language: @word.word.language.name,
-      rating: @word.rating
+      rating: @word.rating,
+      vocabulary: @word.vocabulary == true
     }
   end
 
