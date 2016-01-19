@@ -1,0 +1,34 @@
+- content_for :title, "#{current_language.name} dictation practice"
+
+- content_for :header_image_class, 'europe'
+- content_for :header_image_style, current_language.current_artwork_style
+- content_for :header_title, "#{current_language.name} dictation practice"
+
+.container.u-centered
+  p Listen closely to the word being dictated to you, then write it out in the textbox below.
+
+  #vocab
+  div style="max-width: 50rem; margin: auto;"
+    = text_field_tag 'word', '', class:'u-full-width'
+
+  #vocabButtons.buttons.u-centered
+    #before
+      a.button.button-primary id="showAnswer" Check answer
+      a.button#play
+        = fa_icon 'volume-up'
+        == ' '
+        | Play again.
+      a.button#playSlow
+        = fa_icon 'volume-down'
+        == ' '
+        | Play slowly.
+    #after.u-nodisplay
+
+span id="meta_language" style="display: none;"
+  = current_language.name
+span id="meta_language_voice" style="display: none;"
+  = current_language.voice
+span id="meta_language_voice_rate" style="display: none;"
+  = current_language.voice_rate
+span id="meta_audio_rate" style="display: none;"
+  = current_user.audio_rate
