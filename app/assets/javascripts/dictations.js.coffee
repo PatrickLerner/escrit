@@ -4,6 +4,18 @@ meta_language_voice_rate = false
 meta_audio_rate = false
 disabledLinks = true
 
+shake = (div) ->
+  interval = 50
+  distance = 10
+  times = 4
+  $(div).css 'position', 'relative'
+  iter = 0
+  while iter < times + 1
+    $(div).animate { left: if iter % 2 == 0 then distance else distance * -1 }, interval
+    iter++
+  $(div).animate { left: 0 }, interval
+  return
+
 disableButtons = ->
   disabledLinks = true
 
@@ -11,6 +23,7 @@ enableButtons = ->
   disabledLinks = false
 
 refreshWord = ->
+  $('#word').val ''
   $('#vocabButtons #after').fadeOut 300, ->
     $('#vocabButtons #before').fadeIn 300
   $('#buttons').fadeTo 0, 0
@@ -32,17 +45,26 @@ speak = (text, slow) ->
 $ ->
   if ($('body').attr('data-controller') != 'dictations') || ($('body').attr('data-action') != 'index')
     return
+  $('#word').focus()
   language = $('#meta_language').html().toLowerCase()
   refreshWord()
 
-  $('#showAnswer').click ->
+  $('#checkAnswer').click ->
     return if disabledLinks
-    disableButtons()
+    #disableButtons()
+    val = $('#word').val()
+    if val.toLowerCase() != current_word['value'].toLowerCase()
+      shake $('#word')
+    else
+      refreshWord()
+    $('#word').focus()
 
   $('#play').click ->
     return if disabledLinks
     speak current_word['value'], false
+    $('#word').focus()
 
   $('#playSlow').click ->
     return if disabledLinks
     speak current_word['value'], true
+    $('#word').focus()
