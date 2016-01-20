@@ -17,7 +17,10 @@
             - if vocab > 0
               li
                 = image_tag flag_icon_path(lang), style: 'height: 16px;'
-                = " There are #{vocab} #{lang.name} words waiting for review in the "
+                - if vocab > 1
+                  = " There are #{vocab} #{lang.name} words waiting for review in the "
+                - else
+                  = " There is #{vocab} #{lang.name} word waiting for review in the "
                 = link_to 'vocabulary trainer', vocabulary_path(lang)
                 | .
           - current_user.languages.each do |lang|
