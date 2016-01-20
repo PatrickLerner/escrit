@@ -57,6 +57,7 @@ speak = (text, slow) ->
 reveal = ->
   $('#wordDisplay').html current_word['value']
   $('#wordNote').html current_word['note']
+  $('#wordNote').html '&nbsp;' if current_word['note'] == ''
   speak current_word['value'], false
   $('#vocabButtons #before').fadeOut 300, ->
     $('#vocabButtons #after').fadeIn 300
