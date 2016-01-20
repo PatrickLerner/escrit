@@ -61,6 +61,10 @@ module ApplicationHelper
     "languages/#{language.name.downcase}/flag.png"
   end
 
+  def flag_icon_tag language
+    image_tag flag_icon_path(language), style: 'height: 16px; vertical-align: middle;'
+  end
+
   def language_link_suffix
     if current_language
       '/' + current_language.name.downcase

@@ -23,6 +23,7 @@ gem 'rails4-autocomplete'
 gem 'unicode'
 gem 'slim-rails'
 gem 'paperclip'
+gem 'indefinite_article'
 
 group :production do
   gem 'puma'
