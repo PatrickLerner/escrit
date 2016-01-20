@@ -24,4 +24,8 @@ class Language < ActiveRecord::Base
       "background-image: url('#{self.current_artwork.image.url}');"
     end
   end
+
+  def has_vocabulary? user
+    Note.joins(:word).where('words.Language_id = ? AND user_id = ?', self.id, user.id).where(vocabulary: true).count > 0
+  end
 end

@@ -26,6 +26,13 @@
               = " You could "
               = link_to "read something in #{lang.name}", texts_path(lang)
               | .
+          - current_user.languages.each do |lang|
+            - if lang.has_vocabulary? current_user
+              li
+                = image_tag flag_icon_path(lang), style: 'height: 16px;'
+                = " Maybe try a "
+                = link_to "dictation practice in #{lang.name}", dictation_path(lang)
+                | .
         - else
           li
             | Why not get started 
