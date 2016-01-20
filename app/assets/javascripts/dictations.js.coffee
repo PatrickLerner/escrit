@@ -3,11 +3,12 @@ meta_language_voice = false
 meta_language_voice_rate = false
 meta_audio_rate = false
 disabledLinks = true
+chance = false
 
 shake = (div) ->
-  interval = 50
+  interval = 100
   distance = 10
-  times = 4
+  times = 6
   $(div).css 'position', 'relative'
   iter = 0
   while iter < times + 1
@@ -24,6 +25,9 @@ enableButtons = ->
 
 refreshWord = ->
   $('#word').val ''
+  chance = false
+  $('#wordDisplay').html '&nbsp;'
+  $('#wordNote').html '&nbsp;'
   $('#vocabButtons #after').fadeOut 300, ->
     $('#vocabButtons #before').fadeIn 300
   $('#buttons').fadeTo 0, 0
@@ -31,6 +35,14 @@ refreshWord = ->
   changed = false
   $.getJSON "/dictation/#{language}.json", (data) ->
     current_word = data
+    if current_word['value'] == undefined
+      $('#vocab').hide()
+      $('#no-vocab').show()
+    else
+      $('#vocab').show()
+      $('#no-vocab').hide()
+      speak current_word['value'], false
+      $('#word').focus()
     enableButtons()
 
 speak = (text, slow) ->
@@ -42,21 +54,43 @@ speak = (text, slow) ->
     rate *= 0.5 if slow
     responsiveVoice.speak text, meta_language_voice, { rate: rate }
 
+reveal = ->
+  $('#wordDisplay').html current_word['value']
+  $('#wordNote').html current_word['note']
+  speak current_word['value'], false
+  $('#vocabButtons #before').fadeOut 300, ->
+    $('#vocabButtons #after').fadeIn 300
+    enableButtons()
+
 $ ->
   if ($('body').attr('data-controller') != 'dictations') || ($('body').attr('data-action') != 'index')
     return
-  $('#word').focus()
   language = $('#meta_language').html().toLowerCase()
   refreshWord()
 
+  $('#newWord').click ->
+    return if disabledLinks
+    disableButtons()
+    refreshWord()
+    $('#vocabButtons #after').fadeOut 300, ->
+      $('#vocabButtons #before').fadeIn 300
+      enableButtons()
+
   $('#checkAnswer').click ->
     return if disabledLinks
-    #disableButtons()
+    disableButtons()
     val = $('#word').val()
     if val.toLowerCase() != current_word['value'].toLowerCase()
-      shake $('#word')
+      if chance == false
+        shake $('#word')
+        speak current_word['value'], false
+        chance = true
+        enableButtons()
+      else
+        shake $('#word')
+        reveal()
     else
-      refreshWord()
+      reveal()
     $('#word').focus()
 
   $('#play').click ->

@@ -10,14 +10,18 @@ class DictationsController < ApplicationController
     respond_to do |format|
       format.html
       format.json {
-        render json: {
-          value: @word.word.value,
-          value_clean: @word.word.value_clean,
-          note: @word.value.strip,
-          language: @word.word.language.name,
-          rating: @word.rating,
-          vocabulary: @word.vocabulary == true
-        }
+        if @word
+          render json: {
+            value: @word.word.value,
+            value_clean: @word.word.value_clean,
+            note: @word.value.strip,
+            language: @word.word.language.name,
+            rating: @word.rating,
+            vocabulary: @word.vocabulary == true
+          }
+        else
+          render json: {}
+        end
       }
     end
   end

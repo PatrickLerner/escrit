@@ -5,24 +5,31 @@
 - content_for :header_title, "#{current_language.name} dictation practice"
 
 .container.u-centered
-  p Listen closely to the word being dictated to you, then write it out in the textbox below.
+  #no-vocab.u-nodisplay
+    .u-centered
+      h4 No more vocabulary left to train
+  #vocab.u-nodisplay
+    p Listen closely to the word being dictated to you, then write it out in the textbox below.
 
-  #vocab
-  div style="max-width: 50rem; margin: auto;"
-    = text_field_tag 'word', '', class:'u-full-width'
+    h1#wordDisplay== "&nbsp;"
+    h4#wordNote== "&nbsp;"
 
-  #vocabButtons.buttons.u-centered
-    #before
-      a.button.button-primary#checkAnswer Check answer
-      a.button#play
-        = fa_icon 'volume-up'
-        == ' '
-        | Play again.
-      a.button#playSlow
-        = fa_icon 'volume-down'
-        == ' '
-        | Play slowly.
-    #after.u-nodisplay
+    div style="max-width: 50rem; margin: auto;"
+      = text_field_tag 'word', '', class:'u-full-width', autocomplete: 'off'
+
+    #vocabButtons.buttons.u-centered
+      #before
+        a.button.button-primary#checkAnswer Check answer
+        a.button#play
+          = fa_icon 'volume-up'
+          == ' '
+          | Play again.
+        a.button#playSlow
+          = fa_icon 'volume-down'
+          == ' '
+          | Play slowly.
+      #after.u-nodisplay
+        a.button.button-primary#newWord New word
 
 span id="meta_language" style="display: none;"
   = current_language.name

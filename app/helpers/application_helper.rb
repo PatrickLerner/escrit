@@ -85,6 +85,8 @@ module ApplicationHelper
       'words'
     elsif controller_name == 'vocabularies' and action_name == 'index'
       'vocabulary'
+    elsif controller_name == 'dictations' and action_name == 'index'
+      'dictation'
     elsif controller_name == 'statistics' and action_name == 'index'
       'statistics'
     elsif controller_name == 'texts' and %w[index index_hidden index_public].include? action_name
