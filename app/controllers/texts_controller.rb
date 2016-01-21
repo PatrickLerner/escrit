@@ -4,6 +4,8 @@ class TextsController < ApplicationController
   include TextsHelper
   include WordsHelper
 
+  before_action :load_text, only: [ :show, :edit, :update, :copy, :destroy ]
+
   def vocabulary
     @text = Text.find params[:id]
     
@@ -24,8 +26,6 @@ class TextsController < ApplicationController
   end
 
   def copy
-    @text = Text.find_by id: params[:id]
-    
     if @text == nil or (@text.user_id != current_user.id and not current_user.admin? and not @text.public)
       redirect_to texts_path, alert: 'You are not allowed to do that.'
     else
@@ -55,15 +55,12 @@ class TextsController < ApplicationController
   end
 
   def edit
-    @text = Text.find params[:id]
     if not @text.is_allowed_to_update current_user
       @text = nil
     end
   end
 
   def destroy
-    @text = Text.find params[:id]
-    
     if @text.is_allowed_to_update current_user
       @text.destroy
     end
@@ -148,7 +145,6 @@ class TextsController < ApplicationController
   end
 
   def show
-    @text = Text.find_by id: params[:id]
     if @text.nil?
       return redirect_to language_choice_texts_path, alert: 'This text does not exist.'
     end
@@ -175,8 +171,6 @@ class TextsController < ApplicationController
   end
 
   def update
-    @text = Text.find params[:id]
-
     if params[:completed] and ((current_user.id != @text.id) or @text.public)
       render plain: "not allowed"
     elsif not @text.public or current_user.admin?
@@ -205,6 +199,10 @@ class TextsController < ApplicationController
   end
 
   private
+    def load_text
+      @text = Text.find_by id: params[:id]
+    end
+
     def text_params
       params.require(:text).permit(:category, :title, :content, :language_id, :completed, :hidden, :public, :audio_url, :bulk_update)
     end
