@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Text, type: :model do
+describe Text, type: :model do
   it 'has a valid factory' do
-    text = FactoryGirl.build :text
+    text = build(:text)
     expect(text).to be_valid
   end
 
@@ -16,16 +16,16 @@ RSpec.describe Text, type: :model do
 end
 
 
-RSpec.describe Text, '#scan_words_content', type: :model do
+describe Text, '#scan_words_content', type: :model do
   it 'should detect words correctly' do
-    text = FactoryGirl.build_stubbed :text, content: "This is a test text. this is also still all texts! «Hello» oh my...", title: 'test TeXT'
+    text = build_stubbed(:text, content: "This is a test text. this is also still all texts! «Hello» oh my...", title: 'test TeXT')
     expect(text.scan_words_content).to eq(%w[a all also hello is my oh still test text texts this])
   end
 end
 
-RSpec.describe Text, '#save', type: :model do
+describe Text, '#save', type: :model do
   it 'creates words when saved' do
-    text = FactoryGirl.create :text
+    text = create(:text)
 
     # check that each word contained in the text, title exists as a word
     text.scan_words_content.each do |value|
@@ -35,14 +35,14 @@ RSpec.describe Text, '#save', type: :model do
   end
 
   it 'creates occurrences when saved' do
-    text = FactoryGirl.create :text
+    text = create(:text)
     occurrences = Occurrence.where text: text
 
     expect(occurrences.length).to eq(text.scan_words_content.length)
   end
 
   it 'updates occurrences when saved' do
-    text = FactoryGirl.create :text
+    text = create(:text)
     occurrences = Occurrence.where text: text
 
     expect(occurrences.length).to eq(text.scan_words_content.length)

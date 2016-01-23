@@ -15,6 +15,10 @@ class RegistrationController < Devise::RegistrationsController
       '/u/' + resource.id.to_s
     end
 
+    def after_sign_up_path_for(resource)
+      home_path
+    end
+
   private
     def sign_up_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation, :native_language_id)

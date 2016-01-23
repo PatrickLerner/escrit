@@ -43,6 +43,8 @@ group :test do
   gem 'launchy'
   gem 'shoulda'
   gem 'database_cleaner'
+  gem 'poltergeist'
+  gem 'simplecov', require: false
 end
 
 group :development do

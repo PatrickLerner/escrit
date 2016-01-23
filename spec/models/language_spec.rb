@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Language, type: :model do
+describe Language, type: :model do
   it 'has a valid factory' do
-    language = FactoryGirl.build :language
+    language = build(:language)
     expect(language).to be_valid
   end
 

@@ -10,9 +10,7 @@ class ApplicationController < ActionController::Base
 
   # always redirect away from the www-version of the site to the plain url one
   def redirect_subdomain
-    if request.host == 'www.escrit.eu'
-      redirect_to 'http://escrit.eu' + request.fullpath
-    end
+    redirect_to 'http://escrit.eu' + request.fullpath if request.host == 'www.escrit.eu'
   end
 
   def after_sign_in_path_for(resource)

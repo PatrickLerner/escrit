@@ -7,5 +7,9 @@ FactoryGirl.define do
     pwd = Faker::Internet.password
     password pwd
     password_confirmation pwd
+
+    factory :admin do
+      admin true
+    end
   end
 end

@@ -16,7 +16,7 @@
 = form_for @text, url: form_url, method: form_method, html: { class: 'text_form' } do |f|
   div.row
     div.six.columns
-      = f.label :title, 'Titel'
+      = f.label :title, 'Title'
       = f.text_field :title, class: 'u-full-width', placeholder: 'Titel', autocomplete: :off
     div.six.columns
       = f.label :category, 'Category'
@@ -48,7 +48,7 @@
     div.three.columns
       - if @text.persisted?
         = link_to fa_icon('floppy-o') + ' Save text', '', class: 'button button-primary u-full-width', onclick: "$('.text_form').submit(); return false;"
-        = link_to fa_icon('times') + ' Delete', text_path(@text), method: :delete, data: { confirm: 'Are you absolutely certain?' }, title: 'Delete', class: 'button button-delete u-full-width'
+        = link_to fa_icon('times') + ' Delete text', text_path(@text), method: :delete, data: { confirm: 'Are you absolutely certain?' }, title: 'Delete', class: 'button button-delete u-full-width'
       - else
         = link_to fa_icon('plus') + ' Add text', '', class: 'button button-primary u-full-width', onclick: "$('.text_form').submit(); return false;"
 

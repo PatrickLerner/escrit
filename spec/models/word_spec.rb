@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Word, type: :model do
+describe Word, type: :model do
   it 'has a valid factory' do
-    word = FactoryGirl.build :word
+    word = build(:word)
     expect(word).to be_valid
   end
 
@@ -11,10 +11,10 @@ RSpec.describe Word, type: :model do
   it { is_expected.to validate_uniqueness_of(:value).scoped_to(:language_id) }
 end
 
-RSpec.describe Word, '#find_create_bulk', type: :model do
+describe Word, '#find_create_bulk', type: :model do
   it 'can find or create instances' do
     values = %w[a all also hello is my oh still test text texts this]
-    lang = FactoryGirl.create :language
+    lang = create(:language)
     words = Word.find_create_bulk lang, values
     values.each do |value|
       expect(words[value].value).to eq(value)
