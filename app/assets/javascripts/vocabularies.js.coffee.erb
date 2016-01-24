@@ -40,6 +40,7 @@ refreshVocabulary = ->
   $('#vocabButtons #after').fadeOut 300, ->
     $('#vocabButtons #before').fadeIn 300
   $('#note').fadeTo 300, 0
+  $('#note').hide()
   $('#word').fadeTo 300, 0, ->
     $('#buttons').fadeTo 0, 0
     language = $('#meta_language').html().toLowerCase()
@@ -93,6 +94,7 @@ $ ->
   $('#showAnswer').click ->
     return if disabledLinks
     disableButtons()
+    $('#note').show()
     $('#note').fadeTo 500, 1
     $('#vocabButtons #before').fadeOut 300, ->
       $('#vocabButtons #after').fadeIn(300)

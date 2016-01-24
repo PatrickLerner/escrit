@@ -1,11 +1,19 @@
 require 'simplecov'
 
-SimpleCov.start do
-  add_group "Models", "app/models"
-  add_group "Controllers", "app/controllers"
-  add_group "Helpers", "app/helpers"
-  add_group "Other", "db"
-  add_filter '/spec/'
+if ENV["coverage"]
+  SimpleCov.start do
+    add_group "Controllers", "app/controllers"
+    add_group "Helpers", "app/helpers"
+    add_group "Models", "app/models"
+    add_group "Other", "db"
+    add_filter '/spec/'
+  end
+
+  SimpleCov.at_exit do
+    SimpleCov.result.format!
+    require 'launchy'
+    Launchy.open('coverage/index.html')
+  end
 end
 
 RSpec.configure do |config|

@@ -38,7 +38,7 @@
       .three.columns
         = link_to fa_icon("chevron-left") + ' Back', texts_path(@text.language.name.downcase), class: 'button u-full-width', title: 'Go back to overview'
       .three.columns
-        = link_to fa_icon("floppy-o") + ' Update Texts', '', :class => 'button button-primary u-full-width', :onclick => "$('.text_form').submit(); return false;"
+        = link_to fa_icon("floppy-o") + ' Update texts', '', class: 'button button-primary u-full-width', onclick: "$('.text_form').submit(); return false;"
 
   hr style="margin: 1em 0"
 

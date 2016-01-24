@@ -22,7 +22,7 @@ RSpec.configure do |config|
     Rails.application.load_seed
   end
 
-  config.after :each do
+  config.after(:each) do
     Warden.test_reset!
   end
 

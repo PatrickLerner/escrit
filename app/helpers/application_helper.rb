@@ -62,6 +62,7 @@ module ApplicationHelper
   end
 
   def flag_icon_tag language
+    return '' if Rails.env.test?
     image_tag flag_icon_path(language), style: 'height: 16px; vertical-align: middle;'
   end
 

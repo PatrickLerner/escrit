@@ -4,7 +4,7 @@ namespace :export do
     Language.order(:id).all.each do |language|
       puts "Language.create(#{language.serializable_hash.delete_if {|key, value| ['created_at','updated_at','id'].include?(key)}.to_s.gsub(/[{}]/,'')})"
     end
-    Service.order(:id).all.each do |service|
+    Service.order(:id).where(user_id: 0).each do |service|
       puts "Service.create(#{service.serializable_hash.delete_if {|key, value| ['created_at','updated_at','id'].include?(key)}.to_s.gsub(/[{}]/,'')})"
     end
   end

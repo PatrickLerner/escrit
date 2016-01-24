@@ -23,3 +23,32 @@ describe 'texts' do
     expect(page).to have_content title
   end
 end
+
+describe 'category' do
+  login_user
+
+  let (:language) { create(:language) }
+  let (:category) do
+    text = create(:text, language: language, user: User.last)
+    10.times {
+      create(:text, category: text.category, language: language, user: User.last)
+    }
+    text.category
+  end
+
+  it 'allows changing the category for multiple texts', js: true do
+    expect(Text.where(category: category, user: User.last).count).to eq(11)
+
+    visit texts_path(language)
+    expect(page).to have_content category
+    click_link category
+    find('.fa-pencil').click
+    
+    expect(page).to have_content "Edit #{language.name} category"
+    fill_in 'Category', with: 'New category name'
+    click_link 'Update texts'
+
+    expect(page).to have_content 'New category name'
+    expect(page).to_not have_content category
+  end
+end

@@ -48,7 +48,7 @@ class Note < ActiveRecord::Base
   end
 
   def check_vocab_set
-    if self.vocabulary_changed?
+    if self.vocabulary_changed? and self.persisted?
       update_review_at!
     end
   end

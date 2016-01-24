@@ -39,7 +39,7 @@ html
                 li= link_to fa_icon('pencil-square-o ') + ' Dictation practice', "/dictation#{lang}"
             - if current_lang_prefix
               li
-                = link_to image_tag("languages/#{current_language.to_param}/flag.png", style: 'height: 16px; margin: 0; padding: 0;') + " #{current_language.name}", "/#{current_lang_prefix}"
+                = link_to flag_icon_tag(current_language) + " #{current_language.name}", "/#{current_lang_prefix}"
                 - langs = language_options(true).map { |l| l[0] }
                 - if langs.count > 1
                   ul.hidden

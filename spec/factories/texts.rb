@@ -7,5 +7,7 @@ FactoryGirl.define do
     content { Faker::Lorem.paragraphs(3).join "\n\n" }
     association :user
     association :language
+    public false
+    hidden false
   end
 end

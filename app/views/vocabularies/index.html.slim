@@ -25,12 +25,10 @@
       h4#note.u-hidden
     #vocabButtons.buttons.u-centered
       #before
-        a.button.button-primary id="showAnswer" Show answer
+        = link_to fa_icon('refresh', text: 'Show answer'), '#', class: 'button button-primary', id: 'showAnswer'
       #after.u-nodisplay
-        a.button.button-primary id="correctAnswer"
-          = fa_icon 'check', text: 'Correct answer'
-        a.button id="incorrectAnswer"
-          = fa_icon 'times', text: 'Incorrect answer'
+        = link_to fa_icon('check', text: 'Correct answer'), '#', class: 'button button-primary', id: 'correctAnswer'
+        = link_to fa_icon('times', text: 'Incorrect answer'), '#', class: 'button', id: 'incorrectAnswer'
       div id="exampleSentence"
 
 span id="meta_language" style="display: none;"
