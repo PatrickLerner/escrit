@@ -1,4 +1,4 @@
-<img src="http://escrit.eu/assets/logo-i.png" />
+![](http://escrit.eu/assets/logo-i.png)
 
 # Description
 
