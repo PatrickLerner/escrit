@@ -69,8 +69,8 @@ Rails.application.routes.draw do
   get "/settings/:page", to: "settings#show"
   get '/settings', to: 'settings#index'
   patch '/settings', to: 'settings#update'
-  get '/statistics', to: 'statistics#index_language'
-  get '/statistics/:language', to: 'statistics#index', constraints: { language: /.+/ }
+  get '/statistics', to: 'statistics#index_language', as: :language_choice_statistics
+  get '/statistics/:language', to: 'statistics#index', constraints: { language: /.+/ }, as:: statistics
   get '/u/:id', to: 'users#show'
   get '/u/:id/add', to: 'users#add'
   get '/u/:id/remove/:did', to: 'users#remove'

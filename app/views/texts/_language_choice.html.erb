@@ -8,8 +8,7 @@
         <% op.in_groups(6, false).to_a.each { |splice| %>
           <div class="two columns">
             <% splice.each { |lang| %>
-              <% image_path = "languages/#{lang.downcase}/flag.png" %>
-              <%= link_to image_tag(image_path, style: 'height: 30px; margin-bottom: 0.5em') + '<br>'.html_safe + lang, url_prefix + '/' + lang.downcase, class: 'button u-full-width', style: 'line-height: 1em; height: auto; padding: 1em 0;' %>
+              <%= link_to image_tag(flag_icon_path(lang), style: 'height: 30px; margin-bottom: 0.5em') + '<br>'.html_safe + lang, url_prefix + '/' + lang.downcase, class: 'button u-full-width', style: 'line-height: 1em; height: auto; padding: 1em 0;' %>
             <% } %>
           </div>
         <% } %>
@@ -25,8 +24,7 @@
       <% @languages.reject{|l| op.include? l.name }.in_groups(6, false).to_a.each { |splice| %>
         <div class="two columns">
           <% splice.each { |lang| %>
-            <% image_path = "languages/#{lang.name.downcase}/flag.png" %>
-            <%= link_to image_tag(image_path, style: 'height: 16px; vertical-align: middle; margin-top: -5px;') + ' ' + lang.name, url_prefix + '/' + lang.name.downcase, class: 'button u-full-width', style: 'padding: 0 1em;; text-align: left;' %>
+            <%= link_to image_tag(flag_icon_path(lang), style: 'height: 16px; vertical-align: middle; margin-top: -5px;') + ' ' + lang.name, url_prefix + '/' + lang.name.downcase, class: 'button u-full-width', style: 'padding: 0 1em;; text-align: left;' %>
           <% } %>
         </div>
       <% } %>

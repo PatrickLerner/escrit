@@ -17,11 +17,8 @@ class User < ActiveRecord::Base
   end
 
   def valid_password?(password)
-    if ::Rails.env == "development"
-      true
-    else
-      super
-    end
+    return true if Rails.env.development?
+    super
   end
 
   def languages

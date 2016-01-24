@@ -58,12 +58,20 @@ module ApplicationHelper
   end
 
   def flag_icon_path language
-    "languages/#{language.name.downcase}/flag.png"
+    if Rails.env.test?
+      ''
+    else
+      language = language.name if language.is_a? Language
+      "languages/#{language.downcase}/flag.png"
+    end
   end
 
   def flag_icon_tag language
-    return '' if Rails.env.test?
-    image_tag flag_icon_path(language), style: 'height: 16px; vertical-align: middle;'
+    if Rails.env.test?
+      ''
+    else
+      image_tag flag_icon_path(language), style: 'height: 16px; vertical-align: middle;'
+    end
   end
 
   def language_link_suffix

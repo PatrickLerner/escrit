@@ -11,4 +11,5 @@ describe User, type: :model do
   it { is_expected.to validate_uniqueness_of(:email) }
   it { is_expected.to have_many(:texts) }
   it { is_expected.to have_many(:services) }
+  it { is_expected.to have_many(:buddies) }
 end

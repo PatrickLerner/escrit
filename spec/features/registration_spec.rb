@@ -17,6 +17,11 @@ describe 'user registration' do
     expect(page).to have_content 'Welcome! You have signed up successfully.'
     expect(page).to have_content "Hello, #{name}!"
     expect(page).to have_content 'Nice to have you on board!'
+
+    visit services_path
+    expect(page).to have_content 'English Wiktionary'
+    click_link 'English Wiktionary'
+    expect(page).to have_content 'Edit service'
   end
 
   it 'allows me to login' do

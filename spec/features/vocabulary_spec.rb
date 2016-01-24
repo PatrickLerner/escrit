@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'vocabulary' do
   login_user
 
-  let(:note) { create(:note, vocabulary: true, review_at: 5.days.ago, user: User.last) }
+  let!(:note) { create(:note, vocabulary: true, review_at: 5.days.ago, user: User.last) }
 
   it 'shows when no vocabulary is available', js: true do
     visit vocabulary_path('russian')
