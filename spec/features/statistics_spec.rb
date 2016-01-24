@@ -9,7 +9,7 @@ describe 'statistics' do
     visit statistics_path(language)
     expect(page).to have_content 'You have added 0 words this week so far.'
 
-    create(:note, user: User.last, language: language)
+    create(:note, user: User.last, word: create(:word, language: language))
     visit statistics_path(language)
     expect(page).to have_content 'You have added 1 word this week so far.'
   end
