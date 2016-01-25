@@ -104,7 +104,7 @@ module ApplicationHelper
       'statistics'
     elsif controller_name == 'texts' and %w[index index_hidden index_public].include? action_name
       'texts'
-    elsif controller_name == 'texts' and action_name == 'reader'
+    elsif controller_name == 'reader' and action_name == 'index'
       'reader'
     end
   end

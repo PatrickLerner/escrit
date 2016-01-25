@@ -7,5 +7,8 @@ namespace :export do
     Service.order(:id).where(user_id: 0).each do |service|
       puts "Service.create(#{service.serializable_hash.delete_if {|key, value| ['created_at','updated_at','id'].include?(key)}.to_s.gsub(/[{}]/,'')})"
     end
+    Replacement.all.each do |replacement|
+      puts "Replacement.create(#{replacement.serializable_hash.delete_if {|key, value| ['created_at','updated_at','id'].include?(key)}.to_s.gsub(/[{}]/,'')})"
+    end
   end
 end

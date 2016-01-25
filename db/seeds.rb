@@ -53,3 +53,5 @@ Service.create("name"=>"English Wiktionary", "short_name"=>"wikt", "url"=>"http:
 Service.create("name"=>"Yandex EN<=>RU", "short_name"=>"yandex", "url"=>"https://translate.yandex.com/?text=query&lang=ru-en", "language_id"=>7, "user_id"=>0, "enabled"=>true)
 Service.create("name"=>"Yandex EN<=>UA", "short_name"=>"yandex", "url"=>"https://translate.yandex.com/?text=query&lang=uk-en", "language_id"=>14, "user_id"=>0, "enabled"=>true)
 Service.create("name"=>"Yandex Dictionary EN<=>RU", "short_name"=>"ydict", "url"=>"https://slovari.yandex.ru/query/en/", "language_id"=>7, "user_id"=>0, "enabled"=>true)
+
+Replacement.create("value"=>"ё", "replacement"=>"е", "language_id"=>7)
