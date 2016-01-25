@@ -3,6 +3,8 @@ class WordsController < ApplicationController
   include ApplicationHelper
   include TextsHelper
 
+  before_filter :load_word, only: [ :vocab_unset, :vocab_set, :edit, :show ]
+
   def index_language
     @languages = Language.order(:name).all
   end
@@ -40,27 +42,21 @@ class WordsController < ApplicationController
   end
 
   def show
-    lang = Language.where("lower(name) = ?", params[:language].downcase)[0]
-    @word = Note.find_create lang, utf8downcase(params[:id]), current_user
     render json: {
-      value: @word.word.value,
-      value_clean: @word.word.value_clean,
-      note: @word.value.strip,
-      language: @word.word.language.name,
-      rating: @word.rating,
-      vocabulary: @word.vocabulary == true
+      value: @word.value,
+      value_clean: @word.value_clean,
+      note: @note.value,
+      language: @word.language.name,
+      rating: @note.rating,
+      vocabulary: (@note.vocabulary == true)
     }
   end
 
   def edit
-    @word = Word.find_by value: params[:id], language: current_language
-    @note = Note.find_by word: @word, user: current_user
     @occurrences = Occurrence.includes(:text).joins(:text).where('word_id = ? AND texts.user_id = ? AND texts.public = FALSE', @word.id, current_user.id).paginate(page: params[:page], per_page: 20)
   end
 
   def vocab_set
-    @word = Word.find_by value: params[:id], language: current_language
-    @note = Note.find_by word: @word, user: current_user
     if @note.update_column('vocabulary', true)
       @note.update_review_at!
       render plain: "ok"
@@ -70,8 +66,6 @@ class WordsController < ApplicationController
   end
 
   def vocab_unset
-    @word = Word.find_by value: params[:id], language: current_language
-    @note = Note.find_by word: @word, user: current_user
     if @note.update_column('vocabulary', false)
       render plain: "ok"
     else
@@ -102,6 +96,11 @@ class WordsController < ApplicationController
   end
 
   private
+    def load_word
+      @note = Note.find_create current_language, params[:id].downcase, current_user
+      @word = @note.word
+    end
+
     def word_params
       params.require(:word).permit(:language, :note, :rating, :reviewed)
     end

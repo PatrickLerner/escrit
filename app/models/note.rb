@@ -20,6 +20,7 @@ class Note < ActiveRecord::Base
 
   def init
     self.rating ||= 0
+    self.value ||= ''
   end
 
   def vocabulary?
