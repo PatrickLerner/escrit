@@ -69,15 +69,7 @@ class Text < ActiveRecord::Base
   def content_cleaned
     self.content.gsub(URI.regexp, '').strip
   end
-
-  def excerpt
-    t = self.content_cleaned
-    ["\n", ' '].each_with_index do |sep, i|
-      t = truncate(t, length: 300 - i, separator: sep)
-    end
-    t
-  end
-
+  
   def content_processed
     process self.content
   end

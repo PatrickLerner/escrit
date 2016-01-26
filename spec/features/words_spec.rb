@@ -13,7 +13,7 @@ describe 'words' do
     expect(page).to have_content note.value
   end
 
-  it 'has a word detail list' do
+  it 'has a word detail page' do
     visit edit_word_path(language, note.word.value.downcase)
     expect(page).to have_content note.word.value
     expect(page).to have_content note.value
