@@ -10,7 +10,7 @@ class TextsController < ApplicationController
     @text = Text.find params[:id]
     
     if @text == nil or (@text.user_id != current_user.id and not current_user.admin? and not @text.public)
-      redirect_to texts_path, alert: 'You are not allowed to do that.'
+      redirect_to language_choice_texts_path, alert: 'You are not allowed to do that.'
     else
       if current_user.native_language_id != @text.language_id
         uniq_words = (@text.raw_words + @text.raw_words_title + @text.raw_words_category).sort.uniq
@@ -27,7 +27,7 @@ class TextsController < ApplicationController
 
   def copy
     if @text == nil or (@text.user_id != current_user.id and not current_user.admin? and not @text.public)
-      redirect_to texts_path, alert: 'You are not allowed to do that.'
+      redirect_to language_choice_texts_path, alert: 'You are not allowed to do that.'
     else
       @new_text = @text.dup
       @new_text.user_id = current_user.id

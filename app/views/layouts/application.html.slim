@@ -44,7 +44,7 @@ html
                 - if langs.count > 1
                   ul.hidden
                     - langs.each do |lang|
-                      li= link_to image_tag("languages/#{lang.downcase}/flag.png", style: 'height: 16px; margin: 0; padding: 0;') + " #{lang}", "/#{current_lang_prefix}/#{lang.downcase}"
+                      li= link_to image_tag(flag_icon_path(lang.downcase), style: 'height: 16px; margin: 0; padding: 0;') + " #{lang}", "/#{current_lang_prefix}/#{lang.downcase}"
             li.right
               = link_to current_user.name + ' ￬', "/u/#{current_user.id}"
               ul.hidden

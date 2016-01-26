@@ -3,6 +3,11 @@ require 'rails_helper'
 describe 'texts' do
   login_user
 
+  let!(:language) { create(:language) }
+  let!(:word) { create(:word, language: language) }
+  let!(:note) { create(:note, user: User.last, word: word, rating: 3) }
+  let!(:text) { create(:text, user: User.last, language: language, content: "This is a text which contains a #{word.value}.") }
+
   it 'allows adding a text', js: true do
     visit language_choice_texts_path
     click_link 'Russian'
@@ -22,13 +27,18 @@ describe 'texts' do
     click_link category
     expect(page).to have_content title
   end
+
+  it 'can show the vocabulary used in a text', js: true do
+    visit vocabulary_text_path(text)
+    expect(page).to have_content word.value
+  end
 end
 
 describe 'category' do
   login_user
 
-  let (:language) { create(:language) }
-  let (:category) do
+  let!(:language) { create(:language) }
+  let!(:category) do
     text = create(:text, language: language, user: User.last)
     10.times {
       create(:text, category: text.category, language: language, user: User.last)
@@ -37,8 +47,6 @@ describe 'category' do
   end
 
   it 'allows changing the category for multiple texts', js: true do
-    expect(Text.where(category: category, user: User.last).count).to eq(11)
-
     visit texts_path(language)
     expect(page).to have_content category
     click_link category

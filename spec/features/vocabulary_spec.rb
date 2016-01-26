@@ -3,7 +3,9 @@ require 'rails_helper'
 describe 'vocabulary' do
   login_user
 
-  let!(:note) { create(:note, vocabulary: true, review_at: 5.days.ago, user: User.last) }
+  let!(:language) { create(:language) }
+  let!(:word) { create(:word, language: language) }
+  let!(:note) { create(:note, vocabulary: true, review_at: 5.days.ago, user: User.last, word: word) }
 
   it 'shows when no vocabulary is available', js: true do
     visit vocabulary_path('russian')
@@ -12,6 +14,7 @@ describe 'vocabulary' do
 
   it 'displays vocabulary correctly if it is available', js: true do
     visit vocabulary_path(note.word.language)
+    expect(page).to have_content "#{note.word.language.name} vocabulary trainer"
     expect(page).to have_content 'Show answer'
     expect(page).to have_content note.word.value
     expect(page).to_not have_content note.value
