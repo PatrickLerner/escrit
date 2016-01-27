@@ -10,7 +10,13 @@ class User < ActiveRecord::Base
   
   validates :name, presence: true
 
+  after_initialize :init
+
   attr_writer :real
+
+  def init
+    self.audio_rate ||= 100
+  end
 
   def real?
     @real

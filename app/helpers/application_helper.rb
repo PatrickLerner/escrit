@@ -20,13 +20,11 @@ module ApplicationHelper
   def avatar_url(user, size = 256)
     # in case the user has no gravatar account, use a fallback / default image
 
-    if Rails.env.production?
-      # in production app use a locally hosted default image
-      default_url = root_url + image_path("default-profile.png")
-    else
-      # for testing environments use a publically hosted one
-      default_url = "http://i.imgur.com/Sp2eIpR.png"
-    end
+    # for testing environments use a publically hosted one
+    default_url = "http://i.imgur.com/Sp2eIpR.png"
+    # in production app use a locally hosted default image
+    default_url = root_url + image_path("default-profile.png") if Rails.env.production?
+
     # generate id
     gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
     
@@ -58,30 +56,14 @@ module ApplicationHelper
   end
 
   def flag_icon_path language
-    if Rails.env.test?
-      ''
-    else
-      language = language.name if language.is_a? Language
-      "languages/#{language.downcase}/flag.png"
-    end
+    language = language.name if language.is_a? Language
+    return "languages/#{language.downcase}/flag.png" if not Rails.env.test?
+    ''
   end
 
   def flag_icon_tag language
-    if Rails.env.test?
-      ''
-    else
-      image_tag flag_icon_path(language), style: 'height: 16px; vertical-align: middle;'
-    end
-  end
-
-  def language_link_suffix
-    if current_language
-      '/' + current_language.name.downcase
-    elsif @text and @text.language
-      '/' + @text.language.name.downcase
-    else
-      ''
-    end
+    return image_tag flag_icon_path(language), style: 'height: 16px; vertical-align: middle;' if not Rails.env.test?
+    ''
   end
 
   def vocab_words

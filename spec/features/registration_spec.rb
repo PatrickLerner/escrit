@@ -22,6 +22,8 @@ describe 'user registration' do
     expect(page).to have_content 'English Wiktionary'
     click_link 'English Wiktionary'
     expect(page).to have_content 'Edit service'
+
+    expect(user.audio_rate).to eq(100)
   end
 
   it 'allows me to login' do

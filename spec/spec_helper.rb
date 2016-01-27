@@ -14,3 +14,8 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 end
+
+def range_select(id, value)
+  script = "$('##{id}').val(#{value})"
+  page.execute_script(script)
+end

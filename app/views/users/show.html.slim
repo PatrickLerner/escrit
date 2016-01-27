@@ -25,7 +25,7 @@ div.container
           = "Since then they have been working on learning and improving their reading skills in #{@words.map{ |l, w| l }.to_sentence}."
 
       - if @user.about and @user.about.strip != ""
-        h2 About Me
+        h2 About me
         p= simple_format @user.about.strip
 
       - trophy_header = false
@@ -33,7 +33,7 @@ div.container
         - @words.each do |l, w|
           - if w >= 100
             - if not trophy_header
-              h2 Trophy Case
+              h2 Trophy case
               - trophy_header = true
 
             h4 style="margin-bottom: 0; margin-top: 0.6em"

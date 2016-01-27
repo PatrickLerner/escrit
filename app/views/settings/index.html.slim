@@ -9,9 +9,9 @@
     .one-third.column.centered
       = link_to fa_icon("cogs 2x") + 'Services', '/services', class: 'button button-2x u-full-width'
     .one-third.column.centered
-      = link_to fa_icon("user 2x") + 'User Profile', "/u/#{current_user.id}", class: 'button button-2x u-full-width'
+      = link_to fa_icon("user 2x") + 'User profile', "/u/#{current_user.id}", class: 'button button-2x u-full-width'
     .one-third.column.centered
-      = link_to fa_icon("volume-up 2x") + 'Audio Settings', "/settings/audio", class: 'button button-2x u-full-width'
+      = link_to fa_icon("volume-up 2x") + 'Audio settings', "/settings/audio", class: 'button button-2x u-full-width'
   - if current_user.admin?
     h4.u-centered Admin Settings
     .row
