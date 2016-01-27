@@ -42,11 +42,13 @@ Rails.application.routes.draw do
   get '/words/:language/:id', to: 'words#show', constraints: { id: /.+/ }
   patch '/words/:id', to: 'words#update', constraints: { id: /.+/ }
   get '/words/:language', to: 'words#index', as: :words
-  get '/words', to: 'words#index_language'
+  get '/words', to: 'words#index_language', as: :language_choice_words
 
   # Vocabulary
   get '/vocabulary/:language', to: 'vocabularies#index', constraints: { id: /.+/ }, as: :vocabulary
-  get '/vocabulary', to: 'vocabularies#index_language', as: :vocabularies
+  get '/vocabulary', to: 'vocabularies#index_language', as: :language_choice_vocabulary
+
+  # Dictation
   get '/dictation/:language', to: 'dictations#index', constraints: { id: /.+/ }, as: :dictation
   get '/dictation', to: 'dictations#index_language', as: :dictations
 

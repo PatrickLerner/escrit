@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'dictation' do
   login_user
 
-  let!(:note) { create(:note, vocabulary: true, user: User.last) }
+  let!(:note) { create(:note, vocabulary: true, user: user) }
 
   it 'shows when no vocabulary is available', js: true do
     visit dictation_path('russian')

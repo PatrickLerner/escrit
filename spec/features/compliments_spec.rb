@@ -13,7 +13,7 @@ describe 'compliments for users' do
   it 'shows a compliment for a language if the user has one' do
     visit home_path
     expect(page).to have_content 'Nice to have you on board!'
-    text = create(:text, user: User.last)
+    text = create(:text, user: user)
     compliment = create(:compliment, language: text.language)
     visit home_path
     expect(page).to have_content compliment.value

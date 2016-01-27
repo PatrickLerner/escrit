@@ -5,7 +5,7 @@ describe 'vocabulary' do
 
   let!(:language) { create(:language) }
   let!(:word) { create(:word, language: language) }
-  let!(:note) { create(:note, vocabulary: true, review_at: 5.days.ago, user: User.last, word: word) }
+  let!(:note) { create(:note, vocabulary: true, review_at: 5.days.ago, user: user, word: word) }
 
   it 'shows when no vocabulary is available', js: true do
     visit vocabulary_path('russian')
