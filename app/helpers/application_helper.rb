@@ -27,7 +27,7 @@ module ApplicationHelper
 
     # generate id
     gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
-    
+
     # return full url
     "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}&d=#{CGI.escape(default_url)}"
   end
@@ -61,8 +61,8 @@ module ApplicationHelper
     ''
   end
 
-  def flag_icon_tag language
-    return image_tag flag_icon_path(language), style: 'height: 16px; vertical-align: middle;' if not Rails.env.test?
+  def flag_icon_tag language, options = {}
+    return image_tag flag_icon_path(language), style: "height: 16px; vertical-align: middle; #{options[:style]}" if not Rails.env.test?
     ''
   end
 

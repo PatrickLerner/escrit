@@ -11,7 +11,10 @@
     .one-third.column.centered
       = link_to fa_icon("user 2x") + 'User profile', "/u/#{current_user.id}", class: 'button button-2x u-full-width'
     .one-third.column.centered
-      = link_to fa_icon("volume-up 2x") + 'Audio settings', "/settings/audio", class: 'button button-2x u-full-width'
+      = link_to fa_icon("volume-up 2x") + 'Audio settings', '/settings/audio', class: 'button button-2x u-full-width'
+  .row
+    .one-third.column.centered
+      = link_to fa_icon("list 2x") + 'Vocabulary', '/settings/vocabulary', class: 'button button-2x u-full-width'
   - if current_user.admin?
     h4.u-centered Admin Settings
     .row

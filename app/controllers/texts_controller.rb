@@ -1,14 +1,15 @@
 class TextsController < ApplicationController
-  before_filter :authenticate_user!
   include ApplicationHelper
   include TextsHelper
   include WordsHelper
+
+  before_filter :authenticate_user!
 
   before_action :load_text, only: [ :show, :edit, :update, :copy, :destroy ]
 
   def vocabulary
     @text = Text.find params[:id]
-    
+
     if @text == nil or (@text.user_id != current_user.id and not current_user.admin? and not @text.public)
       redirect_to language_choice_texts_path, alert: 'You are not allowed to do that.'
     else
@@ -151,7 +152,7 @@ class TextsController < ApplicationController
 
     disabled_words = true if not current_user.real?
     disabled_words = true if current_user.native_language_id == current_language.id
-    
+
     if @text == nil or (@text.user_id != current_user.id and not current_user.admin? and not @text.public)
       redirect_to language_choice_texts_path, alert: 'You are not allowed to do that.'
     else
@@ -182,7 +183,7 @@ class TextsController < ApplicationController
         Text.where(category: @text.category, language_id: @text.language_id, public: @text.public, hidden: @text.hidden).update_all(category: text_params['category'], public: text_params['public'], hidden: text_params['hidden'])
         return redirect_to texts_path(current_language), notice: 'Category has been successfully updated.'
       end
-      
+
       if @text.update(text_params)
         @text.save
         if text_params[:completed]

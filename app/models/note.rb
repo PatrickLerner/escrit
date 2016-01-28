@@ -7,7 +7,7 @@ class Note < ActiveRecord::Base
   validates :word, presence: true
   validates :word, uniqueness: { scope: :user_id }
   validates_uniqueness_of :word_id, scope: :user_id
-  
+
   after_initialize :init
   before_save :check_vocab_set
 
@@ -46,6 +46,29 @@ class Note < ActiveRecord::Base
 
   def self.vocabulary_for_review_count user, language
     Note.includes(:word).joins(:word).where('notes.user_id = ? AND words.language_id = ? AND vocabulary = TRUE AND rating < 6 AND notes.review_at < ?', user.id, language.id, DateTime.now).count
+  end
+
+  def self.vocabulary user, language
+    Note.includes(:word).joins(:word).where('notes.user_id = ? AND words.language_id = ? AND vocabulary = TRUE AND rating < 6', user.id, language.id)
+  end
+
+  def self.vocabulary_count user, language
+    Note.includes(:word).joins(:word).where('notes.user_id = ? AND words.language_id = ? AND vocabulary = TRUE AND rating < 6', user.id, language.id).count
+  end
+
+  def self.shuffle_vocabulary! user, language
+    # 50 words first day, -10 after to a minimum of 10
+    max_words = 50
+    days_plus = 0
+    vocab = Note.vocabulary user, language
+    while vocab.count > 0
+      selected = vocab.sample(max_words)
+      Note.where(id: selected.map(&:id)).update_all(review_at: days_plus.days.since)
+      vocab -= selected
+
+      days_plus += 1
+      max_words -= 10 if max_words > 10
+    end
   end
 
   def check_vocab_set

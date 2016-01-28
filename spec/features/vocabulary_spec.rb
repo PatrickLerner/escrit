@@ -5,8 +5,9 @@ describe 'vocabulary' do
 
   let!(:language) { create(:language) }
   let!(:word) { create(:word, language: language) }
-  let!(:note) { create(:note, vocabulary: true, review_at: 5.days.ago, user: user, word: word) }
-
+  let!(:note) { create(:note, vocabulary: true, review_at: 5.days.ago, user: user, word: word, rating: 3) }
+  let!(:text) { create(:text, user: user, language: language) }
+  
   it 'shows when no vocabulary is available', js: true do
     visit vocabulary_path('russian')
     expect(page).to have_content 'No more vocabulary left to train'
@@ -25,5 +26,28 @@ describe 'vocabulary' do
     expect(page).to have_content note.value
     click_link 'Correct answer'
     expect(page).to have_content 'No more vocabulary left to train'
+  end
+
+  it 'allows to reset all vocabulary in the settings' do
+    expect(Note.vocabulary_count user, note.word.language).to eq(1)
+    visit settings_path
+    click_link 'Vocabulary'
+    expect(page).to have_content language.name
+    click_link 'Reset'
+    expect(Note.vocabulary_count user, language).to eq(0)
+    expect(page).to have_content 'You do not have any vocabulary in any language.'
+  end
+
+  it 'allows to shuffle vocabulary in the settings' do
+    100.times do |i|
+      word = create(:word, language: language, value: "word#{i}")
+      create(:note, vocabulary: true, review_at: 5.days.ago, user: user, word: word, rating: 3)
+    end
+    expect(Note.vocabulary_for_review_count user, note.word.language).to eq(101)
+    visit settings_path
+    click_link 'Vocabulary'
+    expect(page).to have_content language.name
+    click_link 'Shuffle'
+    expect(Note.vocabulary_for_review_count user, language).to eq(50)
   end
 end
