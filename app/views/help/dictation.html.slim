@@ -1,0 +1,35 @@
+- content_for :title, 'How does the Vocabulary Trainer work?'
+
+- content_for :header_class, 'large'
+- content_for :header_image_class, 'bottlemessage'
+- content_for :header_title, 'How does the dictation practice work?'
+- content_for :header_subtitle, 'Help'
+
+.container
+  .buttons
+    .right
+      = link_to fa_icon("chevron-left") + " Back to Overview", '/help', class: 'button button-primary u-full-width', title: 'Back to Help Overview'
+  p Dictation practice is a quick way to practice your vocabulary further by having it dictated to you, and checking your transscription of what you hear. The words used in this mode are the same ones used in the vocabulary trainer, that is words you marked as vocabulary. They will appear in random order without any review period.
+  p Listen to the word as often as you'd like and try to write it out. If you get it wrong you'll be alerted by the shaking text box and you will have an opportunity to correct your writing. After the second failure or after getting it right, you will be presented with the solution and the note you wrote for it, in case you want to train your understanding in addition to your listening and writing skills.
+    
+  h3 Keyboard shortcuts
+  table.u-full-width
+    thead
+      tr
+        th[style="width: 50%"] Function
+        th Shortcut
+    tbody
+      tr
+        td Check answer / New word
+        td
+          code ↵ Return
+      tr
+        td Play again
+        td
+          code ↹ Tab
+      tr
+        td Play slowly
+        td
+          code ⇧ Shift
+          |  + 
+          code ↹ Tab

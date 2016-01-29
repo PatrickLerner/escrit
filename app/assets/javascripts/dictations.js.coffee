@@ -4,6 +4,7 @@ meta_language_voice_rate = false
 meta_audio_rate = false
 disabledLinks = true
 chance = false
+revealed = false
 
 shake = (div) ->
   interval = 100
@@ -26,6 +27,7 @@ enableButtons = ->
 refreshWord = ->
   $('#word').val ''
   chance = false
+  revealed = false
   $('#wordDisplay').html '&nbsp;'
   $('#wordNote').html '&nbsp;'
   $('#vocabButtons #after').fadeOut 300, ->
@@ -55,6 +57,7 @@ speak = (text, slow) ->
     responsiveVoice.speak text, meta_language_voice, { rate: rate }
 
 reveal = ->
+  revealed = true
   $('#wordDisplay').html current_word['value']
   $('#wordNote').html current_word['note']
   $('#wordNote').html '&nbsp;' if current_word['note'] == ''
@@ -62,6 +65,9 @@ reveal = ->
   $('#vocabButtons #before').fadeOut 300, ->
     $('#vocabButtons #after').fadeIn 300
     enableButtons()
+
+KEY_ENTER = 13
+KEY_TAB = 9
 
 $ ->
   if ($('body').attr('data-controller') != 'dictations') || ($('body').attr('data-action') != 'index')
@@ -93,6 +99,35 @@ $ ->
     else
       reveal()
     $('#word').focus()
+
+  $('#word').keyup (event) ->
+    keyCode = event.keyCode or event.which
+    if keyCode == KEY_ENTER
+      if revealed
+        $('#newWord').click()
+      else
+        $('#checkAnswer').click()
+    if keyCode == KEY_TAB
+      if event.shiftKey
+        $('#playSlow').click()
+      else
+        $('#play').click()
+      event.preventDefault()
+    return
+
+  $('#word').keypress (event) ->
+    keyCode = event.keyCode or event.which
+
+    if keyCode == KEY_TAB
+      event.preventDefault()
+    return
+
+  $('#word').keydown (event) ->
+    keyCode = event.keyCode or event.which
+
+    if keyCode == KEY_TAB
+      event.preventDefault()
+    return
 
   $('#play').click ->
     return if disabledLinks
