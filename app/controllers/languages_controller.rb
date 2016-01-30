@@ -2,9 +2,10 @@ class LanguagesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :user_admin!
 
+  before_action :load_language, only: [ :edit, :destroy, :update ]
+
   def create
     @language = Language.new(language_params)
- 
     if @language.save
       redirect_to languages_path, notice: 'New language has been successfully added.'
     else
@@ -13,11 +14,9 @@ class LanguagesController < ApplicationController
   end
 
   def edit
-    @language = Language.where("lower(name) = ?", params[:id].downcase)[0]
   end
 
   def destroy
-    @language = Language.where("lower(name) = ?", params[:id].downcase)[0]
     @language.destroy
    
     redirect_to languages_path, notice: 'Language has been successfully deleted.'
@@ -32,8 +31,6 @@ class LanguagesController < ApplicationController
   end
 
   def update
-    @language = Language.where("lower(name) = ?", params[:id].downcase)[0]
-   
     if @language.update(language_params)
       redirect_to languages_path, notice: 'Language has been successfully updated.'
     else
@@ -42,6 +39,10 @@ class LanguagesController < ApplicationController
   end
 
   private
+    def load_language
+      @language = Language.find params[:id]
+    end
+
     def language_params
       params.require(:language).permit(:name, :voice, :voice_rate)
     end

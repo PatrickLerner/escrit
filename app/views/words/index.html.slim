@@ -8,13 +8,13 @@
 .container
   - if @notes.count == 0
     - if @search_term.nil? || @search_term.strip == ''
-      h4= "You seem to have no words in #{@language_name} yet."
+      h4= "You seem to have no words in #{current_language.name} yet."
     - else
-      form action="/words/#{@language_name.downcase}" method="get"
+      form action="/words/#{current_language.name.downcase}" method="get"
         input type="text" name="q" class="u-full-width" placeholder="Search for a word" value="#{@search_term}" autocomplete="off"
-      h4= "No #{@language_name} words match your search phrase \"#{@search_term}\"."
+      h4= "No #{current_language.name} words match your search phrase \"#{@search_term}\"."
   - else
-    form action="/words/#{@language_name.downcase}" method="get"
+    form action="/words/#{current_language.name.downcase}" method="get"
       input type="text" name="q" class="u-full-width" placeholder="Search for a word" value="#{@search_term}" autocomplete="off"
 
     = will_paginate @notes, class: 'pagination'

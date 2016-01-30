@@ -23,9 +23,9 @@
               = language.name
             td.u-right= vocab_count
             td.u-right
-              = link_to 'Reset', "?language=#{language.to_param}&do=reset", class: 'button'
+              = link_to 'Reset', "?lang=#{language.to_param}&do=reset", class: 'button'
               == ' '
-              = link_to 'Shuffle', "?language=#{language.to_param}&do=shuffle", class: 'button'
+              = link_to 'Shuffle', "?lang=#{language.to_param}&do=shuffle", class: 'button'
   .row
     .six.columns
       h4 Reset
