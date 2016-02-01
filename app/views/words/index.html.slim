@@ -11,7 +11,7 @@
       h4= "You seem to have no words in #{current_language.name} yet."
     - else
       form action="/words/#{current_language.name.downcase}" method="get"
-        input type="text" name="q" class="u-full-width" placeholder="Search for a word" value="#{@search_term}" autocomplete="off"
+        input type="text" name="q" id="q" class="u-full-width" placeholder="Search for a word" value="#{@search_term}" autocomplete="off"
       h4= "No #{current_language.name} words match your search phrase \"#{@search_term}\"."
   - else
     form action="/words/#{current_language.name.downcase}" method="get"
