@@ -31,4 +31,4 @@ p Here you can add the details of the new compliment you want to add.
         = link_to fa_icon('floppy-o') + ' Save', '', class: 'button button-primary u-full-width', onclick: "$('.compliment_form').submit(); return false;"
         = link_to fa_icon('times') + ' Delete', compliment_path(@compliment), method: :delete, data: { confirm: 'Are you absolutely certain?' }, title: 'Delete', class: 'button button-delete u-full-width'
       - else
-        = link_to fa_icon('plus') + ' Add', '', class: 'button button-primary u-full-width', onclick: "$('.compliment_form').submit(); return false;"
+        = link_to fa_icon('plus') + ' Add new', '', class: 'button button-primary u-full-width', onclick: "$('.compliment_form').submit(); return false;"

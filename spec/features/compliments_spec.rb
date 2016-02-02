@@ -36,7 +36,7 @@ describe 'compliments for admins' do
 
     fill_in 'Compliment', with: compliment
     select 'Russian', from: 'Language'
-    click_link 'Add'
+    click_link 'Add new'
 
     expect(page).to have_content compliment
     expect(page).to have_content 'Russian'

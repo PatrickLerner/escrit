@@ -8,7 +8,7 @@
   .buttons
     .right
       = link_to fa_icon("chevron-left") + " Back", settings_path, class: 'button', title: 'Back to Settings'
-      = link_to fa_icon("plus") + ' Add New', new_service_path, class: 'button button-primary', title: 'Add a new service'
+      = link_to fa_icon("plus") + ' Add new', new_service_path, class: 'button button-primary', title: 'Add a new service'
   p
     | Services are shortcuts from within this website to interact with another website. In most cases these services will be dictionaries, translation services or similar things than can then be rapidly accessed when you are working on your text.
   table.u-full-width
@@ -28,7 +28,7 @@
             | (
             = link_to service.name, edit_service_path(service), title: 'Edit Service Entry'
             | ) 
-        td= service.short_name
+        td= link_to service.short_name, edit_service_path(service), title: 'Edit Service Entry'
         td
           - if service.language
             = service.language.name
