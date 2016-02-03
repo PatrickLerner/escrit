@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  belongs_to :native_language, class_name: Language
   has_many :buddies, foreign_key: "origin_id", class_name: "Buddy"
   has_many :services
   has_many :texts

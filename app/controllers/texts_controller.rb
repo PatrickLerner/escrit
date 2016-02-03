@@ -14,7 +14,7 @@ class TextsController < ApplicationController
       redirect_to language_choice_texts_path, alert: 'You are not allowed to do that.'
     else
       if current_user.native_language_id != @text.language_id
-        uniq_words = (@text.raw_words + @text.raw_words_title + @text.raw_words_category).sort.uniq
+        uniq_words = (WordsHelper.raw_words "#{@text.content} #{@text.title} #{@text.category}").sort.uniq
         @words = Note.find_create_bulk @text.language, uniq_words, current_user
         @words = @words.sort
         @words.map { |k, w|
@@ -150,21 +150,12 @@ class TextsController < ApplicationController
       return redirect_to language_choice_texts_path, alert: 'This text does not exist.'
     end
 
-    disabled_words = true if not current_user.real?
-    disabled_words = true if current_user.native_language_id == current_language.id
-
     if @text == nil or (@text.user_id != current_user.id and not current_user.admin? and not @text.public)
       redirect_to language_choice_texts_path, alert: 'You are not allowed to do that.'
     else
-      if current_user.native_language_id != current_language.id
-        uniq_words = (@text.raw_words + @text.raw_words_title + @text.raw_words_category).sort.uniq
-        notes = Note.find_create_bulk @text.language, uniq_words, current_user
-      else
-        notes = {}
-      end
-      @processed_text = process_text @text.content, notes, @text.language, disabled_words
-      @processed_title = process_text @text.title, notes, @text.language, disabled_words
-      @processed_category = process_text @text.category, notes, @text.language, disabled_words
+      @processed_text = @text.processed_content current_user
+      @processed_title = @text.processed_title current_user
+      @processed_category = @text.processed_category current_user
 
       @services = Service.where('(language_id=? or language_id=0) and user_id = ? and enabled = true', @text.language_id, current_user.id)
       @services = [] if @services == nil

@@ -5,15 +5,8 @@ class ReaderController < ApplicationController
   include WordsHelper
 
   def render_text text
-    disabled_words = true if not current_user.real?
-    disabled_words = true if current_user.native_language_id == current_language.id
-
-    uniq_words = WordsHelper.raw_words(text).sort.uniq
-    notes = Note.find_create_bulk current_language, uniq_words, current_user
-
-    processed_text = process_text text, notes, current_language, disabled_words
-
-    return processed_text
+    text = Text.new content: text, language: current_language
+    return text.processed_content current_user
   end
 
   def index
