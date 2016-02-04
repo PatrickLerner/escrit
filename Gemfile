@@ -34,7 +34,6 @@ group :development, :test do
   gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'rspec-rails'
-  gem 'parallel_tests'
 end
 
 group :test do

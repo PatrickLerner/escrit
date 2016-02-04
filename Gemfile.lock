@@ -158,9 +158,6 @@ GEM
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (= 0.3.0)
-    parallel (1.6.1)
-    parallel_tests (2.3.1)
-      parallel
     pg (0.18.4)
     poltergeist (1.8.1)
       capybara (~> 2.1)
@@ -322,7 +319,6 @@ DEPENDENCIES
   lightbox2-rails
   naturalsort
   paperclip
-  parallel_tests
   pg
   poltergeist
   puma

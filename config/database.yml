@@ -11,7 +11,7 @@ test:
   host: localhost
   adapter: postgresql
   encoding: utf8
-  database: escrit_test<%= ENV['TEST_ENV_NUMBER'] ? "_#{ENV['TEST_ENV_NUMBER']}" : '' %>
+  database: escrit_test
   pool: 5
   username: <%= ENV['ESCRIT_DATABASE_USER'] %>
   password: <%= ENV['ESCRIT_DATABASE_PASSWORD'] %>
