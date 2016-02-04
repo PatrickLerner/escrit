@@ -1,6 +1,4 @@
 module TextsHelper
-  include WordsHelper
-
   # returns list of languages as an array where each language is an array [name, id]
   # if filter_unused is set, only returns languages the current user has added texts in.
   def language_options filter_unused = false
