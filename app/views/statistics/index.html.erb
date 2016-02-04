@@ -71,6 +71,17 @@
       </p>
     </div>
   </div>
+  <div class="row">
+    <div class="six columns">
+      <h5>Vocabulary for review (cumulative)</h5>
+      <canvas id="vocabulary"></canvas>
+      <p>
+        <div class="u-centered">
+          In total you have <%=  number_with_precision @total_vocabulary_words, precision: 0, delimiter: ',' %> <%= 'word'.pluralize @total_vocabulary_words %> in your vocabulary.
+        </div>
+      </p>
+    </div>
+  </div>
 
   <script type="text/javascript">
     var fontFamily = "'Raleway', 'Helvetica Neue', 'Helvetica', 'Arial'";
@@ -150,18 +161,20 @@
         label: '5 (Know it in my sleep)'
       }
     ];
-    /*{
-      labels: [<%= @words_labels.map{|i| '"' + i + '"'}.join(',').html_safe %>],
+    var wordsCtx = $("#words").get(0).getContext("2d");
+
+    var vocabularyData = {
+      labels: [<%= @vocabulary_labels.map{|i| '"' + i + '"'}.join(',').html_safe %>],
       datasets: [
         {
-          label: "Number of Texts",
+          label: "Number of words for reviews (cumulative)",
           fillColor: "#17A4A2",
           strokeColor: "#15A19F",
-          data: [<%= @words_data.join ',' %>]
+          data: [<%= @vocabulary_data.join ',' %>]
         }
       ]
-    };*/
-    var wordsCtx = $("#words").get(0).getContext("2d");
+    };
+    var vocabularyCtx = $("#vocabulary").get(0).getContext("2d");
 
     $(document).ready(function() {
       var htmlCanvas = document.getElementById('newWords'),
@@ -202,11 +215,12 @@
           responsive: true,
           maintainAspectRatio: true
         });
-        /*new Chart(wordsCtx).Bar(wordsData, {
+
+        var vocabularyChart = new Chart(vocabularyCtx).Bar(vocabularyData, {
           barStrokeWidth : 0,
           responsive: true,
           maintainAspectRatio: true
-        });*/
+        });
       }
     });
   </script>

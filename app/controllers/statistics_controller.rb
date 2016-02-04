@@ -33,12 +33,9 @@ class StatisticsController < ApplicationController
     new_texts_sum = 0
     @new_texts_count = 0
 
-    14.downto(0).each { |i|
+    14.downto(0).each do |i|
       start_date = (i*7).day.ago.beginning_of_week.beginning_of_day
       end_date = (i*7).day.ago.end_of_week.end_of_day
-
-      new_words = 0
-      new_texts = 0
 
       new_words = Note.joins(:word).where(created_at: start_date..end_date, user_id: current_user.id).where('words.language_id = ?', current_language.id).count
       new_texts = Text.where(created_at: start_date..end_date, language_id: current_language.id, user_id: current_user.id).count
@@ -64,7 +61,7 @@ class StatisticsController < ApplicationController
         @new_words_labels += [i.to_s + " weeks ago"]
       end
       @new_texts_labels = @new_words_labels
-    }
+    end
     @new_words_average = 0
     @new_words_average = new_words_sum.to_f / @new_words_count.to_f if @new_words_count > 0
     @new_texts_average = 0
@@ -80,5 +77,18 @@ class StatisticsController < ApplicationController
     }
     @total_read_texts = Text.where(user_id: current_user.id, completed: true, language_id: current_language.id, public: false).count
     @total_read_words = Text.where(user_id: current_user.id, completed: true, language_id: current_language.id, public: false).sum(:word_count)
+
+    @vocabulary_data = []
+    @vocabulary_labels = []
+    @total_vocabulary_words = Note.vocabulary_count current_user, current_language
+    14.times.each do |i|
+      end_date = i.day.since.end_of_day
+
+      vocabulary_for_review = Note.joins(:word).where(user: current_user, vocabulary: true).where('words.language_id = ? and review_at <= ?', current_language.id, end_date).count
+
+      @vocabulary_data += [vocabulary_for_review]
+
+      @vocabulary_labels += ["in #{i} days"]
+    end
   end
 end
