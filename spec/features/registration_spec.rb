@@ -36,3 +36,20 @@ describe 'user registration' do
     expect(page).to have_content "Hello, #{user.name}!"
   end
 end
+
+describe 'editing registration' do
+  login_user
+
+  it 'allows me to update my name', js: true do
+    old_name = user.name
+    new_name = "#{Faker::Name.name} the new"
+    visit edit_user_registration_path
+    expect(page).to have_content 'Edit profile'
+    fill_in 'Name', with: new_name
+    click_link 'Update profile'
+    expect(page).to have_content 'Your account has been updated successfully.'
+    visit "/u/#{user.id}"
+    expect(page).to have_content new_name
+    expect(page).to_not have_content old_name
+  end
+end

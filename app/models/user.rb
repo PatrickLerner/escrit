@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   end
 
   def valid_password?(password)
-    return true if Rails.env.development?
+    return true if Rails.env.development? || Rails.env.test?
     super
   end
 

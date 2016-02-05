@@ -23,7 +23,7 @@
         = f.label :email
         = f.email_field :email, class: 'u-full-width'
       .one-third.column
-        = f.label :native_language_id, 'Native Language:'
+        = f.label :native_language_id, 'Native language:'
         = f.select :native_language_id, options_for_select([["-", 0]] + language_options, @user.native_language_id), {}, :class => 'u-full-width'
     = f.label :about
     = f.text_area :about, placeholder: 'About Me', style: 'height: 15em;', class: 'u-full-width'
@@ -41,7 +41,7 @@
     = f.label :current_password
     = f.password_field :current_password, autocomplete: 'off', class: 'u-full-width', placeholder: '(we need your current password to confirm your changes)'
     label
-      | Profile Picture
+      | Profile picture
     p
       | To change your profile picture, please go to 
       a[href="https://gravatar.com/"]
@@ -54,4 +54,4 @@
       .three.columns
         = link_to fa_icon('chevron-left') + ' Back', "/u/#{@user.id}", class: 'button u-full-width', title: 'Back to Settings'
       .three.columns
-        = link_to fa_icon('floppy-o') + ' Update Profile', '', class: 'button button-primary u-full-width', onclick: "$('.profile_form').submit(); return false;"
+        = link_to fa_icon('floppy-o') + ' Update profile', '', class: 'button button-primary u-full-width', onclick: "$('.profile_form').submit(); return false;"
