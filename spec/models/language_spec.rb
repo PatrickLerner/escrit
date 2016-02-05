@@ -13,4 +13,12 @@ describe Language, type: :model do
   it { is_expected.to have_many(:replacements) }
   it { is_expected.to have_many(:texts) }
   it { is_expected.to have_many(:words) }
+
+  it 'provides artworks if it has any' do
+    language = create(:language)
+    expect(language.current_artwork).to be_nil
+    create(:artwork, language: language)
+    expect(language.current_artwork).to_not be_nil
+    expect(language.current_artwork_style).to_not be_nil
+  end
 end

@@ -1,4 +1,6 @@
 class ArtworksController < ApplicationController
+  include ApplicationHelper
+  
   before_filter :authenticate_user!
   before_filter :user_admin!
   
@@ -28,8 +30,7 @@ class ArtworksController < ApplicationController
   end
 
   def index
-    lang = Language.where("lower(name) = ?", params[:language].downcase)[0]
-    @artworks = lang.artworks.joins(:language).order('languages.name asc')
+    @artworks = current_language.artworks.joins(:language).order('languages.name asc')
   end
 
   def new

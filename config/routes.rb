@@ -54,8 +54,8 @@ Rails.application.routes.draw do
 
   # Artworks
   get '/artworks', to: 'artworks#index_language', as: :language_choice_artwork
-  get '/artworks/:lang/new', to: 'artworks#new', constraints: { lang: /[^0-9]+/ }, as: :new_artwork
-  get '/artworks/:lang', to: 'artworks#index', constraints: { lang: /[^0-9]+/ }, as: :artworks_index
+  get '/artworks/:lang/new', to: 'artworks#new', constraints: { lang: /[^\/]+/ }, as: :new_artwork
+  get '/artworks/:lang', to: 'artworks#index', constraints: { lang: /[^\/]+/ }, as: :artworks_index
   resources :artworks
 
   # Other

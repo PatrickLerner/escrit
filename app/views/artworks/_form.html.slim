@@ -18,7 +18,7 @@
   = f.label :image, 'Artwork:'
   = f.file_field :image
   = f.label :language_id, 'Language:'
-  = f.select :language_id, options_for_select(language_options, @artwork.language_id), {}, class: 'u-full-width'
+  = f.select :language_id, options_for_select(language_options, @artwork.language_id || current_language.id), {}, class: 'u-full-width'
   .row
     .six.columns
       == "&nbsp;"
@@ -29,4 +29,4 @@
         = link_to fa_icon('floppy-o') + ' Save', '', class: 'button button-primary u-full-width', onclick: "$('.artwork_form').submit(); return false;"
         = link_to fa_icon('times') + ' Delete', artwork_path(@artwork), method: :delete, data: { confirm: 'Are you absolutely certain?' }, title: 'Delete', class: 'button button-delete u-full-width'
       - else
-        = link_to fa_icon('plus') + ' Add', '', class: 'button button-primary u-full-width', onclick: "$('.artwork_form').submit(); return false;"
+        = link_to fa_icon('plus') + ' Add new', '', class: 'button button-primary u-full-width', onclick: "$('.artwork_form').submit(); return false;"
