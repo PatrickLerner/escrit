@@ -1,11 +1,11 @@
 ENV['RAILS_ENV'] ||= 'test'
-if ENV["coverage"]
+if ENV['coverage']
   require 'simplecov'
   SimpleCov.start do
-    add_group "Controllers", "app/controllers"
-    add_group "Helpers", "app/helpers"
-    add_group "Models", "app/models"
-    add_group "Other", "db"
+    add_group 'Controllers', 'app/controllers'
+    add_group 'Helpers', 'app/helpers'
+    add_group 'Models', 'app/models'
+    add_group 'Other', ['db', 'lib']
     add_filter '/spec/'
     add_filter '/config/'
   end
@@ -17,7 +17,7 @@ if ENV["coverage"]
   end
 end
 require File.expand_path('../../config/environment', __FILE__)
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'spec_helper'
 require 'rspec/rails'
 require 'devise'
@@ -25,7 +25,7 @@ require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
 
 # core extensions
-Dir[File.join(Rails.root, "lib", "core_extensions", "*.rb")].each {|l| require l }
+Dir[File.join(Rails.root, 'lib', 'core_extensions', '*.rb')].each {|l| require l }
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
