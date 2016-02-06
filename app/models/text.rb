@@ -23,7 +23,7 @@ class Text < ActiveRecord::Base
       disabled_words = false
       disabled_words = true if not current_user.real?
       disabled_words = true if current_user.native_language == self.language
-      if disabled_words
+      if current_user.native_language == self.language
         notes = {}
       else
         content = read_attribute(type).utf8downcase
