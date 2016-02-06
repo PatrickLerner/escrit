@@ -91,8 +91,10 @@ table.listing, .toggleVocabulary {
 }
 
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
-  border: inherit;
   background: #17A4A2;
+  color: white;
+  border-top-color: #17A4A2;
+  border-bottom-color: #17A4A2;
 }
 
 .ui-menu .ui-menu-item {
