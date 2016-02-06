@@ -3,6 +3,7 @@
 - else
   - content_for :title, '%s (User)' % [@user.name]
 
+- content_for :header_image_style, @user.languages.sample.try(:current_artwork_style)
 - content_for :header_image_class, 'bar'
 - content_for :header_title, @user.name
 - if @user.admin?

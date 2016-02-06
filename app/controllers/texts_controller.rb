@@ -13,7 +13,7 @@ class TextsController < ApplicationController
       redirect_to language_choice_texts_path, alert: 'You are not allowed to do that.'
     else
       if current_user.native_language_id != @text.language_id
-        @notes = Note.joins('INNER JOIN "occurrences" ON "notes"."word_id" = "occurrences"."word_id"').includes(:word).where('occurrences.text_id = ? AND notes.rating <> 0 AND notes.user_id = ?', @text.id, current_user.id).paginate(page: params[:page], per_page: 250)
+        @notes = Note.joins('INNER JOIN "occurrences" ON "notes"."word_id" = "occurrences"."word_id"').includes(:word).where('occurrences.text_id = ? AND notes.rating IN (1, 2, 3, 4, 5) AND notes.user_id = ?', @text.id, current_user.id).paginate(page: params[:page], per_page: 250)
       end
     end
   end
