@@ -78,15 +78,20 @@ class StatisticsController < ApplicationController
     @total_read_texts = Text.where(user_id: current_user.id, completed: true, language_id: current_language.id, public: false).count
     @total_read_words = Text.where(user_id: current_user.id, completed: true, language_id: current_language.id, public: false).sum(:word_count)
 
+    @vocabulary_data_c = []
     @vocabulary_data = []
     @vocabulary_labels = []
     @total_vocabulary_words = Note.vocabulary_count current_user, current_language
+    last_count = 0
     14.times.each do |i|
-      end_date = i.day.since.end_of_day
+      end_date = i.days.since.end_of_day
 
       vocabulary_for_review = Note.joins(:word).where(user: current_user, vocabulary: true).where('words.language_id = ? and review_at <= ?', current_language.id, end_date).count
 
-      @vocabulary_data += [vocabulary_for_review]
+      @vocabulary_data_c += [vocabulary_for_review]
+      @vocabulary_data += [vocabulary_for_review - last_count]
+
+      last_count = vocabulary_for_review
 
       @vocabulary_labels += ["in #{i} days"]
     end

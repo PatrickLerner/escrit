@@ -73,8 +73,9 @@
   </div>
   <div class="row">
     <div class="six columns">
-      <h5>Vocabulary for review (cumulative)</h5>
+      <h5>Vocabulary for review</h5>
       <canvas id="vocabulary"></canvas>
+      <div id="vocabularyLegend"></div>
       <p>
         <div class="u-centered">
           In total you have <%=  number_with_precision @total_vocabulary_words, precision: 0, delimiter: ',' %> <%= 'word'.pluralize @total_vocabulary_words %> in your vocabulary.
@@ -165,12 +166,19 @@
 
     var vocabularyData = {
       labels: [<%= @vocabulary_labels.map{|i| '"' + i + '"'}.join(',').html_safe %>],
+      legendTemplate : "<ul class=\"<%%=name.toLowerCase()%>-legend\"><%% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%%=datasets[i].strokeColor%>\"></span><%%if(datasets[i].label){%><%%=datasets[i].label%><%%}%></li><%%}%></ul>",
       datasets: [
+        {
+          label: "Number of words for reviews",
+          fillColor: "#71A5B7",
+          strokeColor: "#71A5B7",
+          data: [<%= @vocabulary_data.join ',' %>]
+        },
         {
           label: "Number of words for reviews (cumulative)",
           fillColor: "#17A4A2",
           strokeColor: "#15A19F",
-          data: [<%= @vocabulary_data.join ',' %>]
+          data: [<%= @vocabulary_data_c.join ',' %>]
         }
       ]
     };
@@ -221,6 +229,7 @@
           responsive: true,
           maintainAspectRatio: true
         });
+        $("#vocabularyLegend").html(vocabularyChart.generateLegend());
       }
     });
   </script>
