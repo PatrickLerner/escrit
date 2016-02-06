@@ -1,4 +1,6 @@
 class Note < ActiveRecord::Base
+  using StringRefinements
+  
   belongs_to :word
   belongs_to :user
 
@@ -78,7 +80,7 @@ class Note < ActiveRecord::Base
   end
 
   def self.find_create language, word, user
-    word = Word.determine_replacement_value ApplicationController.utf8downcase(word), language
+    word = Word.determine_replacement_value word.utf8downcase, language
     w = Note.joins(:word).where('words.value = ? and words.language_id = ? and user_id = ?', word, language.id, user.id)
     if w.length == 0
       w = [Note.new(value: '', word: Word.find_create(language, word), user: user)]
@@ -90,7 +92,7 @@ class Note < ActiveRecord::Base
     words = words.map { |w|
       if w.match(/(.*)\|\|(.*)/)
         wparts = w.match(/(.*)\|\|(.*)/)
-        w = ApplicationController.utf8downcase wparts[2]
+        w = wparts[2].utf8downcase
       end
       Word.determine_replacement_value w, language
     }.uniq
@@ -100,13 +102,13 @@ class Note < ActiveRecord::Base
     list = Note.includes(:word).joins(:word).where('words.value in (?) and words.language_id = ? and user_id = ?', words, language.id, user.id)
     list.each do |res|
       remaining.delete res.word.value
-      word = ApplicationController.utf8downcase res.word.value
+      word = res.word.value.utf8downcase
       result[word] = res
     end
 
     remaining_words = Word.find_create_bulk language, remaining
     remaining.each do |rem|
-      word = ApplicationController.utf8downcase rem
+      word = rem.utf8downcase
       result[word] = Note.new value: '', word: remaining_words[word], user: user
     end
 

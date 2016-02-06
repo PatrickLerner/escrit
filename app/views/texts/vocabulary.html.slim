@@ -10,7 +10,7 @@
     = link_to fa_icon('chevron-left', text: 'Back to the text'), text_path(@text), class: 'button ', title: 'See the text'
     .right
       - 5.times do |i|
-        a class="s#{i + 1} rating-button button" style="cursor: pointer; opacity: #{i == 4 ? 0.3 : 1}" title=[ "Looked it up once.", "This time I'll remember it.", "I'm getting it now.", "Seems easy at this point.", "Know it in my sleep."][i]
+        a class="s#{i + 1} rating-button list-rating" style="cursor: pointer; opacity: #{i == 4 ? 0.3 : 1}" title=[ "Looked it up once.", "This time I'll remember it.", "I'm getting it now.", "Seems easy at this point.", "Know it in my sleep."][i]
           = i + 1
   table.u-full-width.listing
     thead
@@ -20,19 +20,23 @@
         th.u-centered Rating
         th.u-centered Vocab
     tbody
-      - @words.each do |r, w|
-        - if w.rating > 0 and w.rating < 6 and w.value != ''
-          tr class="rating-#{w.rating}" style="#{w.rating == 5 ? 'display: none;' : ''}"
-            td= link_to w.word.value_clean, edit_word_path(current_language, w.word.value)
-            td= w.value
-            td.u-centered
-              span class="s#{w.rating} list-rating" title=[ "Looked it up once.", "This time I'll remember it.", "I'm getting it now.", "Seems easy at this point.", "Know it in my sleep."][w.rating]
-                = w.rating
-            td.u-centered
-              - if w.vocabulary
-                = fa_icon 'check', value: w.word.replacement_value, class: 'toggleVocabulary'
-              - else
-                = fa_icon 'minus', value: w.word.replacement_value, class: 'toggleVocabulary'
+      - @notes.each do |note|
+        tr class="rating-#{note.rating}" style="#{note.rating == 5 ? 'display: none;' : ''}"
+          td= link_to note.word.value_clean, edit_word_path(current_language, note.word.value)
+          td= note.value
+          td.u-centered
+            span class="s#{note.rating} list-rating" title=[ "Looked it up once.", "This time I'll remember it.", "I'm getting it now.", "Seems easy at this point.", "Know it in my sleep."][note.rating]
+              = note.rating
+          td.u-centered
+            - if note.vocabulary?
+              = fa_icon 'check', value: note.word.replacement_value, class: 'toggleVocabulary'
+            - else
+              = fa_icon 'minus', value: note.word.replacement_value, class: 'toggleVocabulary'
+
+  - if @notes.count > 0
+    = will_paginate @notes, class: 'pagination'
+    div.pagination_info
+      = page_entries_info @notes
 
 script[type="text/javascript"]
   | $('.rating-button').click(function (event) { var rating = event.target.innerHTML; $('.rating-' + rating).toggle(); if ($(this).css('opacity') == 1) $(this).css('opacity', 0.3); else $(this).css('opacity', 1); });

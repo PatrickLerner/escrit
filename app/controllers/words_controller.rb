@@ -1,7 +1,10 @@
 class WordsController < ApplicationController
-  before_filter :authenticate_user!
+  using StringRefinements
+
   include ApplicationHelper
   include TextsHelper
+
+  before_filter :authenticate_user!
 
   before_filter :load_word, only: [ :vocab_unset, :vocab_set, :edit, :show ]
 
@@ -71,7 +74,7 @@ class WordsController < ApplicationController
 
   def update
     lang = Language.where("lower(name) = ?", params[:word][:language].downcase)[0]
-    @note = Note.find_create lang, utf8downcase(params[:id]), current_user
+    @note = Note.find_create lang, params[:id].utf8downcase, current_user
     @note.value = params[:word][:note].strip if params[:word][:note]
     @note.rating = params[:word][:rating] if params[:word][:rating]
     @note.update_review_at! if params[:word][:reviewed]

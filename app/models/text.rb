@@ -1,5 +1,6 @@
 class Text < ActiveRecord::Base
-  include WordsHelper
+  using StringRefinements
+
   include ActionView::Helpers::TextHelper
 
   belongs_to :language
@@ -25,7 +26,8 @@ class Text < ActiveRecord::Base
       if disabled_words
         notes = {}
       else
-        uniq_words = WordsHelper.raw_words read_attribute(type)
+        content = read_attribute(type).utf8downcase
+        uniq_words = content.scan(Text::WORD_REGEX).sort.uniq
         notes = Note.find_create_bulk self.language, uniq_words, current_user
       end
       # tag words
@@ -33,12 +35,12 @@ class Text < ActiveRecord::Base
         if word.include? '||'
           split = word.split '||'
           word = split[0]
-          word_value = ApplicationController.utf8downcase split[1..-1].join('||')
+          word_value = split[1..-1].join('||').utf8downcase
         else
-          word_value = ApplicationController.utf8downcase word
+          word_value = word.utf8downcase
         end
 
-        word_lower = ApplicationController.utf8downcase word
+        word_lower = word.utf8downcase
         word_value = Word.determine_replacement_value word_value, language
         rating = notes[word_value].rating if notes[word_value]
 
@@ -113,7 +115,7 @@ class Text < ActiveRecord::Base
     text.downcase.gsub(URI.regexp){
       ''
     }.scan(Text::WORD_REGEX).map { |w|
-      Word.determine_replacement_value ApplicationController.utf8downcase(w), self.language
+      Word.determine_replacement_value w.utf8downcase, self.language
     }.sort.uniq
   end
 
@@ -190,7 +192,7 @@ class Text < ActiveRecord::Base
 
   def occurrences word
     self.content.split(/(?<=[^\.][\.\?!][^\.])|(?<=[\n])/).select { |line|
-      line = Word.determine_replacement_value ApplicationController.utf8downcase(line), self.language
+      line = Word.determine_replacement_value line.utf8downcase, self.language
       if line.downcase.include? word
         words = scan_words line
         words = words.map do |word|
@@ -206,11 +208,11 @@ class Text < ActiveRecord::Base
       end
     }.map { |line|
       line.gsub(Text::WORD_REGEX) { |token|
-        token_val = Word.determine_replacement_value ApplicationController.utf8downcase(token), self.language
+        token_val = Word.determine_replacement_value token.utf8downcase, self.language
         if token_val.include? '||'
           split = token_val.split '||'
           token = split[0]
-          token_val = ApplicationController.utf8downcase split[1..-1].join('||')
+          token_val = split[1..-1].join('||').utf8downcase
         end
 
         if word == token_val

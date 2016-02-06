@@ -21,13 +21,15 @@ $s6_color: inherit;
 .s5 { background-color: $s5_color; }
 .s6 { background-color: $s6_color; }
 
-.list-rating {
+.list-rating, .list-rating:hover {
   text-align: center;
   font-weight: normal;
   width: 2.5rem;
   height: 2.5rem;
   display: inline-block;
   border: 1px solid #ccc;
+  color: black;
+  text-decoration: none;
 }
 
 .current_word {

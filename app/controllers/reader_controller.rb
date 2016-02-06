@@ -2,7 +2,6 @@ class ReaderController < ApplicationController
   before_filter :authenticate_user!
   include ApplicationHelper
   include TextsHelper
-  include WordsHelper
 
   def render_text text
     text = Text.new content: text, language: current_language

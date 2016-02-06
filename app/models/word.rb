@@ -1,4 +1,6 @@
 class Word < ActiveRecord::Base
+  using StringRefinements
+  
   belongs_to :language
   belongs_to :user
   has_many :notes
@@ -30,7 +32,7 @@ class Word < ActiveRecord::Base
   end
 
   def self.find_create language, word
-    word = Word.determine_replacement_value ApplicationController.utf8downcase(word), language
+    word = Word.determine_replacement_value word.utf8downcase, language
     w = Word.find_by value: word, language: language
     w = Word.new value: word, language: language if not w
     return w
@@ -40,7 +42,7 @@ class Word < ActiveRecord::Base
     words = words.map { |w|
       if w.match(/(.*)\|\|(.*)/)
         wparts = w.match(/(.*)\|\|(.*)/)
-        w = ApplicationController.utf8downcase wparts[2]
+        w = wparts[2].utf8downcase
       end
       Word.determine_replacement_value w, language
     }.uniq
@@ -50,12 +52,12 @@ class Word < ActiveRecord::Base
     list = Word.where value: words, language: language
     list.each do |res|
       remaining.delete res.value
-      word = ApplicationController.utf8downcase res.value
+      word = res.value.utf8downcase
       result[word] = res
     end
 
     remaining.each do |rem|
-      word = ApplicationController.utf8downcase rem
+      word = rem.utf8downcase
       result[word] = Word.new value: word, language: language
     end
 

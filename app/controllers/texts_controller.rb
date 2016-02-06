@@ -1,7 +1,6 @@
 class TextsController < ApplicationController
   include ApplicationHelper
   include TextsHelper
-  include WordsHelper
 
   before_filter :authenticate_user!
 
@@ -14,14 +13,7 @@ class TextsController < ApplicationController
       redirect_to language_choice_texts_path, alert: 'You are not allowed to do that.'
     else
       if current_user.native_language_id != @text.language_id
-        uniq_words = (WordsHelper.raw_words "#{@text.content} #{@text.title} #{@text.category}").sort.uniq
-        @words = Note.find_create_bulk @text.language, uniq_words, current_user
-        @words = @words.sort
-        @words.map { |k, w|
-          w.word.value.gsub! '..', ' ... '
-          w.word.value.gsub! '...', ' ... '
-          w.word.value.gsub! '_', ' '
-        }
+        @notes = Note.joins('INNER JOIN "occurrences" ON "notes"."word_id" = "occurrences"."word_id"').includes(:word).where('occurrences.text_id = ? AND notes.rating <> 0 AND notes.user_id = ?', @text.id, current_user.id).paginate(page: params[:page], per_page: 250)
       end
     end
   end

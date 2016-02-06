@@ -1,4 +1,6 @@
 class CategoriesController < ApplicationController
+  using StringRefinements
+  
   before_filter :authenticate_user!
 
   def edit
@@ -9,7 +11,7 @@ class CategoriesController < ApplicationController
   def autocomplete_text_category
     term = params[:term]
     lang = Language.where("lower(name) = ?", params[:lang].downcase)[0]
-    texts = Text.where('lower(category) like ? and (user_id = ? or public = true) and language_id = ?', "%#{utf8downcase term}%", current_user.id, lang.id).group('category').select('category').order('category asc')
+    texts = Text.where('lower(category) like ? and (user_id = ? or public = true) and language_id = ?', "%#{term.utf8downcase}%", current_user.id, lang.id).group('category').select('category').order('category asc')
     cats = texts.map { |t| t.category }
     render text: cats.to_json
   end

@@ -17,16 +17,6 @@ class ApplicationController < ActionController::Base
     '/home'
   end
 
-  # converts a utf8 string into lower case
-  # (probably depricated)
-  def utf8downcase text
-    text.mb_chars.downcase.to_s
-  end
-
-  def self.utf8downcase text
-    text.mb_chars.downcase.to_s
-  end
-
   def user_admin!
     redirect_to home_path, alert: 'You must be an administrator to do this!' if not current_user.admin?
   end

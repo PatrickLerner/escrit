@@ -24,6 +24,9 @@ require 'devise'
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
 
+# core extensions
+Dir[File.join(Rails.root, "lib", "core_extensions", "*.rb")].each {|l| require l }
+
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
