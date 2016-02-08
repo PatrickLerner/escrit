@@ -4,9 +4,8 @@ class WordsController < ApplicationController
   include ApplicationHelper
   include TextsHelper
 
-  before_filter :authenticate_user!
-
-  before_filter :load_word, only: [ :vocab_unset, :vocab_set, :edit, :show ]
+  before_action :authenticate_user!
+  before_action :load_word, only: [ :vocab_unset, :vocab_set, :edit, :show ]
 
   def index_language
     @languages = Language.order(:name).all

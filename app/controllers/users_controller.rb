@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!
-
-  before_filter :load_user, only: [ :show, :add, :remove ]
+  before_action :authenticate_user!
+  before_action :load_user, only: [ :show, :add, :remove ]
 
   def show
     @words = Note.joins(:word).joins('left join languages on languages.id = words.language_id').where('user_id = ? and rating < 6', params[:id]).group('languages.name').order('languages.name asc').count

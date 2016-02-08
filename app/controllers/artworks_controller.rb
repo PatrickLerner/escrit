@@ -1,9 +1,8 @@
 class ArtworksController < ApplicationController
   include ApplicationHelper
   
-  before_filter :authenticate_user!
-  before_filter :user_admin!
-  
+  before_action :authenticate_user!
+  before_action :user_admin!
   before_action :load_artwork, only: [ :show, :edit, :destroy, :update ]
 
   def index_language
@@ -46,7 +45,6 @@ class ArtworksController < ApplicationController
   end
 
   private
-
     def load_artwork
       @artwork = Artwork.find_by id: params[:id]
     end

@@ -1,7 +1,8 @@
 class ComplimentsController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :user_admin!
-    
+  before_action :authenticate_user!
+  before_action :user_admin!
+  before_action :load_compliment, only: [ :edit, :destroy, :update ]
+
   def create
     @compliment = Compliment.new(compliment_params)
  
@@ -13,11 +14,9 @@ class ComplimentsController < ApplicationController
   end
 
   def edit
-    @compliment = Compliment.find_by id: params[:id]
   end
 
   def destroy
-    @compliment = Compliment.find_by id: params[:id]
     @compliment.destroy
    
     redirect_to compliments_path, notice: 'Compliment has been successfully deleted.'
@@ -32,8 +31,6 @@ class ComplimentsController < ApplicationController
   end
 
   def update
-    @compliment = Compliment.find_by id: params[:id]
-   
     if @compliment.update(compliment_params)
       redirect_to compliments_path, notice: 'Compliment has been successfully updated.'
     else
@@ -42,6 +39,10 @@ class ComplimentsController < ApplicationController
   end
 
   private
+    def load_compliment
+      @compliment = Compliment.find_by id: params[:id]
+    end
+
     def compliment_params
       params.require(:compliment).permit(:value, :language_id)
     end

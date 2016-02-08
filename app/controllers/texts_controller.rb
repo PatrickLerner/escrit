@@ -2,8 +2,7 @@ class TextsController < ApplicationController
   include ApplicationHelper
   include TextsHelper
 
-  before_filter :authenticate_user!
-
+  before_action :authenticate_user!
   before_action :load_text, only: [ :show, :edit, :update, :copy, :destroy ]
 
   def vocabulary

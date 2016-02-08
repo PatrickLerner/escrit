@@ -1,7 +1,6 @@
 class LanguagesController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :user_admin!
-
+  before_action :authenticate_user!
+  before_action :user_admin!
   before_action :load_language, only: [ :edit, :destroy, :update ]
 
   def create

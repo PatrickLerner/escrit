@@ -1,7 +1,8 @@
 class StatisticsController < ApplicationController
-  before_filter :authenticate_user!
   include TextsHelper
   include ApplicationHelper
+
+  before_action :authenticate_user!
 
   def index_language
       @languages = Language.order(:name).all

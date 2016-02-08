@@ -33,7 +33,7 @@ describe 'words' do
 
   it 'allows to search words', js: true do
     note = create(:note, user: user, word: word)
-    expect(note.word.language).to eq(languages)
+    expect(note.word.language).to eq(language)
     visit words_path(language) + "?q=#{note.value}"
     expect(page).to have_content note.word.value
     visit words_path(language) + "?q=#{note.value}XXX"

@@ -1,6 +1,6 @@
 class ServicesController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :user_admin!, only: [ :publish ]
+  before_action :authenticate_user!
+  before_action :user_admin!, only: [ :publish ]
 
   def create
     @service = Service.new(service_params)

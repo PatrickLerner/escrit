@@ -1,6 +1,7 @@
 class ReplacementsController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :user_admin!
+  before_action :authenticate_user!
+  before_action :user_admin!
+  before_action :load_replacement, only: [ :edit, :destroy, :update ]
 
   def create
     @replacement = Replacement.new(replacement_params)
@@ -13,11 +14,9 @@ class ReplacementsController < ApplicationController
   end
 
   def edit
-    @replacement = Replacement.find_by id: params[:id]
   end
 
   def destroy
-    @replacement = Replacement.find(params[:id])
     @replacement.destroy
    
     redirect_to replacements_path, notice: 'Replacement has been successfully deleted.'
@@ -32,8 +31,6 @@ class ReplacementsController < ApplicationController
   end
 
   def update
-    @replacement = Replacement.find_by id: params[:id]
-   
     if @replacement.update(replacement_params)
       redirect_to replacements_path, notice: 'Replacement has been successfully updated.'
     else
@@ -42,6 +39,10 @@ class ReplacementsController < ApplicationController
   end
 
   private
+    def load_replacement
+      @replacement = Replacement.find_by id: params[:id]
+    end
+
     def replacement_params
       params.require(:replacement).permit(:replacement, :value, :language_id)
     end

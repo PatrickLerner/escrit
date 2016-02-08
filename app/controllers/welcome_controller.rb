@@ -1,5 +1,5 @@
 class WelcomeController < ApplicationController
-  before_filter :authenticate_user!, only: [ :home ]
+  before_action :authenticate_user!, only: [ :home ]
 
   def index
     @languages = Language.order('name asc').all
