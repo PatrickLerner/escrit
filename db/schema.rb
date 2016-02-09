@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160116020117) do
+ActiveRecord::Schema.define(version: 20160209220331) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 20160116020117) do
 
   add_index "notes", ["user_id"], name: "index_notes_on_user_id", using: :btree
   add_index "notes", ["vocabulary"], name: "index_notes_on_vocabulary", using: :btree
+  add_index "notes", ["word_id", "user_id"], name: "index_notes_on_word_id_and_user_id", unique: true, using: :btree
   add_index "notes", ["word_id"], name: "index_notes_on_word_id", using: :btree
 
   create_table "occurrences", force: :cascade do |t|
@@ -85,6 +86,7 @@ ActiveRecord::Schema.define(version: 20160116020117) do
   end
 
   add_index "occurrences", ["text_id"], name: "index_occurrences_on_text_id", using: :btree
+  add_index "occurrences", ["word_id", "text_id"], name: "index_occurrences_on_word_id_and_text_id", unique: true, using: :btree
   add_index "occurrences", ["word_id"], name: "index_occurrences_on_word_id", using: :btree
 
   create_table "replacements", force: :cascade do |t|
@@ -158,6 +160,8 @@ ActiveRecord::Schema.define(version: 20160116020117) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "words", ["value", "language_id"], name: "index_words_on_value_and_language_id", unique: true, using: :btree
 
   add_foreign_key "artworks", "languages"
 end
