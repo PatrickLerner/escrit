@@ -36,7 +36,7 @@
             | All
         - if current_user.admin?
           td
-            - if not service.published
+            - unless service.published?
               = link_to fa_icon('users'), publish_service_path(service), title: 'Publish this service as a default for all users', class: 'table-button'
   - if @public_services.any?
     h4 Default services

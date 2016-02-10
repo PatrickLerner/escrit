@@ -46,40 +46,19 @@ class ServicesController < ApplicationController
 
   def index
     all_services = Service.where(user_id: current_user.id)
-    @services = all_services.sort { |a, b|
-      l_a = if a.language then a.language.name else "All" end
-      l_b = if b.language then b.language.name else "All" end
-      if (l_a <=> l_b) != 0
-        l_a <=> l_b
-      else
-        a.name <=> b.name
-      end
-    }
+    @services = all_services.sort
 
     @public_services = Service.where(user_id: 0)
 
     @services.each do |service|
-      before = @public_services.count
-      @public_services = @public_services.select do |pservice|
-        (service.name != pservice.name) ||
-        (service.short_name != pservice.short_name) ||
-        (service.url != pservice.url) ||
-        (service.language_id != pservice.language_id)
-      end
-      if before > @public_services.count
-        service.published = true
-      end
+      service.published = @public_services.include?(service)
     end
 
-    @public_services = @public_services.sort { |a, b|
-      l_a = if a.language then a.language.name else "All" end
-      l_b = if b.language then b.language.name else "All" end
-      if (l_a <=> l_b) != 0
-        l_a <=> l_b
-      else
-        a.name <=> b.name
-      end
-    }
+    @public_services = @public_services.reject do |public_service|
+      @services.include? public_service
+    end
+
+    @public_services = @public_services.sort
   end
 
   def new
