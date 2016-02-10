@@ -20,3 +20,4 @@ The source code is not released under any open source license and all rights ret
 
   * Preference of British English over American
   * Absolutely no title case if avoidable (e.g. "Vocabulary trainer", never "Vocabulary Trainer")
+  * Never capitalize the name, i.e. always `escrit.eu`, never `Escrit.eu`. The `.eu` is generally part of the branding, but does not always have to be included if it is stylistically undesireable.
