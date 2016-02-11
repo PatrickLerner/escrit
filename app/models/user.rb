@@ -13,14 +13,8 @@ class User < ActiveRecord::Base
 
   after_initialize :init
 
-  attr_writer :real
-
   def init
     self.audio_rate ||= 100
-  end
-
-  def real?
-    @real
   end
 
   def valid_password?(password)

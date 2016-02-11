@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 
   # always redirect away from the www-version of the site to the plain url one
   def redirect_subdomain
-    redirect_to 'http://escrit.eu' + request.fullpath if request.host == 'www.escrit.eu'
+    redirect_to "http://escrit.eu#{request.fullpath}" if request.host == 'www.escrit.eu'
   end
 
   def after_sign_in_path_for(resource)
@@ -22,14 +22,22 @@ class ApplicationController < ActionController::Base
   end
 
   alias_method :devise_current_user, :current_user
+
   def current_user
-    if !params[:u].blank? && devise_current_user && devise_current_user.admin?
-      user = User.find(params[:u])
-      user.real = false
-    else
-      user = devise_current_user
-      user.real = true if user
-    end
-    user
+    @current_user ||= get_current_user
   end
+
+  protected
+    def get_current_user
+      if !params[:u].blank? && devise_current_user && devise_current_user.admin?
+        user = User.find(params[:u])
+      else
+        user = devise_current_user
+      end
+      unless user.nil?
+        user.extend(User::Real)
+        user.real = (user.id == devise_current_user.id)
+      end
+      user
+    end
 end
