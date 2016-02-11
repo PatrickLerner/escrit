@@ -33,14 +33,14 @@ html
                 li= link_to fa_icon('book') + ' Texts', "/texts#{lang}"
                 li= link_to fa_icon('magic') + ' Quick reader', "/reader#{lang}"
             li
-              = link_to "Learn ￬".html_safe, "/vocabulary#{lang}"
+              = link_to 'Learn ￬'.html_safe, "/vocabulary#{lang}"
               ul.hidden
                 li= link_to fa_icon('list') + ' Word list', "/words#{lang}"
                 li= link_to fa_icon('graduation-cap') + ' Vocab. trainer ' + vocab_words, "/vocabulary#{lang}"
                 li= link_to fa_icon('pencil-square-o ') + ' Dictation practice', "/dictation#{lang}"
             - if current_lang_prefix
               li
-                = link_to flag_icon_tag(current_language, style: 'padding: 0;') + " #{current_language.name}", "/#{current_lang_prefix}"
+                = link_to flag_icon_tag(current_language, style: 'padding: 0;') + " #{current_language.name} ￬", "/#{current_lang_prefix}"
                 - langs = language_options(true).map { |l| l[0] }
                 - if langs.count > 1
                   ul.hidden
