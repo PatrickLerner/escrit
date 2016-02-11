@@ -11,5 +11,21 @@ FactoryGirl.define do
     factory :admin do
       admin true
     end
+
+    factory :current_user do
+      after(:build) do |user|
+        user.extend(User::Real)
+        user.real = true
+      end
+    end
+
+    factory :current_admin do
+      admin true
+      
+      after(:build) do |user|
+        user.extend(User::Real)
+        user.real = true
+      end
+    end
   end
 end

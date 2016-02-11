@@ -162,15 +162,14 @@ class Text < ActiveRecord::Base
     new_words = Word.find_create_bulk self.language, gained_words
     new_words.each do |value, word|
       word.save if word.new_record?
-      occurrence = Occurrence.new word: word, text: self
-      occurrence.save
+      Occurrence.create word: word, text: self
     end
 
     # remove lost occurances and words (if no occurances remain for it)
     removed_words = Word.find_create_bulk self.language, lost_words
     removed_words.each do |value, word|
-      occurrence = Occurrence.find_by word: word, text: self
-      occurrence.destroy if occurrence
+      occurrences = Occurrence.where word: word, text: self
+      occurrences.destroy_all
 
       # if the word is not referenced by occurances in texts or by definitions
       # of users, then it may now also be deleted permanently from the system
@@ -186,7 +185,7 @@ class Text < ActiveRecord::Base
     end
     
     if self.word_count != self.unique_word_count
-      self.update(word_count: self.unique_word_count)
+      self.update_columns(word_count: self.unique_word_count)
     end
   end
 

@@ -6,6 +6,12 @@ describe User, type: :model do
     expect(user).to be_valid
   end
 
+  it 'has a valid current factory' do
+    user = build(:current_user)
+    expect(user).to be_valid
+    expect(user.real?).to be_truthy
+  end
+
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_presence_of(:email) }
   it { is_expected.to validate_uniqueness_of(:email) }

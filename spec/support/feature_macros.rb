@@ -1,6 +1,6 @@
 module FeatureMacros
   def login_user
-    let(:user) { create(:user) }
+    let(:user) { create(:current_user) }
 
     before(:each) do
       login_as user, scope: :user
@@ -8,7 +8,7 @@ module FeatureMacros
   end
 
   def login_admin
-    let(:user) { create(:admin) }
+    let(:user) { create(:current_admin) }
 
     before(:each) do
       login_as user, scope: :user
