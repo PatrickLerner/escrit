@@ -35,24 +35,10 @@ module ApplicationHelper
   # Returns the currently selected language as an object (or nil if none
   # is selected)
   def current_language
-    if params[:lang] != Rails.cache.fetch('selected_language') or (@text and @text.language and @text.language.name != Rails.cache.fetch('selected_language'))
-      Rails.cache.delete('selected_language')
-      Rails.cache.delete('selected_language_value')
-    end
-    Rails.cache.fetch('selected_language') do
-      if @text and @text.language
-        @text.language.name
-      else
-        params[:lang]
-      end
-    end
-    Rails.cache.fetch('selected_language_value') do
-      if params[:lang] and params[:lang].is_a? String
-        Language.where("lower(name) = ?", params[:lang].downcase)[0]
-      elsif @text and @text.language
-        @text.language
-      end
-    end
+    return @text.language if @text and @text.language
+    Rails.cache.fetch("language_#{params['lang'].downcase}") do |key|
+      Language.find_by("lower(name) = ?", params[:lang].downcase)
+    end if params['lang'].present?
   end
 
   def flag_icon_path language

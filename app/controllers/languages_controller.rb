@@ -2,6 +2,7 @@ class LanguagesController < ApplicationController
   before_action :authenticate_user!
   before_action :user_admin!
   before_action :load_language, only: [ :edit, :destroy, :update ]
+  before_action :invalidate_cache, only: [ :update, :destroy ]
 
   def create
     @language = Language.new(language_params)
@@ -38,6 +39,10 @@ class LanguagesController < ApplicationController
   end
 
   private
+    def invalidate_cache
+      Rails.cache.fetch("language_#{@language.name.downcase}")
+    end
+
     def load_language
       @language = Language.find params[:id]
     end
