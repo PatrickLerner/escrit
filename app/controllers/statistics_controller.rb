@@ -17,7 +17,10 @@ class StatisticsController < ApplicationController
       start_date = 0.day.ago.beginning_of_week.beginning_of_day + i.days
       end_date = 0.day.ago.beginning_of_week.end_of_day + i.days
 
-      new_words = Note.joins(:word).where(created_at: start_date..end_date, user_id: current_user.id).where('words.language_id = ?', current_language.id).count
+      new_words = Note.joins(:word).where(
+        created_at: start_date..end_date,
+        user_id: current_user.id
+      ).where('words.language_id = ?', current_language.id).count
 
       @new_words_this_week_data += [new_words]
       @total_new_words_this_week += new_words

@@ -3,7 +3,7 @@ class TextsController < ApplicationController
   include TextsHelper
 
   before_action :authenticate_user!
-  before_action :load_text, only: [ :show, :edit, :update, :copy, :destroy ]
+  before_action :load_text, only: [:show, :edit, :update, :copy, :destroy]
 
   def vocabulary
     @text = Text.find params[:id]
@@ -22,10 +22,11 @@ class TextsController < ApplicationController
       redirect_to language_choice_texts_path, alert: 'You are not allowed to do that.'
     else
       @new_text = @text.dup
-      @new_text.user_id = current_user.id
+      @new_text.user = current_user
       @new_text.public = false
       @new_text.hidden = false
       @new_text.save
+ 
       redirect_to text_path(@new_text), notice: 'Text has been successfully copied into your library.'
     end
   end

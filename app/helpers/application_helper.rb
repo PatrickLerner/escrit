@@ -36,9 +36,13 @@ module ApplicationHelper
   # is selected)
   def current_language
     return @text.language if @text and @text.language
-    Rails.cache.fetch("language_#{params['lang'].downcase}") do |key|
-      Language.find_by("lower(name) = ?", params[:lang].downcase)
-    end if params['lang'].present?
+
+    lang = params['lang'].try(:downcase)
+    if lang.present?
+      Rails.cache.fetch("language_#{lang}") do |key|
+        Language.find_by("lower(name) = ?", lang)
+      end
+    end
   end
 
   def flag_icon_path language

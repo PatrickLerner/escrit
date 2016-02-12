@@ -24,9 +24,16 @@ describe Text, '#scan_words_content', type: :model do
 end
 
 describe Text, '#process', type: :model do
+  let!(:language) { create(:language) }
+  let!(:user) do
+    user = create(:user, native_language: language)
+    user.extend(User::Real)
+    user.real = true
+    user
+  end
+
   it 'should allow process native language text and have no highlights' do
-    text = build_stubbed(:text, content: "test text no highlights")
-    user = create(:current_user, native_language: text.language)
+    text = build_stubbed(:text, language: language, content: "test text no highlights")
 
     content = text.processed_content(user)
 
@@ -36,7 +43,6 @@ describe Text, '#process', type: :model do
 
   it 'should allow to embed youtube videos' do
     text = build_stubbed(:text, content: "https://www.youtube.com/watch?v=i5sG5ISgRuU\n\nYoutube embed")
-    user = create(:current_user)
 
     content = text.processed_content(user)
 
@@ -46,7 +52,6 @@ describe Text, '#process', type: :model do
 
   it 'should allow to embed audio files' do
     text = build_stubbed(:text, content: "http://example.com/1.mp3\n\nYoutube embed")
-    user = create(:current_user)
 
     content = text.processed_content(user)
 
@@ -56,7 +61,6 @@ describe Text, '#process', type: :model do
 
   it 'should allow to embed image files' do
     text = build_stubbed(:text, content: "http://example.com/1.jpg\n\nYoutube embed")
-    user = create(:current_user)
 
     content = text.processed_content(user)
 
@@ -67,7 +71,6 @@ describe Text, '#process', type: :model do
 
   it 'should allow to embed image files with border' do
     text = build_stubbed(:text, content: "@http://example.com/1.jpg\n\nYoutube embed")
-    user = create(:current_user)
 
     content = text.processed_content(user)
 
@@ -79,7 +82,6 @@ describe Text, '#process', type: :model do
 
   it 'should allow to have headlines' do
     text = build_stubbed(:text, content: "# example h1\n\ntest\n\n## example h2\n\n### h3\n\n\ntesti test")
-    user = create(:current_user)
 
     content = text.processed_content(user)
 
@@ -90,7 +92,6 @@ describe Text, '#process', type: :model do
 
   it 'should allow to have paragraphs' do
     text = build_stubbed(:text, content: "p1\n\np2\n\np3")
-    user = create(:current_user)
 
     content = text.processed_content(user)
 
@@ -99,7 +100,6 @@ describe Text, '#process', type: :model do
 
   it 'should allow to have blockquotes' do
     text = build_stubbed(:text, content: "normal\n\n> test block\n\ntest")
-    user = create(:current_user)
 
     content = text.processed_content(user)
 
@@ -108,7 +108,6 @@ describe Text, '#process', type: :model do
 
   it 'should allow to have replaments' do
     text = create(:text, content: "Ich fange||fange..an heute an||fange..an.")
-    user = create(:current_user)
 
     content = text.processed_content(user)
 

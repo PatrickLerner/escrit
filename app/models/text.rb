@@ -20,9 +20,8 @@ class Text < ActiveRecord::Base
 
   %w[content category title].each do |type|
     define_method "processed_#{type}" do |current_user|
-      disabled_words = false
-      disabled_words = true if not current_user.real?
-      disabled_words = true if current_user.native_language == self.language
+      disabled_words = current_user.real?
+      disabled_words ||= current_user.native_language == self.language
       if current_user.native_language == self.language
         notes = {}
       else

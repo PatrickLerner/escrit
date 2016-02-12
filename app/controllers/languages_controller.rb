@@ -1,16 +1,15 @@
 class LanguagesController < ApplicationController
   before_action :authenticate_user!
   before_action :user_admin!
-  before_action :load_language, only: [ :edit, :destroy, :update ]
-  before_action :invalidate_cache, only: [ :update, :destroy ]
+  before_action :load_language, only: [:edit, :destroy, :update]
+  before_action :invalidate_cache, only: [:update, :destroy]
 
   def create
     @language = Language.new(language_params)
-    if @language.save
-      redirect_to languages_path, notice: 'New language has been successfully added.'
-    else
-      render 'new'
-    end
+
+    return render 'new' unless @language.save
+    
+    redirect_to languages_path, notice: 'New language has been successfully added.'
   end
 
   def edit
@@ -18,7 +17,7 @@ class LanguagesController < ApplicationController
 
   def destroy
     @language.destroy
-   
+    
     redirect_to languages_path, notice: 'Language has been successfully deleted.'
   end
 
@@ -31,23 +30,22 @@ class LanguagesController < ApplicationController
   end
 
   def update
-    if @language.update(language_params)
-      redirect_to languages_path, notice: 'Language has been successfully updated.'
-    else
-      render 'edit'
-    end
+    return render 'edit' unless @language.update(language_params)
+    
+    redirect_to languages_path, notice: 'Language has been successfully updated.'
   end
 
   private
-    def invalidate_cache
-      Rails.cache.fetch("language_#{@language.name.downcase}")
-    end
 
-    def load_language
-      @language = Language.find params[:id]
-    end
+  def invalidate_cache
+    Rails.cache.fetch("language_#{@language.name.downcase}")
+  end
 
-    def language_params
-      params.require(:language).permit(:name, :voice, :voice_rate)
-    end
+  def load_language
+    @language = Language.find params[:id]
+  end
+
+  def language_params
+    params.require(:language).permit(:name, :voice, :voice_rate)
+  end
 end

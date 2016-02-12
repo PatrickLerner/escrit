@@ -6,12 +6,16 @@ class ReaderController < ApplicationController
 
   def render_text text
     text = Text.new content: text, language: current_language
+    
     return text.processed_content current_user
   end
 
   def index
-    @services = Service.where('(language_id=? or language_id=0) and user_id = ? and enabled = true', current_language.id, current_user.id)
-    @services = [] if @services == nil
+    @services = Service.where(
+      '(language_id=? or language_id=0) and user_id = ? and enabled = true',
+      current_language.id,
+      current_user.id
+    )
 
     if params[:q]
       @param_text = render_text params[:q]

@@ -26,14 +26,15 @@ class SettingsController < ApplicationController
   end
 
   private
-    def user_params
-      params.require(:user).permit(:audio_rate)
-    end
 
-    def vocabulary
-      current_user.languages.map { |language|
-        vocab_count = Note.vocabulary_count current_user, language
-        [language, vocab_count]
-      }.select { |i| i[1] > 0 }
-    end
+  def user_params
+    params.require(:user).permit(:audio_rate)
+  end
+
+  def vocabulary
+    current_user.languages.map { |language|
+      vocab_count = Note.vocabulary_count current_user, language
+      [language, vocab_count]
+    }.select { |i| i[1] > 0 }
+  end
 end

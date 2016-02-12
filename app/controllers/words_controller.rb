@@ -12,27 +12,49 @@ class WordsController < ApplicationController
   end
 
   def index
-    @search_term = params['q']
-    @search_term = '' if not @search_term
+    @search_term = (params['q'] || '').strip
 
-    if @search_term == nil || @search_term.strip == ''
-      @notes = Note.includes(:word).joins(:word).order('notes.created_at DESC').paginate(page: params[:page], per_page: 250).where 'user_id = ? and rating < 6 and language_id = ?', current_user.id, current_language.id
+    if @search_term == ''
+      @notes = Note.includes(:word).joins(:word).order('notes.created_at DESC')
+        .paginate(page: params[:page], per_page: 250)
+        .where(
+          'user_id = ? and rating < 6 and language_id = ?',
+          current_user.id,
+          current_language.id
+        )
     else
-      @notes = Note.includes(:word).joins(:word).order('notes.created_at DESC').paginate(page: params[:page], per_page: 250).where('user_id = ? and rating < 6 and language_id = ? and (words.value ilike ? or notes.value ilike ?)', current_user.id, current_language.id, "%#{@search_term}%", "%#{@search_term}%")
+      @notes = Note.includes(:word).joins(:word).order('notes.created_at DESC')
+        .paginate(page: params[:page], per_page: 250)
+        .where(
+          'user_id = ? and rating < 6 and language_id = ? and ' \
+          '(words.value ilike ? or notes.value ilike ?)',
+          current_user.id,
+          current_language.id,
+          "%#{@search_term}%", "%#{@search_term}%"
+        )
     end
   end
 
   def sentence
     @word = Word.find_by value: params[:id], language: current_language
-    oc = Occurrence.includes(:text).joins(:text).where('word_id = ? AND texts.user_id = ? AND texts.public = FALSE', @word.id, current_user.id).sample
-    if oc
-      sample = oc.text.occurrences(@word.value).sample
+    occurrence = Occurrence.includes(:text).joins(:text)
+      .where(
+        'word_id = ? AND texts.user_id = ? AND texts.public = FALSE',
+        @word.id,
+        current_user.id
+      ).sample
+    
+    if occurrence
+      sample = occurrence.text.occurrences(@word.value).sample
       raw = ActionView::Base.full_sanitizer.sanitize(sample)
-      sentence = "#{sample}<br><i>(#{oc.text.title} - #{oc.text.category})</i>"
+      sentence = "#{sample}<br><i>(#{occurrence.text.title} - " \
+                 "#{occurrence.text.category})</i>"
     else
-      sentence = 'Could not find any example sentence for this word in your library.'
+      sentence = 'Could not find any example sentence for this word ' \
+                 'in your library.'
       raw = ''
     end
+
     render json: {
       value: sentence,
       raw: raw
@@ -46,12 +68,16 @@ class WordsController < ApplicationController
       note: @note.value,
       language: @word.language.name,
       rating: @note.rating,
-      vocabulary: (@note.vocabulary == true)
+      vocabulary: @note.vocabulary?
     }
   end
 
   def edit
-    @occurrences = Occurrence.includes(:text).joins(:text).where('word_id = ? AND texts.user_id = ? AND texts.public = FALSE', @word.id, current_user.id).paginate(page: params[:page], per_page: 20)
+    @occurrences = Occurrence.includes(:text).joins(:text).where(
+      'word_id = ? AND texts.user_id = ? AND texts.public = FALSE',
+      @word.id,
+      current_user.id
+    ).paginate(page: params[:page], per_page: 20)
   end
 
   def vocab_set
@@ -73,10 +99,15 @@ class WordsController < ApplicationController
 
   def update
     lang = Language.where("lower(name) = ?", params[:word][:language].downcase)[0]
-    @note = Note.find_create lang, params[:id].utf8downcase, current_user
+    @note = Note.find_create(
+      lang,
+      params[:id].utf8downcase,
+      current_user
+    )
+
     @note.value = params[:word][:note].strip if params[:word][:note]
-    @note.rating = params[:word][:rating] if params[:word][:rating]
-    @note.update_review_at! if params[:word][:reviewed]
+    @note.rating = params[:word][:rating]    if params[:word][:rating]
+    @note.update_review_at!                  if params[:word][:reviewed]
     
     if @note.word.save and @note.save
       render plain: "ok"
@@ -86,20 +117,21 @@ class WordsController < ApplicationController
 
     if @note.value == '' and @note.rating == 0
       nodes = Note.where word: @note.word
-      if nodes.length <= 1
-        @note.word.delete
-      end
+      
+      @note.word.delete if nodes.length <= 1
+      
       Note.where(word: @note.word, user: current_user).delete_all
     end
   end
 
   private
-    def load_word
-      @note = Note.find_create current_language, params[:id].downcase, current_user
-      @word = @note.word
-    end
+  
+  def load_word
+    @note = Note.find_create current_language, params[:id].downcase, current_user
+    @word = @note.word
+  end
 
-    def word_params
-      params.require(:word).permit(:language, :note, :rating, :reviewed)
-    end
+  def word_params
+    params.require(:word).permit(:language, :note, :rating, :reviewed)
+  end
 end

@@ -6,18 +6,23 @@ class DictationsController < ApplicationController
   end
 
   def index
-    @word = Note.joins(:word).where('words.language_id = ? AND user_id = ? AND vocabulary = true', current_language.id, current_user.id).order("RANDOM()").first()
+    @note = Note.joins(:word).where(
+      'words.language_id = ? AND user_id = ? AND vocabulary = true',
+      current_language.id,
+      current_user.id
+    ).order("RANDOM()").first()
+    
     respond_to do |format|
       format.html
       format.json {
-        if @word
+        if @note
           render json: {
-            value: @word.word.value,
-            value_clean: @word.word.value_clean,
-            note: @word.value.strip,
-            language: @word.word.language.name,
-            rating: @word.rating,
-            vocabulary: @word.vocabulary == true
+            value: @note.word.value,
+            value_clean: @note.word.value_clean,
+            note: @note.value.strip,
+            language: @note.word.language.name,
+            rating: @note.rating,
+            vocabulary: @note.vocabulary?
           }
         else
           render json: {}

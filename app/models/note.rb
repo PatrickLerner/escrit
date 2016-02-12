@@ -26,7 +26,7 @@ class Note < ActiveRecord::Base
   end
 
   def vocabulary?
-    self.vocabulary == true
+    self.vocabulary
   end
 
   def update_review_at!
