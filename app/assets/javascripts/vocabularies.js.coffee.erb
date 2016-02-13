@@ -6,14 +6,7 @@ vocabulary_words = []
 current_word = {}
 changed = false
 disabledLinks = true
-durations = [
-  '<%= Note::VOCAB_REVIEW_INTERVAL_0 %> days',
-  '<%= Note::VOCAB_REVIEW_INTERVAL_1 %> days',
-  '<%= Note::VOCAB_REVIEW_INTERVAL_2 %> days',
-  '<%= Note::VOCAB_REVIEW_INTERVAL_3 %> days',
-  '<%= Note::VOCAB_REVIEW_INTERVAL_4 %> days',
-  '<%= Note::VOCAB_REVIEW_INTERVAL_5 %> days'
-]
+durations = <%= Note::VOCAB_REVIEW_INTERVALS.map { |k| "#{k} days" } %>
 meta_language_voice = false
 meta_language_voice_rate = false
 meta_audio_rate = false
@@ -92,7 +85,7 @@ $ ->
     $('#buttons').fadeTo 300, 1
 
   $('#showAnswer').click ->
-    return if disabledLinks
+    return false if disabledLinks
     disableButtons()
     $('#note').css('visibility', 'visible')
     $('#note').fadeTo 500, 1
@@ -101,18 +94,20 @@ $ ->
     after = true
     enableButtons()
     speak current_word['value']
+    false
 
   $('#word').click ->
-    return if disabledLinks
+    return false if disabledLinks
     disableButtons()
     wordvalue = $('#wordvalue').html().toLowerCase()
     $.getJSON "/words/#{language}/#{wordvalue}/sentence", (data) ->
       $('#exampleSentence').html "<blockquote>#{data['value']}</blockquote>"
       enableButtons()
     speak current_word['value'] if after
+    false
 
   $('#correctAnswer').click ->
-    return if disabledLinks
+    return false if disabledLinks
     disableButtons()
     wordvalue = $('#wordvalue').html().toLowerCase()
     $.ajax
@@ -123,14 +118,16 @@ $ ->
         'word[reviewed]': true
       async: false
     refreshVocabulary()
+    false
 
   $('#incorrectAnswer').click ->
-    return if disabledLinks
+    return false if disabledLinks
     disableButtons()
     refreshVocabulary()
+    false
 
   $('#buttons span.w').click ->
-    return if disabledLinks
+    return false if disabledLinks
     rating = $(this).attr('value')
     setRating(rating)
     wordvalue = $('#wordvalue').html().toLowerCase()
@@ -141,3 +138,4 @@ $ ->
         'word[language]': language
         'word[rating]': rating
       async: true
+    false

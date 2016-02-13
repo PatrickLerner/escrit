@@ -13,12 +13,14 @@ class Note < ActiveRecord::Base
   after_initialize :init
   before_save :check_vocab_set
 
-  VOCAB_REVIEW_INTERVAL_0 = 2
-  VOCAB_REVIEW_INTERVAL_1 = 3
-  VOCAB_REVIEW_INTERVAL_2 = 5
-  VOCAB_REVIEW_INTERVAL_3 = 7
-  VOCAB_REVIEW_INTERVAL_4 = 13
-  VOCAB_REVIEW_INTERVAL_5 = 31
+  VOCAB_REVIEW_INTERVALS = [
+    VOCAB_REVIEW_INTERVAL_0 = 2,
+    VOCAB_REVIEW_INTERVAL_1 = 3,
+    VOCAB_REVIEW_INTERVAL_2 = 5,
+    VOCAB_REVIEW_INTERVAL_3 = 7,
+    VOCAB_REVIEW_INTERVAL_4 = 13,
+    VOCAB_REVIEW_INTERVAL_5 = 31,
+  ]
 
   def init
     self.rating ||= 0
@@ -32,12 +34,7 @@ class Note < ActiveRecord::Base
   def update_review_at!
     next_review = DateTime.now
 
-    next_review += VOCAB_REVIEW_INTERVAL_0.days if self.rating == 0
-    next_review += VOCAB_REVIEW_INTERVAL_1.days if self.rating == 1
-    next_review += VOCAB_REVIEW_INTERVAL_2.days if self.rating == 2
-    next_review += VOCAB_REVIEW_INTERVAL_3.days if self.rating == 3
-    next_review += VOCAB_REVIEW_INTERVAL_4.days if self.rating == 4
-    next_review += VOCAB_REVIEW_INTERVAL_5.days if self.rating == 5
+    next_review += VOCAB_REVIEW_INTERVALS[self.rating]
 
     self.update_column('review_at', next_review)
   end

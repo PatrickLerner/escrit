@@ -12,9 +12,11 @@ The application requires an active PostgreSQL server for all of production, deve
 
 You further must set two randomly generated strings as the secrets to the environment variables `SECRET_KEY_BASE` and `DEVISE_SECRET_KEY`. For production use you must also set credentials to a gmail account used to send emails when required. `GMAIL_USERNAME`, `GMAIL_PASSWORD` and `GMAIL_DOMAIN` (default `=escrit.eu`).
 
-# Source code
+# Source code license
 
-The source code is not released under any open source license and all rights retain with the author(s). Redistribution or modification without permission is not permitted.
+The source code to this website is licensed under the terms of the MIT license, the terms of which can be taken from the LICENSE.md file in this repository.
+
+Not that this license does not cover all the third party code incorporated in this program or some the image assets. You may use the logo files and the (fav)icon of escrit under the terms of the terms of the MIT license as well.
 
 # Stylistic guidelines
 

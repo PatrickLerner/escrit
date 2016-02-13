@@ -76,15 +76,16 @@ $ ->
   refreshWord()
 
   $('#newWord').click ->
-    return if disabledLinks
+    return false if disabledLinks
     disableButtons()
     refreshWord()
     $('#vocabButtons #after').fadeOut 300, ->
       $('#vocabButtons #before').fadeIn 300
       enableButtons()
+    false
 
   $('#checkAnswer').click ->
-    return if disabledLinks
+    return false if disabledLinks
     disableButtons()
     val = $('#word').val()
     if val.toLowerCase() != current_word['value'].toLowerCase()
@@ -99,6 +100,7 @@ $ ->
     else
       reveal()
     $('#word').focus()
+    false
 
   $('#word').keyup (event) ->
     keyCode = event.keyCode or event.which
@@ -113,28 +115,30 @@ $ ->
       else
         $('#play').click()
       event.preventDefault()
-    return
+    false
 
   $('#word').keypress (event) ->
     keyCode = event.keyCode or event.which
 
     if keyCode == KEY_TAB
       event.preventDefault()
-    return
+    false
 
   $('#word').keydown (event) ->
     keyCode = event.keyCode or event.which
 
     if keyCode == KEY_TAB
       event.preventDefault()
-    return
+    false
 
   $('#play').click ->
-    return if disabledLinks
+    return false if disabledLinks
     speak current_word['value'], false
     $('#word').focus()
+    false
 
   $('#playSlow').click ->
-    return if disabledLinks
+    return false if disabledLinks
     speak current_word['value'], true
     $('#word').focus()
+    false
