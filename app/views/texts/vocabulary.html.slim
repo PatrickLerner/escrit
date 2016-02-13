@@ -10,7 +10,7 @@
     = link_to fa_icon('chevron-left', text: 'Back to the text'), text_path(@text), class: 'button ', title: 'See the text'
     .right
       - 5.times do |i|
-        a class="s#{i + 1} rating-button list-rating" style="cursor: pointer; opacity: #{i == 4 ? 0.3 : 1}" title=[ "Looked it up once.", "This time I'll remember it.", "I'm getting it now.", "Seems easy at this point.", "Know it in my sleep."][i]
+        a class="s#{i + 1} rating-button list-rating text-vocab-button" style="cursor: pointer; opacity: #{i == 4 ? 0.3 : 1}" title=[ "Looked it up once.", "This time I'll remember it.", "I'm getting it now.", "Seems easy at this point.", "Know it in my sleep."][i]
           = i + 1
   table.u-full-width.listing
     thead
