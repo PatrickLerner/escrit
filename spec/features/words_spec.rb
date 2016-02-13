@@ -8,6 +8,7 @@ describe 'words' do
 
   it 'has a word list page' do
     note = create(:note, user: user, word: word)
+    visit edit_word_path(language, note.word.value.downcase)
     visit words_path(language)
     expect(page).to have_content note.word.value
     expect(page).to have_content note.value

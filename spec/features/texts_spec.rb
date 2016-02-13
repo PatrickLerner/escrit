@@ -48,6 +48,7 @@ describe 'texts' do
   end
 
   it 'can show the vocabulary used in a text', js: true do
+    visit text_path(text)
     visit vocabulary_text_path(text)
     expect(page).to have_content word.value
   end

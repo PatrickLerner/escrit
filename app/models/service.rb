@@ -22,8 +22,8 @@ class Service < ActiveRecord::Base
   end
 
   def <=>(other)
-    l_a = if self.language then self.language.name else "All" end
-    l_b = if other.language then other.language.name else "All" end
+    l_a = self.language.try(:name) || 'All'
+    l_b = other.language.try(:name) || 'All'
     if (l_a <=> l_b) != 0
       l_a <=> l_b
     else

@@ -10,13 +10,13 @@ class Word < ActiveRecord::Base
   validates :language, presence: true
   validates :value, uniqueness: { scope: :language_id }
 
-  def self.determine_replacement_value word, language
+  def self.determine_replacement_value(word, language)
     replacements = language.replacements
     v = word
-    replacements.each { |r|
+    replacements.each do |r|
       v = v.gsub r.value.downcase, r.replacement.downcase
       v = v.gsub r.value.upcase, r.replacement.upcase
-    }
+    end
     v
   end
 
@@ -31,14 +31,14 @@ class Word < ActiveRecord::Base
     val = val.gsub '_', ' '
   end
 
-  def self.find_create language, word
+  def self.find_create(language, word)
     word = Word.determine_replacement_value word.utf8downcase, language
     w = Word.find_by value: word, language: language
     w = Word.new value: word, language: language if not w
     return w
   end
 
-  def self.find_create_bulk language, words
+  def self.find_create_bulk(language, words)
     words = words.map { |w|
       if w.match(/(.*)\|\|(.*)/)
         wparts = w.match(/(.*)\|\|(.*)/)
