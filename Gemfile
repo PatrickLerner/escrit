@@ -34,6 +34,8 @@ group :development, :test do
   gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'rspec-rails'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :test do
@@ -52,6 +54,4 @@ group :development do
   gem 'spring'
   gem 'quiet_assets'
   gem 'letter_opener'
-  gem 'better_errors'
-  gem 'binding_of_caller'
 end

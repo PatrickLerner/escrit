@@ -59,14 +59,15 @@ html
             li.right= link_to 'Sign up', new_user_registration_path
 
     - if header[:title]
-      header class=header[:class]
-        div.image class=header[:image_class] style=header[:image_style]
+      .header class=header[:class]
+        .image class=header[:image_class] style=header[:image_style]
         .container
           h1= header[:title].html_safe
           - if header[:subtitle_large]
             h4= header[:subtitle_large].html_safe
           - else
             h2= (header[:subtitle] || "&nbsp;").html_safe
+        = fa_icon 'search-plus', class: 'zoom'
 
     - if notice
       .notice

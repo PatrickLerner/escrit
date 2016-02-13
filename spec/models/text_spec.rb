@@ -33,12 +33,20 @@ describe Text, '#process', type: :model do
   end
 
   it 'should allow process native language text and have no highlights' do
-    text = build_stubbed(:text, language: language, content: "test text no highlights")
+    text = create(:text, language: language, content: "test text no highlights")
 
     content = text.processed_content(user)
 
     expect(content).to_not include('word')
     expect(content).to_not include('s0')
+
+    text.language = create(:language)
+    text.save
+
+    content = text.processed_content(user)
+
+    expect(content).to include('word')
+    expect(content).to include('s0')
   end
 
   it 'should allow to embed youtube videos' do

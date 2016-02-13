@@ -1,4 +1,4 @@
-header {
+.header {
   background: $color_darker;
   color: $color_lighter;
   text-align: center;
@@ -6,6 +6,19 @@ header {
   overflow: hidden;
   position: relative;
   margin-top: $navbar_height;
+  position: relative;
+
+  .zoom {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    color: white;
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
 
   a {
     color: white;
@@ -68,7 +81,7 @@ header {
   }
 }
 
-header, .notice, .alert {
+.header, .notice, .alert {
   & + .container {
     margin-top: 2rem;
   }

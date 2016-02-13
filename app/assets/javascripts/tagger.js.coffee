@@ -14,8 +14,8 @@ description = [
 ]
 currentRating = 0
 old_nl = -1
-isMobile = false
 lastObject = null
+isMobile = false
 
 # detects if the user is on a mobile device
 detectMobile = ->
