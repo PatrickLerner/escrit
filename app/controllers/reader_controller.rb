@@ -4,10 +4,10 @@ class ReaderController < ApplicationController
 
   before_action :authenticate_user!
 
-  def render_text text
+  def render_text(text)
     text = Text.new content: text, language: current_language
-    
-    return text.processed_content current_user
+
+    text.processed_content current_user
   end
 
   def index

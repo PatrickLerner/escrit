@@ -8,28 +8,31 @@ class Service < ActiveRecord::Base
   validates :url, presence: true, length: { minimum: 10 }
 
   attr_accessor :published
-
-  def published?
-    @published
-  end
+  attr_reader :published
 
   def ==(other)
     other.instance_of?(self.class) &&
-    self.name == other.name &&
-    self.short_name == other.short_name &&
-    self.url == other.url &&
-    self.language == other.language
+      name == other.name &&
+      short_name == other.short_name &&
+      url == other.url &&
+      language == other.language
   end
 
   def <=>(other)
-    l_a = self.language.try(:name) || 'All'
+    l_a = language.try(:name) || 'All'
     l_b = other.language.try(:name) || 'All'
     if (l_a <=> l_b) != 0
       l_a <=> l_b
     else
-      self.name <=> other.name
+      name <=> other.name
     end
   end
-  
+
+  def dup_for(user)
+    service = dup
+    service.user = user
+    service.save
+  end
+
   alias_method :eql?, :==
 end

@@ -8,8 +8,9 @@ class LanguagesController < ApplicationController
     @language = Language.new(language_params)
 
     return render 'new' unless @language.save
-    
-    redirect_to languages_path, notice: 'New language has been successfully added.'
+
+    redirect_to languages_path,
+                notice: 'New language has been successfully added.'
   end
 
   def edit
@@ -17,8 +18,9 @@ class LanguagesController < ApplicationController
 
   def destroy
     @language.destroy
-    
-    redirect_to languages_path, notice: 'Language has been successfully deleted.'
+
+    redirect_to languages_path,
+                notice: 'Language has been successfully deleted.'
   end
 
   def index
@@ -31,8 +33,9 @@ class LanguagesController < ApplicationController
 
   def update
     return render 'edit' unless @language.update(language_params)
-    
-    redirect_to languages_path, notice: 'Language has been successfully updated.'
+
+    redirect_to languages_path,
+                notice: 'Language has been successfully updated.'
   end
 
   private

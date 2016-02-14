@@ -8,8 +8,9 @@ class ServicesController < ApplicationController
     @service.user = current_user
 
     return render 'new' unless @service.save
-    
-    redirect_to services_path, notice: 'New service has been successfully added.'
+
+    redirect_to services_path,
+                notice: 'New service has been successfully added.'
   end
 
   def edit
@@ -19,23 +20,23 @@ class ServicesController < ApplicationController
     @new_service = @service.dup
     @new_service.user_id = 0
     @new_service.save
-    
+
     redirect_to services_path
   end
 
   def copy
     @service = Service.find_by id: params[:id], user_id: 0
-    
+
     @new_service = @service.dup
     @new_service.user = current_user
     @new_service.save
-    
+
     redirect_to services_path
   end
 
   def destroy
     @service.destroy
-   
+
     redirect_to services_path, notice: 'Service has been successfully deleted.'
   end
 
@@ -59,9 +60,10 @@ class ServicesController < ApplicationController
     @service.enabled = true
   end
 
-  def update    
+  def update
     if @service.update(service_params)
-      redirect_to services_path, notice: 'Service has been successfully updated.'
+      redirect_to services_path,
+                  notice: 'Service has been successfully updated.'
     else
       render 'edit'
     end
@@ -70,11 +72,11 @@ class ServicesController < ApplicationController
   private
 
   def load_service
-    if current_user.admin?
-      @service = Service.find_by id: params[:id]
-    else
-      @service = Service.find_by id: params[:id], user_id: current_user.id
-    end
+    @service = if current_user.admin?
+                 Service.find_by id: params[:id]
+               else
+                 Service.find_by id: params[:id], user_id: current_user.id
+               end
   end
 
   def service_params

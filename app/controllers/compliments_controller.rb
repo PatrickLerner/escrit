@@ -7,8 +7,9 @@ class ComplimentsController < ApplicationController
     @compliment = Compliment.new(compliment_params)
 
     return render 'new' unless @compliment.save
-    
-    redirect_to compliments_path, notice: 'New compliment has been successfully added.'
+
+    redirect_to compliments_path,
+                notice: 'New compliment has been successfully added.'
   end
 
   def edit
@@ -16,13 +17,14 @@ class ComplimentsController < ApplicationController
 
   def destroy
     @compliment.destroy
-    
-    redirect_to compliments_path, notice: 'Compliment has been successfully deleted.'
+
+    redirect_to compliments_path,
+                notice: 'Compliment has been successfully deleted.'
   end
 
   def index
     @compliments = Compliment.joins(:language)
-      .order('languages.name asc, value asc').all
+                             .order('languages.name asc, value asc').all
   end
 
   def new
@@ -31,8 +33,9 @@ class ComplimentsController < ApplicationController
 
   def update
     return render 'edit' unless @compliment.update(compliment_params)
-    
-    redirect_to compliments_path, notice: 'Compliment has been successfully updated.'
+
+    redirect_to compliments_path,
+                notice: 'Compliment has been successfully updated.'
   end
 
   private

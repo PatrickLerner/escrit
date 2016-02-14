@@ -1,6 +1,6 @@
 class ArtworksController < ApplicationController
   include ApplicationHelper
-  
+
   before_action :authenticate_user!
   before_action :user_admin!
   before_action :load_artwork, only: [:show, :edit, :destroy, :update]
@@ -13,8 +13,9 @@ class ArtworksController < ApplicationController
     @artwork = Artwork.new(artwork_params)
 
     return render 'new' unless @artwork.save
-    
-    redirect_to edit_artwork_path(@artwork), notice: 'New artwork has been successfully added.'
+
+    redirect_to edit_artwork_path(@artwork),
+                notice: 'New artwork has been successfully added.'
   end
 
   def edit
@@ -27,7 +28,8 @@ class ArtworksController < ApplicationController
   end
 
   def index
-    @artworks = current_language.artworks.joins(:language).order('languages.name asc')
+    @artworks = current_language.artworks.joins(:language)
+                                .order('languages.name asc')
   end
 
   def new
@@ -36,8 +38,9 @@ class ArtworksController < ApplicationController
 
   def update
     return render 'edit' unless @artwork.update(artwork_params)
-    
-    redirect_to edit_artwork_path(@artwork), notice: 'Artwork has been successfully updated.'
+
+    redirect_to edit_artwork_path(@artwork),
+                notice: 'Artwork has been successfully updated.'
   end
 
   private
@@ -45,7 +48,7 @@ class ArtworksController < ApplicationController
   def load_artwork
     @artwork = Artwork.find_by id: params[:id]
   end
-  
+
   def artwork_params
     params.require(:artwork).permit(:image, :language_id)
   end

@@ -1,6 +1,6 @@
 class Note < ActiveRecord::Base
   using StringRefinements
-  
+
   belongs_to :word
   belongs_to :user
 
@@ -55,6 +55,14 @@ class Note < ActiveRecord::Base
     Note.includes(:word).joins(:word).where('notes.user_id = ? AND words.language_id = ? AND vocabulary = TRUE AND rating < 6', user.id, language.id).count
   end
 
+  def self.sample_vocabulary(language, user)
+    Note.joins(:word).where(
+      'words.language_id = ? AND user_id = ? AND vocabulary = true',
+      language.id,
+      user.id
+    ).order('RANDOM()').first
+  end
+
   def self.shuffle_vocabulary! user, language
     # 50 words first day, -10 after to a minimum of 10
     max_words = 50
@@ -74,6 +82,17 @@ class Note < ActiveRecord::Base
     if self.vocabulary_changed? and self.persisted?
       update_review_at!
     end
+  end
+
+  def to_json
+    {
+      value: word.value,
+      value_clean: word.value_clean,
+      note: value.strip,
+      language: word.language.name,
+      rating: rating,
+      vocabulary: vocabulary?
+    }
   end
 
   def self.find_create language, word, user

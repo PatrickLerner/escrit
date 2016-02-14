@@ -7,8 +7,9 @@ class ReplacementsController < ApplicationController
     @replacement = Replacement.new(replacement_params)
 
     return render 'new' unless @replacement.save
-    
-    redirect_to replacements_path, notice: 'New replacement has been successfully added.'
+
+    redirect_to replacements_path,
+                notice: 'New replacement has been successfully added.'
   end
 
   def edit
@@ -16,8 +17,9 @@ class ReplacementsController < ApplicationController
 
   def destroy
     @replacement.destroy
-    
-    redirect_to replacements_path, notice: 'Replacement has been successfully deleted.'
+
+    redirect_to replacements_path,
+                notice: 'Replacement has been successfully deleted.'
   end
 
   def index
@@ -30,12 +32,13 @@ class ReplacementsController < ApplicationController
 
   def update
     return render 'edit' unless @replacement.update(replacement_params)
-    
-    redirect_to replacements_path, notice: 'Replacement has been successfully updated.'
+
+    redirect_to replacements_path,
+                notice: 'Replacement has been successfully updated.'
   end
 
   private
-  
+
   def load_replacement
     @replacement = Replacement.find_by id: params[:id]
   end

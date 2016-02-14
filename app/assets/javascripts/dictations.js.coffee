@@ -115,21 +115,21 @@ $ ->
       else
         $('#play').click()
       event.preventDefault()
-    false
+    return
 
   $('#word').keypress (event) ->
     keyCode = event.keyCode or event.which
 
     if keyCode == KEY_TAB
       event.preventDefault()
-    false
+    return
 
   $('#word').keydown (event) ->
     keyCode = event.keyCode or event.which
 
     if keyCode == KEY_TAB
       event.preventDefault()
-    false
+    return
 
   $('#play').click ->
     return false if disabledLinks

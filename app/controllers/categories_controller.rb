@@ -1,7 +1,7 @@
 class CategoriesController < ApplicationController
   include ApplicationHelper
   using StringRefinements
-  
+
   before_action :authenticate_user!
 
   def edit
@@ -23,7 +23,7 @@ class CategoriesController < ApplicationController
       current_user.id,
       current_language.id
     ).group('category').select('category').order('category asc').limit(5)
-    
+
     render text: texts.map(&:category).to_json
   end
 end
