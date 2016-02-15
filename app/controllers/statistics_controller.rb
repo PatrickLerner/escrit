@@ -7,7 +7,7 @@ class StatisticsController < ApplicationController
   def index_language
       @languages = Language.order(:name).all
   end
-  
+
   def index
     @new_words_this_week_data = []
     @new_words_this_week_labels = []
@@ -85,7 +85,7 @@ class StatisticsController < ApplicationController
     @vocabulary_data_c = []
     @vocabulary_data = []
     @vocabulary_labels = []
-    @total_vocabulary_words = Note.vocabulary_count current_user, current_language
+    @total_vocabulary_words = Note.vocabulary(current_user, current_language).count
     last_count = 0
     14.times.each do |i|
       end_date = i.days.since.end_of_day

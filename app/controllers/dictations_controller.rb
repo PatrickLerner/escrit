@@ -9,7 +9,7 @@ class DictationsController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        render json: Note.sample_vocabulary(current_language, current_user)
+        render json: Note.sample_vocabulary(current_user, current_language)
           .try(:to_json) || {}
       end
     end

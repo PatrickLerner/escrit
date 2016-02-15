@@ -1,6 +1,6 @@
 class Word < ActiveRecord::Base
   using StringRefinements
-  
+
   belongs_to :language
   belongs_to :user
   has_many :notes
@@ -21,21 +21,21 @@ class Word < ActiveRecord::Base
   end
 
   def replacement_value
-    Word.determine_replacement_value self.value, self.language
+    Word.determine_replacement_value value, language
   end
 
   def value_clean
-    val = self.value
+    val = value
     val = val.gsub '..', ' ... '
     val = val.gsub '...', ' ... '
-    val = val.gsub '_', ' '
+    val.tr '_', ' '
   end
 
   def self.find_create(language, word)
-    word = Word.determine_replacement_value word.utf8downcase, language
-    w = Word.find_by value: word, language: language
-    w = Word.new value: word, language: language if not w
-    return w
+    value = Word.determine_replacement_value word.utf8downcase, language
+    word = Word.find_by value: value, language: language
+    word ||= Word.new value: value, language: language
+    word
   end
 
   def self.find_create_bulk(language, words)
@@ -61,6 +61,6 @@ class Word < ActiveRecord::Base
       result[word] = Word.new value: word, language: language
     end
 
-    return result
+    result
   end
 end

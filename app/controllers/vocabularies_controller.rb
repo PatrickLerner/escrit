@@ -10,12 +10,12 @@ class VocabulariesController < ApplicationController
     respond_to do |format|
       format.html
       format.json {
-        if @words
+        if @words.empty?
+          render json: []
+        else
           render json: @words.map { |word|
             word.word.value
           }
-        else
-          render json: []
         end
       }
     end

@@ -35,7 +35,7 @@ class SettingsController < ApplicationController
 
   def vocabulary
     all_vocabulary = current_user.languages.map do |language|
-      [language, Note.vocabulary_count(current_user, language)]
+      [language, Note.vocabulary(current_user, language).count]
     end
     all_vocabulary.select { |i| i[1] > 0 }
   end

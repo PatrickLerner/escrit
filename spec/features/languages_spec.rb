@@ -33,7 +33,7 @@ describe 'languages for admins' do
     expect(page).to have_content language
     click_link language
 
-    new_language = Faker::Hipster.word
+    new_language = 'newlanguage'
     fill_in 'Language name', with: new_language
     click_link 'Save'
 

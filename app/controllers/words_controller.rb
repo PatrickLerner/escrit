@@ -5,7 +5,7 @@ class WordsController < ApplicationController
   include TextsHelper
 
   before_action :authenticate_user!
-  before_action :load_word, only: [ :vocab_unset, :vocab_set, :edit, :show ]
+  before_action :load_word, only: [:vocab_unset, :vocab_set, :edit, :show]
 
   def index_language
     @languages = Language.order(:name).all
@@ -14,24 +14,11 @@ class WordsController < ApplicationController
   def index
     @search_term = (params['q'] || '').strip
 
-    if @search_term == ''
-      @notes = Note.includes(:word).joins(:word).order('notes.created_at DESC')
-        .paginate(page: params[:page], per_page: 250)
-        .where(
-          'user_id = ? and rating < 6 and language_id = ?',
-          current_user.id,
-          current_language.id
-        )
-    else
-      @notes = Note.includes(:word).joins(:word).order('notes.created_at DESC')
-        .paginate(page: params[:page], per_page: 250)
-        .where(
-          'user_id = ? and rating < 6 and language_id = ? and ' \
-          '(words.value ilike ? or notes.value ilike ?)',
-          current_user.id,
-          current_language.id,
-          "%#{@search_term}%", "%#{@search_term}%"
-        )
+    @notes = Note.for(current_user, current_language)
+                 .paginate(page: params[:page], per_page: 250)
+    if @search_term != ''
+      @notes = @notes.where('words.value ilike ? or notes.value ilike ?',
+                            "%#{@search_term}%", "%#{@search_term}%")
     end
   end
 
@@ -43,7 +30,7 @@ class WordsController < ApplicationController
         @word.id,
         current_user.id
       ).sample
-    
+
     if occurrence
       sample = occurrence.text.occurrences(@word.value).sample
       raw = ActionView::Base.full_sanitizer.sanitize(sample)
@@ -108,7 +95,7 @@ class WordsController < ApplicationController
     @note.value = params[:word][:note].strip if params[:word][:note]
     @note.rating = params[:word][:rating]    if params[:word][:rating]
     @note.update_review_at!                  if params[:word][:reviewed]
-    
+
     if @note.word.save and @note.save
       render plain: "ok"
     else
@@ -117,15 +104,15 @@ class WordsController < ApplicationController
 
     if @note.value == '' and @note.rating == 0
       nodes = Note.where word: @note.word
-      
+
       @note.word.delete if nodes.length <= 1
-      
+
       Note.where(word: @note.word, user: current_user).delete_all
     end
   end
 
   private
-  
+
   def load_word
     @note = Note.find_create current_language, params[:id].downcase, current_user
     @word = @note.word

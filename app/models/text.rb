@@ -8,7 +8,7 @@ class Text < ActiveRecord::Base
   has_many :occurrences, dependent: :delete_all
 
   validates :category, presence: true
-  validates :content, presence: true, length: { minimum: 4, maximum: 15000 }
+  validates :content, presence: true, length: { minimum: 4, maximum: 15_000 }
   validates :language, presence: true
   validates :title, presence: true
   validates :user, presence: true
@@ -69,9 +69,9 @@ class Text < ActiveRecord::Base
       }
       # convert headers
       processed = processed.gsub(/^([#]+)[ \t]*(.*)[\n]*/, "\\1 \\2\n\n")
-      processed = processed.gsub(/\r/, '')
+      processed = processed.delete("\r")
       paragraphs = processed.split(/[\n]{2,}/)
-      paragraphs = paragraphs.map { |p| p.strip }
+      paragraphs = paragraphs.map(&:strip)
       processed = if paragraphs.count > 1
         paragraphs.map { |p|
           if p[0] == '#'
@@ -80,7 +80,7 @@ class Text < ActiveRecord::Base
             p = p.gsub(/^#[ \t]*(.*)[\n]*/, '<h3>\1</h3>')
           elsif p[0] == '>'
             p = p.gsub(/^>[ \t]*(.*)[\n]*/, '<blockquote>\1</blockquote>')
-          elsif not (/<div/.match p)
+          elsif !(/<div/.match p)
             '<p>' + p + '</p>'
           else
             p
@@ -89,12 +89,13 @@ class Text < ActiveRecord::Base
       else
         paragraphs.join
       end
-      processed = processed.gsub(/\n/, "<br />")
+      processed = processed.gsub(/\n/, '<br />')
       processed = processed.gsub(/\*\*(.*?)\*\*/, '<strong>\1</strong>')
       processed = processed.gsub(/__(.*?)__/, '<em>\1</em>')
       processed = processed.gsub(/\-\-\-[\-]*[\n]*/, '<hr />')
       processed = processed.gsub(/==[=]*[\n]*/, '<hr />')
-      processed = processed.gsub(/\(\((.*?)\)\)/, '<span class="hint">(\1)</span>')
+      processed = processed.gsub(/\(\((.*?)\)\)/,
+                                 '<span class="hint">(\1)</span>')
       processed.html_safe
     end
   end
@@ -102,8 +103,12 @@ class Text < ActiveRecord::Base
   # returns if the given user is allowed to update the text
   # admins are allowed to update all texts, other users only their own
   # and only if their text has not been made public
-  def is_allowed_to_update user
-    user.admin? or (user.id == read_attribute(:user_id) and not read_attribute(:public))
+  def is_allowed_to_update?(user)
+    user.admin? || (user.id == user_id && !public)
+  end
+
+  def is_allowed_to_view?(user)
+    user_id == user.id || user.admin? || public
   end
 
   def scan_words_content
@@ -151,7 +156,7 @@ class Text < ActiveRecord::Base
   def content_cleaned
     self.content.gsub(URI.regexp, '').strip
   end
-  
+
   def content_processed
     process self.content
   end
@@ -194,7 +199,7 @@ class Text < ActiveRecord::Base
         o.delete
       end
     end
-    
+
     if self.word_count != self.unique_word_count
       self.update_columns(word_count: self.unique_word_count)
     end

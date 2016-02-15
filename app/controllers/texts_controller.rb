@@ -8,8 +8,9 @@ class TextsController < ApplicationController
   def vocabulary
     @text = Text.find params[:id]
 
-    if @text == nil or (@text.user_id != current_user.id and not current_user.admin? and not @text.public)
-      redirect_to language_choice_texts_path, alert: 'You are not allowed to do that.'
+    if @text.nil? || !@text.is_allowed_to_view?(current_user)
+      redirect_to language_choice_texts_path,
+                  alert: 'You are not allowed to do that.'
     else
       if current_user.native_language_id != @text.language_id
         @notes = Note.joins('INNER JOIN "occurrences" ON "notes"."word_id" = "occurrences"."word_id"').includes(:word).where('occurrences.text_id = ? AND notes.rating IN (1, 2, 3, 4, 5) AND notes.user_id = ?', @text.id, current_user.id).paginate(page: params[:page], per_page: 250)
@@ -18,16 +19,18 @@ class TextsController < ApplicationController
   end
 
   def copy
-    if @text == nil or (@text.user_id != current_user.id and not current_user.admin? and not @text.public)
-      redirect_to language_choice_texts_path, alert: 'You are not allowed to do that.'
+    if @text.nil? || !@text.is_allowed_to_view?(current_user)
+      redirect_to language_choice_texts_path,
+                  alert: 'You are not allowed to do that.'
     else
       @new_text = @text.dup
       @new_text.user = current_user
       @new_text.public = false
       @new_text.hidden = false
       @new_text.save
- 
-      redirect_to text_path(@new_text), notice: 'Text has been successfully copied into your library.'
+
+      redirect_to text_path(@new_text),
+                  notice: 'Text has been successfully copied into your library.'
     end
   end
 
@@ -40,23 +43,17 @@ class TextsController < ApplicationController
       @text.save
       redirect_to @text, notice: 'New text has been successfully added.'
     else
-      if @text.language
-        params[:language] = @text.language.name
-      end
+      params[:language] = @text.language.name if @text.language
       render 'new'
     end
   end
 
   def edit
-    if not @text.is_allowed_to_update current_user
-      @text = nil
-    end
+    @text = nil unless @text.is_allowed_to_update?(current_user)
   end
 
   def destroy
-    if @text.is_allowed_to_update current_user
-      @text.destroy
-    end
+    @text.destroy unless @text.is_allowed_to_update?(current_user)
 
     url = '/texts/' + @text.language.name.downcase
     if @text.public
@@ -73,7 +70,7 @@ class TextsController < ApplicationController
     @languages = Language.order(:name).all
   end
 
-  def index hidden = false, public = false
+  def index(hidden = false, public = false)
     selected_category = params[:c]
 
     if current_language == nil
