@@ -1,5 +1,7 @@
 ![](http://escrit.eu/assets/logo-i.png)
 
+[![Code Climate](https://codeclimate.com/github/PatrickLerner/escrit/badges/gpa.svg)](https://codeclimate.com/github/PatrickLerner/escrit)
+
 # Description
 
 escrit.eu is a little private project I have been working on for the past few months, in it's earliest revisions which were originally written in PHP, since about late 2014. This current version of the software is written in Ruby on Rails and under current and constant development. A live version of it can be found, as the project name suggest under [escrit.eu](http://escrit.eu/).
