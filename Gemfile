@@ -25,7 +25,7 @@ gem 'paperclip'
 gem 'indefinite_article'
 
 group :production do
-  gem 'puma'
+ gem 'unicorn'
 end
 
 group :development, :test do
