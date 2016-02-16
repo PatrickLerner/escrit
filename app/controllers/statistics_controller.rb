@@ -1,12 +1,9 @@
 class StatisticsController < ApplicationController
+  include LanguageIndexPage
   include TextsHelper
   include ApplicationHelper
 
   before_action :authenticate_user!
-
-  def index_language
-      @languages = Language.order(:name).all
-  end
 
   def index
     @new_words_this_week_data = []

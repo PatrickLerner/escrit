@@ -1,15 +1,11 @@
 class WordsController < ApplicationController
-  using StringRefinements
-
+  include LanguageIndexPage
   include ApplicationHelper
   include TextsHelper
+  using StringRefinements
 
   before_action :authenticate_user!
   before_action :load_word, only: [:vocab_unset, :vocab_set, :edit, :show]
-
-  def index_language
-    @languages = Language.order(:name).all
-  end
 
   def index
     @search_term = (params['q'] || '').strip

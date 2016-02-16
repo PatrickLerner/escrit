@@ -1,6 +1,6 @@
 class Note < ActiveRecord::Base
-  using StringRefinements
   include Note::Vocabulary
+  using StringRefinements
 
   belongs_to :word
   belongs_to :user
@@ -17,7 +17,7 @@ class Note < ActiveRecord::Base
   scope :for_user, ->(user) { where(user: user) }
 
   def self.for_language(language)
-    joins(:word).where('words.language_id IN (?)', [0, language.id])
+    joins(:word).where('words.language_id = ?', language.id)
   end
 
   def init

@@ -11,6 +11,7 @@ class Service < ActiveRecord::Base
   attr_reader :published
 
   scope :enabled, -> { where(enabled: true) }
+  scope :published, -> { where(user_id: 0) }
   scope :for_user, ->(user) { where(user: user) }
 
   def self.for_language(language)

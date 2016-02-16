@@ -1,13 +1,10 @@
 class ArtworksController < ApplicationController
+  include LanguageIndexPage
   include ApplicationHelper
 
   before_action :authenticate_user!
   before_action :user_admin!
   before_action :load_artwork, only: [:show, :edit, :destroy, :update]
-
-  def index_language
-    @languages = Language.order(:name).all
-  end
 
   def create
     @artwork = Artwork.new(artwork_params)

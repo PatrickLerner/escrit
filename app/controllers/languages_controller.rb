@@ -24,7 +24,7 @@ class LanguagesController < ApplicationController
   end
 
   def index
-    @languages = Language.order(:name)
+    @languages = Language.all
   end
 
   def new

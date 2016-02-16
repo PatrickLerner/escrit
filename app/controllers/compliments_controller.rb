@@ -23,8 +23,7 @@ class ComplimentsController < ApplicationController
   end
 
   def index
-    @compliments = Compliment.joins(:language)
-                             .order('languages.name asc, value asc').all
+    @compliments = Compliment.all
   end
 
   def new

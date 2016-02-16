@@ -18,6 +18,9 @@ class Text < ActiveRecord::Base
 
   WORD_REGEX = /@?\p{Alpha}[\p{Alpha}\-\|\.:\/\?=0-9%_]+[\p{Alpha}0-9]|\p{Alpha}+/i
 
+  scope :for_user, ->(user) { where(user: user) }
+  scope :for_language, ->(language) { where(language: language) }
+
   %w[content category title].each do |type|
     define_method "processed_#{type}" do |current_user|
       disabled_words = !current_user.real?

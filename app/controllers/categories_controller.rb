@@ -15,11 +15,10 @@ class CategoriesController < ApplicationController
   end
 
   def autocomplete_text_category
-    render text: Text.group('category').where(
-      'lower(category) like ? and (user_id = ? or public = true) ' \
-      'and language_id = ?', "%#{params[:term].utf8downcase}%",
-      current_user.id,
-      current_language.id
-    ).order('category asc').limit(5).pluck(:category).to_json
+    render text: Text.for_language(current_language)
+      .group('category').where(
+        'lower(category) like ? and (user_id = ? or public = true) ',
+        "%#{params[:term].utf8downcase}%", current_user.id)
+      .order('category asc').limit(5).pluck(:category).to_json
   end
 end

@@ -1,9 +1,6 @@
 class DictationsController < ApplicationController
+  include LanguageIndexPage
   include ApplicationHelper
-
-  def index_language
-    @languages = Language.order(:name).all
-  end
 
   def index
     respond_to do |format|

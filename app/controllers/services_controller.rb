@@ -25,7 +25,7 @@ class ServicesController < ApplicationController
   end
 
   def copy
-    @service = Service.find_by id: params[:id], user_id: 0
+    @service = Service.published.find(params[:id])
 
     @new_service = @service.dup
     @new_service.user = current_user
@@ -41,8 +41,8 @@ class ServicesController < ApplicationController
   end
 
   def index
-    @services = Service.where(user_id: current_user.id).sort
-    @public_services = Service.where(user_id: 0)
+    @services = Service.for_user(current_user).sort
+    @public_services = Service.published
 
     @services.each do |service|
       service.published = @public_services.include?(service)
@@ -56,8 +56,7 @@ class ServicesController < ApplicationController
   end
 
   def new
-    @service = Service.new
-    @service.enabled = true
+    @service = Service.new(enabled: true)
   end
 
   def update
@@ -73,9 +72,9 @@ class ServicesController < ApplicationController
 
   def load_service
     @service = if current_user.admin?
-                 Service.find_by id: params[:id]
+                 Service.find(params[:id])
                else
-                 Service.find_by id: params[:id], user_id: current_user.id
+                 Service.for_user(current_user).find(params[:id])
                end
   end
 

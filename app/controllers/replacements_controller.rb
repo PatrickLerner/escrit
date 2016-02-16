@@ -23,7 +23,7 @@ class ReplacementsController < ApplicationController
   end
 
   def index
-    @replacements = Replacement.order(:language_id)
+    @replacements = Replacement.all
   end
 
   def new

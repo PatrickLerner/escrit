@@ -7,7 +7,7 @@ class RegistrationController < Devise::RegistrationsController
     # user is created successfuly
     return unless resource.persisted?
     # add all services that are public by default
-    Service.where(user_id: 0).each do |service|
+    Service.published.each do |service|
       service.dup_for(resource)
     end
   end

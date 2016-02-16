@@ -1,4 +1,5 @@
 class TextsController < ApplicationController
+  include LanguageIndexPage
   include ApplicationHelper
   include TextsHelper
 
@@ -65,10 +66,6 @@ class TextsController < ApplicationController
     url += '#' + @text.category
 
     redirect_to url, notice: 'Text has been successfully deleted.'
-  end
-
-  def index_language
-    @languages = Language.order(:name).all
   end
 
   def index(hidden = false, public = false)

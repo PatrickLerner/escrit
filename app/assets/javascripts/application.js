@@ -19,3 +19,4 @@
 //= require lightbox
 //= require audiojs
 //= require_tree .
+//= require_tree ../../../vendor/assets/javascripts/.

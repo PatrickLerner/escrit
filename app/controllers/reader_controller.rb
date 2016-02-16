@@ -1,4 +1,5 @@
 class ReaderController < ApplicationController
+  include LanguageIndexPage
   include ApplicationHelper
   include TextsHelper
 
@@ -10,10 +11,6 @@ class ReaderController < ApplicationController
       @param_text = render_text params[:q]
       @param_text_raw = params[:q]
     end
-  end
-
-  def index_language
-    @languages = Language.order(:name).all
   end
 
   def preview
