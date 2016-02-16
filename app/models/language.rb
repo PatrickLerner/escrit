@@ -26,9 +26,7 @@ class Language < ActiveRecord::Base
   end
 
   def has_vocabulary?(user)
-    Note.joins(:word).where(
-      'words.Language_id = ? AND user_id = ?', id, user.id
-    ).where(vocabulary: true).count > 0
+    Note.vocabulary.for_language(self).for_user(user).count > 0
   end
 
   def <=>(other)
