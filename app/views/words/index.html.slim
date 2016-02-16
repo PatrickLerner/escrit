@@ -21,7 +21,7 @@
     div class="pagination_info"
       = page_entries_info @notes
 
-    
+
     table.u-full-width.listing
       thead
         th style="width: 35%" Word
@@ -37,7 +37,7 @@
               span class=["s#{w.rating}", "list-rating"] title=[ "Looked it up once.", "This time I'll remember it.", "I'm getting it now.", "Seems easy at this point.", "Know it in my sleep."][w.rating - 1]
                 = w.rating
             td.u-centered
-              - if w.vocabulary
+              - if w.vocabulary?
                 = fa_icon 'check', value: w.word.replacement_value, class: 'toggleVocabulary'
               - else
                 = fa_icon 'minus', value: w.word.replacement_value, class: 'toggleVocabulary'

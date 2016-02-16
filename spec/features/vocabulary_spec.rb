@@ -30,12 +30,12 @@ describe 'vocabulary' do
   end
 
   it 'allows to reset all vocabulary in the settings' do
-    expect(Note.vocabulary(user, note.word.language).count).to eq(1)
+    expect(Note.vocabulary.for_user(user).for_language(note.word.language).count).to eq(1)
     visit settings_path
     click_link 'Vocabulary'
     expect(page).to have_content language.name
     click_link 'Reset'
-    expect(Note.vocabulary(user, language).count).to eq(0)
+    expect(Note.vocabulary.for_user(user).for_language(language).count).to eq(0)
     expect(page).to have_content 'You do not have any vocabulary in any language.'
   end
 
@@ -44,11 +44,11 @@ describe 'vocabulary' do
       word = create(:word, language: language, value: "word#{i}")
       create(:note, vocabulary: true, review_at: 5.days.ago, user: user, word: word, rating: 3)
     end
-    expect(Note.vocabulary_for_review(user, note.word.language).count).to eq(101)
+    expect(Note.vocabulary.for_user(user).for_language(note.word.language).awaiting_review.count).to eq(101)
     visit settings_path
     click_link 'Vocabulary'
     expect(page).to have_content language.name
     click_link 'Shuffle'
-    expect(Note.vocabulary_for_review(user, language).count).to eq(50)
+    expect(Note.vocabulary.for_user(user).for_language(language).awaiting_review.count).to eq(50)
   end
 end

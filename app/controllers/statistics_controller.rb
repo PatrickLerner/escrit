@@ -85,7 +85,7 @@ class StatisticsController < ApplicationController
     @vocabulary_data_c = []
     @vocabulary_data = []
     @vocabulary_labels = []
-    @total_vocabulary_words = Note.vocabulary(current_user, current_language).count
+    @total_vocabulary_words = Note.vocabulary.for_user(current_user).for_language(current_language).count
     last_count = 0
     14.times.each do |i|
       end_date = i.days.since.end_of_day

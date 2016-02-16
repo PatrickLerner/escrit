@@ -15,7 +15,7 @@
       ul
         - if current_user.languages.count > 0
           - current_user.languages.each do |lang|
-            - vocab = Note.vocabulary_for_review(current_user, lang).count
+            - vocab = Note.vocabulary.for_user(current_user).for_language(lang).awaiting_review.count
             - if vocab > 0
               li
                 = flag_icon_tag lang

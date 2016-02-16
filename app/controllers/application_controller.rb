@@ -10,29 +10,38 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  # always redirect away from the www-version of the site to the plain url one
-  def redirect_subdomain
-    redirect_to "http://escrit.eu#{request.fullpath}" if request.host == 'www.escrit.eu'
+  def load_services
+    @services = Service.for_user(current_user)
+                       .for_language(current_language).enabled
   end
 
-  def after_sign_in_path_for(resource)
+  # always redirect away from the www-version of the site to the plain url one
+  def redirect_subdomain
+    if request.host == 'www.escrit.eu'
+      redirect_to "http://escrit.eu#{request.fullpath}"
+    end
+  end
+
+  def after_sign_in_path_for(_resource)
     '/home'
   end
 
   def user_admin!
-    redirect_to home_path, alert: 'You must be an administrator to do this!' if not current_user.admin?
+    unless current_user.admin?
+      redirect_to home_path, alert: 'You must be an administrator to do this!'
+    end
   end
 
   alias_method :devise_current_user, :current_user
 
   def current_user
-    @current_user ||= get_current_user
+    @current_user ||= determine_current_user
   end
 
   private
 
-  def get_current_user
-    if !params[:u].blank? && devise_current_user && devise_current_user.admin?
+  def determine_current_user
+    if allowed_to_shadow_users? && params[:u].present?
       user = User.find(params[:u])
     end
     user ||= devise_current_user
@@ -41,5 +50,9 @@ class ApplicationController < ActionController::Base
       user.real = (user.id == devise_current_user.id)
     end
     user
+  end
+
+  def allowed_to_shadow_users?
+    devise_current_user && devise_current_user.admin?
   end
 end

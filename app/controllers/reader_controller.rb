@@ -3,20 +3,9 @@ class ReaderController < ApplicationController
   include TextsHelper
 
   before_action :authenticate_user!
-
-  def render_text(text)
-    text = Text.new content: text, language: current_language
-
-    text.processed_content current_user
-  end
+  before_action :load_services, only: [:index]
 
   def index
-    @services = Service.where(
-      '(language_id=? or language_id=0) and user_id = ? and enabled = true',
-      current_language.id,
-      current_user.id
-    )
-
     if params[:q]
       @param_text = render_text params[:q]
       @param_text_raw = params[:q]
@@ -29,5 +18,13 @@ class ReaderController < ApplicationController
 
   def preview
     render text: render_text(params['text'])
+  end
+
+  private
+
+  def render_text(text)
+    text = Text.new content: text, language: current_language
+
+    text.processed_content current_user
   end
 end

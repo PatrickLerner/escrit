@@ -10,8 +10,8 @@ class SettingsController < ApplicationController
 
   def show
     if params[:do] == 'reset'
-      Note.vocabulary(current_user, current_language)
-          .update_all(vocabulary: false)
+      Note.vocabulary.for_user(current_user)
+          .for_language(current_language).reset_all
     elsif params[:do] == 'shuffle'
       Note.shuffle_vocabulary!(current_user, current_language)
     end
@@ -35,7 +35,8 @@ class SettingsController < ApplicationController
 
   def vocabulary
     all_vocabulary = current_user.languages.map do |language|
-      [language, Note.vocabulary(current_user, language).count]
+      [language, Note.vocabulary.for_user(current_user)
+                     .for_language(language).count]
     end
     all_vocabulary.select { |i| i[1] > 0 }
   end

@@ -10,6 +10,13 @@ class Service < ActiveRecord::Base
   attr_accessor :published
   attr_reader :published
 
+  scope :enabled, -> { where(enabled: true) }
+  scope :for_user, ->(user) { where(user: user) }
+
+  def self.for_language(language)
+    where('language_id IN (?)', [0, language.id])
+  end
+
   def ==(other)
     other.instance_of?(self.class) &&
       name == other.name &&

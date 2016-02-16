@@ -4,6 +4,8 @@ module Note::Vocabulary
   included do
     before_save :check_vocab_set
 
+    scope :vocabulary, -> { where(vocabulary: true) }
+
     VOCAB_REVIEW_INTERVALS = [
       VOCAB_REVIEW_INTERVAL_0 = 2,
       VOCAB_REVIEW_INTERVAL_1 = 3,
@@ -19,12 +21,13 @@ module Note::Vocabulary
   end
 
   module ClassMethods
-    def vocabulary_for_review(user, language)
-      Note.includes(:word).joins(:word).where(
-        'notes.user_id = ? AND words.language_id = ? AND ' \
-        'vocabulary = TRUE AND rating < 6 AND notes.review_at < ?',
-        user.id, language.id, DateTime.now
-      ).order(:review_at)
+    def reset_all
+      update_all(vocabulary: false)
+    end
+
+    def awaiting_review
+      where('rating < 6 AND notes.review_at < ?', DateTime.now)
+        .order(:review_at)
     end
 
     def vocabulary(user, language)
@@ -44,7 +47,7 @@ module Note::Vocabulary
       # 50 words first day, -10 after to a minimum of 10
       max_words = 50
       days_plus = 0
-      vocab = Note.vocabulary user, language
+      vocab = Note.vocabulary.for_user(user).for_language(language)
       while vocab.count > 0
         selected = vocab.sample(max_words)
         Note.where(id: selected.map(&:id))

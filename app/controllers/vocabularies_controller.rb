@@ -6,7 +6,8 @@ class VocabulariesController < ApplicationController
   end
 
   def index
-    @words = Note.vocabulary_for_review current_user, current_language
+    @words = Note.vocabulary.for_user(current_user)
+                 .for_language(current_language).awaiting_review
     respond_to do |format|
       format.html
       format.json {

@@ -5,14 +5,20 @@ class Note < ActiveRecord::Base
   belongs_to :word
   belongs_to :user
 
-  validates :rating, presence: true,
-    numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 6 }
+  validates :rating, presence: true, numericality: {
+    greater_than_or_equal_to: 0, less_than_or_equal_to: 6 }
   validates :user, presence: true
   validates :word, presence: true
   validates :word, uniqueness: { scope: :user_id }
   validates_uniqueness_of :word_id, scope: :user_id
 
   after_initialize :init
+
+  scope :for_user, ->(user) { where(user: user) }
+
+  def self.for_language(language)
+    joins(:word).where('words.language_id IN (?)', [0, language.id])
+  end
 
   def init
     self.rating ||= 0

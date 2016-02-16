@@ -4,6 +4,7 @@ class TextsController < ApplicationController
 
   before_action :authenticate_user!
   before_action :load_text, only: [:show, :edit, :update, :copy, :destroy]
+  before_action :load_services, only: [:show]
 
   def vocabulary
     @text = Text.find params[:id]
@@ -145,9 +146,6 @@ class TextsController < ApplicationController
       @processed_text = @text.processed_content current_user
       @processed_title = @text.processed_title current_user
       @processed_category = @text.processed_category current_user
-
-      @services = Service.where('(language_id=? or language_id=0) and user_id = ? and enabled = true', @text.language_id, current_user.id)
-      @services = [] if @services == nil
     end
   end
 

@@ -57,7 +57,8 @@ module ApplicationHelper
 
   def vocab_words
     if current_language
-      count = Note.vocabulary_for_review(current_user, current_language).count
+      count = Note.vocabulary.for_user(current_user)
+                  .for_language(current_language).awaiting_review.count
       if count > 0
         content_tag(:span, count, class: 'highlight')
       end
