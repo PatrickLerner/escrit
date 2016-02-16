@@ -39,12 +39,6 @@ class Note < ActiveRecord::Base
       .order(:review_at)
   end
 
-  def self.vocabulary(user, language)
-    Note.includes(:word).joins(:word).where(
-      'notes.user_id = ? AND words.language_id = ? AND ' \
-      'vocabulary = TRUE AND rating < 6', user.id, language.id)
-  end
-
   def self.sample_vocabulary(user, language)
     Note.joins(:word).where(
       'words.language_id = ? AND user_id = ? AND vocabulary = true',
