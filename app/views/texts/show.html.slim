@@ -7,6 +7,13 @@
 
 .container
   .buttons
+    - if @text.public
+      - back_link = texts_path(current_language) + '/public'
+    - elsif @text.hidden
+      - back_link = texts_path(current_language) + '/archive'
+    - else
+      - back_link = texts_path(current_language)
+    = link_to fa_icon('chevron-left') + ' Back', "#{back_link}\##{@text.category}", class: 'button', title: 'Go back to overview'
     - if current_user.native_language_id != @text.language_id
       a.button[href=vocabulary_text_path(@text)]
         = fa_icon 'paragraph'
@@ -15,13 +22,6 @@
         == ' unrated '
         span id="unratedWordsPlural" words
     .right
-      - if @text.public
-        - back_link = texts_path(current_language) + '/public'
-      - elsif @text.hidden
-        - back_link = texts_path(current_language) + '/archive'
-      - else
-        - back_link = texts_path(current_language)
-      = link_to fa_icon('chevron-left') + ' Back', "#{back_link}\##{@text.category}", class: 'button', title: 'Go back to overview'
       - if @text.is_allowed_to_update? current_user
         = link_to fa_icon('pencil') + ' Edit text', edit_text_path(@text), class: 'button'
       - if @text.public

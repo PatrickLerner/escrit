@@ -50,7 +50,7 @@ h1 .current_word, h2 .current_word {
     &.s2 { border-bottom: 3px solid mix($s2_color, rgba(255, 255, 255, 0.1)); }
     &.s3 { border-bottom: 3px solid mix($s3_color, rgba(255, 255, 255, 0.1)); }
     &.s4 { border-bottom: 3px solid mix($s4_color, rgba(255, 255, 255, 0.1)); }
-  }  
+  }
 }
 
 #text_content {
@@ -84,10 +84,12 @@ table.listing, .toggleVocabulary {
 }
 
 .cat-button {
-  color: black;
+  color: white;
+  opacity: 0.8;
 
   &:hover {
-    border: 0
+    border: 0;
+    color: white;
   }
 }
 
@@ -101,4 +103,28 @@ table.listing, .toggleVocabulary {
 .ui-menu .ui-menu-item {
   padding: 1px 1em 1px .4em;
   font-size: 1.6rem;
+}
+
+.panel {
+  border: 1px solid hsla(0,0%,90%,1);
+  background: hsla(0,0%,98%,1);
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+
+  .fa-check {
+    color: #17A4A2;
+  }
+
+  .panel-header {
+    color: #FFF;
+    background-color: $color_accent;
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+
+    h3 {
+      font-size: 1.7rem;
+      margin: 1rem 0;
+      font-weight: 300;
+    }
+  }
 }

@@ -147,22 +147,23 @@ class TextsController < ApplicationController
   end
 
   def update
-    if params[:completed] and ((current_user.id != @text.id) or @text.public)
-      render plain: "not allowed"
-    elsif not @text.public or current_user.admin?
-      if text_params[:public] and not current_user.admin?
+    if params[:completed] && ((current_user.id != @text.id) || @text.public)
+      render plain: 'not allowed'
+    elsif !@text.public || current_user.admin?
+      if text_params[:public] && !current_user.admin?
         text_params[:public] = false
       end
 
       if text_params[:bulk_update]
         Text.where(category: @text.category, language_id: @text.language_id, public: @text.public, hidden: @text.hidden).update_all(category: text_params['category'], public: text_params['public'], hidden: text_params['hidden'])
-        return redirect_to texts_path(current_language), notice: 'Category has been successfully updated.'
+        return redirect_to texts_path(current_language),
+                           notice: 'Category has been successfully updated.'
       end
 
       if @text.update(text_params)
         @text.save
         if text_params[:completed]
-          render plain: "ok"
+          render plain: 'ok'
         else
           redirect_to @text, notice: 'Text has been successfully updated'
         end
@@ -175,11 +176,14 @@ class TextsController < ApplicationController
   end
 
   private
-    def load_text
-      @text = Text.find_by id: params[:id]
-    end
 
-    def text_params
-      params.require(:text).permit(:category, :title, :content, :language_id, :completed, :hidden, :public, :audio_url, :bulk_update)
-    end
+  def load_text
+    @text = Text.find_by id: params[:id]
+  end
+
+  def text_params
+    params.require(:text).permit(
+      :category, :title, :content, :language_id, :completed, :hidden, :public,
+      :audio_url, :bulk_update)
+  end
 end

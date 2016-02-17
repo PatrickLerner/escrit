@@ -80,7 +80,7 @@ a {
   &.toggle-link {
     color: black;
     border: 0;
-    
+
     i {
       color: $color_accent;
     }
@@ -139,10 +139,21 @@ pre, blockquote, dl, figure, p, ul, ol {
 
 blockquote {
   font-style: italic;
-  background: #F1F1F1;
-  border: 1px solid #E1E1E1;
+  background: hsla(0,0%,95%,1);
+  border: 1px solid hsla(0,0%,90%,1);
   border-radius: 4px;
-  padding: 1rem 1.5rem;
+  padding: 2rem 2.5rem 2rem 8rem;
+  margin: 2rem 0;
+  position: relative;
+
+  &:before {
+    content: '"';
+    position: absolute;
+    top: -1.5rem;
+    left: 2rem;
+    font-size: 8rem;
+    color: hsla(0,0%,90%,1);
+  }
 
   i, em {
     font-style: normal;
