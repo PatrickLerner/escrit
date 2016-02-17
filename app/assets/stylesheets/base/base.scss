@@ -6,68 +6,12 @@ html {
   font-size: 62.5%;
 }
 
-@font-face {
-  font-family: 'Fira Sans';
-  font-weight: 200;
-  src: url("fira-sans/FiraSans-UltraLight.otf") format("opentype");
-}
-
-@font-face {
-  font-family: 'Fira Sans';
-  font-weight: 300;
-  src: url("fira-sans/FiraSans-Light.otf") format("opentype");
-}
-
-@font-face {
-  font-family: 'Fira Sans';
-  font-weight: 400;
-  src: url("fira-sans/FiraSans-Book.otf") format("opentype");
-}
-
-@font-face {
-  font-family: 'Fira Sans';
-  font-weight: 500;
-  src: url("fira-sans/FiraSans-Medium.otf") format("opentype");
-}
-
-@font-face {
-  font-family: 'Fira Sans';
-  font-weight: 200;
-  font-style: italic;
-  src: url("fira-sans/FiraSans-UltraLightItalic.otf") format("opentype");
-}
-
-@font-face {
-  font-family: 'Fira Sans';
-  font-weight: 300;
-  font-style: italic;
-  src: url("fira-sans/FiraSans-LightItalic.otf") format("opentype");
-}
-
-@font-face {
-  font-family: 'Fira Sans';
-  font-weight: 400;
-  font-style: italic;
-  src: url("fira-sans/FiraSans-BookItalic.otf") format("opentype");
-}
-
-@font-face {
-  font-family: 'Fira Sans';
-  font-weight: 500;
-  font-style: italic;
-  src: url("fira-sans/FiraSans-MediumItalic.otf") format("opentype");
-}
-
-
 body {
   font-size: 1.7em;
-  line-height: 1.7;
-  font-weight: 400;
-  font-family: 'Fira Sans', sans-serif;
+  line-height: 1.8;
+  font-weight: 200;
+  font-family: 'Roboto', sans-serif;
   color: $color_darker;
-}
-
-.content {
 }
 
 footer {

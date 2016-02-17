@@ -84,12 +84,11 @@ table.listing, .toggleVocabulary {
 }
 
 .cat-button {
-  color: white;
+  color: #191919;
   opacity: 0.8;
 
   &:hover {
     border: 0;
-    color: white;
   }
 }
 
@@ -116,15 +115,15 @@ table.listing, .toggleVocabulary {
   }
 
   .panel-header {
-    color: #FFF;
-    background-color: $color_accent;
+    color: #191919;
+    background-color: hsl(0, 0%, 95%);
     margin-bottom: 1rem;
     padding: 0 1rem;
 
     h3 {
       font-size: 1.7rem;
       margin: 1rem 0;
-      font-weight: 300;
+      font-weight: 200;
     }
   }
 }
