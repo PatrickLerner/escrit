@@ -10,4 +10,6 @@ class Artwork < ActiveRecord::Base
   validates_attachment_file_name :image, matches: [/png\Z/, /jpe?g\Z/]
   # Validate filesize
   validates_with AttachmentSizeValidator, attributes: :image, less_than: 600.kilobytes
+
+  default_scope { joins(:language).order('languages.name asc') }
 end

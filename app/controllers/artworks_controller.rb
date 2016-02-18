@@ -25,8 +25,7 @@ class ArtworksController < ApplicationController
   end
 
   def index
-    @artworks = current_language.artworks.joins(:language)
-                                .order('languages.name asc')
+    @artworks = current_language.artworks
   end
 
   def new

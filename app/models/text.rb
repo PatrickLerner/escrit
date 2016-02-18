@@ -20,6 +20,10 @@ class Text < ActiveRecord::Base
 
   scope :for_user, ->(user) { where(user: user) }
   scope :for_language, ->(language) { where(language: language) }
+  scope :published, -> { where(public: true) }
+  scope :completed, -> { where(completed: true) }
+  scope :not_published, -> { where.not(public: true) }
+  scope :not_completed, -> { where.not(completed: true) }
 
   %w[content category title].each do |type|
     define_method "processed_#{type}" do |current_user|
