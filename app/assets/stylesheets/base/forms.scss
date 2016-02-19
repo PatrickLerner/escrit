@@ -67,13 +67,16 @@ input[type="button"] {
   white-space: nowrap;
   background-color: transparent;
   border-radius: 0;
-  border: 1px solid #bbb;
+  border: 1px solid #fff;
   cursor: pointer;
   box-sizing: border-box;
+  transition: border-color 0.4s;
+
   &:hover, &:focus {
     color: $color_darker;
-    border-color: #aaa;
     outline: 0;
+    border-bottom: 1px solid $color_accent;
+    transition: border-color 0.4s;
   }
   &.button-primary {
     color: #FFF;

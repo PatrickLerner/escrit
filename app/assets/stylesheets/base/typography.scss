@@ -72,10 +72,12 @@ a {
   color: $color_accent;
   text-decoration: none;
   border: 0;
+  transition: border-color 0.4s;
 
   &:hover {
     color: $color_dark_accent;
     border-bottom: 1px solid $color_accent;
+    transition: border-color 0.4s;
   }
   &.toggle-link {
     color: black;
@@ -137,11 +139,11 @@ pre, blockquote, dl, figure, p, ul, ol {
   margin-bottom: 2.5rem;
 }
 
+$blockquote-color: hsla(180,6%,89%,1);
+
 blockquote {
   font-style: italic;
-  background: hsla(0,0%,95%,1);
-  border: 1px solid hsla(0,0%,90%,1);
-  border-radius: 4px;
+  border-left: 10px solid $blockquote-color;
   padding: 2rem 2.5rem 2rem 8rem;
   margin: 2rem 0;
   position: relative;
@@ -152,7 +154,7 @@ blockquote {
     top: -1.5rem;
     left: 2rem;
     font-size: 8rem;
-    color: hsla(0,0%,90%,1);
+    color: $blockquote-color;
   }
 
   i, em {

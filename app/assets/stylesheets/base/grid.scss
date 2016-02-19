@@ -54,6 +54,11 @@
   }
 }
 
+
+.container.text {
+  max-width: 65rem;
+}
+
 /* For devices larger than 550px */
 @media (min-width: 550px) {
   .container {

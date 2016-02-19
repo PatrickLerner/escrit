@@ -12,11 +12,20 @@ audio {
   font: inherit;
   font-size: 14px;
   width: 100%;
+  position: relative;
+
   .play-pause {
     width: 25px;
     height: 20px;
     padding: 0px 8px 0px 0px;
     border: 0;
+    opacity: 0.4;
+    transition: opacity 1s;
+
+    &:hover {
+      opacity: 0.7;
+      transition: opacity 1s;
+    }
   }
   p {
     width: 25px;
@@ -24,37 +33,48 @@ audio {
     margin: -3px 0px 0px -1px;
   }
   .scrubber {
-    border: 1px solid #93B0C7;
+    border: none;
     background: #fff;
-    width: 65%;
-    float: left;
+    position: absolute;
+    left: 3rem;
+    right: 10rem;
     height: 10px;
-    margin: 5px;
+    margin: 6px 0;
+    width: auto;
   }
   .progress {
-    height: 10px;
+    height: 7px;
     width: 0px;
-    background: #56a3e1;
-    background-image: none;
+    background: none;
+    border-bottom: $color_accent 4px solid;
   }
   .loaded {
-    height: 10px;
-    background: inherit;
-    background-image: none;
+    height: 7px;
+    background: none;
+    border-bottom: #eee 4px solid;
   }
   .time {
     width: 100px;
-  }
-  .time,
-  .time em {
-    float: left;
+    position: absolute;
+    right: 0;
     height: 25px;
     line-height: 25px;
     border: 0;
-    color: black;
-    text-shadow: none;
-    padding: 0;
-    text-align: left;
+    text-align: right;
+    margin-top: -2px;
+    opacity: 0.4;
+    transition: opacity 1s;
+
+    &:hover, &:hover em, &:hover strong {
+      opacity: 1;
+      transition: opacity 1s;
+    }
+    &, & em, & strong {
+      color: black;
+      font-weight: 200;
+      text-shadow: none;
+      padding: 0;
+    }
   }
   .error-message {
     height: 24px;

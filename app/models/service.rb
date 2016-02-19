@@ -18,6 +18,10 @@ class Service < ActiveRecord::Base
     where('language_id IN (?)', [0, language.id])
   end
 
+  def published?
+    @published
+  end
+
   def ==(other)
     other.instance_of?(self.class) &&
       name == other.name &&

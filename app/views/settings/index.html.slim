@@ -6,22 +6,22 @@
 
 .container
   .row
-    .one-third.column.centered
+    .three.columns.centered
       = link_to fa_icon("cogs 2x") + 'Services', '/services', class: 'button button-2x u-full-width'
-    .one-third.column.centered
+    .three.columns.centered
       = link_to fa_icon("user 2x") + 'User profile', "/u/#{current_user.id}", class: 'button button-2x u-full-width'
-    .one-third.column.centered
+    .three.columns.centered
       = link_to fa_icon("volume-up 2x") + 'Audio settings', '/settings/audio', class: 'button button-2x u-full-width'
-  .row
-    .one-third.column.centered
+    .three.columns.centered
       = link_to fa_icon("list 2x") + 'Vocabulary', '/settings/vocabulary', class: 'button button-2x u-full-width'
   - if current_user.admin?
-    h4.u-centered Admin Settings
+    h4.u-centered(style="padding: 5rem 0 2rem 0;") Admin Settings
     .row
-      .one-third.column.centered
+      .three.columns.centered
         = link_to fa_icon("flag 2x") + 'Languages', '/languages', class: 'button button-2x u-full-width'
+      .three.columns.centered
         = link_to fa_icon("heart 2x") + 'Compliments', '/compliments', class: 'button button-2x u-full-width'
-      .one-third.column.centered
+      .three.columns.centered
         = link_to fa_icon("magic 2x") + 'Replacements', '/replacements', class: 'button button-2x u-full-width'
-      .one-third.column.centered
+      .three.columns.centered
         = link_to fa_icon("picture-o 2x") + 'Artworks', '/artworks', class: 'button button-2x u-full-width'
