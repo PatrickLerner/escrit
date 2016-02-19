@@ -1,10 +1,10 @@
 .lookup {
   position: fixed;
-  background-color: #eaeaea;
-  background: -webkit-linear-gradient(#ffffff, #eaeaea);
-  background: -o-linear-gradient(#ffffff, #eaeaea);
-  background: -moz-linear-gradient(#ffffff, #eaeaea);
-  background: linear-gradient(#ffffff, #eaeaea);
+  background-color: #efefef;
+  background: -webkit-linear-gradient(#ffffff, #efefef);
+  background: -o-linear-gradient(#ffffff, #efefef);
+  background: -moz-linear-gradient(#ffffff, #efefef);
+  background: linear-gradient(#ffffff, #efefef);
   padding: 1rem 0;
   display: none;
   overflow: overflow;
@@ -14,8 +14,10 @@
   z-index: 99;
   border-top: 1px solid #ADADAD;
   box-sizing: border-box;
+
   #rword {
     margin: 0;
+    font-weight: 200;
   }
   #close-btn {
     display: inline-block;
