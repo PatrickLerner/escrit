@@ -5,7 +5,10 @@
 $ ->
   check_url_mask = ->
     s = $('#service_url').val()
-    $('p.warning').css('display', if /\{query\}/.test(s) then 'none' else 'block')
+    if /\{query\}/.test(s)
+      $('p.warning').css('display', 'none')
+    else
+      $('p.warning').css('display', 'block')
 
   $('#service_url').keydown check_url_mask
   $('#service_url').keyup check_url_mask
