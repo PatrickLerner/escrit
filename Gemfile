@@ -1,20 +1,21 @@
 source 'https://rubygems.org'
 
-gem 'rails'
+gem 'rails', '5.0.0.beta2'
 gem 'pg'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'turbolinks'
+gem 'turbolinks', '5.0.0.beta1'
 gem 'jbuilder'
 gem 'font-awesome-rails'
 gem 'naturalsort', require: 'natural_sort_kernel'
 gem 'jquery-turbolinks'
+
 gem 'seed_dump'
 gem 'lightbox2-rails'
-gem 'devise'
+gem 'devise', github: 'plataformatec/devise', branch: 'master'
 gem 'will_paginate'
 gem 'chronic_duration'
 gem 'audiojs'
@@ -33,7 +34,11 @@ group :development, :test do
   gem 'byebug'
   gem 'factory_girl'
   gem 'factory_girl_rails'
-  gem 'rspec-rails'
+  gem 'rspec-core', '3.5.0.beta1' # d!
+  gem 'rspec-mocks', '3.5.0.beta1' # d!
+  gem 'rspec-expectations', '3.5.0.beta1' # d!
+  gem 'rspec-support', '3.5.0.beta1' # d!
+  gem 'rspec-rails', '3.5.0.beta1'
   gem 'better_errors'
   gem 'binding_of_caller'
 end
@@ -41,7 +46,6 @@ end
 group :test do
   gem 'faker'
   gem 'capybara'
-  gem 'guard-rspec'
   gem 'launchy'
   gem 'shoulda'
   gem 'database_cleaner'

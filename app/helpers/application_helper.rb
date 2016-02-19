@@ -35,13 +35,13 @@ module ApplicationHelper
   # Returns the currently selected language as an object (or nil if none
   # is selected)
   def current_language
-    return @text.language if @text and @text.language
+    return @text.language if @text.try(:language).present?
 
     lang = params['lang'].try(:downcase)
     if lang.present?
-      Rails.cache.fetch("language_#{lang}") do |key|
-        Language.find_by("lower(name) = ?", lang)
-      end
+      #Rails.cache.fetch("language_#{lang}") do
+        Language.find_by('lower(name) = ?', lang)
+      #end
     end
   end
 

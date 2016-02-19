@@ -1,13 +1,11 @@
 Rails.application.routes.draw do
   get 'languageartworks/index'
 
-  devise_for :users, controllers: { registrations: 'registration'}
+  devise_for :users, controllers: { registrations: 'registration' }
   get 'statistics/index'
 
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
+  mount ActionCable.server => '/cable'
 
-  # You can have the root of your site routed with "root"
   root 'welcome#index'
   get '/cookies', to: 'welcome#cookie_policy'
   get '/home', to: 'welcome#home'

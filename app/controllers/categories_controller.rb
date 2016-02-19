@@ -15,7 +15,7 @@ class CategoriesController < ApplicationController
   end
 
   def autocomplete_text_category
-    render text: Text.for_language(current_language)
+    render plain: Text.for_language(current_language)
       .group('category').where(
         'lower(category) like ? and (user_id = ? or public = true) ',
         "%#{params[:term].utf8downcase}%", current_user.id)

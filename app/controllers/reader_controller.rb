@@ -14,7 +14,7 @@ class ReaderController < ApplicationController
   end
 
   def preview
-    render text: render_text(params['text'])
+    render plain: render_text(params['text'])
   end
 
   private
