@@ -21,9 +21,9 @@ module ApplicationHelper
     # in case the user has no gravatar account, use a fallback / default image
 
     # for testing environments use a publically hosted one
-    default_url = "http://i.imgur.com/Sp2eIpR.png"
+    default_url = 'http://i.imgur.com/Sp2eIpR.png'
     # in production app use a locally hosted default image
-    default_url = root_url + image_path("default-profile.png") if Rails.env.production?
+    default_url = root_url + image_path('default-profile.png') if Rails.env.production?
 
     # generate id
     gravatar_id = Digest::MD5.hexdigest(user.email.downcase)

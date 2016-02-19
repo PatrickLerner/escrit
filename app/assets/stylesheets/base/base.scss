@@ -7,11 +7,19 @@ html {
 }
 
 body {
-  font-size: 1.6em;
+  font-size: 1.6rem;
   line-height: 1.7;
   font-weight: 200;
-  font-family: "merriweather", serif;
+  font-family: 'merriweather', serif;
   color: $color_darker;
+}
+
+.ui-widget {
+  font-family: 'merriweather', serif;
+
+  &.ui-menu .ui-menu-item {
+    font-size: 1.5rem;
+  }
 }
 
 footer {

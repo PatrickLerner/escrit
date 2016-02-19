@@ -5,7 +5,7 @@
 - content_for :header_subtitle, 'Citizens'
 
 div.container
-  - @users.in_groups_of(4, false).to_a.each do |splice|
+  - @users.to_a.in_groups_of(4, false).to_a.each do |splice|
     .row style='margin-bottom: 2rem'
       - splice.each do |user|
         .three.columns.u-centered
