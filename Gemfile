@@ -23,9 +23,10 @@ gem 'unicode'
 gem 'slim-rails'
 gem 'paperclip'
 gem 'indefinite_article'
+gem 'cancancan'
 
 group :production do
- gem 'unicorn'
+  gem 'unicorn'
 end
 
 group :development, :test do
