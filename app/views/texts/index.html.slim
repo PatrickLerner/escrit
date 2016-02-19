@@ -35,10 +35,7 @@ div.container
   - else
     .row
       .five.columns
-        .panel
-          .row.norawp.panel-header
-            .twelve.columns
-              h3 Categories
+        = panel headline: 'Categories' do
           - @categories.each do |name, count|
             .row.nowrap
               .two.columns

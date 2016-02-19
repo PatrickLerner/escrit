@@ -1,9 +1,8 @@
 - @texts.each do |category, texts|
-  .panel
-    .row.nowrap.panel-header
-      .eleven.columns
-        h3= category
-      .one.column.u-centered style="padding-top: 0.5rem"
+  = panel do
+    .panel-header
+      = category
+      span(style="padding-top: 0.5rem")
         - if not @public or current_user.admin?
           = link_to fa_icon('pencil'), edit_category_path(texts[0]), class: 'cat-button'
     - texts.each do |text|

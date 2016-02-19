@@ -11,30 +11,30 @@
     .two-thirds.column
       p It is very nice to see you (back) on this website. There is always a lot to do when learning a language, so get started! :)
 
-      h4 Activities
-      ul
-        - if current_user.languages.count > 0
-          - current_user.languages.each do |lang|
-            - vocab = Note.vocabulary.for_user(current_user).for_language(lang).awaiting_review.count
-            - if vocab > 0
+      = panel headline: 'Activities' do
+        ul.none
+          - if current_user.languages.count > 0
+            - current_user.languages.each do |lang|
+              - vocab = Note.vocabulary.for_user(current_user).for_language(lang).awaiting_review.count
+              - if vocab > 0
+                li
+                  = flag_icon_tag lang
+                  == ' '
+                  = link_to "Review #{vocab} #{lang.name} vocabulary #{'word'.pluralize vocab}.", vocabulary_path(lang)
               li
                 = flag_icon_tag lang
                 == ' '
-                = link_to "Review #{vocab} #{lang.name} vocabulary #{'word'.pluralize vocab}.", vocabulary_path(lang)
+                = link_to "Read #{lang.name.indefinitize} text.", texts_path(lang)
+              - if lang.has_vocabulary? current_user
+                li
+                  = flag_icon_tag lang
+                  == ' '
+                  = link_to "Practice #{lang.name} word dictation.", dictation_path(lang)
+          - else
             li
-              = flag_icon_tag lang
-              == ' '
-              = link_to "Read #{lang.name.indefinitize} text.", texts_path(lang)
-            - if lang.has_vocabulary? current_user
-              li
-                = flag_icon_tag lang
-                == ' '
-                = link_to "Practice #{lang.name} word dictation.", dictation_path(lang)
-        - else
-          li
-            = link_to 'Get started reading a text in a foreign language.', language_choice_texts_path
-          li
-            = link_to 'Look for help.', help_path
+              = link_to 'Get started reading a text in a foreign language.', language_choice_texts_path
+            li
+              = link_to 'Look for help.', help_path
 
     .one-third.column
       = image_tag avatar_url(@user), class: 'profile-picture u-full-width'
