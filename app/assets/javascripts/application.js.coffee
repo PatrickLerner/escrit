@@ -3,9 +3,9 @@
 #= require jquery_ujs
 #= require jquery-ui
 #= require autocomplete-rails
-#= require turbolinks
 #= require lightbox
 #= require audiojs
+#= require lightbox
+#= require turbolinks
 #= require_tree .
 #= require_tree ../../../vendor/assets/javascripts/.
-#= require lightbox
