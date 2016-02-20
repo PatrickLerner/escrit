@@ -66,7 +66,7 @@ html
             li.right= link_to 'Sign up', new_user_registration_path
 
     - if header[:title]
-      .header class=header[:class]
+      header class=header[:class]
         .image class=header[:image_class] style=header[:image_style]
         .container
           h1= header[:title].html_safe
@@ -80,10 +80,14 @@ html
       .notice
         .container
           = notice
+      noscript
+        = notice
     - if alert
       .alert
         .container
           = alert
+      noscript
+        = alert
 
     = yield
     footer
