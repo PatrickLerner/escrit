@@ -98,3 +98,10 @@ html
       div= "&copy; #{Time.now.year} escrit.eu".html_safe
     - if Rails.env.production?
       = render 'layouts/footer'
+
+    - if notice
+      noscript
+        = notice
+    - if alert
+      noscript
+        = alert
