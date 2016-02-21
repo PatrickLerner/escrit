@@ -1,4 +1,4 @@
-class VocabulariesController < ApplicationController
+class VocabularyController < ApplicationController
   include LanguageIndexPage
   include ApplicationHelper
 

@@ -9,12 +9,12 @@ describe 'vocabulary' do
   let!(:text) { create(:text, user: user, language: language) }
 
   it 'shows when no vocabulary is available', js: true do
-    visit vocabulary_path('russian')
+    visit language_vocabulary_path('russian')
     expect(page).to have_content 'No more vocabulary left to train'
   end
 
   it 'displays vocabulary correctly if it is available', js: true do
-    visit vocabulary_path(note.word.language)
+    visit language_vocabulary_path(note.word.language)
     wait_for_ajax
     expect(page).to have_content "#{note.word.language.name} vocabulary trainer"
     expect(page).to have_content 'Show answer'

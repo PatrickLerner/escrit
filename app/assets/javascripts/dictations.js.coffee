@@ -35,7 +35,7 @@ refreshWord = ->
   $('#buttons').fadeTo 0, 0
   language = $('#meta_language').html().toLowerCase()
   changed = false
-  $.getJSON "/dictation/#{language}.json", (data) ->
+  $.getJSON "/#{language}/dictation.json", (data) ->
     current_word = data
     if current_word['value'] == undefined
       $('#vocab').hide()
@@ -70,8 +70,8 @@ KEY_ENTER = 13
 KEY_TAB = 9
 
 $ ->
-  if ($('body').attr('data-controller') != 'dictations') || ($('body').attr('data-action') != 'index')
-    return
+  return unless $('body').hasClass('dictation')
+
   language = $('#meta_language').html().toLowerCase()
   refreshWord()
 

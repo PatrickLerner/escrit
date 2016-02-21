@@ -13,8 +13,7 @@ $ ->
 
   setTimeout autoHideNotice, 5000
 
-  if ($('body').attr('data-controller') == 'welcome' && $('body').attr('data-action') == 'index')
-    return
+  return if $('body').hasClass('welcome-index')
 
   xlarge = (head) ->
     head.animate({

@@ -26,7 +26,7 @@ submitNote = ->
   if last_word != '' and $('.lookup #lword').hasClass('dirty')
     $.ajax
         type: 'PATCH'
-        url: '/words/' + last_word
+        url: "#{text_language}/words/#{last_word}"
         data:
           'word[note]': $('#lword').val()
           'word[language]': text_language
@@ -98,7 +98,7 @@ onRatingsButton = (rating) ->
   if last_word
     $.ajax
       type: 'PATCH'
-      url: '/words/' + last_word
+      url: "#{text_language}/words/#{last_word}"
       data:
         'word[note]': $('#lword').val()
         'word[language]': text_language
@@ -183,7 +183,7 @@ $ ->
 
   $('.lookup #lword').focusout ->
     submitNote()
-  
+
   $('.lookup #lword').change ->
     $('.lookup #lword').addClass 'dirty'
     return
@@ -195,7 +195,7 @@ $ ->
 
     if keyCode == KEY_ENTER
       submitNote()
-    
+
     if keyCode == KEY_TAB
       orig = parseInt($(lastObject).attr('nid'))
       delta = 1
@@ -212,7 +212,7 @@ $ ->
       if orig != nid
         $('span.w[nid=' + nid + ']').click()
       event.preventDefault()
-    
+
     if last_word_val != $('.lookup #lword').val()
       $('.lookup #lword').addClass 'dirty'
       if last_word_val == '' and currentRating == 0
@@ -223,7 +223,7 @@ $ ->
 
   $('.lookup #lword').keypress (event) ->
     keyCode = event.keyCode or event.which
-    
+
     if keyCode == KEY_TAB
       event.preventDefault()
     return
@@ -233,7 +233,7 @@ $ ->
 
     if keyCode == KEY_TAB
       event.preventDefault()
-    
+
     if (keyCode == KEY_DOWN or keyCode == KEY_UP) and event.shiftKey
       if keyCode == KEY_UP
         currentRating += 1

@@ -4,19 +4,21 @@
       = category
       span(style="padding-top: 0.5rem")
         - if not @public or current_user.admin?
-          = link_to fa_icon('pencil'), edit_category_path(texts[0]), class: 'cat-button'
+          = link_to fa_icon('pencil'),
+                    edit_language_category_path(current_language, texts[0]),
+                    class: 'cat-button'
     - texts.each do |text|
       .row.nowrap
         .two.columns
           .u-right
-            - if (current_user.native_language_id == current_language.id) or (not text.public and text.completed) or (text.public and ((text.word_count - text.rated_words_count(current_user)) == 0))
+            - if (current_user.native_language == current_language) || (!text.public && text.completed) || (text.public && ((text.word_count - text.rated_words_count(current_user)) == 0))
               alias title="You know all the words in this text."
                 = fa_icon 'check'
             - else
               alias title="Number of new words in the text"
-                - if not text.public and text.completed
+                - if !text.public && text.completed
                   | 0
                 - else
                   = number_with_precision (text.word_count - text.rated_words_count(current_user)), precision: 0, delimiter: ','
         .ten.columns
-          = link_to text.title, text_path(text)
+          = link_to text.title, language_text_path(text.language, text)

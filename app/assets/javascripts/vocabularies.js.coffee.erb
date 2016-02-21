@@ -38,7 +38,7 @@ refreshVocabulary = ->
     $('#buttons').fadeTo 0, 0
     language = $('#meta_language').html().toLowerCase()
     changed = false
-    $.getJSON "/vocabulary/#{language}.json", (data) ->
+    $.getJSON "/#{language}/vocabulary.json", (data) ->
       vocabulary_words = data
       $('#count').html vocabulary_words.length
       if vocabulary_words.length == 0
@@ -54,7 +54,7 @@ refreshVocabulary = ->
 
         max = Math.min(50, vocabulary_words.length)
         p = vocabulary_words[Math.floor(Math.random() * max)]
-        $.getJSON "/words/#{language}/#{p}", (data) ->
+        $.getJSON "/#{language}/words/#{p}", (data) ->
           current_word = data
           $('#wordvalue').html current_word['value']
           $('.toggleVocabulary').attr 'value', current_word['value']
@@ -75,8 +75,8 @@ speak = (text) ->
     responsiveVoice.speak text, meta_language_voice, { rate: rate }
 
 $ ->
-  if ($('body').attr('data-controller') != 'vocabularies') || ($('body').attr('data-action') != 'index')
-    return
+  return unless $('body').hasClass('vocabulary')
+
   language = $('#meta_language').html().toLowerCase()
   refreshVocabulary()
 
@@ -100,7 +100,7 @@ $ ->
     return false if disabledLinks
     disableButtons()
     wordvalue = $('#wordvalue').html().toLowerCase()
-    $.getJSON "/words/#{language}/#{wordvalue}/sentence", (data) ->
+    $.getJSON "/#{language}/words/#{wordvalue}/sentence", (data) ->
       $('#exampleSentence').html "<blockquote>#{data['value']}</blockquote>"
       enableButtons()
     speak current_word['value'] if after
@@ -112,7 +112,7 @@ $ ->
     wordvalue = $('#wordvalue').html().toLowerCase()
     $.ajax
       type: 'PATCH'
-      url: '/words/' + wordvalue
+      url: "/#{language}/words/#{wordvalue}"
       data:
         'word[language]': language
         'word[reviewed]': true
@@ -133,7 +133,7 @@ $ ->
     wordvalue = $('#wordvalue').html().toLowerCase()
     $.ajax
       type: 'PATCH'
-      url: '/words/' + wordvalue
+      url: "/#{language}/words/#{wordvalue}"
       data:
         'word[language]': language
         'word[rating]': rating

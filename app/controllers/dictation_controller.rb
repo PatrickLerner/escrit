@@ -1,4 +1,4 @@
-class DictationsController < ApplicationController
+class DictationController < ApplicationController
   include LanguageIndexPage
   include ApplicationHelper
 

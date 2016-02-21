@@ -7,8 +7,8 @@
 .container
   .buttons
     .right
-      = link_to fa_icon('chevron-left') + ' Back', language_choice_artwork_path, class: 'button', title: 'Back to Settings'
-      = link_to fa_icon('plus') + ' Add new', new_artwork_path, class: 'button button-primary', title: 'Add a new artwork'
+      = link_to fa_icon('chevron-left') + ' Back', artworks_path, class: 'button', title: 'Back to Settings'
+      = link_to fa_icon('plus') + ' Add new', new_language_artwork_path(current_language), class: 'button button-primary', title: 'Add a new artwork'
 
   p Click the headers to toggle between large and compact displays. Remember it is important that it looks good on both.
 
@@ -16,6 +16,6 @@
   header.preview
     div.image style="background-image: url('#{art.image.url}');"
     .container
-      h1= link_to art.language.name, edit_artwork_path(art)
-      h2= link_to 'Edit', edit_artwork_path(art)
+      h1= link_to art.language.name, edit_language_artwork_path(current_language, art)
+      h2= link_to 'Edit', edit_language_artwork_path(current_language, art)
     = fa_icon 'search-plus', class: 'zoom'

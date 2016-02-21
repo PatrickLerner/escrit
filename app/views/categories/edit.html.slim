@@ -12,7 +12,7 @@
       ul
         - @text.errors.full_messages.each do |msg|
           li= msg
-  = form_for :text, url: text_path(@text), method: :patch, html: { class: 'text_form' } do |f|
+  = form_for :text, url: language_text_path(@text.language, @text), method: :patch, html: { class: 'text_form' } do |f|
     = f.label :category, 'Category'
     = f.text_field :category, class: 'u-full-width', placeholder: 'Category', autocomplete: :off
 
@@ -36,7 +36,7 @@
                 == "&nbsp"
                 | Make text public
       .three.columns
-        = link_to fa_icon("chevron-left") + ' Back', texts_path(@text.language.name.downcase), class: 'button u-full-width', title: 'Go back to overview'
+        = link_to fa_icon("chevron-left") + ' Back', language_texts_path(@text.language), class: 'button u-full-width', title: 'Go back to overview'
       .three.columns
         = link_to fa_icon("floppy-o") + ' Update texts', '', class: 'button button-primary u-full-width', onclick: "$('.text_form').submit(); return false;"
 

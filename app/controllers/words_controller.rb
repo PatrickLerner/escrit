@@ -45,22 +45,22 @@ class WordsController < ApplicationController
   end
 
   def show
-    render json: {
-      value: @word.value,
-      value_clean: @word.value_clean,
-      note: @note.value,
-      language: @word.language.name,
-      rating: @note.rating,
-      vocabulary: @note.vocabulary?
-    }
-  end
-
-  def edit
-    @occurrences = Occurrence.includes(:text).joins(:text).where(
-      'word_id = ? AND texts.user_id = ? AND texts.public = FALSE',
-      @word.id,
-      current_user.id
-    ).paginate(page: params[:page], per_page: 20)
+    if request.xhr?
+      render json: {
+        value: @word.value,
+        value_clean: @word.value_clean,
+        note: @note.value,
+        language: @word.language.name,
+        rating: @note.rating,
+        vocabulary: @note.vocabulary?
+      }
+    else
+      @occurrences = Occurrence.includes(:text).joins(:text).where(
+        'word_id = ? AND texts.user_id = ? AND texts.public = FALSE',
+        @word.id,
+        current_user.id
+      ).paginate(page: params[:page], per_page: 20)
+    end
   end
 
   def vocab_set

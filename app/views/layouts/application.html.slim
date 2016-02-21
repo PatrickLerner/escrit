@@ -18,16 +18,11 @@ html
     = javascript_include_tag "application", 'data-turbolinks-track': true
     = csrf_meta_tags
     = favicon_link_tag 'favicon.png'
-  body data-action=action_name data-controller=controller_name
+  body(data-action=action_name data-controller=controller_name class="#{controller_name} #{controller_name}-#{action_name}")
     - if Rails.env.development?
       div class="corner-ribbon top-left accent sticky shadow" Dev Version
     nav.navbar
       .container
-        - lang = ''
-        - if current_language
-          - lang = '/' + current_language.name.downcase
-        - if @text and @text.language
-          - lang = '/' + @text.language.name.downcase
         input#show-menu type="checkbox" role="button"
         label.show-menu for="show-menu" Show Menu
         ul#menu
@@ -35,17 +30,24 @@ html
           - if user_signed_in?
             li= link_to 'Home', '/home'
             li
-              = link_to 'Reading ￬', "/texts#{lang}"
+              = link_to 'Reading ￬', language_path_for(:texts, current_language)
               ul.hidden
-                li= link_to fa_icon('book') + ' Texts', "/texts#{lang}"
-                li= link_to fa_icon('magic') + ' Quick reader', "/reader#{lang}"
+                li= link_to fa_icon('book', text: 'Texts'),
+                            language_path_for(:texts, current_language)
+                li= link_to fa_icon('magic', text: 'Quick reader'),
+                            language_path_for(:reader, current_language)
             li
-              = link_to 'Learn ￬'.html_safe, "/vocabulary#{lang}"
+              = link_to 'Learn ￬'.html_safe, "/vocabulary"
               ul.hidden
-                li= link_to fa_icon('list') + ' Word list', "/words#{lang}"
-                li= link_to fa_icon('graduation-cap') + ' Vocab. trainer ' + vocab_words, "/vocabulary#{lang}"
-                li= link_to fa_icon('pencil-square-o ') + ' Dictation practice', "/dictation#{lang}"
-            - if current_lang_prefix
+                li= link_to fa_icon('list', text: 'Word list'),
+                            language_path_for(:words, current_language)
+                li= link_to fa_icon('graduation-cap',
+                            text: "Vocab. trainer #{vocab_words}".html_safe),
+                            language_path_for(:vocabulary, current_language)
+                li= link_to fa_icon('pencil-square-o',
+                            text: 'Dictation practice'),
+                            language_path_for(:dictation, current_language)
+            - if false
               li
                 = link_to flag_icon_tag(current_language, style: 'padding: 0;') + " #{current_language.name} ￬", "/#{current_lang_prefix}"
                 - langs = language_options(true).map { |l| l[0] }
@@ -57,7 +59,7 @@ html
               = link_to current_user.name + ' ￬', "/u/#{current_user.id}"
               ul.hidden
                 li= link_to fa_icon('user') + ' Your profile', "/u/#{current_user.id}"
-                li= link_to fa_icon('bar-chart') + ' Statistics', "/statistics#{lang}"
+                li= link_to fa_icon('bar-chart') + ' Statistics', "/statistics"
                 li= link_to fa_icon('wrench') + ' Settings', '/settings'
                 li= link_to fa_icon('life-ring') + ' Help', '/help'
                 li= link_to fa_icon('sign-out') + ' Sign out', destroy_user_session_path, method: :delete

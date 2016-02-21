@@ -21,9 +21,9 @@ module ApplicationHelper
     # in case the user has no gravatar account, use a fallback / default image
 
     # for testing environments use a publically hosted one
-    default_url = "http://i.imgur.com/Sp2eIpR.png"
+    default_url = 'http://i.imgur.com/Sp2eIpR.png'
     # in production app use a locally hosted default image
-    default_url = root_url + image_path("default-profile.png") if Rails.env.production?
+    default_url = root_url + image_path('default-profile.png') if Rails.env.production?
 
     # generate id
     gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
@@ -37,7 +37,8 @@ module ApplicationHelper
   def current_language
     return @text.language if @text.try(:language).present?
 
-    lang = params['lang'].try(:downcase)
+    lang = params['lang'].downcase if params['lang'].present?
+    lang = params['language_id'].downcase if params['language_id'].present?
     if lang.present?
       #Rails.cache.fetch("language_#{lang}") do
         Language.find_by('lower(name) = ?', lang)
@@ -65,19 +66,12 @@ module ApplicationHelper
     end
   end
 
-  def current_lang_prefix
-    if controller_name == 'words' and action_name == 'index'
-      'words'
-    elsif controller_name == 'vocabularies' and action_name == 'index'
-      'vocabulary'
-    elsif controller_name == 'dictations' and action_name == 'index'
-      'dictation'
-    elsif controller_name == 'statistics' and action_name == 'index'
-      'statistics'
-    elsif controller_name == 'texts' and %w[index index_hidden index_public].include? action_name
-      'texts'
-    elsif controller_name == 'reader' and action_name == 'index'
-      'reader'
+  def language_path_for(path_base, language)
+    language = nil if controller_name == path_base.to_s
+    if language.present?
+      method("language_#{path_base}_path".to_sym).call(language)
+    else
+      method("#{path_base}_path").call
     end
   end
 end

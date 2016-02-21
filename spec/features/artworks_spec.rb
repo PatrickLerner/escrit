@@ -4,9 +4,9 @@ describe 'artworks for users' do
   login_user
 
   it 'cannot be added or listed' do
-    visit artworks_index_path('Russian')
+    visit language_artworks_path('Russian')
     expect(page).to have_content 'You must be an administrator to do this!'
-    visit new_artwork_path('Russian')
+    visit new_language_artwork_path('Russian')
     expect(page).to have_content 'You must be an administrator to do this!'
   end
 end
@@ -15,7 +15,7 @@ describe 'artworks for admins' do
   login_admin
 
   it 'should have an artwork index page' do
-    visit language_choice_artwork_path
+    visit artworks_path
     expect(page).to have_content 'Choose language'
     expect(page).to have_content 'Language artworks'
 
@@ -23,13 +23,13 @@ describe 'artworks for admins' do
     expect(page).to have_content 'language artworks'
 
     artwork = create(:artwork)
-    visit artworks_index_path(artwork.language)
+    visit language_artworks_path(artwork.language)
     expect(page).to have_content artwork.language.name
   end
 
   it 'allows adding a new artwork, edit it and delete it', js: true do
     language = create(:language)
-    visit artworks_index_path(language)
+    visit language_artworks_path(language)
     click_link 'Add new'
 
     expect(page).to have_content 'New language artwork'
