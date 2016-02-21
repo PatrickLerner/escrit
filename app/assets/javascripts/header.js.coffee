@@ -13,8 +13,7 @@ $ ->
 
   setTimeout autoHideNotice, 5000
 
-  if ($('body').attr('data-controller') == 'welcome' && $('body').attr('data-action') == 'index')
-    return
+  return if $('body').hasClass('welcome-index')
 
   xlarge = (head) ->
     head.animate({
@@ -52,13 +51,13 @@ $ ->
       'opacity': 1
     }, 2000);
 
-  $('.header .zoom').click ->
+  $('header .zoom').click ->
     if $(this).hasClass('fa-search-plus')
       $(this).removeClass('fa-search-plus').addClass('fa-search-minus')
     else
       $(this).addClass('fa-search-plus').removeClass('fa-search-minus')
 
-    head = $(this).parent('.header')
+    head = $(this).parent('header')
     if head.hasClass 'preview'
       if head.hasClass 'large'
         small(head)
