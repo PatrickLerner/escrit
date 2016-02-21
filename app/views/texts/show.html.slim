@@ -8,14 +8,14 @@
 .container
   .buttons
     - if @text.public
-      - back_link = texts_path(current_language) + '/public'
+      - back_link = public_language_texts_path(current_language)
     - elsif @text.hidden
-      - back_link = texts_path(current_language) + '/archive'
+      - back_link = archive_language_texts_path(current_language)
     - else
-      - back_link = texts_path(current_language)
+      - back_link = language_texts_path(current_language)
     = link_to fa_icon('chevron-left') + ' Back', "#{back_link}\##{@text.category}", class: 'button', title: 'Go back to overview'
     - if current_user.native_language_id != @text.language_id
-      a.button[href=vocabulary_text_path(@text)]
+      a.button[href=vocabulary_language_text_path(@text.language, @text)]
         = fa_icon 'paragraph'
         == ' '
         span style="margin-bottom: 0;" id="unratedWords" 0
@@ -23,9 +23,9 @@
         span id="unratedWordsPlural" words
     .right
       - if @text.is_allowed_to_update? current_user
-        = link_to fa_icon('pencil') + ' Edit text', edit_text_path(@text), class: 'button'
+        = link_to fa_icon('pencil') + ' Edit text', edit_language_text_path(@text.language, @text), class: 'button'
       - if @text.public
-        = link_to fa_icon('copy', text: 'Copy'), copy_text_path(@text), class: 'button', data: { confirm: 'Do you want to copy this text into your private library?' }, title: 'Make a copy of this text and add it to your personal text library.'
+        = link_to fa_icon('copy', text: 'Copy'), copy_language_text_path(@text.language, @text), method: :post, class: 'button', data: { confirm: 'Do you want to copy this text into your private library?' }, title: 'Make a copy of this text and add it to your personal text library.'
 
 .container.text
   = @processed_text

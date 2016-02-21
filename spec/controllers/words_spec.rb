@@ -8,7 +8,7 @@ describe WordsController do
   it 'returns the word as a json object' do
     word = create(:word)
 
-    get :show, { lang: word.language.name.downcase, id: word.value }
+    xhr :get, :show, { language_id: word.language, id: word.value, format: :json }
     json = JSON.parse(response.body)
 
     expect(response).to be_success
@@ -18,7 +18,7 @@ describe WordsController do
     expect(json['language']).to eq(word.language.name)
 
     note = create(:note, word: word, user: User.last)
-    get :show, { lang: word.language.name.downcase, id: word.value }
+    xhr :get, :show, { language_id: word.language, id: word.value, format: :json }
     json = JSON.parse(response.body)
 
     expect(response).to be_success

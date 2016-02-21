@@ -10,11 +10,11 @@
     - if @search_term.nil? || @search_term.strip == ''
       h4= "You seem to have no words in #{current_language.name} yet."
     - else
-      form action="/words/#{current_language.name.downcase}" method="get"
+      form action="#{language_words_path(current_language)}" method="get"
         input type="text" name="q" id="q" class="u-full-width" placeholder="Search for a word" value="#{@search_term}" autocomplete="off"
       h4= "No #{current_language.name} words match your search phrase \"#{@search_term}\"."
   - else
-    form action="/words/#{current_language.name.downcase}" method="get"
+    form action="#{language_words_path(current_language)}" method="get"
       input type="text" name="q" class="u-full-width" placeholder="Search for a word" value="#{@search_term}" autocomplete="off"
 
     = will_paginate @notes, class: 'pagination'
@@ -31,7 +31,7 @@
       tbody
         - @notes.each do |w|
           tr
-            td= link_to w.word.value_clean, edit_word_path(current_language, w.word.value)
+            td= link_to w.word.value_clean, language_word_path(current_language, w.word.value)
             td= w.value
             td.u-centered
               span class=["s#{w.rating}", "list-rating"] title=[ "Looked it up once.", "This time I'll remember it.", "I'm getting it now.", "Seems easy at this point.", "Know it in my sleep."][w.rating - 1]

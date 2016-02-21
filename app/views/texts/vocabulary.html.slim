@@ -7,7 +7,7 @@
 
 .container
   .buttons
-    = link_to fa_icon('chevron-left', text: 'Back to the text'), text_path(@text), class: 'button ', title: 'See the text'
+    = link_to fa_icon('chevron-left', text: 'Back to the text'), language_text_path(@text.language, @text), class: 'button ', title: 'See the text'
     .right
       - 5.times do |i|
         a class="s#{i + 1} rating-button list-rating text-vocab-button" style="cursor: pointer; opacity: #{i == 4 ? 0.3 : 1}" title=[ "Looked it up once.", "This time I'll remember it.", "I'm getting it now.", "Seems easy at this point.", "Know it in my sleep."][i]
@@ -22,7 +22,7 @@
     tbody
       - @notes.each do |note|
         tr class="rating-#{note.rating}" style="#{note.rating == 5 ? 'display: none;' : ''}"
-          td= link_to note.word.value_clean, edit_word_path(current_language, note.word.value)
+          td= link_to note.word.value_clean, language_word_path(current_language, note.word.value)
           td= note.value
           td.u-centered
             span class="s#{note.rating} list-rating" title=[ "Looked it up once.", "This time I'll remember it.", "I'm getting it now.", "Seems easy at this point.", "Know it in my sleep."][note.rating]
@@ -38,7 +38,15 @@
     div.pagination_info
       = page_entries_info @notes
 
-script[type="text/javascript"]
-  | $('.rating-button').click(function (event) { var rating = event.target.innerHTML; $('.rating-' + rating).toggle(); if ($(this).css('opacity') == 1) $(this).css('opacity', 0.3); else $(this).css('opacity', 1); });
+javascript:
+  $('.rating-button').click(function (event) {
+    var rating = event.target.innerHTML;
+    $('.rating-' + rating).toggle();
+    if ($(this).css('opacity') == 1)
+      $(this).css('opacity', 0.3);
+    else
+      $(this).css('opacity', 1);
+  });
+
 span#meta_language[style="display: none;"]
   = @text.language.name

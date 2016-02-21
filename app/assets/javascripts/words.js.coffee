@@ -12,12 +12,12 @@ $ ->
       obj.removeClass 'fa-minus'
       $.ajax
         type: 'get'
-        url: '/words/' + language + '/' + word + '/set'
+        url: "/#{language}/words/#{word}/set"
         async: true
     else
       obj.addClass 'fa-minus'
       obj.removeClass 'fa-check'
       $.ajax
         type: 'get'
-        url: '/words/' + language + '/' + word + '/unset'
+        url: "/#{language}/words/#{word}/unset"
         async: true

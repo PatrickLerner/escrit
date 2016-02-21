@@ -1,10 +1,10 @@
 @media (min-width: 550px) {
-  .header .container {
+  header .container {
     width: 90%;
   }
 }
 
-.header {
+header {
   background: $color_darker;
   color: $color_lighter;
   text-align: center;
@@ -87,7 +87,7 @@
   }
 }
 
-.header, .notice, .alert {
+header, .notice, .alert {
   & + .container {
     margin-top: 2rem;
   }

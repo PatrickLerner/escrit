@@ -37,7 +37,8 @@ module ApplicationHelper
   def current_language
     return @text.language if @text and @text.language
 
-    lang = params['lang'].try(:downcase)
+    lang = params['lang'].downcase if params['lang'].present?
+    lang = params['language_id'].downcase if params['language_id'].present?
     if lang.present?
       Rails.cache.fetch("language_#{lang}") do |key|
         Language.find_by("lower(name) = ?", lang)
@@ -65,19 +66,12 @@ module ApplicationHelper
     end
   end
 
-  def current_lang_prefix
-    if controller_name == 'words' and action_name == 'index'
-      'words'
-    elsif controller_name == 'vocabularies' and action_name == 'index'
-      'vocabulary'
-    elsif controller_name == 'dictations' and action_name == 'index'
-      'dictation'
-    elsif controller_name == 'statistics' and action_name == 'index'
-      'statistics'
-    elsif controller_name == 'texts' and %w[index index_hidden index_public].include? action_name
-      'texts'
-    elsif controller_name == 'reader' and action_name == 'index'
-      'reader'
+  def language_path_for(path_base, language)
+    language = nil if controller_name == path_base.to_s
+    if language.present?
+      method("language_#{path_base}_path".to_sym).call(language)
+    else
+      method("#{path_base}_path").call
     end
   end
 end

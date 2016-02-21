@@ -30,7 +30,7 @@ class UsersController < ApplicationController
 
   def remove
     @buddy.destroy if @user && @is_buddy
-    redirect_to "/u/#{params[:did]}"
+    redirect_to "/u/#{current_user.id}"
   end
 
   private

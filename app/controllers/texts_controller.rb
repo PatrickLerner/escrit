@@ -13,10 +13,8 @@ class TextsController < ApplicationController
     if @text.nil? || !@text.is_allowed_to_view?(current_user)
       redirect_to language_choice_texts_path,
                   alert: 'You are not allowed to do that.'
-    else
-      if current_user.native_language_id != @text.language_id
-        @notes = Note.joins('INNER JOIN "occurrences" ON "notes"."word_id" = "occurrences"."word_id"').includes(:word).where('occurrences.text_id = ? AND notes.rating IN (1, 2, 3, 4, 5) AND notes.user_id = ?', @text.id, current_user.id).paginate(page: params[:page], per_page: 250)
-      end
+    elsif current_user.native_language_id != @text.language_id
+      @notes = Note.joins('INNER JOIN "occurrences" ON "notes"."word_id" = "occurrences"."word_id"').includes(:word).where('occurrences.text_id = ? AND notes.rating IN (1, 2, 3, 4, 5) AND notes.user_id = ?', @text.id, current_user.id).paginate(page: params[:page], per_page: 250)
     end
   end
 
@@ -31,7 +29,7 @@ class TextsController < ApplicationController
       @new_text.hidden = false
       @new_text.save
 
-      redirect_to text_path(@new_text),
+      redirect_to language_text_path(@new_text.language, @new_text),
                   notice: 'Text has been successfully copied into your library.'
     end
   end
@@ -120,11 +118,11 @@ class TextsController < ApplicationController
     end
   end
 
-  def index_hidden
+  def archive
     index true
   end
 
-  def index_public
+  def public
     index false, true
   end
 
@@ -156,16 +154,16 @@ class TextsController < ApplicationController
 
       if text_params[:bulk_update]
         Text.where(category: @text.category, language_id: @text.language_id, public: @text.public, hidden: @text.hidden).update_all(category: text_params['category'], public: text_params['public'], hidden: text_params['hidden'])
-        return redirect_to texts_path(current_language),
+        return redirect_to language_texts_path(current_language),
                            notice: 'Category has been successfully updated.'
       end
 
-      if @text.update(text_params)
-        @text.save
+      if @text.update_attributes(text_params)
         if text_params[:completed]
           render plain: 'ok'
         else
-          redirect_to @text, notice: 'Text has been successfully updated'
+          redirect_to language_text_path(@text.language, @text),
+                      notice: 'Text has been successfully updated'
         end
       else
         render 'edit'

@@ -11,7 +11,7 @@ class ArtworksController < ApplicationController
 
     return render 'new' unless @artwork.save
 
-    redirect_to edit_artwork_path(@artwork),
+    redirect_to edit_language_artwork_path(@artwork.language, @artwork),
                 notice: 'New artwork has been successfully added.'
   end
 
@@ -35,7 +35,7 @@ class ArtworksController < ApplicationController
   def update
     return render 'edit' unless @artwork.update(artwork_params)
 
-    redirect_to edit_artwork_path(@artwork),
+    redirect_to edit_language_artwork_path(@artwork.language, @artwork),
                 notice: 'Artwork has been successfully updated.'
   end
 

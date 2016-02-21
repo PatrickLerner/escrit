@@ -1,0 +1,33 @@
+- op = language_options(true).map { |l| l[0] }
+- path = method("language_#{controller_name}_path".to_sym)
+
+.container
+  - if op.length > 0
+    h6.docs-header
+      | Select one of your current languages...
+
+    .row
+      - op.in_groups(6, false).to_a.each do |splice|
+        .two.columns
+          - splice.each do |lang|
+            = link_to image_tag(flag_icon_path(lang), style: 'height: 30px; margin-bottom: 0.5em') + '<br>'.html_safe + lang, path.call(lang.to_param.downcase), class: 'button u-full-width', style: 'line-height: 1em; height: auto; padding: 1em 0;'
+    h6.docs-header
+      | ... or try a new language ...
+  - else
+    h6.docs-header
+      | Chose the language in which you want to start ...
+
+  .row
+    - @languages.reject {|l| op.include? l.name }.in_groups(6, false).to_a.each do |splice|
+      .two.columns
+        - splice.each do |lang|
+          = link_to image_tag(flag_icon_path(lang), style: 'height: 16px; vertical-align: middle; margin-top: -5px;') + ' ' + lang.name, path.call(lang.to_param.downcase), class: 'button u-full-width', style: 'padding: 0 1em;; text-align: left;'
+  hr[style="margin: 2em 0;"]
+  .footer
+    | Missing a language? Shoot me an
+    a<>[href="mailto:patricklerner@me.com"]
+      | email
+    | or a
+    a<[href="https://www.reddit.com/message/compose/?to=zqom"]
+      | message on reddit
+    | .

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe DictationsController do
+describe DictationController do
   let!(:user) { create(:user) }
 
   before(:each) do
@@ -10,7 +10,7 @@ describe DictationsController do
   it 'returns a vocabulary word as a json object' do
     note = create(:note, vocabulary: true, user: user)
 
-    get :index, lang: note.word.language.to_param, format: :json
+    xhr :get, :index, { language_id: note.word.language, format: :json }
     json = JSON.parse(response.body)
 
     expect(response).to be_success

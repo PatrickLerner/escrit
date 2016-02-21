@@ -4,16 +4,16 @@ describe 'reader' do
   login_user
 
   it 'allows you to translate texts', js: true do
-    visit reader_path('russian')
+    visit language_reader_path('russian')
     expect(page).to have_content 'Quick reader'
     fill_in 'preview_text', with: 'This is a test!'
     click_link 'Read text'
-    
+
     expect(page).to have_content 'This is a test!'
   end
 
   it 'should have a language index page' do
-    visit language_choice_reader_path
+    visit reader_path
     expect(page).to have_content 'Choose language'
     expect(page).to have_content 'Quick reader'
 
@@ -24,7 +24,7 @@ describe 'reader' do
   end
 
   it 'should support a get parameter to set the text' do
-    visit reader_path('russian') + '?q=This is a test text!'
+    visit language_reader_path('russian',  q: 'This is a test text!')
     expect(page).to have_content 'This is a test text!'
   end
 end

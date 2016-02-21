@@ -6,21 +6,21 @@ describe 'statistics' do
   let(:language) { create(:language) }
 
   it 'should have a statistics page' do
-    visit statistics_path(language)
+    visit language_statistics_path(language)
     expect(page).to have_content 'You have added 0 words this week so far.'
 
     create(:note, user: user, word: create(:word, language: language))
-    visit statistics_path(language)
+    visit language_statistics_path(language)
     expect(page).to have_content 'You have added 1 word this week so far.'
     expect(page).to have_content 'In your best week you added 1 new word.'
 
     create(:text, user: user, language: language)
-    visit statistics_path(language)
+    visit language_statistics_path(language)
     expect(page).to have_content 'In your best week you added 1 new text.'
   end
 
   it 'should have a language index page' do
-    visit language_choice_statistics_path
+    visit statistics_path
     expect(page).to have_content 'Choose language'
     expect(page).to have_content 'Statistics'
 
