@@ -53,6 +53,6 @@ class ApplicationController < ActionController::Base
   end
 
   def allowed_to_shadow_users?
-    devise_current_user && devise_current_user.admin?
+    devise_current_user.try(:admin?)
   end
 end

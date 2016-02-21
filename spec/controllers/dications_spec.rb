@@ -10,7 +10,7 @@ describe DictationsController do
   it 'returns a vocabulary word as a json object' do
     note = create(:note, vocabulary: true, user: user)
 
-    get :index, lang: note.word.language.to_param, format: :json
+    get :index, params: { lang: note.word.language.to_param, format: :json }
     json = JSON.parse(response.body)
 
     expect(response).to be_success

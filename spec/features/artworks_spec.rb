@@ -21,9 +21,7 @@ describe 'artworks for admins' do
 
     click_link 'German'
     expect(page).to have_content 'language artworks'
-  end
 
-  it 'allows to list current artworks for a language' do
     artwork = create(:artwork)
     visit artworks_index_path(artwork.language)
     expect(page).to have_content artwork.language.name
