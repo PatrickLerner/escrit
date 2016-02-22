@@ -39,6 +39,10 @@ class Note < ActiveRecord::Base
       .order(:review_at)
   end
 
+  def self.review_by(date)
+    where('review_at <= ?', date)
+  end
+
   def self.sample_vocabulary(user, language)
     Note.joins(:word).where(
       'words.language_id = ? AND user_id = ? AND vocabulary = true',
@@ -60,26 +64,6 @@ class Note < ActiveRecord::Base
       days_plus += 1
       max_words -= 10 if max_words > 10
     end
-  end
-
-  def init
-    self.rating ||= 0
-    self.value ||= ''
-  end
-
-  def to_json
-    {
-      value: word.value,
-      value_clean: word.value_clean,
-      note: value.strip,
-      language: word.language.name,
-      rating: rating,
-      vocabulary: vocabulary?
-    }
-  end
-
-  def vocabulary?
-    vocabulary
   end
 
   def self.for(user, language)
@@ -127,6 +111,26 @@ class Note < ActiveRecord::Base
     end
 
     result
+  end
+
+  def init
+    self.rating ||= 0
+    self.value ||= ''
+  end
+
+  def to_json
+    {
+      value: word.value,
+      value_clean: word.value_clean,
+      note: value.strip,
+      language: word.language.name,
+      rating: rating,
+      vocabulary: vocabulary?
+    }
+  end
+
+  def vocabulary?
+    vocabulary
   end
 
   def update_review_at!

@@ -23,13 +23,14 @@ module ApplicationHelper
     # for testing environments use a publically hosted one
     default_url = 'http://i.imgur.com/Sp2eIpR.png'
     # in production app use a locally hosted default image
-    default_url = root_url + image_path('default-profile.png') if Rails.env.production?
+    default_url = image_url('default-profile.png') if Rails.env.production?
 
     # generate id
     gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
 
     # return full url
-    "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}&d=#{CGI.escape(default_url)}"
+    "http://gravatar.com/avatar/#{gravatar_id}.png" \
+      "?s=#{size}&d=#{CGI.escape(default_url)}"
   end
 
   # Returns the currently selected language as an object (or nil if none
@@ -40,19 +41,21 @@ module ApplicationHelper
     lang = params['lang'].downcase if params['lang'].present?
     lang = params['language_id'].downcase if params['language_id'].present?
     if lang.present?
-      #Rails.cache.fetch("language_#{lang}") do
+      env = Rails.env
+      Rails.cache.fetch("#{env}_language_#{lang}", expires_in: 5.minutes) do
         Language.find_by('lower(name) = ?', lang)
-      #end
+      end
     end
   end
 
   def flag_icon_path(language)
-    return "languages/#{language.to_param.downcase}/flag.png" unless Rails.env.test?
+    return "languages/#{nl language}/flag.png" unless Rails.env.test?
     ''
   end
 
-  def flag_icon_tag(language, options = {})
-    return image_tag flag_icon_path(language), style: "height: 16px; vertical-align: middle; #{options[:style]}" unless Rails.env.test?
+  def flag_icon_tag(language, style: '')
+    return image_tag flag_icon_path(language), style:
+      "height: 16px; vertical-align: middle; #{style}" unless Rails.env.test?
     ''
   end
 
@@ -60,9 +63,7 @@ module ApplicationHelper
     if current_language
       count = Note.vocabulary.for_user(current_user)
                   .for_language(current_language).awaiting_review.count
-      if count > 0
-        content_tag(:span, count, class: 'highlight')
-      end
+      content_tag(:span, count, class: 'highlight') if count > 0
     end
   end
 
@@ -73,5 +74,24 @@ module ApplicationHelper
     else
       method("#{path_base}_path").call
     end
+  end
+
+  # returns list of languages as an array where each language is an
+  # array [name, id] if filter_unused is set, only returns languages
+  # the current user has added texts in.
+  def language_options(filter_unused = false)
+    if filter_unused
+      current_user.languages.pluck(:name, :id).sort
+    else
+      Language.order(:name).pluck(:name, :id).sort
+    end
+  end
+
+  private
+
+  # normalize a language name, represented either as a string ir
+  # an actual language object
+  def nl(language)
+    language.to_param.downcase
   end
 end

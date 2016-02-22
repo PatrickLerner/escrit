@@ -1,6 +1,5 @@
 class StatisticsController < ApplicationController
   include LanguageIndexPage
-  include TextsHelper
   include ApplicationHelper
 
   before_action :authenticate_user!
@@ -10,6 +9,8 @@ class StatisticsController < ApplicationController
 
   WEEK_LABELS = (2..14).to_a.reverse.map { |i| "#{i} weeks ago" } +
                 ['last week', 'this week']
+
+  IN_WEEK_LABELS = (0..13).to_a.map { |i| "in #{i} days" }
 
   def index
     @new_words_this_week = new_words_this_week
@@ -22,26 +23,11 @@ class StatisticsController < ApplicationController
     @total_read_words = Text.completed.not_published.for_user(current_user)
                             .for_language(current_language).sum(:word_count)
 
-    @vocabulary_data_c = []
-    @vocabulary_data = []
-    @vocabulary_labels = []
     @total_vocabulary_words = Note.vocabulary.for_user(current_user)
                                   .for_language(current_language).count
-    last_count = 0
-    14.times.each do |i|
-      end_date = i.days.since.end_of_day
 
-      voc_for_review = Note.vocabulary.for_user(current_user)
-                           .for_language(current_language)
-                           .where('review_at <= ?', end_date).count
-
-      @vocabulary_data_c += [voc_for_review]
-      @vocabulary_data += [voc_for_review - last_count]
-
-      last_count = voc_for_review
-
-      @vocabulary_labels += ["in #{i} days"]
-    end
+    @vocabulary_c = vocabulary_words(cumulative: true)
+    @vocabulary   = vocabulary_words(cumulative: false)
   end
 
   private
@@ -67,7 +53,7 @@ class StatisticsController < ApplicationController
               .for_user(current_user).for_language(current_language).count
     end
 
-    StatisticEntry.new data, DAYS_OF_THE_WEEK
+    StatisticEntry.new data: data, labels: DAYS_OF_THE_WEEK
   end
 
   def new_words
@@ -77,7 +63,7 @@ class StatisticsController < ApplicationController
               .for_user(current_user).for_language(current_language).count
     end
 
-    StatisticEntry.new data, WEEK_LABELS
+    StatisticEntry.new data: data, labels: WEEK_LABELS
   end
 
   def new_text
@@ -87,7 +73,7 @@ class StatisticsController < ApplicationController
               .for_language(current_language).for_user(current_user).count
     end
 
-    StatisticEntry.new data, WEEK_LABELS
+    StatisticEntry.new data: data, labels: WEEK_LABELS
   end
 
   def total_words
@@ -97,6 +83,29 @@ class StatisticsController < ApplicationController
               .for_language(current_language).count
     end
 
-    StatisticEntry.new data, (1..5).to_s
+    StatisticEntry.new data: data, labels: (1..5).to_a
+  end
+
+  def vocabulary_words(cumulative: false)
+    data = (0..13).to_a.map { |day| vocabulary_words_data_for_day(day) }
+
+    data = data.each_with_index.map do |_, i|
+      vocabulary_words_non_cumulative_process_day data, i
+    end unless cumulative
+
+    StatisticEntry.new data: data, labels: IN_WEEK_LABELS
+  end
+
+  def vocabulary_words_non_cumulative_process_day(data, day)
+    if day == 0
+      data[day]
+    else
+      data[day] - data[day - 1]
+    end
+  end
+
+  def vocabulary_words_data_for_day(day)
+    Note.for_user(current_user).for_language(current_language)
+        .vocabulary.review_by(day.days.since.end_of_day).count
   end
 end

@@ -1,7 +1,7 @@
 class StatisticEntry
   attr_accessor :data, :labels
 
-  def initialize(data, labels)
+  def initialize(data: nil, labels: nil)
     @data   = data
     @labels = labels
   end

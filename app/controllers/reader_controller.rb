@@ -1,7 +1,6 @@
 class ReaderController < ApplicationController
   include LanguageIndexPage
   include ApplicationHelper
-  include TextsHelper
 
   before_action :authenticate_user!
   before_action :load_services, only: [:index]

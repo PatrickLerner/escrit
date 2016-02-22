@@ -1,7 +1,6 @@
 class TextsController < ApplicationController
   include LanguageIndexPage
   include ApplicationHelper
-  include TextsHelper
 
   before_action :authenticate_user!
   before_action :load_text, only: [:show, :edit, :update, :copy, :destroy]

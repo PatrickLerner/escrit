@@ -1,7 +1,6 @@
 class WordsController < ApplicationController
   include LanguageIndexPage
   include ApplicationHelper
-  include TextsHelper
   using StringRefinements
 
   before_action :authenticate_user!

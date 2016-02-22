@@ -165,20 +165,20 @@
     var wordsCtx = $("#words").get(0).getContext("2d");
 
     var vocabularyData = {
-      labels: [<%= @vocabulary_labels.map{|i| '"' + i + '"'}.join(',').html_safe %>],
+      labels: [<%= @vocabulary.labels.map{|i| '"' + i + '"'}.join(',').html_safe %>],
       legendTemplate : "<ul class=\"<%%=name.toLowerCase()%>-legend\"><%% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%%=datasets[i].strokeColor%>\"></span><%%if(datasets[i].label){%><%%=datasets[i].label%><%%}%></li><%%}%></ul>",
       datasets: [
         {
           label: "Number of words for reviews",
           fillColor: "#71A5B7",
           strokeColor: "#71A5B7",
-          data: [<%= @vocabulary_data.join ',' %>]
+          data: [<%= @vocabulary.data.join ',' %>]
         },
         {
           label: "Number of words for reviews (cumulative)",
           fillColor: "#17A4A2",
           strokeColor: "#15A19F",
-          data: [<%= @vocabulary_data_c.join ',' %>]
+          data: [<%= @vocabulary_c.data.join ',' %>]
         }
       ]
     };
