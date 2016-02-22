@@ -53,6 +53,20 @@ describe 'services for users' do
   end
 end
 
-describe 'replacements for admins' do
+describe 'services for admins', js: true do
   login_admin
+
+  it 'allows to publish services' do
+    service = create(:service, user: user)
+
+    visit services_path
+    expect(page).to have_content service.name
+    find('.fa-users').click
+
+    expect(page).to have_content 'The service has been published.'
+    new_service = Service.find(service.id + 1)
+    expect(new_service.name).to eq(service.name)
+    expect(new_service.user_id).to eq(0)
+    expect(service.user_id).to eq(user.id)
+  end
 end

@@ -21,7 +21,8 @@ class ServicesController < ApplicationController
     @new_service.user_id = 0
     @new_service.save
 
-    redirect_to services_path
+    redirect_to services_path,
+                notice: 'The service has been published.'
   end
 
   def copy
@@ -31,7 +32,8 @@ class ServicesController < ApplicationController
     @new_service.user = current_user
     @new_service.save
 
-    redirect_to services_path
+    redirect_to services_path,
+                notice: 'New service has been successfully added.'
   end
 
   def destroy
@@ -50,7 +52,7 @@ class ServicesController < ApplicationController
 
     @public_services = @public_services.reject do |public_service|
       @services.include? public_service
-    end
+    end unless current_user.admin?
 
     @public_services = @public_services.sort
   end

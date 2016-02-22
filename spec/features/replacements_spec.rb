@@ -23,7 +23,7 @@ describe 'replacements for admins' do
 
   it 'allows adding a new replacement, edit it and delete it', js: true do
     replacement_value = "#{Faker::Hipster.word}_val"
-    replacement = Faker::Hipster.word
+    replacement = "#{Faker::Hipster.word}_word"
     visit replacements_path
     click_link 'Add new'
 
