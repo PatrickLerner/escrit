@@ -1,6 +1,6 @@
 class LanguagesController < ApplicationController
   before_action :authenticate_user!
-  before_action :user_admin!
+  before_action :restrict_access!
   before_action :load_language, only: [:edit, :destroy, :update]
   before_action :invalidate_cache, only: [:update, :destroy]
 
@@ -39,6 +39,10 @@ class LanguagesController < ApplicationController
   end
 
   private
+
+  def restrict_access!
+    authorize! :manage, Language
+  end
 
   def invalidate_cache
     Rails.cache.fetch("language_#{@language.name.downcase}")

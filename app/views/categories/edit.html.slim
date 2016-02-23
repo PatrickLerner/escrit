@@ -30,7 +30,7 @@
               == "&nbsp"
               | Archive this text
           .six.columns
-            - if current_user.admin?
+            - if can? :publish, Text
               a href="#" id="publicToggle" class="toggle-link"
                 = fa_icon 'toggle-off'
                 == "&nbsp"

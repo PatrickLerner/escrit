@@ -16,7 +16,7 @@
       th style="width: 40%" Name
       th style="width: 25%" Short Name
       th Language
-      - if current_user.admin?
+      - if can? :publish, Service
         th.u-centered style="width: 10%"
     - @services.each do |service|
       tr
@@ -27,14 +27,14 @@
           td.disabled_entry
             | (
             = link_to service.name, edit_service_path(service), title: 'Edit Service Entry'
-            | ) 
+            | )
         td= link_to service.short_name, edit_service_path(service), title: 'Edit Service Entry'
         td
           - if service.language
             = service.language.name
           - else
             | All
-        - if current_user.admin?
+        - if can? :publish, Service
           td
             - unless service.published?
               = link_to fa_icon('users'), publish_service_path(service), title: 'Publish this service as a default for all users', class: 'table-button'
@@ -50,12 +50,12 @@
       - @public_services.each do |service|
         tr
           td
-            - if current_user.admin?
+            - if can? :publish, Service
               = link_to service.name, edit_service_path(service), title: 'Edit Service Entry'
             - else
               = service.name
           td
-            - if current_user.admin?
+            - if can? :publish, Service
               = link_to service.short_name, edit_service_path(service), title: 'Edit Service Entry'
             - else
               = service.short_name

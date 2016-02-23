@@ -1,15 +1,9 @@
-- if @user.admin
-  - content_for :title, '%s (Admin)' % [@user.name]
-- else
-  - content_for :title, '%s (User)' % [@user.name]
+- content_for :title, '%s (%s)' % [@user.name, @user.role_name]
 
 - content_for :header_image_style, @user.languages.sample.try(:current_artwork_style)
 - content_for :header_image_class, 'bar'
 - content_for :header_title, @user.name
-- if @user.admin?
-  - content_for :header_subtitle, 'Most Serene Administrator'
-- else
-  - content_for :header_subtitle, 'Citizen'
+- content_for :header_subtitle, @user.role_name
 
 div.container
   div.row
@@ -46,7 +40,7 @@ div.container
               - percentage = ((w % 1000).to_f/1000.to_f * 100).round
               div.four.columns style="text-align: left"
                 h5 style="margin-bottom: 0; margin-top: 0.5em" title="#{@user.name} has added a total of #{number_with_precision w, precision: 0, delimiter: ','} #{"word".pluralize w} so far."
-                  | Level 
+                  | Level
                   - if w < 1000
                     = number_with_precision level, precision: 1, delimiter: ','
                   - else
@@ -60,7 +54,7 @@ div.container
                 - w_familiar = if @words_familiar[l] then @words_familiar[l] else 0 end
                 - percentage = ((w_familiar % 1000).to_f/1000.to_f * 100).round
                 h5 style="margin-bottom: 0; margin-top: 0.5em" title="#{@user.name} has rated a total of #{number_with_precision w_familiar, precision: 0, delimiter: ','} #{"word".pluralize w_familiar} to be familiar to them (rating of three or above)."
-                  | Level 
+                  | Level
                   - level = w_familiar.to_f/1000.to_f
                   - if level >= 0.1 and level < 1
                     = number_with_precision level, precision: 1, delimiter: ','
@@ -69,6 +63,6 @@ div.container
                 div class="progress" title="#{@user.name} is #{percentage}% to the next level."
                   div class="current" style="width: #{percentage}%;"
                 span style="color: gray;"
-                  | for 
+                  | for
                   alias title="Words with a rating of three or above are considered familiar. That is, you probably remember them more often than you forget them." familiar words
                   | .

@@ -1,6 +1,6 @@
 class ReplacementsController < ApplicationController
   before_action :authenticate_user!
-  before_action :user_admin!
+  before_action :restrict_access!
   before_action :load_replacement, only: [:edit, :destroy, :update]
 
   def create
@@ -38,6 +38,10 @@ class ReplacementsController < ApplicationController
   end
 
   private
+
+  def restrict_access!
+    authorize! :manage, Replacement
+  end
 
   def load_replacement
     @replacement = Replacement.find_by id: params[:id]

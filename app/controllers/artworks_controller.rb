@@ -3,7 +3,7 @@ class ArtworksController < ApplicationController
   include ApplicationHelper
 
   before_action :authenticate_user!
-  before_action :user_admin!
+  before_action :restrict_access!
   before_action :load_artwork, only: [:show, :edit, :destroy, :update]
 
   def create
@@ -40,6 +40,10 @@ class ArtworksController < ApplicationController
   end
 
   private
+
+  def restrict_access!
+    authorize! :manage, Artwork
+  end
 
   def load_artwork
     @artwork = Artwork.find_by id: params[:id]

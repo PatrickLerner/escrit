@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
 
   after_initialize :init
 
+  enum role: [:citizen, :councilor, :advisor, :doge]
+
   def init
     self.audio_rate ||= 100
   end
@@ -30,5 +32,21 @@ class User < ActiveRecord::Base
 
   def compliments
     Compliment.where(language: languages)
+  end
+
+  def ability
+    @ability ||= Ability.new(self)
+  end
+
+  def role_name
+    if doge?
+      'Most Serene Doge'
+    elsif advisor?
+      'Serene Advisor'
+    elsif councilor?
+      'Councilor'
+    else
+      'Citizen'
+    end
   end
 end

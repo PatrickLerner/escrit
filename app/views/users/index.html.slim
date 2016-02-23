@@ -11,7 +11,7 @@ div.container
         .three.columns.u-centered
           div= link_to image_tag(avatar_url(user, 256), class: 'u-full-width profile-picture'), '/u/' + user.id.to_s, class: 'image-link'
           - name = user.name
-          - name += ' (Admin)' if user.admin
+          - name += ' (Admin)' if user.doge?
           div= link_to name, '/u/' + user.id.to_s
   = will_paginate @words, class: 'pagination'
   .pagination_info

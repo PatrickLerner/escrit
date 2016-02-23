@@ -3,43 +3,35 @@ class TextsController < ApplicationController
   include ApplicationHelper
 
   before_action :authenticate_user!
-  before_action :load_text, only: [:show, :edit, :update, :copy, :destroy]
+  before_action :load_text, only:
+    [:vocabulary, :show, :edit, :update, :copy, :destroy]
   before_action :load_services, only: [:show]
+  before_action :can_update_text, only: [:edit, :update, :destroy]
+  before_action :can_read_text, only: [:show, :vocabulary, :copy]
 
   def vocabulary
-    @text = Text.find params[:id]
-
-    if @text.nil? || !@text.is_allowed_to_view?(current_user)
-      redirect_to language_choice_texts_path,
-                  alert: 'You are not allowed to do that.'
-    elsif current_user.native_language_id != @text.language_id
+    if current_user.native_language_id != @text.language_id
       @notes = Note.joins('INNER JOIN "occurrences" ON "notes"."word_id" = "occurrences"."word_id"').includes(:word).where('occurrences.text_id = ? AND notes.rating IN (1, 2, 3, 4, 5) AND notes.user_id = ?', @text.id, current_user.id).paginate(page: params[:page], per_page: 250)
     end
   end
 
   def copy
-    if @text.nil? || !@text.is_allowed_to_view?(current_user)
-      redirect_to language_choice_texts_path,
-                  alert: 'You are not allowed to do that.'
-    else
-      @new_text = @text.dup
-      @new_text.user = current_user
-      @new_text.public = false
-      @new_text.hidden = false
-      @new_text.save
+    @new_text = @text.dup
+    @new_text.user = current_user
+    @new_text.public = false
+    @new_text.hidden = false
+    @new_text.save
 
-      redirect_to language_text_path(@new_text.language, @new_text),
-                  notice: 'Text has been successfully copied into your library.'
-    end
+    redirect_to language_text_path(@new_text.language, @new_text),
+                notice: 'Text has been successfully copied into your library.'
   end
 
   def create
     @text = Text.new(text_params)
     @text.user_id = current_user.id
-    @text.public = false unless current_user.admin?
+    @text.public = false unless can? :publish, Text
 
     if @text.save
-      @text.save
       redirect_to @text, notice: 'New text has been successfully added.'
     else
       params[:language] = @text.language.name if @text.language
@@ -48,19 +40,18 @@ class TextsController < ApplicationController
   end
 
   def edit
-    @text = nil unless @text.is_allowed_to_update?(current_user)
   end
 
   def destroy
-    @text.destroy unless @text.is_allowed_to_update?(current_user)
+    @text.destroy
 
-    url = '/texts/' + @text.language.name.downcase
+    url = "/texts/#{@text.language}"
     if @text.public
       url += '/public'
     elsif @text.hidden
       url += '/archive'
     end
-    url += '#' + @text.category
+    url += "##{@text.category}"
 
     redirect_to url, notice: 'Text has been successfully deleted.'
   end
@@ -130,49 +121,39 @@ class TextsController < ApplicationController
   end
 
   def show
-    if @text.nil?
-      return redirect_to language_choice_texts_path, alert: 'This text does not exist.'
-    end
-
-    if @text == nil or (@text.user_id != current_user.id and not current_user.admin? and not @text.public)
-      redirect_to language_choice_texts_path, alert: 'You are not allowed to do that.'
-    else
-      @processed_text = @text.processed_content current_user
-      @processed_title = @text.processed_title current_user
-      @processed_category = @text.processed_category current_user
-    end
+    @processed_text = @text.processed_content current_user
+    @processed_title = @text.processed_title current_user
+    @processed_category = @text.processed_category current_user
   end
 
   def update
-    if params[:completed] && ((current_user.id != @text.id) || @text.public)
-      render plain: 'not allowed'
-    elsif !@text.public || current_user.admin?
-      if text_params[:public] && !current_user.admin?
-        text_params[:public] = false
-      end
+    if text_params[:bulk_update]
+      Text.where(category: @text.category, language_id: @text.language_id, public: @text.public, hidden: @text.hidden).update_all(category: text_params['category'], public: text_params['public'], hidden: text_params['hidden'])
+      return redirect_to language_texts_path(current_language),
+                         notice: 'Category has been successfully updated.'
+    end
 
-      if text_params[:bulk_update]
-        Text.where(category: @text.category, language_id: @text.language_id, public: @text.public, hidden: @text.hidden).update_all(category: text_params['category'], public: text_params['public'], hidden: text_params['hidden'])
-        return redirect_to language_texts_path(current_language),
-                           notice: 'Category has been successfully updated.'
-      end
-
-      if @text.update_attributes(text_params)
-        if text_params[:completed]
-          render plain: 'ok'
-        else
-          redirect_to language_text_path(@text.language, @text),
-                      notice: 'Text has been successfully updated'
-        end
+    if @text.update_attributes(text_params)
+      if text_params[:completed]
+        render plain: 'ok'
       else
-        render 'edit'
+        redirect_to language_text_path(@text.language, @text),
+                    notice: 'Text has been successfully updated'
       end
     else
-      redirect_to @text, alert: 'Text could not be updated!'
+      render 'edit'
     end
   end
 
   private
+
+  def can_update_text
+    authorize! :update, @text
+  end
+
+  def can_read_text
+    authorize! :read, @text
+  end
 
   def load_text
     @text = Text.find_by id: params[:id]

@@ -107,17 +107,6 @@ class Text < ActiveRecord::Base
     end
   end
 
-  # returns if the given user is allowed to update the text
-  # admins are allowed to update all texts, other users only their own
-  # and only if their text has not been made public
-  def is_allowed_to_update?(user)
-    user.admin? || (user.id == user_id && !public)
-  end
-
-  def is_allowed_to_view?(user)
-    user_id == user.id || user.admin? || public
-  end
-
   def scan_words_content
     scan_words self.content
   end

@@ -1,6 +1,5 @@
 class ServicesController < ApplicationController
   before_action :authenticate_user!
-  before_action :user_admin!, only: [:publish]
   before_action :load_service, only: [:edit, :publish, :destroy, :update]
 
   def create
@@ -17,6 +16,7 @@ class ServicesController < ApplicationController
   end
 
   def publish
+    authorize! :publish, Service
     @new_service = @service.dup
     @new_service.user_id = 0
     @new_service.save
@@ -52,7 +52,7 @@ class ServicesController < ApplicationController
 
     @public_services = @public_services.reject do |public_service|
       @services.include? public_service
-    end unless current_user.admin?
+    end unless can?(:publish, Service)
 
     @public_services = @public_services.sort
   end
@@ -73,7 +73,7 @@ class ServicesController < ApplicationController
   private
 
   def load_service
-    @service = if current_user.admin?
+    @service = if can?(:publish, Service)
                  Service.find(params[:id])
                else
                  Service.for_user(current_user).find(params[:id])

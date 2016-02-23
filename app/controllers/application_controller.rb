@@ -26,12 +26,6 @@ class ApplicationController < ActionController::Base
     '/home'
   end
 
-  def user_admin!
-    unless current_user.admin?
-      redirect_to home_path, alert: 'You must be an administrator to do this!'
-    end
-  end
-
   alias_method :devise_current_user, :current_user
 
   def current_user
@@ -53,6 +47,6 @@ class ApplicationController < ActionController::Base
   end
 
   def allowed_to_shadow_users?
-    devise_current_user.try(:admin?)
+    devise_current_user.try(:ability).try(:can?, :shadow, User)
   end
 end

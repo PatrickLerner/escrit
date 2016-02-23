@@ -22,7 +22,7 @@
         == ' unrated '
         span id="unratedWordsPlural" words
     .right
-      - if @text.is_allowed_to_update? current_user
+      - if can?(:manage, @text)
         = link_to fa_icon('pencil') + ' Edit text', edit_language_text_path(@text.language, @text), class: 'button'
       - if @text.public
         = link_to fa_icon('copy', text: 'Copy'), copy_language_text_path(@text.language, @text), method: :post, class: 'button', data: { confirm: 'Do you want to copy this text into your private library?' }, title: 'Make a copy of this text and add it to your personal text library.'

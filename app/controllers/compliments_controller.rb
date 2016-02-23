@@ -1,6 +1,6 @@
 class ComplimentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :user_admin!
+  before_action :restrict_access!
   before_action :load_compliment, only: [:edit, :destroy, :update]
 
   def create
@@ -38,6 +38,10 @@ class ComplimentsController < ApplicationController
   end
 
   private
+
+  def restrict_access!
+    authorize! :manage, Compliment
+  end
 
   def load_compliment
     @compliment = Compliment.find_by id: params[:id]
