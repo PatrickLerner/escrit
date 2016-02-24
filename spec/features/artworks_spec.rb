@@ -1,17 +1,6 @@
 require 'rails_helper'
 
-describe 'artworks for users' do
-  login_user
-
-  it 'cannot be added or listed' do
-    visit language_artworks_path('Russian')
-    expect(page).to have_content 'You must be an administrator to do this!'
-    visit new_language_artwork_path('Russian')
-    expect(page).to have_content 'You must be an administrator to do this!'
-  end
-end
-
-describe 'artworks for admins' do
+describe 'artworks' do
   login_admin
 
   it 'should have an artwork index page' do

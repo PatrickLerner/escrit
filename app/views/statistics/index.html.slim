@@ -56,7 +56,7 @@
           | In your best week you added
           =<> number_with_precision @new_text.data.max, precision: 0, delimiter: ','
           | new
-          =<> "text".pluralize @new_text.data.max
+          =< "text".pluralize @new_text.data.max
           | .
     .six.columns
       h5 New Words Added (Per Week)
@@ -74,7 +74,7 @@
           | In your best week you added
           =<> number_with_precision @new_words.data.max, precision: 0, delimiter: ','
           | new
-          =<> "word".pluralize @new_words.data.max
+          =< "word".pluralize @new_words.data.max
           | .
   .row
     .six.columns

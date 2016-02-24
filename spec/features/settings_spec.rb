@@ -3,24 +3,6 @@ require 'rails_helper'
 describe 'user settings' do
   login_user
 
-  it 'settings do not contain admin only things', js: true do
-    visit settings_path
-
-    expect(page).to have_content 'Services'
-    expect(page).to have_content 'User profile'
-    expect(page).to_not have_content 'Languages'
-    expect(page).to_not have_content 'Compliments'
-
-    visit languages_path
-    expect(page).to have_content 'You must be an administrator to do this!'
-    visit replacements_path
-    expect(page).to have_content 'You must be an administrator to do this!'
-    visit artworks_path
-    expect(page).to have_content 'You must be an administrator to do this!'
-    visit compliments_path
-    expect(page).to have_content 'You must be an administrator to do this!'
-  end
-
   it 'allows changing the audio rate', js: true do
     visit settings_path
 

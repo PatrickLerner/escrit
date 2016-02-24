@@ -18,6 +18,7 @@ describe WordsController do
     expect(json['language']).to eq(word.language.name)
 
     note = create(:note, word: word, user: User.last)
+    note.reload
     get :show, xhr: true, params: { language_id: word.language, id: word.value, format: :json }
     json = JSON.parse(response.body)
 

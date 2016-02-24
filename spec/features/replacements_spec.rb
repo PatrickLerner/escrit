@@ -1,17 +1,6 @@
 require 'rails_helper'
 
-describe 'replacements for users' do
-  login_user
-
-  it 'cannot be added or listed' do
-    visit replacements_path
-    expect(page).to have_content 'You must be an administrator to do this!'
-    visit new_replacement_path
-    expect(page).to have_content 'You must be an administrator to do this!'
-  end
-end
-
-describe 'replacements for admins' do
+describe 'replacements' do
   login_admin
 
   it 'allows to list current replacements' do

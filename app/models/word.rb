@@ -10,6 +10,10 @@ class Word < ActiveRecord::Base
   validates :language, presence: true
   validates :value, uniqueness: { scope: :language_id }
 
+  def self.for_text(text)
+    joins(:occurrences).where('occurrences.text_id = ?', text.id)
+  end
+
   def self.determine_replacement_value(word, language)
     replacements = language.replacements
     v = word

@@ -3,13 +3,6 @@ require 'rails_helper'
 describe 'compliments for users' do
   login_user
 
-  it 'cannot be added or listed' do
-    visit compliments_path
-    expect(page).to have_content 'You must be an administrator to do this!'
-    visit new_compliment_path
-    expect(page).to have_content 'You must be an administrator to do this!'
-  end
-
   it 'shows a compliment for a language if the user has one' do
     visit home_path
     expect(page).to have_content 'Nice to have you on board!'

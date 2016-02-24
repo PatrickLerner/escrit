@@ -7,9 +7,10 @@ FactoryGirl.define do
     pwd = Faker::Internet.password
     password pwd
     password_confirmation pwd
+    role User.roles[:citizen]
 
     factory :admin do
-      admin true
+      role User.roles[:doge]
     end
   end
 end

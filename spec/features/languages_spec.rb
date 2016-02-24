@@ -1,17 +1,6 @@
 require 'rails_helper'
 
-describe 'languages for users' do
-  login_user
-
-  it 'cannot be added or listed' do
-    visit languages_path
-    expect(page).to have_content 'You must be an administrator to do this!'
-    visit new_language_path
-    expect(page).to have_content 'You must be an administrator to do this!'
-  end
-end
-
-describe 'languages for admins' do
+describe 'languages' do
   login_admin
 
   it 'allows to list current languages' do

@@ -24,8 +24,6 @@ describe 'texts' do
 
     visit language_texts_path('russian')
     expect(page).to have_content category
-    click_link category
-    expect(page).to have_content title
   end
 
   it 'auto completes category names', js: true do

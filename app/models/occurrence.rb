@@ -5,4 +5,6 @@ class Occurrence < ActiveRecord::Base
   validates :word, presence: true
   validates :text, presence: true
   validates_uniqueness_of :word_id, scope: :text_id
+
+  scope :for_text, ->(text) { where(text: text) }
 end

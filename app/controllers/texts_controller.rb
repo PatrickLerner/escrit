@@ -27,7 +27,7 @@ class TextsController < ApplicationController
   end
 
   def create
-    @text = Text.new(text_params)
+    @text = Text.new(text_params.merge(language: current_language))
     @text.user_id = current_user.id
     @text.public = false unless can? :publish, Text
 
@@ -161,7 +161,7 @@ class TextsController < ApplicationController
 
   def text_params
     params.require(:text).permit(
-      :category, :title, :content, :language_id, :completed, :hidden, :public,
+      :category, :title, :content, :completed, :hidden, :public,
       :audio_url, :bulk_update)
   end
 end

@@ -108,100 +108,39 @@ class Text < ActiveRecord::Base
   end
 
   def scan_words_content
-    scan_words self.content
-  end
-
-  def scan_words text
-    text.downcase.gsub(URI.regexp){
-      ''
-    }.scan(Text::WORD_REGEX).map { |w|
-      Word.determine_replacement_value w.utf8downcase, self.language
-    }.sort.uniq
+    scan_words(content)
   end
 
   def unique_word_count
-    Occurrence.where(text: self).count
+    Occurrence.for_text(self).count
   end
 
   def unique_words
-    Word.joins(:occurrences).where('occurrences.text_id = ?', self.id).map { |word|
-      word.value
-    }
+    Word.for_text(self).pluck(:value)
   end
 
-  def rated_words_count user
+  def rated_words_count(user)
+    rated_words(user).count
+  end
+
+  def rated_words(user)
     Word.joins(:occurrences).joins(
       'INNER JOIN "notes" ON "notes"."word_id" = "words"."id"'
     ).where(
       'occurrences.text_id = ? AND notes.rating <> 0 AND notes.user_id = ?',
-      self.id,
-      user.id
-    ).count
-  end
-
-  def rated_words user
-    Word.joins(:occurrences).joins(
-      'INNER JOIN "notes" ON "notes"."word_id" = "words"."id"'
-    ).where(
-      'occurrences.text_id = ? AND notes.rating <> 0 AND notes.user_id = ?',
-      self.id,
-      user.id
-    ).map.(&:value)
+      id, user.id
+    ).pluck(:value)
   end
 
   def content_cleaned
-    self.content.gsub(URI.regexp, '').strip
+    content.gsub(URI.regexp, '').strip
   end
 
   def content_processed
-    process self.content
+    process content
   end
 
-  def normalize_unicode
-    self.title = Unicode.normalize_KC(self.title).strip
-    self.category = Unicode.normalize_KC(self.category).strip
-    self.content = Unicode.normalize_KC(self.content).strip
-  end
-
-  def update_occurrences
-    current_words = self.scan_words_content
-    previous_words = self.unique_words
-
-    gained_words = current_words - previous_words
-    lost_words = previous_words - current_words
-
-    # add gained words
-    new_words = Word.find_create_bulk self.language, gained_words
-    new_words.each do |value, word|
-      word.save if word.new_record?
-      Occurrence.create word: word, text: self
-    end
-
-    # remove lost occurances and words (if no occurances remain for it)
-    removed_words = Word.find_create_bulk self.language, lost_words
-    removed_words.each do |value, word|
-      occurrences = Occurrence.where word: word, text: self
-      occurrences.destroy_all
-
-      # if the word is not referenced by occurances in texts or by definitions
-      # of users, then it may now also be deleted permanently from the system
-      if word.occurrences.count == 0 and word.notes.count == 0
-        word.destroy
-      end
-    end
-
-    Occurrence.where(text: self).includes(:word).each do |o|
-      if o.word.nil?
-        o.delete
-      end
-    end
-
-    if self.word_count != self.unique_word_count
-      self.update_columns(word_count: self.unique_word_count)
-    end
-  end
-
-  def occurrences word
+  def occurrences(word)
     self.content.split(/(?<=[^\.][\.\?!][^\.])|(?<=[\n])/).select { |line|
       line = Word.determine_replacement_value line.utf8downcase, self.language
       if line.downcase.include? word
@@ -233,5 +172,53 @@ class Text < ActiveRecord::Base
         end
       }.html_safe
     }
+  end
+
+  private
+
+  def scan_words(text)
+    text.downcase.gsub(URI.regexp, '').scan(Text::WORD_REGEX).map { |w|
+      Word.determine_replacement_value(w.utf8downcase, language)
+    }.sort.uniq
+  end
+
+  def normalize_unicode
+    self.title = Unicode.normalize_KC(title).strip
+    self.category = Unicode.normalize_KC(category).strip
+    self.content = Unicode.normalize_KC(content).strip
+  end
+
+  def update_occurrences
+    current_words  = scan_words_content
+    previous_words = unique_words
+
+    gained_words = current_words - previous_words
+    lost_words = previous_words - current_words
+
+    # add gained words
+    new_words = Word.find_create_bulk(language, gained_words)
+    new_words.each do |_, word|
+      word.save if word.new_record?
+      Occurrence.create word: word, text: self
+    end
+
+    # remove lost occurances and words (if no occurances remain for it)
+    removed_words = Word.find_create_bulk language, lost_words
+    removed_words.each do |_, word|
+      occurrences = Occurrence.where word: word, text: self
+      occurrences.destroy_all
+
+      # if the word is not referenced by occurances in texts or by definitions
+      # of users, then it may now also be deleted permanently from the system
+      word.destroy if word.occurrences.count.zero? && word.notes.count.zero?
+    end
+
+    Occurrence.where(text: self).includes(:word).each do |o|
+      o.delete if o.word.nil?
+    end
+
+    if word_count != unique_word_count
+      update_columns(word_count: unique_word_count)
+    end
   end
 end
