@@ -4,14 +4,8 @@ class UsersController < ApplicationController
   before_action :find_buddy, only: [:show, :add, :remove]
 
   def show
-    @words = Note.joins(:word)
-      .joins('left join languages on languages.id = words.language_id')
-      .where('user_id = ? and rating < 6', params[:id]).group('languages.name')
-      .order('languages.name asc').count
-    @words_familiar = Note.joins(:word)
-      .joins('left join languages on languages.id = words.language_id')
-      .where('user_id = ? and rating < 6 and rating >= 3', params[:id])
-      .group('languages.name').order('languages.name asc').count
+    @words = current_user.words_by_languages
+    @words_familiar = current_user.words_by_languages(min_rating: 3)
   end
 
   def index
@@ -20,10 +14,7 @@ class UsersController < ApplicationController
 
   def add
     if @user && !@is_buddy
-      buddy = Buddy.new
-      buddy.origin = current_user
-      buddy.destination = @user
-      buddy.save
+      Buddy.create! origin: current_user, destination: @user
     end
     redirect_to "/u/#{params[:id]}"
   end
