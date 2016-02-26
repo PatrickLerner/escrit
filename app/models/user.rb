@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   def languages
     Text.group(:language_id).select('language_id, sum(id) as sum')
         .where(user_id: id, public: false).includes(:language)
-        .pluck(:language).sort
+        .map(&:language).sort
   end
 
   def words_by_languages(min_rating: 0)
