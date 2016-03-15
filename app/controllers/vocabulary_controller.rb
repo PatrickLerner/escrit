@@ -7,15 +7,9 @@ class VocabularyController < ApplicationController
                  .for_language(current_language).awaiting_review
     respond_to do |format|
       format.html
-      format.json {
-        if @words.empty?
-          render json: []
-        else
-          render json: @words.map { |word|
-            word.word.value
-          }
-        end
-      }
+      format.json do
+        render json: @words.map(&:word).map(&:value)
+      end
     end
   end
 end
