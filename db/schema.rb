@@ -24,25 +24,28 @@ ActiveRecord::Schema.define(version: 20160223205316) do
     t.integer  "language_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
-    t.index ["language_id"], name: "index_artworks_on_language_id", using: :btree
   end
+
+  add_index "artworks", ["language_id"], name: "index_artworks_on_language_id", using: :btree
 
   create_table "buddies", force: :cascade do |t|
     t.integer  "origin_id"
     t.integer  "destination_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["destination_id"], name: "index_buddies_on_destination_id", using: :btree
-    t.index ["origin_id"], name: "index_buddies_on_origin_id", using: :btree
   end
+
+  add_index "buddies", ["destination_id"], name: "index_buddies_on_destination_id", using: :btree
+  add_index "buddies", ["origin_id"], name: "index_buddies_on_origin_id", using: :btree
 
   create_table "categories", force: :cascade do |t|
     t.text     "title"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "language_id"
-    t.index ["language_id"], name: "index_categories_on_language_id", using: :btree
   end
+
+  add_index "categories", ["language_id"], name: "index_categories_on_language_id", using: :btree
 
   create_table "compliments", force: :cascade do |t|
     t.text     "value"
@@ -68,21 +71,23 @@ ActiveRecord::Schema.define(version: 20160223205316) do
     t.datetime "updated_at"
     t.boolean  "vocabulary"
     t.datetime "review_at"
-    t.index ["user_id"], name: "index_notes_on_user_id", using: :btree
-    t.index ["vocabulary"], name: "index_notes_on_vocabulary", using: :btree
-    t.index ["word_id", "user_id"], name: "index_notes_on_word_id_and_user_id", unique: true, using: :btree
-    t.index ["word_id"], name: "index_notes_on_word_id", using: :btree
   end
+
+  add_index "notes", ["user_id"], name: "index_notes_on_user_id", using: :btree
+  add_index "notes", ["vocabulary"], name: "index_notes_on_vocabulary", using: :btree
+  add_index "notes", ["word_id", "user_id"], name: "index_notes_on_word_id_and_user_id", unique: true, using: :btree
+  add_index "notes", ["word_id"], name: "index_notes_on_word_id", using: :btree
 
   create_table "occurrences", force: :cascade do |t|
     t.integer  "word_id"
     t.integer  "text_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["text_id"], name: "index_occurrences_on_text_id", using: :btree
-    t.index ["word_id", "text_id"], name: "index_occurrences_on_word_id_and_text_id", unique: true, using: :btree
-    t.index ["word_id"], name: "index_occurrences_on_word_id", using: :btree
   end
+
+  add_index "occurrences", ["text_id"], name: "index_occurrences_on_text_id", using: :btree
+  add_index "occurrences", ["word_id", "text_id"], name: "index_occurrences_on_word_id_and_text_id", unique: true, using: :btree
+  add_index "occurrences", ["word_id"], name: "index_occurrences_on_word_id", using: :btree
 
   create_table "replacements", force: :cascade do |t|
     t.string   "value",       limit: 255
@@ -90,8 +95,9 @@ ActiveRecord::Schema.define(version: 20160223205316) do
     t.integer  "language_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["language_id"], name: "index_replacements_on_language_id", using: :btree
   end
+
+  add_index "replacements", ["language_id"], name: "index_replacements_on_language_id", using: :btree
 
   create_table "services", force: :cascade do |t|
     t.text     "name"
@@ -102,8 +108,9 @@ ActiveRecord::Schema.define(version: 20160223205316) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.boolean  "enabled"
-    t.index ["language_id"], name: "index_services_on_language_id", using: :btree
   end
+
+  add_index "services", ["language_id"], name: "index_services_on_language_id", using: :btree
 
   create_table "texts", force: :cascade do |t|
     t.text     "title"
@@ -118,9 +125,10 @@ ActiveRecord::Schema.define(version: 20160223205316) do
     t.boolean  "hidden"
     t.integer  "user_id"
     t.boolean  "public"
-    t.index ["category_id"], name: "index_texts_on_category_id", using: :btree
-    t.index ["language_id"], name: "index_texts_on_language_id", using: :btree
   end
+
+  add_index "texts", ["category_id"], name: "index_texts_on_category_id", using: :btree
+  add_index "texts", ["language_id"], name: "index_texts_on_language_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.text     "email",                  default: "", null: false
@@ -140,18 +148,20 @@ ActiveRecord::Schema.define(version: 20160223205316) do
     t.integer  "native_language_id"
     t.integer  "audio_rate"
     t.integer  "role",                   default: 0,  null: false
-    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
-    t.index ["native_language_id"], name: "index_users_on_native_language_id", using: :btree
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["native_language_id"], name: "index_users_on_native_language_id", using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "words", force: :cascade do |t|
     t.text     "value"
     t.integer  "language_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["value", "language_id"], name: "index_words_on_value_and_language_id", unique: true, using: :btree
   end
+
+  add_index "words", ["value", "language_id"], name: "index_words_on_value_and_language_id", unique: true, using: :btree
 
   add_foreign_key "artworks", "languages"
 end

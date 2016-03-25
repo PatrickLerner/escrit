@@ -45,7 +45,7 @@ class TextsController < ApplicationController
   def destroy
     @text.destroy
 
-    url = "/texts/#{@text.language}"
+    url = "/#{@text.language.to_param}/texts"
     if @text.public
       url += '/public'
     elsif @text.hidden
