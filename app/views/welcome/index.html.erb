@@ -7,7 +7,7 @@
   <% max_tab_id = 0 %>
   <% @languages.to_a.sort{ |x,y| y.texts.count <=> x.texts.count }.in_groups_of(8, nil).to_a.each_with_index { |splice, i| %>
     <% max_tab_id = i %>
-    <div class="row" data-tab-id="<%= i %>">
+    <div class="row only-large" data-tab-id="<%= i %>">
       <div class="two columns" style="text-align: center">
         <a data-tab-id="<%= i %>" class="tab-previous"><%= fa_icon 'chevron-left' %></a>
       </div>
@@ -30,11 +30,11 @@
 
   <h4>What is escit?</h4>
   <div class="row">
-    <div class="two-thirds column">
+    <div class="seven columns">
       <p><b>escit</b>.eu allows you to read texts in a foreign language to further your understanding of grammar and extend your vocabulary. It is not a replacement for text books or other language learning tools, but an ideal supplement for your learning if you want to be exposed to entertaining and engaging content of your own choice in a foreign language rather than boring dialoges from a dusty textbook.</p>
     </div>
-    <div class="one-third column">
-      <blockquote class="u-no-margin">
+    <div class="five columns">
+      <blockquote class="u-no-margin" style="2rem 0 2rem 9rem">
         <p>
           <b>escrit</b> <i>m</i> (Old French)<br />
           1. writing(s) (written work)

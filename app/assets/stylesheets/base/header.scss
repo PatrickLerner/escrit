@@ -76,6 +76,14 @@ header {
   img {
     height: 20rem;
     margin-top: -6rem;
+    max-width: inherit;
+  }
+
+  @media (max-width: 550px) {
+    img {
+      height: auto;
+      max-width: 100%;
+    }
   }
 
   h1 {
