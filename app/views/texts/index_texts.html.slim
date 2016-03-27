@@ -3,7 +3,7 @@
     .panel-header
       = category
       span(style="padding-top: 0.5rem")
-        - if not @public or current_user.admin?
+        - if not @public or current_user.doge?
           = link_to fa_icon('pencil'),
                     edit_language_category_path(current_language, texts[0]),
                     class: 'cat-button'

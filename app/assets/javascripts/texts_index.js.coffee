@@ -8,7 +8,8 @@ $ ->
 
   $('.category_link').click ->
     loadCategory($(this).attr('data-name'))
-  
+    false
+
   name = window.location.hash
-  name = name.substr(1, name.length)  
+  name = name.substr(1, name.length)
   loadCategory(name)
