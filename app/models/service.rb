@@ -1,4 +1,4 @@
-class Service < ActiveRecord::Base
+class Service < ApplicationRecord
   belongs_to :user
   belongs_to :language
   default_scope { order('short_name asc, name asc') }
@@ -7,19 +7,17 @@ class Service < ActiveRecord::Base
   validates :short_name, presence: true, length: { minimum: 1 }
   validates :url, presence: true, length: { minimum: 10 }
 
-  attr_accessor :published
-  attr_reader :published
-
   scope :enabled, -> { where(enabled: true) }
   scope :published, -> { where(user_id: 0) }
   scope :for_user, ->(user) { where(user: user) }
 
   def self.for_language(language)
+    # language_id = 0 means for all languages
     where('language_id IN (?)', [0, language.id])
   end
 
   def published?
-    @published
+    user_id.zero?
   end
 
   def ==(other)
@@ -39,12 +37,4 @@ class Service < ActiveRecord::Base
       name <=> other.name
     end
   end
-
-  def dup_for(user)
-    service = dup
-    service.user = user
-    service.save
-  end
-
-  alias_method :eql?, :==
 end

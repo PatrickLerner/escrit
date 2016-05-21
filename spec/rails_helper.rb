@@ -1,4 +1,9 @@
 ENV['RAILS_ENV'] ||= 'test'
+require File.expand_path('../../config/environment', __FILE__)
+if Rails.env.production?
+  abort('The Rails environment is running in production mode!')
+end
+
 if ENV['coverage']
   require 'simplecov'
   SimpleCov.start do
@@ -16,25 +21,26 @@ if ENV['coverage']
     Launchy.open('coverage/index.html')
   end
 end
-require File.expand_path('../../config/environment', __FILE__)
-abort('The Rails environment is running in production mode!') if Rails.env.production?
+
 require 'spec_helper'
 require 'rspec/rails'
-require 'devise'
-require 'capybara/poltergeist'
-Capybara.javascript_driver = :poltergeist
-
-# core extensions
-Dir[File.join(Rails.root, 'lib', 'core_extensions', '*.rb')].each {|l| require l }
-
-Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
 
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+
 RSpec.configure do |config|
+  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.use_transactional_fixtures = true
+  config.infer_spec_type_from_file_location!
+  config.filter_rails_from_backtrace!
+
+  config.before(:suite) { FactoryGirl.reload }
+  config.include FactoryGirl::Syntax::Methods
+  config.include Devise::TestHelpers, type: :controller
   config.include Warden::Test::Helpers
 
-  truncation_options = { except: %w[languages compliments] }
+  truncation_options = { except: %w(languages compliments) }
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
@@ -63,20 +69,8 @@ RSpec.configure do |config|
   end
 
   config.after do |example|
-    if example.metadata[:type] == :feature and example.exception.present?
+    if example.metadata[:type] == :feature && example.exception.present?
       save_and_open_page
     end
   end
-
-  config.include Devise::TestHelpers, type: :controller
-  config.include Warden::Test::Helpers
-  config.extend FeatureMacros, type: :feature
-
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
-  config.use_transactional_fixtures = true
-
-  config.infer_base_class_for_anonymous_controllers = false
-  config.infer_spec_type_from_file_location!
-
-  # config.filter_rails_from_backtrace!
 end

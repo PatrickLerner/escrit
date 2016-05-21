@@ -1,35 +1,19 @@
-class Language < ActiveRecord::Base
-  has_many :artworks
+class Language < ApplicationRecord
   has_many :compliments
   has_many :replacements
   has_many :texts
   has_many :words
 
-  validates :name, presence: true, uniqueness: true
+  param_field :code
 
-  default_scope { order(:name) }
+  validates :name, uniqueness: true, length: { minimum: 3 }
+  validates :code, uniqueness: true, length: { is: 2 },
+                   format: { with: /[a-z]{2}/, message: :lowercase_latin }
 
-  def to_param
-    name.downcase
-  end
-
-  def current_artwork
-    if artworks.count > 0
-      start_date = Date.parse '2000-01-19 00:00:00 +0100'
-      index = (DateTime.now - start_date).to_i % artworks.count
-      artworks.limit(1).offset(index).first
-    end
-  end
-
-  def current_artwork_style
-    "background-image: url('#{current_artwork.image.url}');" if current_artwork
-  end
-
-  def has_vocabulary?(user)
-    Note.vocabulary.for_language(self).for_user(user).count > 0
-  end
-
-  def <=>(other)
-    name <=> other.name
-  end
+  scope :with_text_counts, lambda { |user|
+    joins('LEFT JOIN texts ON texts.language_id = languages.id')
+      .group('languages.id')
+      .select('languages.*, COUNT(texts.id) AS text_count')
+      .where('texts.user_id = ? OR texts.id IS NULL', user.id)
+  }
 end

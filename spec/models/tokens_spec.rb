@@ -1,20 +1,15 @@
 require 'rails_helper'
 
-describe Word, type: :model do
+describe Token, type: :model do
   it 'has a valid factory' do
-    expect(build(:word)).to be_valid
+    expect(build(:token)).to be_valid
   end
 
   it { is_expected.to validate_length_of(:value).is_at_least(1) }
-  it do
-    is_expected.to validate_uniqueness_of(:value).scoped_to(
-      [:language_id, :user_id]
-    )
-  end
 
   it 'should always correctly parameterize as its value field' do
-    word = build(:word)
-    expect(word.to_param).to eq(word.value)
+    token = build(:token)
+    expect(token.to_param).to eq(token.value)
   end
 
   it { is_expected.to allow_value('word').for(:value) }
@@ -29,7 +24,21 @@ describe Word, type: :model do
   it 'is expected to clean up umlaut messes' do
     stupid_characters = 'dümm'
     normal_characters = 'dümm'
-    word = create(:word, value: stupid_characters)
-    expect(word.value).to eq(normal_characters)
+    token = create(:token, value: stupid_characters)
+    expect(token.value).to eq(normal_characters)
+  end
+
+  it 'it destroys itself along with its last association' do
+    create(:token, value: 'token1')
+    token2 = create(:token, value: 'token2')
+    text = create(:text, title: 'token1 token2', content: 'token1 token2')
+    word = create(:word, language: text.language, user: text.user)
+    token2.words << word
+    expect(word.tokens.length).to eq(1)
+    text.destroy
+    expect(Token.find_by(value: 'token1')).to be_nil
+    expect(Token.find_by(value: 'token2')).to_not be_nil
+    word.destroy
+    expect(Token.find_by(value: 'token2')).to be_nil
   end
 end

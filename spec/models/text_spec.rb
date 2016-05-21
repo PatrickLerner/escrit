@@ -2,162 +2,69 @@ require 'rails_helper'
 
 describe Text, type: :model do
   it 'has a valid factory' do
-    text = build(:text)
-    expect(text).to be_valid
+    expect(build(:text)).to be_valid
   end
 
-  it { is_expected.to validate_presence_of(:title) }
-  it { is_expected.to validate_presence_of(:content) }
+  it { is_expected.to validate_length_of(:title).is_at_least(1) }
+  it { is_expected.to validate_length_of(:content).is_at_least(1) }
   it { is_expected.to validate_presence_of(:user) }
-  it { is_expected.to validate_presence_of(:category) }
   it { is_expected.to validate_presence_of(:language) }
-  it { is_expected.to belong_to(:user) }
-  it { is_expected.to belong_to(:language) }
-end
 
-
-describe Text, '#scan_words_content', type: :model do
-  it 'should detect words correctly' do
-    text = build_stubbed(:text, content: "This is a test text. this is also still all texts! «Hello» oh my...", title: 'test TeXT')
-    expect(text.scan_words_content).to eq(%w[a all also hello is my oh still test text texts this])
-  end
-end
-
-describe Text, '#process', type: :model do
-  let!(:language) { create(:language) }
-  let!(:user) do
-    user = create(:user, native_language: language)
-    user.extend(User::Real)
-    user.real = true
-    user
+  it 'is expected to remove trailing whitespace from fields' do
+    title = ' This is a stupid title with stupid whitepace  '
+    content = '  All aboard the stupid train to stupid village   '
+    text = create(:text, title: title, content: content)
+    expect(text.title).to eq(text.title.strip)
+    expect(text.content).to eq(text.content.strip)
   end
 
-  it 'should allow process native language text and have no highlights' do
-    text = create(:text, language: language, content: "test text no highlights")
-
-    content = text.processed_content(user)
-
-    expect(content).to_not include('word')
-    expect(content).to_not include('s0')
-
-    text.language = create(:language)
-    text.save
-
-    content = text.processed_content(user)
-
-    expect(content).to include('word')
-    expect(content).to include('s0')
+  it 'is supposed to normalize retarded combined unicode characters' do
+    stupid_characters = 'Ällös is dümm'
+    normal_characters = 'Ällös is dümm'
+    expect(stupid_characters).to_not eq(normal_characters)
+    text = create(:text, title: stupid_characters)
+    expect(text.title).to eq(normal_characters)
   end
 
-  it 'should allow to embed youtube videos' do
-    text = build_stubbed(:text, content: "https://www.youtube.com/watch?v=i5sG5ISgRuU\n\nYoutube embed")
-
-    content = text.processed_content(user)
-
-    expect(content).to include('embed-container')
-    expect(content).to include('i5sG5ISgRuU')
-  end
-
-  it 'should allow to embed audio files' do
-    text = build_stubbed(:text, content: "http://example.com/1.mp3\n\nYoutube embed")
-
-    content = text.processed_content(user)
-
-    expect(content).to include('audio')
-    expect(content).to include('1.mp3')
-  end
-
-  it 'should allow to embed image files' do
-    text = build_stubbed(:text, content: "http://example.com/1.jpg\n\nYoutube embed")
-
-    content = text.processed_content(user)
-
-    expect(content).to include('lightbox')
-    expect(content).to include('img')
-    expect(content).to include('1.jpg')
-  end
-
-  it 'should allow to embed image files with border' do
-    text = build_stubbed(:text, content: "@http://example.com/1.jpg\n\nYoutube embed")
-
-    content = text.processed_content(user)
-
-    expect(content).to include('border')
-    expect(content).to include('lightbox')
-    expect(content).to include('img')
-    expect(content).to include('1.jpg')
-  end
-
-  it 'should allow to have headlines' do
-    text = build_stubbed(:text, content: "# example h1\n\ntest\n\n## example h2\n\n### h3\n\n\ntesti test")
-
-    content = text.processed_content(user)
-
-    expect(content).to include('h3')
-    expect(content).to include('h4')
-    expect(content).to include('h5')
-  end
-
-  it 'should allow to have paragraphs' do
-    text = build_stubbed(:text, content: "p1\n\np2\n\np3")
-
-    content = text.processed_content(user)
-
-    expect(content).to include('p')
-  end
-
-  it 'should allow to have blockquotes' do
-    text = build_stubbed(:text, content: "normal\n\n> test block\n\ntest")
-
-    content = text.processed_content(user)
-
-    expect(content).to include('blockquote')
-  end
-
-  it 'should allow to have replaments' do
-    text = create(:text, content: "Ich fange||fange..an heute an||fange..an.")
-
-    content = text.processed_content(user)
-
-    expect(content).to include('fange..an')
-    expect(content).to include('>fange<')
-  end
-end
-
-describe Text, '#save', type: :model do
-  it 'creates words when saved' do
-    text = create(:text)
-
-    # check that each word contained in the text, title exists as a word
-    text.scan_words_content.each do |value|
-      word = Word.find_by value: value, language: text.language
-      expect(word).to_not be_nil
+  it 'is supposed to tokenize itself' do
+    text = create(:text, title: 'This is a test text',
+                         content: 'All of this is good!')
+    %w(this is a test text all of good).each do |token|
+      w = Token.find_by(value: token)
+      expect(w).to be_persisted
+      expect(text.tokens).to include(w)
     end
+    expect(text.tokens.count).to eq(8)
   end
 
-  it 'creates occurrences when saved' do
-    text = create(:text)
-    occurrences = Occurrence.where text: text
-
-    expect(occurrences.length).to eq(text.scan_words_content.length)
+  it 'should add new tokens when the text gets edited' do
+    text = create(:text, title: 'totally', content: 'easy')
+    expect(Token.find_by(value: 'bluemoonfish')).to be_nil
+    expect(text.tokens.count).to eq(2)
+    text.update_attributes(title: 'totally bluemoonfish')
+    expect(Token.find_by(value: 'bluemoonfish')).to be_persisted
+    expect(text.tokens.count).to eq(3)
   end
 
-  it 'updates occurrences when saved' do
-    text = create(:text)
-    occurrences = Occurrence.where text: text
-
-    expect(occurrences.length).to eq(text.scan_words_content.length)
-
-    # old occurrences are deleted
-    text.content = "this is a shorter text now"
-    text.save
-    occurrences = Occurrence.where text: text
-
-    expect(occurrences.length).to eq(text.scan_words_content.length)
-
-    # old words are deleted
-    Word.all.each do |word|
-      expect(word.occurrences.count).to be > 0
+  it 'handles non-latin characters just as well' do
+    text = create(:text, title: 'Я лыблю её.', content: 'Лыблю Её Я!')
+    %w(я лыблю её).each do |word|
+      w = Token.find_by(value: word)
+      expect(w).to be_persisted
+      expect(text.tokens).to include(w)
     end
+    expect(text.tokens.count).to eq(3)
+  end
+
+  it 'destroys tokens along with it if it gets destroyed' do
+    language = create(:language)
+    user = create(:user)
+    text = create(:text, title: 'bluemoonfish', content: 'redmoonfish',
+                         language: language, user: user)
+    create(:text, title: 'bluemoonfish', content: 'bluemoonfish',
+                  language: language, user: user)
+    expect(Token.where(value: %w(bluemoonfish redmoonfish)).count).to eq(2)
+    text.destroy
+    expect(Token.where(value: %w(bluemoonfish redmoonfish)).count).to eq(1)
   end
 end

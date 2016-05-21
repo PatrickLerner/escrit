@@ -1,22 +1,28 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
   belongs_to :native_language, class_name: Language
-  has_many :buddies, foreign_key: 'origin_id', class_name: 'Buddy'
   has_many :services
   has_many :texts
 
-  validates :name, presence: true
+  validates :name, uniqueness: true, length: { minimum: 3 }
+  validate :validate_role
 
-  after_initialize :init
+  after_initialize :set_defaults
 
-  enum role: [:citizen, :councilor, :advisor, :doge]
+  ROLES = [
+    ROLE_ADMIN     = :admin,
+    ROLE_MODERATOR = :moderator,
+    ROLE_USER      = :user
+  ].freeze
 
-  def init
-    self.audio_rate ||= 100
+  ROLES.each do |role|
+    define_method "#{role}?" do
+      self.role.try(:to_sym) == role
+    end
   end
 
   def valid_password?(password)
@@ -45,15 +51,16 @@ class User < ActiveRecord::Base
     @ability ||= Ability.new(self)
   end
 
-  def role_name
-    if doge?
-      'Most Serene Doge'
-    elsif advisor?
-      'Serene Advisor'
-    elsif councilor?
-      'Councilor'
-    else
-      'Citizen'
+  protected
+
+  def validate_role
+    unless role.try(:to_sym).in?(User::ROLES)
+      errors.add(:role, 'must be a valid role')
     end
+  end
+
+  def set_defaults
+    self.audio_rate ||= 100
+    self.role ||= ROLE_USER
   end
 end

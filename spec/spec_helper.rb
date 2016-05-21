@@ -1,8 +1,4 @@
 RSpec.configure do |config|
-  config.before(:suite) { FactoryGirl.reload }
-  config.include FactoryGirl::Syntax::Methods
-  config.include ActionDispatch::TestProcess
-  
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
@@ -14,9 +10,4 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
-end
-
-def range_select(id, value)
-  script = "$('##{id}').val(#{value})"
-  page.execute_script(script)
 end

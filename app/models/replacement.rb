@@ -1,7 +1,5 @@
-class Replacement < ActiveRecord::Base
+class Replacement < ApplicationRecord
   belongs_to :language
 
   validates :value, presence: true
-
-  default_scope { order(:language_id) }
 end

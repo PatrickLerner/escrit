@@ -1,61 +1,61 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.0.0.beta3'
+gem 'rails', '>= 5.0.0.rc1', '< 5.1'
 gem 'pg'
-gem 'sass-rails'
-gem 'uglifier'
+gem 'puma', '~> 3.0'
+
 gem 'coffee-rails'
-gem 'jquery-rails'
-gem 'jquery-ui-rails'
-gem 'turbolinks', '5.0.0.beta1'
-gem 'jbuilder'
-gem 'font-awesome-rails'
-gem 'naturalsort', require: 'natural_sort_kernel'
-gem 'jquery-turbolinks'
-
-gem 'seed_dump'
-gem 'lightbox2-rails'
-gem 'devise', github: 'plataformatec/devise', branch: 'master'
-gem 'will_paginate'
-gem 'chronic_duration'
-gem 'audiojs'
-gem 'rails4-autocomplete'
-gem 'unicode'
+gem 'sass-rails'
 gem 'slim-rails'
-gem 'paperclip'
-gem 'indefinite_article'
-gem 'cancancan'
+gem 'uglifier'
 
-group :production do
-  gem 'unicorn'
+gem 'attribute_normalizer'
+gem 'cancancan'
+gem 'devise', github: 'plataformatec/devise', branch: 'master'
+gem 'jbuilder'
+gem 'naturalsort', require: 'natural_sort_kernel'
+gem 'paperclip'
+gem 'searchkick'
+gem 'will_paginate'
+
+gem 'angularjs-rails'
+gem 'angular-rails-templates'
+source 'https://rails-assets.org' do
+  gem 'rails-assets-angular-devise'
 end
+
+gem 'audiojs'
+gem 'bourbon'
+gem 'font-awesome-rails'
+gem 'lightbox2-rails'
+gem 'neat'
 
 group :development, :test do
   gem 'byebug'
-  gem 'factory_girl'
   gem 'factory_girl_rails'
-  gem 'rspec-core', '3.5.0.beta1' # d!
-  gem 'rspec-mocks', '3.5.0.beta1' # d!
-  gem 'rspec-expectations', '3.5.0.beta1' # d!
-  gem 'rspec-support', '3.5.0.beta1' # d!
-  gem 'rspec-rails', '3.5.0.beta1'
+  gem 'faker'
+  rs = %w(rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support)
+  rs.each do |lib|
+    gem lib, git: "https://github.com/rspec/#{lib}.git", branch: 'master'
+  end
   gem 'better_errors'
   gem 'binding_of_caller'
 end
 
 group :test do
-  gem 'faker'
   gem 'capybara'
-  gem 'launchy'
-  gem 'shoulda'
   gem 'database_cleaner'
   gem 'poltergeist'
+  gem 'shoulda'
   gem 'simplecov', require: false
 end
 
 group :development do
-  gem 'web-console'
-  gem 'spring'
-  gem 'quiet_assets'
   gem 'letter_opener'
+  gem 'quiet_assets'
+  gem 'seed_dump'
+  gem 'spring'
+  gem 'web-console'
 end
+
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

@@ -1,4 +1,4 @@
-class Compliment < ActiveRecord::Base
+class Compliment < ApplicationRecord
   belongs_to :language
 
   validates :value, length: { minimum: 3 }

@@ -1,0 +1,13 @@
+AllCops:
+  Includes:
+    - Rakefile
+    - config.ru
+  Excludes:
+    - db/**
+    - config/**
+    - script/**
+Documentation:
+  Enabled: false
+Lint/Debugger:
+  Exclude:
+    - spec/rails_helper.rb
