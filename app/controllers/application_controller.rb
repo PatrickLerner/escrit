@@ -1,19 +1,17 @@
 class ApplicationController < ActionController::Base
+  helper :all
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  # this is needed to prevent XHR request form using layouts
-  layout proc { false if request.xhr? }
+  after_action :set_csrf_cookie_for_ng
+  before_action :authenticate_user!
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   before_action :redirect_subdomain
 
   protected
-
-  def load_services
-    @services = Service.for_user(current_user)
-                       .for_language(current_language).enabled
-  end
 
   # always redirect away from the www-version of the site to the plain url one
   def redirect_subdomain
@@ -22,31 +20,26 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def after_sign_in_path_for(_resource)
-    '/home'
+  def authenticate_user!
+    return unless current_user.nil?
+    return unless request.format == :json
+    return if controller_name.in? %w(sessions registrations passwords)
+    render json: { error: 'authentication error' }, status: 401
   end
 
-  alias_method :devise_current_user, :current_user
-
-  def current_user
-    @current_user ||= determine_current_user
+  def verified_request?
+    super || valid_authenticity_token?(session, request.headers['X-XSRF-TOKEN'])
   end
 
-  private
-
-  def determine_current_user
-    if allowed_to_shadow_users? && params[:u].present?
-      user = User.find(params[:u])
-    end
-    user ||= devise_current_user
-    unless user.nil?
-      user.extend(User::Real)
-      user.real = (user.id == devise_current_user.id)
-    end
-    user
+  def set_csrf_cookie_for_ng
+    cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
   end
 
-  def allowed_to_shadow_users?
-    devise_current_user.try(:ability).try(:can?, :shadow, User)
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+  end
+
+  rescue_from CanCan::AccessDenied do |exception|
+    render json: { error: exception.message }
   end
 end

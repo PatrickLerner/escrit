@@ -1,2 +1,10 @@
+#= require angular
+#= require angular-animate
+#= require angular-route
+#= require angular-resource
+#= require angular-devise
+#= require angular-rails-templates
+#= require_tree ./templates
+#= require escrit
 #= require_tree .
 #= require_tree ../../../vendor/assets/javascripts/.

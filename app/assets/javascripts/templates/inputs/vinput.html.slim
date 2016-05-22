@@ -1,0 +1,5 @@
+.vc-form-control ng-init="object[name] = ''"
+  label for="{{ name }}" {{ label }}
+  input(type="{{ type || 'text' }}" id="{{ name }}"
+        ng-model="object[name]" autocomplete="off")
+  .error ng-if="errors[name]" {{ errors[name].join(" and ") }}

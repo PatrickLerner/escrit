@@ -2,24 +2,28 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    if user.councilor? || user.advisor? || user.doge?
-      can :publish, Text
-      can :manage, Text, public: true
-    end
+    user ||= User.new
 
-    if user.advisor? || user.doge?
-      can :manage, Artwork
-      can :manage, Compliment
-      can :manage, Text
-      can :shadow, User
-    end
+    user_permissions(user)      if user.admin? || user.moderator? || user.user?
+    moderator_permissions(user) if user.admin? || user.moderator?
+    admin_permissions(user)     if user.admin?
+  end
 
-    if user.doge?
-      can :publish, Service
-      can :manage, Language
-      can :manage, Replacement
-    end
+  def user_permissions(user)
+    # languages can be read by users
+    can :read, [Language, Word, Token]
 
-    can :manage, Text, user_id: user.id
+    # everybody may mange their own texts
+    can %i(read update create destroy), Text do |text|
+      text.user_id == user.id
+    end
+  end
+
+  def moderator_permissions(user)
+    can :manage, Text
+  end
+
+  def admin_permissions(user)
+    can :manage, :all
   end
 end

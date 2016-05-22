@@ -1,0 +1,8 @@
+.text-list
+  section.text-listing ng-repeat="text in texts"
+    h1 ng-click="show(text)"== '{{ text.title }}'
+    span.language== '{{ text.language }}'
+    == ' - '
+    span.count== '{{ text.word_count }} words'
+    == ' - '
+    span.category== '{{ text.category }}'

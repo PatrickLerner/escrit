@@ -1,0 +1,8 @@
+.login-form
+  img src=image_path('logo.svg')
+  form name="form" ng-submit="submit()"
+    v-input label='E-Mail' name="email" object="credentials" errors="errors"
+    v-input label='Password' name="password" type="password" object="credentials" errors="errors"
+    a.btn.primary> ng-click="submit()"
+      i.fa.fa-sign-in>
+      | Sign In

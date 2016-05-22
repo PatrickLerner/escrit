@@ -1,95 +1,15 @@
 doctype html
-html
+html(ng-app="escrit")
   head
-    title= page_title.html_safe
-    meta name="keywords" content="language learning"
-    meta name="author"   content="Patrick Lerner"
-    meta name="viewport" content="width=device-width, initial-scale=1"
-    link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic&subset=latin,cyrillic,latin-ext,cyrillic-ext' rel='stylesheet' type='text/css'
-    = stylesheet_link_tag    "application", media: 'all', 'data-turbolinks-track': true
-    = javascript_include_tag "application", 'data-turbolinks-track': true
+    meta content="text/html; charset=UTF-8" http-equiv="Content-Type"
+    title escrit.eu
     = csrf_meta_tags
-    = favicon_link_tag 'favicon.png'
-  body(data-action=action_name data-controller=controller_name class="#{controller_name} #{controller_name}-#{action_name}")
-    - if Rails.env.development?
-      div class="corner-ribbon top-left accent sticky shadow" Dev Version
-    nav.navbar
-      .container
-        input#show-menu type="checkbox" role="button"
-        label.show-menu for="show-menu" Show Menu
-        ul#menu
-          li= link_to image_tag('logo-i.png', class: 'navbar-logo'), '/'
-          - if user_signed_in?
-            li= link_to 'Home', '/home'
-            li
-              = link_to 'Reading ￬', language_path_for(:texts, current_language)
-              ul.hidden
-                li= link_to fa_icon('book', text: 'Texts'),
-                            language_path_for(:texts, current_language)
-                li= link_to fa_icon('magic', text: 'Quick reader'),
-                            language_path_for(:reader, current_language)
-            li
-              = link_to 'Learn ￬'.html_safe, "/vocabulary"
-              ul.hidden
-                li= link_to fa_icon('list', text: 'Word list'),
-                            language_path_for(:words, current_language)
-                li= link_to fa_icon('graduation-cap',
-                            text: "Vocab. trainer #{vocab_words}".html_safe),
-                            language_path_for(:vocabulary, current_language)
-                li= link_to fa_icon('pencil-square-o',
-                            text: 'Dictation practice'),
-                            language_path_for(:dictation, current_language)
-            - if false
-              li
-                = link_to flag_icon_tag(current_language, style: 'padding: 0;') + " #{current_language.name} ￬", "/#{current_lang_prefix}"
-                - langs = language_options(true).map { |l| l[0] }
-                - if langs.count > 1
-                  ul.hidden
-                    - langs.each do |lang|
-                      li= link_to flag_icon_tag(lang, style: 'padding: 0;') + " #{lang}", "/#{current_lang_prefix}/#{lang.downcase}"
-            li.right
-              = link_to current_user.name + ' ￬', "/u/#{current_user.id}"
-              ul.hidden
-                li= link_to fa_icon('user') + ' Your profile', "/u/#{current_user.id}"
-                li= link_to fa_icon('bar-chart') + ' Statistics', "/statistics"
-                li= link_to fa_icon('wrench') + ' Settings', '/settings'
-                li= link_to fa_icon('life-ring') + ' Help', '/help'
-                li= link_to fa_icon('sign-out') + ' Sign out', destroy_user_session_path, method: :delete
-          - else
-            li.right= link_to 'Sign in', new_user_session_path
-            li.right= link_to 'Sign up', new_user_registration_path
-
-    - if header[:title]
-      header class=header[:class]
-        .image class=header[:image_class] style=header[:image_style]
-        .container
-          h1= header[:title].html_safe
-          - if header[:subtitle_large]
-            h4= header[:subtitle_large].html_safe
-          - else
-            h2= (header[:subtitle] || "&nbsp;").html_safe
-        = fa_icon 'search-plus', class: 'zoom'
-
-    - if notice
-      .notice
-        .container
-          = notice
-    - if alert
-      .alert
-        .container
-          = alert
-
-    = yield
-    footer
-      = link_to 'Cookie Policy', '/cookies'
-      = link_to 'Legal Disclosure', '/legal'
-      div= "&copy; #{Time.now.year} escrit.eu".html_safe
-    - if Rails.env.production?
-      = render 'layouts/footer'
-
-    - if notice
-      noscript
-        = notice
-    - if alert
-      noscript
-        = alert
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
+  body
+    nav.nav-top: ul.nav-list
+      li.nav-item Test
+      li.nav-item Test
+      li.nav-item Test
+    header.header-image
+    section.content(ng-view)

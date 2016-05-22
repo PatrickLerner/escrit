@@ -1,0 +1,10 @@
+.buttons
+  a.btn.primary> ng-click="submit()"
+    i.fa.fa-user-plus>
+    | Sign Up
+
+form name="form" ng-submit="submit()"
+  v-input label='Name' name="name" object="credentials" errors="errors"
+  v-input label='E-Mail' name="email" object="credentials" errors="errors"
+  v-input label='Password' name="password" type="password" object="credentials" errors="errors"
+  v-input label='Password confirmation' name="password_confirmation" type="password" object="credentials" errors="errors"

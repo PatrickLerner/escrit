@@ -1,0 +1,40 @@
+$nav-top-height: 5rem;
+
+.header-image {
+  background-color: #787882;
+  background-position: center;
+  background-size: cover;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/b/bc/Caspar_David_Friedrich_012.jpg');
+  height: 17rem;
+  margin-top: $nav-top-height;
+}
+
+.nav-top {
+  background-color: $color-white;
+  box-shadow: 0 0 3px rgba(0,0,0,.6);
+  left: 0;
+  list-style-type: none;
+  position: fixed;
+  right: 0;
+  top: 0;
+
+  .nav-list {
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-item {
+    display: inline-block;
+    line-height: $nav-top-height;
+    padding: 0 2rem;
+  }
+}
+
+.nav-top .nav-list,
+.content {
+  @include outer-container($container-width);
+}
+
+.content {
+  padding: 0 2rem;
+}

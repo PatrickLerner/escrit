@@ -1,0 +1,29 @@
+.vc-form-control {
+  border: 1px solid $color-light-gray;
+  padding: 1rem;
+  margin-bottom: 1rem;
+
+  label {
+    display: block;
+    font-weight: 500;
+
+    &:after {
+      content: ':';
+    }
+  }
+
+  input {
+    border: none;
+    font-size: 1.6rem;
+    padding: 0.4rem;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0px 1000px white inset;
+    }
+  }
+}

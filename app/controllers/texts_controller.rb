@@ -1,0 +1,27 @@
+class TextsController < ScaffoldController
+  resource Text
+
+  def create
+    @object = resource.new(permitted_params)
+    @object.user     = current_user
+    @object.language = current_language
+    super
+  end
+
+  protected
+
+  def object
+    @object ||= resource.owned_by(current_user)
+                        .with_word_counts
+                        .find_by!(resource.param_field => params[:id])
+  end
+
+  def collection
+    @collection ||= resource.with_word_counts.includes(:language)
+                            .owned_by(current_user).order(:title)
+  end
+
+  def permitted_params
+    params.require(:text).permit(:id, :title, :content)
+  end
+end
