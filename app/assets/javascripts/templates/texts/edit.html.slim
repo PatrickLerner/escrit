@@ -1,0 +1,11 @@
+.buttons
+  a.btn> ng-click="show(text)"
+    i.fa.fa-chevron-left>
+    | Back
+  a.btn.primary> ng-click="submit()"
+    i.fa.fa-floppy-o>
+    | Save
+
+form name="form" ng-submit="submit()"
+  v-input label='Title' name="title" object="text" errors="errors"
+  v-textarea label='Content' name="content" object="text" errors="errors"

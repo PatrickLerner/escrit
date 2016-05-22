@@ -20,7 +20,7 @@ class Text < ApplicationRecord
 
   tokenized_fields :title, :content
 
-  scope :search_scope, -> { joins(:language).includes(:tokens) }
+  scope :search_import, -> { includes(:language).includes(:tokens) }
   scope :in_language, -> (language) { where(language_id: language.id) }
   scope :owned_by, -> (user) { where(user_id: user.id) }
   scope :with_word_counts, lambda {
@@ -36,7 +36,8 @@ class Text < ApplicationRecord
     {
       title: title,
       language: language.name,
-      tokens: tokens.pluck(:value)
+      tokens: tokens.loaded? ? tokens.map(&:value) : tokens.pluck(:value),
+      user_id: user_id
     }
   end
 

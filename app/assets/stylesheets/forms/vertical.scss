@@ -1,7 +1,7 @@
 .vc-form-control {
   border: 1px solid $color-light-gray;
   padding: 1rem;
-  margin-bottom: 1rem;
+  margin-top: 1rem;
 
   label {
     display: block;
@@ -12,9 +12,10 @@
     }
   }
 
-  input {
+  input, textarea {
     border: none;
     font-size: 1.6rem;
+    font-weight: 300;
     padding: 0.4rem;
     width: 100%;
 

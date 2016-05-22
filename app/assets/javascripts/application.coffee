@@ -6,5 +6,6 @@
 #= require angular-rails-templates
 #= require_tree ./templates
 #= require escrit
+#= require autosize
 #= require_tree .
 #= require_tree ../../../vendor/assets/javascripts/.

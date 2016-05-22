@@ -32,4 +32,12 @@ describe Word, type: :model do
     word = create(:word, value: stupid_characters)
     expect(word.value).to eq(normal_characters)
   end
+
+  describe 'searchkick' do
+    let!(:word) { 10.times { create(:word_with_tokens) } }
+
+    it 'should not make unnecessairy queries when indexing' do
+      expect { Word.reindex }.to make_database_queries(count: 4)
+    end
+  end
 end

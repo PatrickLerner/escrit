@@ -16,11 +16,20 @@ class ReadScaffoldController < ApplicationController
   end
 
   def collection
-    @collection ||= resource.all
+    @collection ||= resource.search('*', where: load_collection,
+                                         page: params[:page] || 1, per_page: 20)
+  end
+
+  def load_collection
+    {}
   end
 
   def object
-    @object ||= resource.find_by!(resource.param_field => params[:id])
+    @object ||= load_object
+  end
+
+  def load_object
+    resource.find_by!(resource.param_field => params[:id])
   end
 
   def resource

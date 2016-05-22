@@ -1,6 +1,8 @@
 FactoryGirl.define do
   factory :language do
-    name Faker::Name.last_name
+    sequence :name do |n|
+      "#{Faker::Name.last_name} #{n}"
+    end
     sequence :code do |n|
       ('aa'..'zz').to_a[n].downcase
     end

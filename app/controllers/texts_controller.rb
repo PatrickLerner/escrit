@@ -10,15 +10,15 @@ class TextsController < ScaffoldController
 
   protected
 
-  def object
-    @object ||= resource.owned_by(current_user)
-                        .with_word_counts
-                        .find_by!(resource.param_field => params[:id])
+  def load_object
+    resource.owned_by(current_user).with_word_counts
+            .find_by!(resource.param_field => params[:id])
   end
 
-  def collection
-    @collection ||= resource.with_word_counts.includes(:language)
-                            .owned_by(current_user).order(:title)
+  def load_collection
+    {
+      user_id: current_user.id
+    }
   end
 
   def permitted_params

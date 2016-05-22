@@ -1,6 +1,8 @@
 FactoryGirl.define do
   factory :token do
-    value Faker::Lorem.word
+    sequence :value do |n|
+      "#{Faker::Lorem.word}#{n}"
+    end
 
     factory :token_with_words do
       transient do

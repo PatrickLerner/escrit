@@ -1,0 +1,26 @@
+.will-paginate {
+  text-align: right;
+
+  a {
+    border: 0.1rem solid $color-gray;
+    color: $color-gray;
+    display: inline-block;
+    font-size: 2rem;
+    height: 3rem;
+    line-height: 3rem;
+    margin-right: 0.5rem;
+    text-align: center;
+    text-decoration: none;
+    width: 3rem;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+
+    &.disabled {
+      border: 0.1rem solid $color-light-gray;
+      color: $color-light-gray;
+    }
+  }
+}

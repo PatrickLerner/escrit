@@ -10,8 +10,8 @@
     , (error) ->
       $location.url "/#{resource.path}"
 
-  $scope.loadIndex = ->
-    resource.findAll().then (collection) ->
+  $scope.loadIndex = (page = 1) ->
+    resource.findAll(page).then (collection) ->
       $scope[resource.name_collection] = collection
 
   $scope.loadNew = ->
@@ -22,6 +22,9 @@
       $scope[resource.name_object] = response
     , (error) ->
       $location.url "/#{resource.path}"
+
+  $scope.showPage = (page) ->
+    $scope.loadIndex(page)
 
   $scope.submit = ->
     resource.save($scope[resource.name_object]).then (response) ->

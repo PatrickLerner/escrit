@@ -1,32 +1,123 @@
 $nav-top-height: 5rem;
 
 .header-image {
+  @include transition(height 1s);
   background-color: #787882;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/b/bc/Caspar_David_Friedrich_012.jpg');
   background-position: center;
   background-size: cover;
-  background-image: url('https://upload.wikimedia.org/wikipedia/commons/b/bc/Caspar_David_Friedrich_012.jpg');
   height: 17rem;
   margin-top: $nav-top-height;
+  position: relative;
+
+  &.large {
+    height: 30rem;
+
+    .fa::before {
+      content: '\f010';
+    }
+  }
+
+  .fa {
+    bottom: 1rem;
+    color: $color-white;
+    cursor: pointer;
+    opacity: .6;
+    position: absolute;
+    right: 1rem;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
 }
 
 .nav-top {
-  background-color: $color-white;
-  box-shadow: 0 0 3px rgba(0,0,0,.6);
   left: 0;
-  list-style-type: none;
   position: fixed;
-  right: 0;
   top: 0;
+  right: 0;
+  z-index: 100;
 
   .nav-list {
+    list-style-type: none;
+    background-color: $color-white;
+    box-shadow: 0 0 3px rgba(0, 0, 0, .6);
     margin: 0;
     padding: 0;
+    height: 5rem;
   }
 
   .nav-item {
-    display: inline-block;
+    display: none;
+  }
+
+  .nav-brand {
+    display: block;
+    height: 5rem;
+
+    img {
+      height: 3rem;
+      margin-top: 0.5rem;
+      vertical-align: bottom;
+    }
+  }
+}
+
+.nav-top.open {
+  background-color: rgba(0, 0, 0, .4);
+  bottom: 0;
+
+  .nav-list {
+    left: 0;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: auto;
+  }
+
+  .nav-item {
+    cursor: pointer;
+    display: block;
     line-height: $nav-top-height;
     padding: 0 2rem;
+  }
+}
+
+@include media($mw-m) {
+  .nav-top {
+    background-color: $color-white;
+    box-shadow: 0 0 3px rgba(0,0,0,.6);
+    left: 0;
+    list-style-type: none;
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: auto;
+    z-index: 100;
+
+    .nav-list {
+      margin: 0;
+      padding: 0;
+      position: static;
+      box-shadow: none;
+    }
+
+    .nav-item {
+      cursor: pointer;
+      display: inline-block;
+      line-height: $nav-top-height;
+      padding: 0 2rem;
+    }
+
+    .nav-brand {
+      display: inline-block;
+
+      img {
+        height: 3rem;
+        vertical-align: bottom;
+      }
+    }
   }
 }
 
@@ -37,4 +128,5 @@ $nav-top-height: 5rem;
 
 .content {
   padding: 0 2rem;
+  padding-bottom: 10rem;
 }

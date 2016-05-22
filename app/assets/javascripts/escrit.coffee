@@ -38,7 +38,7 @@
       templateUrl: 'texts/index.html',
       controller: 'TextsController',
       action_name: 'index'
-    .when '/texts/:id/new',
+    .when '/texts/new',
       templateUrl: 'texts/new.html',
       controller: 'TextsController',
       action_name: 'new'

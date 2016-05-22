@@ -1,8 +1,15 @@
 $color-white: #fff;
 $color-black: #191919;
+$color-gray: #808080;
 $color-light-gray: #d4d4d4;
+$color-blue: #1f8dd6;
 
 $container-width: 920px;
+
+$mw-s:  320px;
+$mw-m:  768px;
+$mw-l:  1024px;
+$mw-xl: 1382px;
 
 @import 'bourbon';
 @import 'neat';
@@ -11,7 +18,9 @@ $container-width: 920px;
 
 @import 'base/header';
 @import 'base/typography';
+@import 'base/will_paginate';
 
 @import 'forms/vertical';
+@import 'forms/buttons';
 
 @import 'pages/texts';

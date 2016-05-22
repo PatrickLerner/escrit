@@ -6,14 +6,31 @@
     obj.path ||= obj.name_collection
     obj.backend_path ||= obj.path
     obj.resource ||= $resource "/#{obj.backend_path}/:id.json",
-                               { id: '@id' },
-                               { 'update': { method: 'PUT' } }
+                               { id: '@id' }
+                               {
+                                 'query': {
+                                   method: 'GET',
+                                   isArray: true,
+                                   transformResponse: (data) ->
+                                     r = angular.fromJson(data)
+                                     r.data.$metadata =
+                                       page: parseInt(r.page)
+                                       num_pages: parseInt(r.num_pages)
+                                       per_page: parseInt(r.per_page)
+                                     return r.data
+                                   interceptor:
+                                     response: (res) ->
+                                       res.resource.$metadata = res.data.$metadata
+                                       return res.resource
+                                 },
+                                 'update': { method: 'PUT' }
+                               }
 
     obj.find = (id) ->
       obj.resource.get({id: id}).$promise
 
-    obj.findAll = (id) ->
-      obj.resource.query().$promise
+    obj.findAll = (page = 1) ->
+      obj.resource.query({page: page}).$promise
 
     obj.new = () ->
       new obj.resource()

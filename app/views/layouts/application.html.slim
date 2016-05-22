@@ -2,14 +2,26 @@ doctype html
 html(ng-app="escrit")
   head
     meta content="text/html; charset=UTF-8" http-equiv="Content-Type"
+    meta content="width=device-width, initial-scale=1" name="viewport"
     title escrit.eu
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
+    = favicon_link_tag       'favicon.png'
   body
-    nav.nav-top: ul.nav-list
-      li.nav-item Test
-      li.nav-item Test
-      li.nav-item Test
-    header.header-image
+    div ng-controller="HeaderController"
+      nav.nav-top ng-class="{ open: showMenu }"
+        ul.nav-list ng-if="user"
+          li.nav-brand ng-click="toggleMenu()"= image_tag 'logo.svg'
+          li.nav-item Test
+          li.nav-item Test
+          li.nav-item Test
+          li.nav-item ng-click="signOut()" Sign out
+        ul.nav-list ng-if="!user"
+          li.nav-brand ng-click="toggleMenu()"= image_tag 'logo.svg'
+          li.nav-item ng-click="signIn()" Sign in
+          li.nav-item ng-click="signUp()" Sign up
+      header.header-image ng-class="{ large: largeHeader }"
+        a ng-click="toggleHeader()"
+          = fa_icon('search-plus')
     section.content(ng-view)

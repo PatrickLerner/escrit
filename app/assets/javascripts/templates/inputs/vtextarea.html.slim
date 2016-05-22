@@ -1,0 +1,4 @@
+.vc-form-control ng-init="object[name] = ''"
+  label for="{{ name }}" {{ label }}
+  textarea(autosize id="{{ name }}" ng-model="object[name]")
+  .error ng-if="errors[name]" {{ errors[name].join(" and ") }}
