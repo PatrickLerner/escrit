@@ -1,4 +1,5 @@
-@escrit.controller 'ModalController', ($scope, Modal, $rootScope) ->
+@escrit.controller 'ModalCtrl', ($scope, Modal, DefinitionModal,
+  $rootScope) ->
   $scope.modals = []
 
   $scope.closeModal = (val) ->

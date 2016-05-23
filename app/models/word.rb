@@ -4,7 +4,9 @@ class Word < ApplicationRecord
 
   searchkick
 
-  has_and_belongs_to_many :tokens
+  has_many :entries, dependent: :destroy
+  has_many :notes
+  has_many :tokens, through: :entries
   belongs_to :language
   belongs_to :user
 

@@ -16,7 +16,7 @@ html(ng-app="escrit")
           li.nav-item Test
           li.nav-item Test
           li.nav-item Test
-          li.nav-item ng-click="signOut()" Sign out
+          li.nav-item.right ng-click="signOut()" Sign out
         ul.nav-list ng-if="!user"
           li.nav-brand ng-click="toggleMenu()"= image_tag 'logo.svg'
           li.nav-item ng-click="signIn()" Sign in
@@ -25,3 +25,4 @@ html(ng-app="escrit")
         a ng-click="toggleHeader()"
           = fa_icon('search-plus')
     section.content(ng-view)
+    = render partial: 'layouts/modals'

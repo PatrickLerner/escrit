@@ -1,0 +1,71 @@
+.modal {
+  $modal-background: $color-white !default;
+  $modal-border-radius: .5rem;
+  $modal-close-color: $color-gray !default;
+  $modal-fade-color: rgba(#000, .48);
+  $modal-padding: 1em;
+
+  .modal-fade-screen {
+    @include position(fixed, 0);
+    background-color: $modal-fade-color;
+    padding-top: .6em;
+    text-align: left;
+    transition: opacity .25s ease;
+    z-index: 99999999999;
+
+    @include media($mw-xl) {
+      padding-top: 10em;
+    }
+
+    .modal-bg {
+      @include position(absolute, 0);
+      cursor: pointer;
+    }
+  }
+
+  .modal-close {
+    @include position(absolute, 1.5rem 1.3rem null null);
+    @include size(1.5rem);
+    background: $modal-background;
+    cursor: pointer;
+  }
+
+  .modal-inner {
+    background: $modal-background;
+    border-radius: $modal-border-radius;
+    left: 50%;
+    margin: auto;
+    max-height: 95%;
+    overflow: auto;
+    padding: $modal-padding / 2;
+    position: absolute;
+    top: 33%;
+    transform: translate(-50%, -50%);
+    transition: opacity .25s ease;
+    width: 95%;
+
+    @include media($mw-l) {
+      max-height: 70%;
+      padding: $modal-padding;
+      width: 60%;
+    }
+
+    @include media($mw-xl) {
+      width: 50%;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      margin-top: 0;
+    }
+  }
+
+  .modal-buttons {
+    text-align: right;
+
+    a {
+      margin-left: .5rem;
+    }
+  }
+}

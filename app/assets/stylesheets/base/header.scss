@@ -50,6 +50,10 @@ $nav-top-height: 5rem;
 
   .nav-item {
     display: none;
+
+    &.right {
+      float: right;
+    }
   }
 
   .nav-brand {

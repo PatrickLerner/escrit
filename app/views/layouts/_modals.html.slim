@@ -1,0 +1,12 @@
+div(ng-controller="ModalController")
+  .modal ng-repeat="modal in modals"
+    .modal-fade-screen(ng-click="closeBackground($event, 'close')")
+      .modal-inner
+        i.fa.fa-times.modal-close ng-click="closeModal('close')"
+        h1== '{{ modal.title }}'
+        p== '{{ modal.content }}'
+        .modal-buttons
+          a.btn>(class="{{ t[0] }}" ng-repeat="(v, t) in modal.buttons"
+                 ng-click="closeModal(v)")
+            i.fa> class="fa-{{ t[1] }}" ng-show="t[1]"
+            == '{{ t[2] }}'

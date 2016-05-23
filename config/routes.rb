@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'pages#index'
 
+  resources :languages
   resources :texts
 
   devise_scope :user do

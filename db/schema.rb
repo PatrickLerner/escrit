@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160521232610) do
+ActiveRecord::Schema.define(version: 20160523182736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,17 @@ ActiveRecord::Schema.define(version: 20160521232610) do
     t.datetime "updated_at"
   end
 
+  create_table "entries", force: :cascade do |t|
+    t.integer  "word_id"
+    t.integer  "token_id"
+    t.integer  "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["token_id"], name: "index_entries_on_token_id", using: :btree
+    t.index ["word_id", "token_id"], name: "index_entries_on_word_id_and_token_id", unique: true, using: :btree
+    t.index ["word_id"], name: "index_entries_on_word_id", using: :btree
+  end
+
   create_table "languages", force: :cascade do |t|
     t.text     "name"
     t.datetime "created_at"
@@ -31,6 +42,14 @@ ActiveRecord::Schema.define(version: 20160521232610) do
     t.string   "voice_rate"
     t.string   "code"
     t.index ["code"], name: "index_languages_on_code", unique: true, using: :btree
+  end
+
+  create_table "notes", force: :cascade do |t|
+    t.string   "value"
+    t.integer  "word_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["word_id"], name: "index_notes_on_word_id", using: :btree
   end
 
   create_table "replacements", force: :cascade do |t|
@@ -85,13 +104,6 @@ ActiveRecord::Schema.define(version: 20160521232610) do
     t.index ["value"], name: "index_tokens_on_value", unique: true, using: :btree
   end
 
-  create_table "tokens_words", id: false, force: :cascade do |t|
-    t.integer "token_id"
-    t.integer "word_id"
-    t.index ["token_id"], name: "index_tokens_words_on_token_id", using: :btree
-    t.index ["word_id"], name: "index_tokens_words_on_word_id", using: :btree
-  end
-
   create_table "users", force: :cascade do |t|
     t.text     "email",                  default: "", null: false
     t.text     "encrypted_password",     default: "", null: false
@@ -127,6 +139,9 @@ ActiveRecord::Schema.define(version: 20160521232610) do
     t.index ["value", "language_id", "user_id"], name: "index_words_on_value_and_language_id_and_user_id", unique: true, using: :btree
   end
 
+  add_foreign_key "entries", "tokens"
+  add_foreign_key "entries", "words"
+  add_foreign_key "notes", "words"
   add_foreign_key "words", "languages"
   add_foreign_key "words", "users"
 end

@@ -7,5 +7,7 @@
     | Save
 
 form name="form" ng-submit="submit()"
+  v-language-select label='Language' object="text" errors="errors"
+  v-input label='Category' name="category" object="text" errors="errors"
   v-input label='Title' name="title" object="text" errors="errors"
   v-textarea label='Content' name="content" object="text" errors="errors"

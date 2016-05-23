@@ -33,7 +33,7 @@ describe Token, type: :model do
     token2 = create(:token, value: 'token2')
     text = create(:text, title: 'token1 token2', content: 'token1 token2')
     word = create(:word, language: text.language, user: text.user)
-    token2.words << word
+    create(:entry, word: word, token: token2)
     expect(word.tokens.length).to eq(1)
     text.destroy
     expect(Token.find_by(value: 'token1')).to be_nil

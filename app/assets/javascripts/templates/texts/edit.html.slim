@@ -2,10 +2,15 @@
   a.btn> ng-click="show(text)"
     i.fa.fa-chevron-left>
     | Back
+  a.btn> ng-click="delete(text)"
+    i.fa.fa-times>
+    | Delete
   a.btn.primary> ng-click="submit()"
     i.fa.fa-floppy-o>
     | Save
 
 form name="form" ng-submit="submit()"
+  v-language-select label='Language' object="text" errors="errors"
+  v-input label='Category' name="category" object="text" errors="errors"
   v-input label='Title' name="title" object="text" errors="errors"
   v-textarea label='Content' name="content" object="text" errors="errors"

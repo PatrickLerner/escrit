@@ -16,3 +16,11 @@
     object: '='
     label: '@'
   templateUrl: 'inputs/vtextarea.html'
+
+@escrit.directive 'vLanguageSelect', ->
+  restrict: 'E'
+  scope:
+    errors: '='
+    object: '='
+    label: '@'
+  templateUrl: 'inputs/vlanguage_select.html'

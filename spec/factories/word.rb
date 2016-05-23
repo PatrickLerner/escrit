@@ -12,10 +12,7 @@ FactoryGirl.define do
       end
 
       after(:create) do |word, evaluator|
-        tokens = create_list(:token, evaluator.token_count)
-        tokens.each do |token|
-          word.tokens << token
-        end
+        create_list(:entry, evaluator.token_count, word: word)
       end
     end
   end

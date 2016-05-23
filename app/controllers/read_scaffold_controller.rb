@@ -17,7 +17,8 @@ class ReadScaffoldController < ApplicationController
 
   def collection
     @collection ||= resource.search('*', where: load_collection,
-                                         page: params[:page] || 1, per_page: 20)
+                                         page: params[:page] || 1, per_page: 20,
+                                         order: { updated_at: :desc })
   end
 
   def load_collection

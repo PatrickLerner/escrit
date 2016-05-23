@@ -4,7 +4,6 @@ class TextsController < ScaffoldController
   def create
     @object = resource.new(permitted_params)
     @object.user     = current_user
-    @object.language = current_language
     super
   end
 
@@ -22,6 +21,6 @@ class TextsController < ScaffoldController
   end
 
   def permitted_params
-    params.require(:text).permit(:id, :title, :content)
+    params.require(:text).permit(:id, :title, :content, :category, :language_id)
   end
 end
