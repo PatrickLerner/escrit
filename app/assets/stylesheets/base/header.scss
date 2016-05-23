@@ -50,19 +50,24 @@ $nav-top-height: 5rem;
 
   .nav-item {
     display: none;
-
-    &.right {
-      float: right;
-    }
   }
 
   .nav-brand {
     display: block;
     height: 5rem;
 
+    &:after {
+      font: normal normal normal 14px/1 FontAwesome;
+      content: "\f0c9";
+      position: absolute;
+      font-size: 3rem;
+      top: 1rem;
+      right: 2rem;
+    }
+
     img {
       height: 3rem;
-      margin-top: 0.5rem;
+      margin-top: .5rem;
       vertical-align: bottom;
     }
   }
@@ -112,10 +117,18 @@ $nav-top-height: 5rem;
       display: inline-block;
       line-height: $nav-top-height;
       padding: 0 2rem;
+
+      &.right {
+        float: right;
+      }
     }
 
     .nav-brand {
       display: inline-block;
+
+      &:after {
+        content: '';
+      }
 
       img {
         height: 3rem;

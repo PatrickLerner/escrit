@@ -3,6 +3,7 @@
 
   a {
     border: 0.1rem solid $color-gray;
+    border-radius: 0.2rem;
     color: $color-gray;
     display: inline-block;
     font-size: 2rem;
@@ -18,9 +19,18 @@
     -webkit-user-select: none;
     -o-user-select: none;
 
+    &:hover {
+      background-image: linear-gradient(transparent, rgba(0, 0, 0, .05) 40%,
+                                        rgba(0, 0, 0, .1));
+    }
+
     &.disabled {
       border: 0.1rem solid $color-light-gray;
       color: $color-light-gray;
+
+      &:hover {
+        background-image: none;
+      }
     }
   }
 }
