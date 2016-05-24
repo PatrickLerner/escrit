@@ -1,4 +1,4 @@
-![](http://escrit.eu/assets/logo-i.png)
+![](https://github.com/PatrickLerner/escrit/blob/master/app/assets/images/logo.png)
 
 [![Code Climate](https://codeclimate.com/github/PatrickLerner/escrit/badges/gpa.svg)](https://codeclimate.com/github/PatrickLerner/escrit)
 
