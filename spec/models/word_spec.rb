@@ -6,6 +6,8 @@ describe Word, type: :model do
   end
 
   it { is_expected.to validate_length_of(:value).is_at_least(1) }
+  it { is_expected.to validate_presence_of(:language) }
+  it { is_expected.to validate_presence_of(:user) }
   it do
     is_expected.to validate_uniqueness_of(:value).scoped_to(
       [:language_id, :user_id]
@@ -37,7 +39,7 @@ describe Word, type: :model do
     let!(:word) { 10.times { create(:word_with_tokens) } }
 
     it 'should not make unnecessairy queries when indexing' do
-      expect { Word.reindex }.to make_database_queries(count: 4)
+      expect { Word.reindex }.to make_database_queries(count: 5)
     end
   end
 end

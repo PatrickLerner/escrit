@@ -1,12 +1,13 @@
 .buttons
   a.btn> ng-click="showIndex()"
-    i.fa.fa-chevron-left>
+    i.icon.ion-chevron-left>
     | Back
   a.btn> ng-click="edit(text)"
-    i.fa.fa-pencil>
+    i.icon.ion-edit>
     | Edit
 
-h1
-  compiled-html content='text.title | formatText: text.js_split_tokens'
+article.text
+  h1
+    compiled-html content='text.title | formatText: text.js_split_tokens'
 
-compiled-html content='text.content | formatText: text.js_split_tokens'
+  compiled-html content='text.content | formatText: text.js_split_tokens'

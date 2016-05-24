@@ -172,6 +172,7 @@ GEM
       activesupport (>= 4.1.0)
     hashie (3.4.4)
     i18n (0.7.0)
+    ionicons-rails (2.0.0)
     jbuilder (2.4.1)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
@@ -338,6 +339,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   font-awesome-rails
+  ionicons-rails
   jbuilder
   letter_opener
   lightbox2-rails

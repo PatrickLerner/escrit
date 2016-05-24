@@ -8,5 +8,5 @@ div(ng-controller="ModalController")
         .modal-buttons
           a.btn>(class="{{ t[0] }}" ng-repeat="(v, t) in modal.buttons"
                  ng-click="closeModal(v)")
-            i.fa> class="fa-{{ t[1] }}" ng-show="t[1]"
+            i.icon> class="ion-{{ t[1] }}" ng-show="t[1]"
             == '{{ t[2] }}'

@@ -38,7 +38,7 @@
       content: "Do you really wish to delete this #{resource.name_object}?",
       buttons:
         abort: 'Abort'
-        confirm: ['danger', 'times', 'Delete'],
+        confirm: ['danger', 'close', 'Delete'],
     }).then (r) ->
       return unless r == 'confirm'
       resource.destroy(object.to_param).then (response) ->

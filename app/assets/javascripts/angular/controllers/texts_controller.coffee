@@ -3,3 +3,6 @@
   $controller 'ScaffoldController',
     $scope: $scope,
     resource: Text
+
+  $scope.showWord = (token) ->
+    alert(token)
