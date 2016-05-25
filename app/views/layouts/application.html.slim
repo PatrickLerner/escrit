@@ -23,6 +23,6 @@ html(ng-app="escrit")
           li.nav-item ng-click="signUp()" Sign up
       header.header-image ng-class="{ large: largeHeader }"
         a ng-click="toggleHeader()"
-          = fa_icon('search-plus')
+          i.icon.ion-search
     section.content(ng-view)
     = render partial: 'layouts/modals'

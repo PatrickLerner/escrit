@@ -12,6 +12,10 @@
     }
   }
 
+  &.error {
+    border-color: mix($color-danger, $color-light-gray);
+  }
+
   input, textarea, select {
     background-color: white;
     border: none;
@@ -28,5 +32,9 @@
     &:-webkit-autofill {
       -webkit-box-shadow: 0 0 0px 1000px white inset;
     }
+  }
+
+  .error-message {
+    font-size: 1.5rem;
   }
 }

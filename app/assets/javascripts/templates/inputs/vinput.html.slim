@@ -1,5 +1,6 @@
-.vc-form-control ng-init="object[name] = ''"
+.vc-form-control(ng-init="object[name] = ''"
+                 ng-class="{ error: errors[name] }")
   label for="{{ name }}" {{ label }}
   input(type="{{ type || 'text' }}" id="{{ name }}"
         ng-model="object[name]" autocomplete="off")
-  .error ng-if="errors[name]" {{ errors[name].join(" and ") }}
+  .error-message ng-if="errors[name]" {{ errors[name].join(" and ") }}

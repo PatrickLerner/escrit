@@ -9,8 +9,9 @@
   color: $color-black;
   display: inline-block;
   line-height: 2.2rem;
-  padding: 0.8rem 2rem;
+  padding: 0.9rem 2rem 0.7rem 2rem;
   text-decoration: none;
+  transition: all 0.1s linear;
 
   &.primary {
     background: $color-blue;

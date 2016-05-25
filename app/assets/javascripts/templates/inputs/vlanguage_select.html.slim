@@ -1,7 +1,8 @@
-div
-  .vc-form-control ng-init="object['language_id'] = 0"
-    label for="language" {{ label }}
-    select(id="language" ng-model="object['language_id']"
-           ng-controller="LanguageSelectController"
-           ng-options="l.id as l.name for l in languages")
-    .error ng-if="errors['language']" {{ errors['language'].join(" and ") }}
+.vc-form-control(ng-init="object['language_id'] = 0"
+                 ng-class="{ error: errors['language'] }")
+  label for="language" {{ label }}
+  select(id="language" ng-model="object['language_id']"
+         ng-controller="LanguageSelectController"
+         ng-options="l.id as l.name for l in languages")
+  .error-message ng-if="errors['language']"
+    == '{{ errors["language"].join(" and ") }}'
