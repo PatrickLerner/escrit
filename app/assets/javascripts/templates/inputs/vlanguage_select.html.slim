@@ -1,5 +1,5 @@
-.vc-form-control(ng-init="object['language_id'] = 0"
-                 ng-class="{ error: errors['language'] }")
+.vc-form-control.select(ng-init="object['language_id'] = 0"
+                        ng-class="{ error: errors['language'] }")
   label for="language" {{ label }}
   select(id="language" ng-model="object['language_id']"
          ng-controller="LanguageSelectController"

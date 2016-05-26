@@ -1,8 +1,8 @@
 @escrit.controller 'TextsController', ($scope, $controller, Text, $routeParams,
-  $location, Modal, $rootScope) ->
+  $location, Modal, $rootScope, TokenModal) ->
   $controller 'ScaffoldController',
     $scope: $scope,
     resource: Text
 
   $scope.showWord = (token) ->
-    alert(token)
+    TokenModal.open(token)

@@ -2,7 +2,7 @@
   $modal-background: $color-white !default;
   $modal-border-radius: .5rem;
   $modal-close-color: $color-gray !default;
-  $modal-fade-color: rgba(#000, .48);
+  $modal-fade-color: rgba(#000, .7);
   $modal-padding: 1em;
 
   .modal-fade-screen {
@@ -33,6 +33,7 @@
   .modal-inner {
     background: $modal-background;
     border-radius: $modal-border-radius;
+    box-shadow: 0px 0px 4px 0px #000000;
     left: 50%;
     margin: auto;
     max-height: 95%;
