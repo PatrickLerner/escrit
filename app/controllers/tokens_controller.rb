@@ -15,7 +15,9 @@ class TokensController < ScaffoldController
 
   def word_from_data(data)
     Word.find_or_initialize_by(
-      value: data['value'], user: current_user, language_id: data['language_id']
+      value: data['to_param'],
+      user: current_user,
+      language_id: data['language_id']
     )
   end
 
@@ -53,17 +55,16 @@ class TokensController < ScaffoldController
   end
 
   def format_entry_reference(entry, word_data)
-    {
-      id: entry.id,
-      word_attributes: word_data,
-      rating: entry.rating || 0
-    }
+    res = { word_attributes: word_data, rating: entry.rating || 0 }
+    res[:id] = entry.id if entry.persisted?
+    res
   end
 
   def fix_entry_reference(word_from_data, word_data)
     entry = Entry.find_or_initialize_by(word: word_from_data, token: object)
     word_data[:id] = word_from_data.id if word_from_data.persisted?
     word_data[:user_id] = current_user.id
+    word_data.delete(:to_param)
     format_entry_reference(entry, word_data)
   end
 
@@ -87,6 +88,6 @@ class TokensController < ScaffoldController
   end
 
   def permitted_words_params
-    [:id, :value, :language_id, notes: []]
+    [:id, :to_param, :value, :language_id, notes: []]
   end
 end

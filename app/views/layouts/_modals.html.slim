@@ -11,6 +11,7 @@ div ng-controller="TokenModalController"
             == '{{ word.value }}'
           li: i.icon.ion-plus
         .word-definition ng-if="current_word"
+          input type="text" ng-model="current_word.value"
           .notes
             h1 Notes
             div ng-repeat="note in current_word.notes track by $index"

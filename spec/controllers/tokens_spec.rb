@@ -31,6 +31,7 @@ describe TokensController do
         words: token.words_for_user(user).map do |word|
           {
             value: word.value,
+            to_param: word.value,
             language_id: word.language_id,
             notes: word.notes
           }
@@ -54,6 +55,7 @@ describe TokensController do
       new_word = create(:word)
       data[:words] += [{
         value: new_word.value,
+        to_param: new_word.value,
         language_id: new_word.language_id,
         notes: new_word.notes
       }]
@@ -61,6 +63,15 @@ describe TokensController do
       patch :update, params: { id: token.value, token: data }
       expect(token.words.count).to eq(word_count + 1)
       new_word.token_ids.include?(token.id)
+    end
+
+    it 'should allow renaming a word' do
+      orig_word_name = data[:words][0][:value]
+      orig_word_id = token.words[0].id
+      data[:words][0][:value] = 'newword'
+      patch :update, params: { id: token.value, token: data }
+      expect(Word.find(orig_word_id).value).to eq('newword')
+      expect(Word.where(value: orig_word_name).count).to eq(0)
     end
   end
 end
