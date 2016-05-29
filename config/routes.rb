@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :languages
   resources :texts
+  resources :tokens
 
   devise_scope :user do
     post   '/signup',        to: 'devise/registrations#create'

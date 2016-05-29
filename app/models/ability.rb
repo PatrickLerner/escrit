@@ -10,8 +10,10 @@ class Ability
   end
 
   def user_permissions(user)
-    # languages can be read by users
-    can :read, [Language, Word, Token]
+    # languages can only be read by users
+    can :read, [Language, Word]
+
+    can :manage, Token
 
     # everybody may mange their own texts
     can %i(read update create destroy), Text do |text|

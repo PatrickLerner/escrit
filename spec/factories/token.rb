@@ -7,16 +7,17 @@ FactoryGirl.define do
     factory :token_with_words do
       transient do
         word_count 3
-        language create(:language)
+        user create(:user)
       end
 
       after(:create) do |token, evaluator|
-        u = create(:user)
-        l = evaluator.language
-        words = create_list(:word, evaluator.word_count, user: u, language: l)
+        l = create(:language)
+        words = create_list(:word, evaluator.word_count, user: evaluator.user,
+                                                         language: l)
         words.each do |word|
-          word.tokens << token
+          Entry.create(word: word, token: token, rating: 3)
         end
+        Word.reindex
       end
     end
   end

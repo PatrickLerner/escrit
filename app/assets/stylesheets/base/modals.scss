@@ -40,14 +40,15 @@
     overflow: auto;
     padding: $modal-padding / 2;
     position: absolute;
-    top: 33%;
+    top: 50%;
     transform: translate(-50%, -50%);
     transition: opacity .25s ease;
     width: 95%;
 
     @include media($mw-l) {
-      max-height: 70%;
+      max-height: 65%;
       padding: $modal-padding;
+      top: 33%;
       width: 60%;
     }
 

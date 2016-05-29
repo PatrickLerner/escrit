@@ -37,8 +37,9 @@ RSpec.configure do |config|
 
   config.before(:suite) { FactoryGirl.reload }
   config.include FactoryGirl::Syntax::Methods
-  config.include Devise::TestHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Warden::Test::Helpers
+  config.extend ControllerMacros, type: :controller
 
   truncation_options = { except: %w(languages compliments) }
 

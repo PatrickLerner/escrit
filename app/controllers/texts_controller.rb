@@ -3,7 +3,7 @@ class TextsController < ScaffoldController
 
   def create
     @object = resource.new(permitted_params)
-    @object.user     = current_user
+    @object.user = current_user
     super
   end
 

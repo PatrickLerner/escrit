@@ -1,22 +1,39 @@
-div(ng-controller="ModalController"): .modal ng-repeat="modal in modals"
-  .modal-fade-screen(ng-click="closeBackground($event, 'close')")
-    .modal-inner
-      i.icon.ion-close.modal-close ng-click="closeModal('close')"
-      h1== '{{ modal.title }}'
-      p== '{{ modal.content }}'
-      .modal-buttons
-        a.btn>(class="{{ t[0] }}" ng-repeat="(v, t) in modal.buttons"
-               ng-click="closeModal(v)")
-          i.icon> class="ion-{{ t[1] }}" ng-show="t[1]"
-          == '{{ t[2] }}'
+div ng-controller="TokenModalController"
+  .token-modal.modal ng-if="current_token"
+    .modal-fade-screen(ng-click="closeBackground($event, 'close')")
+      .modal-inner
+        i.icon.ion-close.modal-close ng-click="closeModal('close')"
+        h1== '{{ current_token.value }}'
+        ul.word-tabs
+          li(ng-repeat="word in current_token.words"
+             ng-click="selectWord(word)"
+             ng-class="{'active': current_word == word}")
+            == '{{ word.value }}'
+          li: i.icon.ion-plus
+        .word-definition ng-if="current_word"
+          .notes
+            h1 Notes
+            div ng-repeat="note in current_word.notes track by $index"
+              input type="text" ng-model="current_word.notes[$index]"
+              a ng-click="deleteNote($index)": i.icon.ion-close
+            a.btn.u-right ng-click="addNote()"
+              i.icon.ion-plus>
+              | Add note
+        .modal-buttons
+          a.btn.primary ng-click="closeModal('save')"
+            i.icon.ion-checkmark>
+            | Save
 
-div(ng-controller="TokenModalController"): .modal ng-if="current_token"
-  .modal-fade-screen(ng-click="closeBackground($event, 'close')")
-    .modal-inner
-      i.icon.ion-close.modal-close ng-click="closeModal('close')"
-      h1== '{{ current_token }}'
-      p Definitions here
-      .modal-buttons
-        a.btn.primary ng-click="closeModal('save')"
-          i.icon.ion-checkmark>
-          | Save
+
+div ng-controller="ModalController"
+  .modal ng-repeat="modal in modals"
+    .modal-fade-screen(ng-click="closeBackground($event, 'close')")
+      .modal-inner
+        i.icon.ion-close.modal-close ng-click="closeModal('close')"
+        h1== '{{ modal.title }}'
+        p== '{{ modal.content }}'
+        .modal-buttons
+          a.btn>(class="{{ t[0] }}" ng-repeat="(v, t) in modal.buttons"
+                 ng-click="closeModal(v)")
+            i.icon> class="ion-{{ t[1] }}" ng-show="t[1]"
+            == '{{ t[2] }}'
