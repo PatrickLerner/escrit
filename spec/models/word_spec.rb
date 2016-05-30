@@ -8,11 +8,6 @@ describe Word, type: :model do
   it { is_expected.to validate_length_of(:value).is_at_least(1) }
   it { is_expected.to validate_presence_of(:language) }
   it { is_expected.to validate_presence_of(:user) }
-  it do
-    is_expected.to validate_uniqueness_of(:value).scoped_to(
-      [:language_id, :user_id]
-    )
-  end
 
   it 'should always correctly parameterize as its value field' do
     word = build(:word)
@@ -40,6 +35,45 @@ describe Word, type: :model do
 
     it 'should not make unnecessairy queries when indexing' do
       expect { Word.reindex }.to make_database_queries(count: 5)
+    end
+  end
+
+  describe 'word combination' do
+    let(:language) { create(:language) }
+    let(:user) { create(:user) }
+    let(:word_one) { create(:word_with_tokens, language: language, user: user) }
+    let(:word_two) { create(:word_with_tokens, language: language, user: user) }
+
+    it 'does not combine if they are dissimilar' do
+      orig_word_two_value = word_two.value
+      word_two.value = word_one.value
+      word_two.language = create(:language)
+      word_two.save
+      expect(Word.where(value: orig_word_two_value).count).to eq(0)
+      expect(Word.where(value: word_one.value).count).to eq(2)
+    end
+
+    it 'combines words when they have the same name, language and user' do
+      orig_word_two_value = word_two.value
+      word_two.value = word_one.value
+      word_two.save!
+      expect(Word.where(value: orig_word_two_value).count).to eq(0)
+      expect(Word.where(value: word_two.value).count).to eq(1)
+    end
+
+    it 'transfers all notes and tokens to the other word' do
+      create(:note, word: word_one)
+      create(:note, word: word_one)
+      create(:note, word: word_two)
+      create(:note, word: word_two)
+      create(:note, word: word_two)
+      expect(word_one.notes.count).to eq(2)
+      expect(word_two.notes.count).to eq(3)
+      token_count = word_one.tokens.count + word_two.tokens.count
+      word_two.value = word_one.value
+      word_two.save!
+      expect(word_two.notes.count).to eq(5)
+      expect(word_two.tokens.count).to eq(token_count)
     end
   end
 end
