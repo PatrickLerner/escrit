@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :word do
     sequence :value do |n|
-      "#{Faker::Lorem.word}#{n}"
+      "abcd#{n}efg"
     end
     language
     user

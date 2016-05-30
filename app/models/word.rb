@@ -17,6 +17,7 @@ class Word < ApplicationRecord
   accepts_nested_attributes_for :notes, reject_if: :all_blank
 
   before_validation :combine_words, if: :similar_word?
+  before_save :combine_words, if: :similar_word?
 
   scope :search_import, lambda {
     includes(:language).includes(:tokens).includes(:notes)
@@ -49,7 +50,7 @@ class Word < ApplicationRecord
   end
 
   def similar_word
-    @similar_word = nil if changed?
+    @similar_word = nil if !persisted? || changed?
     @similar_word ||= Word.where(
       value: value, user_id: user_id, language_id: language_id
     ).where.not(id: id).first
@@ -72,7 +73,7 @@ class Word < ApplicationRecord
 
   def check_uniqueness_and_save(what, attr, to: self, unique: nil)
     attr_val = attr.method(unique).call
-    already_exists = to.method(what).call.pluck(unique).include?(attr_val)
+    already_exists = to.method(what).call.map(&unique).include?(attr_val)
     return attr.destroy if already_exists
     attr.save!
   end

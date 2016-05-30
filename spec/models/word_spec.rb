@@ -75,5 +75,47 @@ describe Word, type: :model do
       expect(word_two.notes.count).to eq(5)
       expect(word_two.tokens.count).to eq(token_count)
     end
+
+    it 'can correctly merge three ways' do
+      uid = create(:user).id
+      lid = create(:language).id
+      buil_t = create(:token, value: 'был')
+      buil_w = create(:word, value: 'был', user_id: uid, language_id: lid)
+      create(:entry, word: buil_w, token: buil_t)
+      create(:note, value: '(pm) was', word: buil_w)
+
+      buila_t = create(:token, value: 'была')
+      buila_w = create(:word, value: 'была', user_id: uid, language_id: lid)
+      create(:entry, word: buila_w, token: buila_t)
+      create(:note, value: 'was', word: buila_w)
+
+      buit_t = create(:token, value: 'быть')
+      buit_w = create(:word, value: 'быть', user_id: uid, language_id: lid)
+      create(:entry, word: buit_w, token: buit_t)
+      create(:note, value: 'to be', word: buit_w)
+
+      buila_w.value = buil_w.value
+      buila_w.save!
+      buila_w.reload
+      notes = buila_w.notes
+      notes[0].update_attributes(value: 'to be')
+      notes[1..-1].each(&:destroy)
+
+      buila_w.value = 'быть'
+      buila_w.save!
+
+      expect(
+        Word.where(value: %w(был была), language_id: lid, user_id: uid).count
+      ).to eq(0)
+      expect(
+        Word.where(value: 'быть', language_id: lid, user_id: uid).count
+      ).to eq(1)
+      expect(
+        Word.find_by(value: 'быть', language_id: lid, user_id: uid).notes.count
+      ).to eq(1)
+      expect(
+        Word.find_by(value: 'быть', language_id: lid, user_id: uid).tokens.count
+      ).to eq(3)
+    end
   end
 end

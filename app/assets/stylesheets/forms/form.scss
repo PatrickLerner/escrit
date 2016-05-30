@@ -1,0 +1,17 @@
+input, textarea, select {
+  border: 0.1rem solid $color-light-gray;
+  font-size: 1.6rem;
+  font-weight: 300;
+  padding: 0.4rem;
+  width: 100%;
+  -webkit-appearance:none;
+
+  &:focus {
+    outline: none;
+    border: 0.1rem solid $color-blue;
+  }
+
+  &:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+  }
+}
