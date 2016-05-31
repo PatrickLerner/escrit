@@ -8,21 +8,20 @@ html(ng-app="escrit")
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
     = favicon_link_tag       'favicon.png'
-  body
-    div ng-controller="HeaderController"
-      nav.nav-top ng-class="{ open: showMenu }"
-        ul.nav-list ng-if="user"
-          li.nav-brand ng-click="toggleMenu()"= image_tag 'logo.svg'
-          li.nav-item Test
-          li.nav-item Test
-          li.nav-item Test
-          li.nav-item.right ng-click="signOut()" Sign out
-        ul.nav-list ng-if="!user"
-          li.nav-brand ng-click="toggleMenu()"= image_tag 'logo.svg'
-          li.nav-item ng-click="signIn()" Sign in
-          li.nav-item ng-click="signUp()" Sign up
-      header.header-image ng-class="{ large: largeHeader }"
-        a ng-click="toggleHeader()"
-          i.icon.ion-search
+  body ng-controller="HeaderController" ng-class="{'stop-scrolling': noScroll}"
+    nav.nav-top ng-class="{ open: showMenu }"
+      ul.nav-list ng-if="user"
+        li.nav-brand ng-click="toggleMenu()"= image_tag 'logo.svg'
+        li.nav-item Test
+        li.nav-item Test
+        li.nav-item Test
+        li.nav-item.right ng-click="signOut()" Sign out
+      ul.nav-list ng-if="!user"
+        li.nav-brand ng-click="toggleMenu()"= image_tag 'logo.svg'
+        li.nav-item ng-click="signIn()" Sign in
+        li.nav-item ng-click="signUp()" Sign up
+    header.header-image ng-class="{ large: largeHeader }"
+      a ng-click="toggleHeader()"
+        i.icon.ion-search
     section.content(ng-view)
     = render partial: 'layouts/modals'

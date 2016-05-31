@@ -1,5 +1,10 @@
 $nav-top-height: 5rem;
 
+body.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
+
 .header-image {
   @include transition(height 1s);
   background-color: #787882;
