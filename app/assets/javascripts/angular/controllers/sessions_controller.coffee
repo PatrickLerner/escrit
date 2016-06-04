@@ -1,5 +1,4 @@
-@escrit.controller 'SessionsController', ($scope, $location, $route, Auth,
-  $routeParams, $rootScope, Modal) ->
+@escrit.controller 'SessionsController', ['$scope', '$location', '$route', 'Auth', '$routeParams', '$rootScope', 'Modal', ($scope, $location, $route, Auth, $routeParams, $rootScope, Modal) ->
   $scope.action_name = $route.current.$$route.action_name
   $scope.credentials = {}
   $scope.errors = {}
@@ -56,3 +55,4 @@
             ok: ['primary', '', 'Ok']
     , (error) ->
       $scope.errors = error.data.errors
+]

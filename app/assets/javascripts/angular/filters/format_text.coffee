@@ -1,4 +1,4 @@
-@escrit.filter 'formatText', ($sce) ->
+@escrit.filter 'formatText', ['$sce', ($sce) ->
   parseNewLines = (input) ->
     lines = input.split("\n")
     lines.join('<br />')
@@ -40,3 +40,4 @@
     res = parseLines(input)
     res = tokenize(res, split_tokens)
     $sce.trustAsHtml(res)
+]

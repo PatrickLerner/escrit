@@ -1,5 +1,4 @@
-@escrit.controller 'ScaffoldController', ($scope, resource, Modal, $location,
-  $routeParams, $route) ->
+@escrit.controller 'ScaffoldController', ['$scope', 'resource', 'Modal', '$location', '$routeParams', '$route', ($scope, resource, Modal, $location, $routeParams, $route) ->
 
   $scope.action_name = $route.current.$$route.action_name
   $scope.errors = {}
@@ -66,3 +65,4 @@
     when 'index' then $scope.loadIndex()
     when 'show'  then $scope.loadShow()
     when 'new'   then $scope.loadNew()
+]

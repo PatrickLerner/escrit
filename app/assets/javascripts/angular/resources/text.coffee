@@ -1,3 +1,4 @@
-@escrit.factory 'Text', (Resource) ->
+@escrit.factory 'Text', ['Resource', (Resource) ->
   return Resource
     name_object: 'text'
+]

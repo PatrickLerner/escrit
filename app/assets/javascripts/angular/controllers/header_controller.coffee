@@ -1,5 +1,4 @@
-@escrit.controller 'HeaderController', ($scope, $location, $route, Auth,
-  $routeParams, $rootScope) ->
+@escrit.controller 'HeaderController', ['$scope', '$location', '$route', 'Auth', '$routeParams', '$rootScope', ($scope, $location, $route, Auth, $routeParams, $rootScope) ->
   $scope.largeHeader = false
   $scope.showMenu = false
   $scope.user = null
@@ -45,3 +44,4 @@
 
   $scope.$on 'devise:logout', (event, oldCurrentUser) ->
     $rootScope.$broadcast('user:set', null)
+]

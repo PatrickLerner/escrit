@@ -1,5 +1,4 @@
-@escrit.controller 'TokenModalController', ($scope, Modal, TokenModal,
-  Token, $rootScope) ->
+@escrit.controller 'TokenModalController', ['$scope', 'Modal', 'TokenModal', 'Token', '$rootScope', ($scope, Modal, TokenModal, Token, $rootScope) ->
   $scope.current_token = null
   $scope.current_language_id = null
   $scope.current_word = null
@@ -76,3 +75,4 @@
 
   $rootScope.$on 'token_modal:close', ->
     $scope.current_token = null
+]

@@ -1,4 +1,4 @@
-@escrit.factory 'Resource', ($resource) ->
+@escrit.factory 'Resource', ['$resource', ($resource) ->
   return (obj) ->
     obj ||= {}
     obj.name_object ||= 'resource'
@@ -12,6 +12,7 @@
         transformResponse: (data) ->
           r = angular.fromJson(data)
           return r if Array.isArray(r)
+          return r unless r.page?
           r.data.$metadata =
             page: parseInt(r.page)
             num_pages: parseInt(r.num_pages)
@@ -51,3 +52,4 @@
       obj.resource.remove({ id: id }).$promise
 
     return obj
+]

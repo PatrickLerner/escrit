@@ -1,4 +1,4 @@
-@escrit.directive 'autosize', () ->
+@escrit.directive 'autosize', ->
   (scope, element, attrs) ->
     autosize(element)
 

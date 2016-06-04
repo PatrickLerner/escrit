@@ -1,4 +1,4 @@
-@escrit.factory 'TokenModal', ($resource, $q, $rootScope) ->
+@escrit.factory 'TokenModal', ['$resource', '$q', '$rootScope', ($resource, $q, $rootScope) ->
   current_token = null
   current_language_id = null
   factory = {}
@@ -20,3 +20,4 @@
     current_language_id
 
   return factory
+]

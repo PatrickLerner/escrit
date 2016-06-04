@@ -1,4 +1,4 @@
-@escrit.factory 'Modal', ($resource, $q, $rootScope) ->
+@escrit.factory 'Modal', ['$resource', '$q', '$rootScope', ($resource, $q, $rootScope) ->
   modal_list = []
   factory = {}
 
@@ -26,3 +26,4 @@
     modal_list
 
   return factory
+]

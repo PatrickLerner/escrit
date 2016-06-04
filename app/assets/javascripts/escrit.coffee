@@ -1,7 +1,7 @@
 @escrit = angular.module 'escrit', ['ngRoute', 'ngResource', 'templates',
   'Devise', 'ngAnimate']
 
-@escrit.run ($rootScope, $location, Auth) ->
+@escrit.run ['$rootScope', '$location', 'Auth', ($rootScope, $location, Auth) ->
   $rootScope.$on '$routeChangeStart', (event, next, current) ->
     Auth.currentUser().then (user) ->
       null
@@ -10,15 +10,17 @@
         event.preventDefault()
         $rootScope.$evalAsync ->
           $location.path('/signin')
+]
 
-@escrit.config (AuthProvider, AuthInterceptProvider) ->
+@escrit.config ['AuthProvider', 'AuthInterceptProvider', (AuthProvider, AuthInterceptProvider) ->
   AuthProvider.loginPath '/signin.json'
   AuthProvider.logoutPath '/signout.json'
   AuthProvider.registerPath '/signup.json'
   AuthProvider.sendResetPasswordInstructionsPath '/resetpassword.json'
   AuthProvider.resetPasswordPath '/resetpassword.json'
+]
 
-@escrit.config ($routeProvider, $locationProvider) ->
+@escrit.config ['$routeProvider', '$locationProvider', ($routeProvider, $locationProvider) ->
   $locationProvider.html5Mode(true)
   $routeProvider
     # session
@@ -54,3 +56,4 @@
     # else
     .otherwise
       redirectTo: '/texts'
+]

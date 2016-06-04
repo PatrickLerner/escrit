@@ -1,4 +1,4 @@
-@escrit.controller 'ModalController', ($scope, Modal, $rootScope) ->
+@escrit.controller 'ModalController', ['$scope', 'Modal', '$rootScope', ($scope, Modal, $rootScope) ->
   $scope.modals = []
 
   $scope.closeModal = (val) ->
@@ -13,3 +13,4 @@
 
   $rootScope.$on 'modal:close', ->
     $scope.modals = Modal.getAll()
+]
