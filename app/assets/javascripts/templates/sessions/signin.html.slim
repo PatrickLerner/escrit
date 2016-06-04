@@ -6,6 +6,8 @@
     i.icon.ion-log-in>
     | Sign In
 
+.vc-form-control ng-if="errors.error": .error-message== '{{ errors.error }}'
+
 form name="form" ng-submit="submit()"
   v-input label='E-Mail' name="email" object="credentials" errors="errors"
   v-input label='Password' name="password" type="password" object="credentials" errors="errors"
