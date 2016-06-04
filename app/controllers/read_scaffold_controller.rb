@@ -1,7 +1,8 @@
 class ReadScaffoldController < ApplicationController
   helper_method :object, :collection
 
-  before_action :check_read_permission!, only: [:index, :show]
+  before_action :check_read_permission_object!, only: :show
+  before_action :check_read_permission_resource!, only: :index
 
   def index
   end
@@ -11,7 +12,11 @@ class ReadScaffoldController < ApplicationController
 
   protected
 
-  def check_read_permission!
+  def check_read_permission_object!
+    authorize! :read, object
+  end
+
+  def check_read_permission_resource!
     authorize! :read, resource
   end
 

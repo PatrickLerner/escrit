@@ -48,6 +48,6 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |exception|
-    render json: { error: exception.message }
+    render json: { error: exception.message }, status: :not_authorized
   end
 end

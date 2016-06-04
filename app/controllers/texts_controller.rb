@@ -10,8 +10,7 @@ class TextsController < ScaffoldController
   protected
 
   def load_object
-    resource.owned_by(current_user).with_word_counts
-            .find_by!(resource.param_field => params[:id])
+    resource.with_word_counts.find_by!(resource.param_field => params[:id])
   end
 
   def load_collection

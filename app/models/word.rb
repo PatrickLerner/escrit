@@ -20,7 +20,8 @@ class Word < ApplicationRecord
     includes(:language).includes(:tokens).includes(:notes)
   }
 
-  after_save :merge_duplicate
+  before_validation :mark_duplicate, if: :duplicate_present?
+  after_save :merge_duplicate, if: :duplicate_present?
 
   def search_data
     as_json(only: search_data_attributes).merge(
@@ -37,23 +38,25 @@ class Word < ApplicationRecord
   def parse_update(params, _current_user)
     parse_notes(params)
     parse_attributes(params)
-    mark_duplicate
     save!
   end
 
   protected
 
+  def duplicate_present?
+    duplicate.present?
+  end
+
   def mark_duplicate
-    return unless duplicate.present?
     duplicate.update_attribute(:value, "#{duplicate.value}_marked_for_deletion")
   end
 
   def merge_duplicate
-    return unless duplicate.present?
     migrate_attribute(:notes, from: duplicate, unique: :value)
     migrate_attribute(:entries, from: duplicate, unique: :token_id)
     duplicate.reload if duplicate.persisted?
     duplicate.destroy! if duplicate.persisted?
+    @duplicate = nil
   end
 
   def migrate_attribute(what, from: self, to: self, unique: nil)

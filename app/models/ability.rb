@@ -21,11 +21,11 @@ class Ability
     end
   end
 
-  def moderator_permissions(user)
+  def moderator_permissions(_user)
     can :manage, Text
   end
 
-  def admin_permissions(user)
+  def admin_permissions(_user)
     can :manage, :all
   end
 end
