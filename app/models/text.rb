@@ -2,7 +2,7 @@ class Text < ApplicationRecord
   include Tokenizable
   include TokenRelated
 
-  searchkick
+  searchkick batch_size: 100
 
   has_and_belongs_to_many :tokens
   belongs_to :language

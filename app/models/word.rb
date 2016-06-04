@@ -2,7 +2,7 @@ class Word < ApplicationRecord
   include NormalizedValued
   include TokenRelated
 
-  searchkick
+  searchkick batch_size: 200
 
   has_many :entries, inverse_of: :word, dependent: :destroy
   has_many :notes
