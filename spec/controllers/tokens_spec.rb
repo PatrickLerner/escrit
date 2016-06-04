@@ -106,8 +106,32 @@ describe TokensController do
     end
   end
 
+  describe 'word deletion' do
+    let!(:token) { create(:token_with_words, user: user) }
+    let!(:data) do
+      {
+        value: token.value,
+        words: token.words_for_user(user).map do |word|
+          {
+            value: word.value,
+            to_param: word.value,
+            language_id: word.language_id,
+            notes: word.notes
+          }
+        end
+      }
+    end
+
+    it 'allows to delete a word' do
+      expect(token.words.count).to eq(3)
+      data[:words] = data[:words][1..-1]
+      patch :update, params: { id: token.value, token: data }
+      expect(token.words.count).to eq(2)
+    end
+  end
+
   describe 'merge behavior' do
-    it 'merges strange1 correctly' do
+    it 'merges word into other one correctly' do
       language = create(:language)
       payload = JSON.parse('{"value":"спросил","to_param":"спросил",'\
         '"words":[{"value":"спросить","to_param":"спросил","language_id":' +
@@ -149,6 +173,28 @@ describe TokensController do
       expect(response).to be_success
 
       expect(Word.find_by(value: 'спросить').notes.count).to eq(1)
+    end
+
+    it 'can add a new token to an existing word' do
+      language = create(:language)
+      payload = JSON.parse('{"value":"помогал","to_param":"помогал",'\
+        '"words":[{"value":"помогать","language_id":' + language.id.to_s +
+        ',"notes":["to help"],"to_param":"помогать"}]}')
+
+      orig_token = create(:token, value: 'помогал')
+      token = create(:token, value: 'помогать')
+      word = create(:word, value: 'помогать', user_id: user.id,
+                           language_id: language.id)
+      create(:entry, word: word, token: token)
+      create(:note, value: 'to help', word: word)
+
+      expect(Word.find_by(value: 'помогать').tokens.count).to eq(1)
+
+      patch :update, params: { id: orig_token.value, token: payload }
+
+      expect(response).to be_success
+
+      expect(Word.find_by(value: 'помогать').tokens.count).to eq(2)
     end
   end
 end

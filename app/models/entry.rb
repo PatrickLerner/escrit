@@ -10,7 +10,7 @@ class Entry < ApplicationRecord
 
   accepts_nested_attributes_for :word
 
-  before_save :set_defaults
+  before_validation :set_defaults
 
   protected
 

@@ -5,13 +5,17 @@ div ng-controller="TokenModalController"
         i.icon.ion-close.modal-close ng-click="closeModal('close')"
         h1== '{{ current_token.value }}'
         ul.word-tabs
-          li(ng-repeat="word in current_token.words"
+          li(ng-repeat="word in current_token.words track by $index"
              ng-click="selectWord(word)"
              ng-class="{'active': current_word == word}")
-            == '{{ word.value }}'
-          li: i.icon.ion-plus
+            span ng-hide="word.__editing"
+              == '&nbsp;'
+              == '{{ word.value }}'
+            input(ng-show="word.__editing" type="text"
+                  ng-enter="confirmWord(word, $index)"
+                  ng-model="current_word.value")
+          li: i.icon.ion-plus ng-click="addWord()"
         .word-definition ng-if="current_word"
-          input type="text" ng-model="current_word.value"
           .notes
             h1 Notes
             div ng-repeat="note in current_word.notes track by $index"

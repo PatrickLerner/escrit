@@ -10,8 +10,16 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   before_action :redirect_subdomain
+  before_action :empty_html_response
 
   protected
+
+  # angular handels everything view-related, so all we have to do is
+  # to make sure that the layout is loaded containing all the angular
+  # initialization
+  def empty_html_response
+    return render text: '', layout: true if request.format == :html
+  end
 
   # always redirect away from the www-version of the site to the plain url one
   def redirect_subdomain

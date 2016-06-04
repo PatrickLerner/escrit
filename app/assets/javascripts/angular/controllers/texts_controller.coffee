@@ -5,4 +5,4 @@
     resource: Text
 
   $scope.showWord = (token) ->
-    TokenModal.open(token)
+    TokenModal.open(token, $scope.text.language_id)

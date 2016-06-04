@@ -16,12 +16,11 @@ class Word < ApplicationRecord
 
   accepts_nested_attributes_for :notes, reject_if: :all_blank
 
-  before_validation :combine_words, if: :similar_word?
-  before_save :combine_words, if: :similar_word?
-
   scope :search_import, lambda {
     includes(:language).includes(:tokens).includes(:notes)
   }
+
+  after_save :merge_duplicate
 
   def search_data
     as_json(only: search_data_attributes).merge(
@@ -35,33 +34,26 @@ class Word < ApplicationRecord
     [:value, :user_id]
   end
 
+  def parse_update(params, _current_user)
+    parse_notes(params)
+    parse_attributes(params)
+    mark_duplicate
+    save!
+  end
+
   protected
 
-  def all_tokens
-    tokens.loaded? ? tokens.map(&:value) : tokens.pluck(:value)
+  def mark_duplicate
+    return unless duplicate.present?
+    duplicate.update_attribute(:value, "#{duplicate.value}_marked_for_deletion")
   end
 
-  def all_notes
-    notes.loaded? ? notes.map(&:value) : notes.pluck(:value)
-  end
-
-  def similar_word?
-    similar_word.present?
-  end
-
-  def similar_word
-    @similar_word = nil if !persisted? || changed?
-    @similar_word ||= Word.where(
-      value: value, user_id: user_id, language_id: language_id
-    ).where.not(id: id).first
-    @similar_word
-  end
-
-  # combine words if they have the same value, user and language
-  def combine_words
-    migrate_attribute(:notes, from: similar_word, unique: :value)
-    migrate_attribute(:entries, from: similar_word, unique: :token_id)
-    similar_word.destroy!
+  def merge_duplicate
+    return unless duplicate.present?
+    migrate_attribute(:notes, from: duplicate, unique: :value)
+    migrate_attribute(:entries, from: duplicate, unique: :token_id)
+    duplicate.reload if duplicate.persisted?
+    duplicate.destroy! if duplicate.persisted?
   end
 
   def migrate_attribute(what, from: self, to: self, unique: nil)
@@ -76,5 +68,33 @@ class Word < ApplicationRecord
     already_exists = to.method(what).call.map(&unique).include?(attr_val)
     return attr.destroy if already_exists
     attr.save!
+  end
+
+  def duplicate
+    @duplicate ||= Word.where(
+      value: value, language_id: language_id, user_id: user_id
+    ).where.not(id: id).first.presence
+  end
+
+  def parse_attributes(params)
+    %w(value language_id).each do |attribute|
+      method("#{attribute}=").call(params[attribute]) if params.key?(attribute)
+    end
+  end
+
+  def parse_notes(params)
+    return unless params.key?(:notes)
+    params[:notes].each do |value|
+      notes.find_or_initialize_by(value: value).word = self
+    end
+    notes.where.not(value: params[:notes]).each(&:destroy)
+  end
+
+  def all_tokens
+    tokens.loaded? ? tokens.map(&:value) : tokens.pluck(:value)
+  end
+
+  def all_notes
+    notes.loaded? ? notes.map(&:value) : notes.pluck(:value)
   end
 end

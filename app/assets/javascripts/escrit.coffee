@@ -18,7 +18,8 @@
   AuthProvider.sendResetPasswordInstructionsPath '/resetpassword.json'
   AuthProvider.resetPasswordPath '/resetpassword.json'
 
-@escrit.config ($routeProvider) ->
+@escrit.config ($routeProvider, $locationProvider) ->
+  $locationProvider.html5Mode(true)
   $routeProvider
     # session
     .when '/signin',

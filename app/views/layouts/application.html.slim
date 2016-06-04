@@ -1,6 +1,7 @@
 doctype html
 html(ng-app="escrit")
   head
+    base href="/"
     meta content="text/html; charset=UTF-8" http-equiv="Content-Type"
     meta content="width=device-width, initial-scale=1" name="viewport"
     title escrit.eu
@@ -12,9 +13,7 @@ html(ng-app="escrit")
     nav.nav-top ng-class="{ open: showMenu }"
       ul.nav-list ng-if="user"
         li.nav-brand ng-click="toggleMenu()"= image_tag 'logo.svg'
-        li.nav-item Test
-        li.nav-item Test
-        li.nav-item Test
+        li.nav-item: a href="texts" Read
         li.nav-item.right ng-click="signOut()" Sign out
       ul.nav-list ng-if="!user"
         li.nav-brand ng-click="toggleMenu()"= image_tag 'logo.svg'
