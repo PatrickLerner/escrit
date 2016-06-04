@@ -11,6 +11,13 @@ GIT
       warden (~> 1.2.3)
 
 GIT
+  remote: https://github.com/c0m3tx/ionicons-rails
+  revision: c1e014f68a38565f6f14ad116fe22eb6dcb6db16
+  branch: master
+  specs:
+    ionicons-rails (2.0.1)
+
+GIT
   remote: https://github.com/rspec/rspec-core.git
   revision: d6931615722a15fb26e7e0257bbd0a7fa84feec2
   branch: master
@@ -196,7 +203,6 @@ GEM
       activesupport (>= 4.1.0)
     hashie (3.4.4)
     i18n (0.7.0)
-    ionicons-rails (2.0.0)
     jbuilder (2.4.1)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
@@ -381,7 +387,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   font-awesome-rails
-  ionicons-rails
+  ionicons-rails!
   jbuilder
   letter_opener
   lightbox2-rails

@@ -2,25 +2,34 @@
 
   $scope.action_name = $route.current.$$route.action_name
   $scope.errors = {}
+  $scope.loading = false
 
   $scope.loadEdit = ->
+    $scope.loading = true
     resource.find($routeParams.id).then (response) ->
       $scope[resource.name_object] = response
+      $scope.loading = false
     , (error) ->
       $location.url "/#{resource.path}"
+      $scope.loading = false
 
   $scope.loadIndex = (page = 1) ->
+    $scope.loading = true
     resource.findAll(page).then (collection) ->
       $scope[resource.name_collection] = collection
+      $scope.loading = false
 
   $scope.loadNew = ->
     $scope[resource.name_object] = resource.new()
 
   $scope.loadShow = ->
+    $scope.loading = true
     resource.find($routeParams.id).then (response) ->
       $scope[resource.name_object] = response
+      $scope.loading = false
     , (error) ->
       $location.url "/#{resource.path}"
+      $scope.loading = false
 
   $scope.showPage = (page) ->
     $scope.loadIndex(page)

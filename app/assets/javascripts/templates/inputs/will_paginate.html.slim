@@ -1,4 +1,4 @@
-.will-paginate
+.will-paginate ng-if="ngModel.$metadata.page"
   ==<> 'Page {{ ngModel.$metadata.page }} of {{ ngModel.$metadata.num_pages }}'
   a(ng-click="showPage(ngModel.$metadata.page - 1)"
     ng-if="ngModel.$metadata.page > 1") «

@@ -19,7 +19,8 @@ gem 'naturalsort', require: 'natural_sort_kernel'
 gem 'paperclip'
 gem 'searchkick'
 gem 'will_paginate'
-gem 'ionicons-rails'
+gem 'ionicons-rails', git: 'https://github.com/c0m3tx/ionicons-rails',
+                      branch: 'master'
 
 gem 'angularjs-rails'
 gem 'angular-rails-templates'

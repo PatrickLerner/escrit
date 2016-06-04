@@ -5,7 +5,7 @@
 
 will-paginate ng-model="texts"
 
-.text-list
+.text-list ng-if="texts.length"
   section.text-listing ng-repeat="text in texts"
     h1: a ng-click="show(text)"== '{{ text.title }}'
     span.language== '{{ text.language }}'
@@ -15,3 +15,5 @@ will-paginate ng-model="texts"
     span.category== '{{ text.category }}'
 
 will-paginate ng-model="texts"
+
+loading-indicator

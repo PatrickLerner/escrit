@@ -1,0 +1,33 @@
+.loading-indicator {
+  $loading-indicator-opacity: .3;
+  $loading-indicator-transition-length: .3s;
+
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin-right: 2rem;
+  margin-bottom: 1rem;
+  opacity: $loading-indicator-opacity;
+
+  .icon {
+    font-size: 3rem;
+    line-height: inherit;
+  }
+
+  &.ng-enter {
+    transition: $loading-indicator-transition-length linear all;
+    transition-delay: 0.5s;
+    opacity: 0;
+  }
+  &.ng-enter.ng-enter-active {
+    opacity: $loading-indicator-opacity;
+  }
+  &.ng-leave {
+    transition: $loading-indicator-transition-length linear all;
+    transition-delay: 0.5s;
+    opacity: $loading-indicator-opacity;
+  }
+  &.ng-leave.ng-leave-active {
+    opacity: 0;
+  }
+}
