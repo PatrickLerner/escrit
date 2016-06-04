@@ -20,3 +20,4 @@
 public/system
 coverage
 .byebug_history
+.rbenv-vars
