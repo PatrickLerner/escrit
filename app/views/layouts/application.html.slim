@@ -15,6 +15,7 @@ html(ng-app="escrit")
         li.nav-brand ng-click="toggleMenu()"= image_tag 'logo.svg'
         li.nav-item: a href="texts" Read
         li.nav-item.right ng-click="signOut()" Sign out
+        li.nav-item.right Hello, {{ user.name }}!
       ul.nav-list ng-if="!user"
         li.nav-brand ng-click="toggleMenu()"= image_tag 'logo.svg'
         li.nav-item ng-click="signIn()" Sign in
