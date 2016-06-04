@@ -8,6 +8,8 @@ gem 'coffee-rails'
 gem 'sass-rails'
 gem 'slim-rails'
 gem 'uglifier'
+gem 'execjs'
+gem 'therubyracer'
 
 gem 'attribute_normalizer'
 gem 'cancancan'
@@ -66,8 +68,6 @@ group :development do
   gem 'capistrano-rails',   require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano3-puma',   require: false
-  gem 'execjs'
-  gem 'therubyracer'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
