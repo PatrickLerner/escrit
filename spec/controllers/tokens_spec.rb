@@ -71,9 +71,28 @@ describe TokensController do
       orig_word_name = data[:words][0][:value]
       orig_word_id = token.words[0].id
       data[:words][0][:value] = 'newword'
+      word_count = Word.all.count
       patch :update, params: { id: token.value, token: data }
       expect(response).to be_success
+      expect(Word.all.count).to eq(word_count)
       expect(Word.find(orig_word_id).value).to eq('newword')
+      expect(Word.where(value: orig_word_name).count).to eq(0)
+    end
+
+    it 'should allow adding and renaming an existing word' do
+      ex_word = create(:word_with_tokens, user: user)
+      orig_word_name = ex_word.value
+      token = create(:token, value: 'newtoken')
+      payload = JSON.parse('{"value":"newtoken","to_param":"newtoken",'\
+        '"words":[{"value":"newword","to_param":"' + ex_word.value +
+        '","language_id":' + ex_word.language_id.to_s + ',"language":"x",'\
+        '"notes":["to ask"]}]}')
+      word_count = Word.all.count
+      patch :update, params: { id: token.value, token: payload }
+      expect(response).to be_success
+      expect(Word.all.count).to eq(word_count)
+      expect(Word.find(ex_word.id).value).to eq('newword')
+      expect(Word.find(ex_word.id).tokens.count).to eq(4)
       expect(Word.where(value: orig_word_name).count).to eq(0)
     end
 

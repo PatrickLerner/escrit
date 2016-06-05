@@ -38,7 +38,10 @@
     resource.save($scope[resource.name_object]).then (response) ->
       $scope.afterSave(response)
     , (error) ->
-      $scope.errors = error.data
+      if error.status >= 500
+        Modal.reportCommunicationError()
+      else
+        $scope.errors = error.data
 
   $scope.delete = (object) ->
     Modal.addModal({

@@ -22,6 +22,16 @@
     factory.push(data)
     return defer.promise
 
+  factory.reportCommunicationError = ->
+    factory.addModal
+      title: "Error communicating with server"
+      content: "It looks like there was a problem connecting and " +
+               "communicating with the server. You might try again later " +
+               "or get in contact with the administration of the site to " +
+               "resolve the problem. Sorry for the inconvenience.",
+      buttons:
+        confirm: ['danger', 'close', 'Close']
+
   factory.getAll = () ->
     modal_list
 

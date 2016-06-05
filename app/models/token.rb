@@ -9,16 +9,15 @@ class Token < ApplicationRecord
 
   accepts_nested_attributes_for :entries
 
+  after_save :reindex_words
+
   # if a word is not referenced by anything, it should be deleted
   def destroy
     super if texts.count.zero? && words.count.zero?
   end
 
   def words_for_user(user)
-    Word.search '*', where: {
-      tokens: value,
-      user_id: user.id
-    }
+    words.owned_by(user)
   end
 
   def parse_update(params, current_user)
@@ -31,6 +30,11 @@ class Token < ApplicationRecord
 
   protected
 
+  def reindex_words
+    words.reload
+    words.each(&:reindex)
+  end
+
   def remove_old_word_references(params)
     new_lst = params[:words].map { |w| w[:value] }
     words.each do |word|
@@ -39,10 +43,15 @@ class Token < ApplicationRecord
   end
 
   def word_reference(params, current_user)
-    word = words.find_or_initialize_by(value: params[:to_param],
-                                       language_id: params[:language_id],
-                                       user_id: current_user.id)
-    entries.build(word: word) unless entries.where(word_id: word.id)
+    data = { value: params[:to_param], language_id: params[:language_id],
+             user_id: current_user.id }
+    word = Word.find_or_initialize_by(data)
+    entry_reference(word)
     word
+  end
+
+  def entry_reference(word)
+    return if entries.find { |e| e.word_id == word.id }.present?
+    entries.build(word: word)
   end
 end

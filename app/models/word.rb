@@ -16,6 +16,7 @@ class Word < ApplicationRecord
 
   accepts_nested_attributes_for :notes, reject_if: :all_blank
 
+  scope :owned_by, -> (user) { where(user_id: user.id) }
   scope :search_import, lambda {
     includes(:language).includes(:tokens).includes(:notes)
   }

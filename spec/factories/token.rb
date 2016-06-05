@@ -17,7 +17,8 @@ FactoryGirl.define do
         words.each do |word|
           Entry.create(word: word, token: token, rating: 3)
         end
-        Word.reindex
+        token.reload
+        words.each(&:reindex)
       end
     end
   end
