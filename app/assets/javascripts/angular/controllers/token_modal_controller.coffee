@@ -30,7 +30,7 @@
     $scope.current_word.notes.splice(index, 1)
 
   $scope.addWord = () ->
-    value = prompt('Word', '')
+    value = prompt('Word', $scope.current_token.value)
     return if value == ''
 
     pushWord = (word) ->
@@ -44,7 +44,7 @@
         value: value
         to_param: value
         language_id: $scope.current_language_id
-        notes: []
+        notes: ['']
 
   $scope.editWord = (word) ->
     word.__editing = true
