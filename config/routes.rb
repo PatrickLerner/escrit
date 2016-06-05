@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
   root 'pages#index'
 
+  allow_all_ids = { id: %r{[^/]+(?=\.html\z|\.json\z)|[^/]+} }
+
   resources :languages
   resources :texts
-  resources :tokens
-  resources :words
+  resources :tokens, constraints: allow_all_ids
+  resources :words, constraints: allow_all_ids
 
   devise_scope :user do
     post   '/signup',        to: 'devise/registrations#create'

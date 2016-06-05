@@ -3,7 +3,7 @@ class WordsController < ReadScaffoldController
 
   def show
     unless object.present?
-      render json: { errror: 'word not found' }, status: :not_found
+      render json: { error: 'word not found' }, status: :not_found
     end
   end
 

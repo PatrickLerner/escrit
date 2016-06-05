@@ -15,12 +15,18 @@
     else
       parseParagraphs(paragraphs)
 
+  escapeRegExp = (str) ->
+    str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
+
+  formatWord = (str) ->
+    str.replace(/^(.+?)\|\|.+?$/, "$1")
+
   tokenize = (input, split_tokens) ->
     # we do not want to replace partial matches again, so we replace with a
     # placeholder first
     i = 0
     for word in Object.keys(split_tokens)
-      input = input.replace new RegExp(word, 'g'), "___#{i}___"
+      input = input.replace new RegExp(escapeRegExp(word), 'g'), "___#{i}___"
       i += 1
 
     i = 0
@@ -29,7 +35,7 @@
         "<span ng-click='showWord(\"#{split_tokens[word]}\")'" +
           " class='word'" +
         ">" +
-          "#{word}" +
+          "#{formatWord(word)}" +
         "</span>"
       i += 1
 

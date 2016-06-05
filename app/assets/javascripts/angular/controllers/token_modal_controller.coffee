@@ -42,7 +42,7 @@
     , (error) ->
       pushWord
         value: value
-        to_param = value
+        to_param: value
         language_id: $scope.current_language_id
         notes: []
 
