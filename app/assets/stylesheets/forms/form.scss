@@ -1,4 +1,4 @@
-input, textarea, select {
+input[type="text"], input[type="password"], textarea, select {
   border: 0.1rem solid $color-light-gray;
   font-size: 1.6rem;
   font-weight: 300;

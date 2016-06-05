@@ -36,6 +36,7 @@ class Text < ApplicationRecord
     {
       title: title,
       language: language.name,
+      language_id: language_id,
       tokens: tokens.loaded? ? tokens.map(&:value) : tokens.pluck(:value),
       user_id: user_id,
       created_at: created_at,

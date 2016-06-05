@@ -3,6 +3,7 @@
   $scope.action_name = $route.current.$$route.action_name
   $scope.errors = {}
   $scope.loading = false
+  $scope.filters = {}
 
   $scope.loadEdit = ->
     $scope.loading = true
@@ -15,7 +16,7 @@
 
   $scope.loadIndex = (page = 1) ->
     $scope.loading = true
-    resource.findAll(page).then (collection) ->
+    resource.findAll(page, $scope.filters).then (collection) ->
       $scope[resource.name_collection] = collection
       $scope.loading = false
 

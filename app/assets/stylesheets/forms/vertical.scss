@@ -17,7 +17,7 @@
     border-color: mix($color-danger, $color-light-gray);
   }
 
-  input, textarea, select {
+  input[type="text"], input[type="password"], textarea, select {
     background-color: white;
     border: none;
 
