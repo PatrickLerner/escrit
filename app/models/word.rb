@@ -89,7 +89,7 @@ class Word < ApplicationRecord
   def parse_notes(params)
     return unless params.key?(:notes)
     params[:notes].each do |value|
-      notes.find_or_initialize_by(value: value).word = self
+      notes.find_or_initialize_by(value: value).word = self unless value.blank?
     end
     notes.where.not(value: params[:notes]).each(&:destroy)
   end

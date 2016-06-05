@@ -46,9 +46,9 @@
     width: 95%;
 
     @include media($mw-l) {
-      max-height: 65%;
+      max-height: 80%;
       padding: $modal-padding;
-      top: 33%;
+      top: 50%;
       width: 60%;
     }
 

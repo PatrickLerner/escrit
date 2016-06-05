@@ -19,7 +19,9 @@ div ng-controller="TokenModalController"
           .notes
             h1 Notes
             div ng-repeat="note in current_word.notes track by $index"
-              input type="text" ng-model="current_word.notes[$index]"
+              input(type="text" ng-model="current_word.notes[$index]"
+                    set-focus-if="$index == current_word.notes.length - 1"
+                    ng-enter="addNote()")
               a ng-click="deleteNote($index)": i.icon.ion-close
             a.btn.u-right ng-click="addNote()"
               i.icon.ion-plus>
