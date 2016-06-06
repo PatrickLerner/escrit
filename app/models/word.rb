@@ -1,11 +1,12 @@
 class Word < ApplicationRecord
+  using StringRefinements
   include NormalizedValued
   include TokenRelated
 
   searchkick batch_size: 200
 
   has_many :entries, inverse_of: :word, dependent: :destroy
-  has_many :notes
+  has_many :notes, dependent: :destroy
   has_many :tokens, through: :entries
   belongs_to :language
   belongs_to :user
@@ -40,6 +41,10 @@ class Word < ApplicationRecord
     parse_notes(params)
     parse_attributes(params)
     save!
+  end
+
+  def destroy(force: false)
+    super() if tokens.count.zero? || force
   end
 
   protected
@@ -82,7 +87,9 @@ class Word < ApplicationRecord
 
   def parse_attributes(params)
     %w(value language_id).each do |attribute|
-      method("#{attribute}=").call(params[attribute]) if params.key?(attribute)
+      val = params[attribute]
+      val = val.utf8downcase.strip if val.is_a?(String)
+      method("#{attribute}=").call(val) if params.key?(attribute)
     end
   end
 

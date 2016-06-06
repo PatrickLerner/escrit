@@ -7,6 +7,7 @@
     $scope.languages = collection
 
   $scope.filters = { language_id: [] }
+  $scope.unknownWords = {}
 
   $scope.toggleLanguageSelection = (language_id) ->
     idx = $scope.filters.language_id.indexOf(language_id)
@@ -19,5 +20,6 @@
     $scope.loadIndex(1)
 
   $scope.showWord = (token) ->
+    $scope.unknownWords[token] = true
     TokenModal.open(token, $scope.text.language_id)
 ]

@@ -20,7 +20,8 @@
     if $scope.current_word == word
       $scope.current_word.__editing = true
     else
-      $scope.current_word.__editing = undefined
+      if $scope.current_word?
+        $scope.confirmWord($scope.current_word, -1)
       $scope.current_word = word
 
   $scope.addNote = () ->
@@ -29,34 +30,48 @@
   $scope.deleteNote = (index) ->
     $scope.current_word.notes.splice(index, 1)
 
-  $scope.addWord = () ->
-    value = prompt('Word', $scope.current_token.value)
-    return if value == ''
-
+  $scope.addWord = (value) ->
     pushWord = (word) ->
       $scope.current_token.words.push(word)
       $scope.current_word = word
 
-    Word.find(value).then (response) ->
-      pushWord(response)
-    , (error) ->
-      pushWord
-        value: value
-        to_param: value
-        language_id: $scope.current_language_id
-        notes: ['']
+    if $scope.current_word?
+      $scope.current_word.__editing = undefined
+
+    existing = $scope.current_token.words.filter (word) ->
+      word.value == value && word.language_id == $scope.current_language_id
+
+    if existing.length > 0
+      value = ''
+
+    pushWord
+      value: value
+      to_param: value
+      language_id: $scope.current_language_id
+      notes: ['']
+      __editing: true
+
+    if existing.length == 0
+      $scope.confirmWord($scope.current_word, -1)
 
   $scope.editWord = (word) ->
     word.__editing = true
 
   $scope.confirmWord = (word, index) ->
-    word.value = word.value.trim()
+    word.value = word.value.trim().toLowerCase()
     word.__editing = undefined
     if word.value == ''
       $scope.current_token.words.splice(index, 1)
       $scope.current_word = null
       if $scope.current_token.words.length > 0
-        $scope.current_word = $scope.current_token.words[0]
+        new_index = Math.min(index, $scope.current_token.words.length - 1)
+        $scope.current_word = $scope.current_token.words[new_index]
+    else
+      Word.find(word.value).then (response) ->
+        word.notes = response.notes
+        word.to_param = response.to_param
+      , (error) ->
+        word.to_param = word.value
 
   $scope.loadData = (token) ->
     Token.find(token).then (response) ->

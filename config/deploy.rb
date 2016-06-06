@@ -1,5 +1,5 @@
 # Change these
-server '46.101.114.196', port: 22, roles: [:web, :app, :db], primary: true
+server 'escrit.eu', port: 22, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:PatrickLerner/escrit.git'
 set :application,     'escrit.eu'

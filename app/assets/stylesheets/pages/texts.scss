@@ -19,6 +19,10 @@
 .text {
   .word {
     cursor: pointer;
+
+    &.unknown {
+      background-color: #F7F48F;
+    }
   }
 }
 

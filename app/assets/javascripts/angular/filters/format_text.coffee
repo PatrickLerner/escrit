@@ -34,6 +34,7 @@
       input = input.replace new RegExp("___#{i}___", 'g'), (m) ->
         "<span ng-click='showWord(\"#{split_tokens[word]}\")'" +
           " class='word'" +
+          " ng-class='{ unknown: unknownWords[\"#{split_tokens[word]}\"] }'" +
         ">" +
           "#{formatWord(word)}" +
         "</span>"

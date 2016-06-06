@@ -38,7 +38,7 @@ describe Token, type: :model do
     text.destroy
     expect(Token.find_by(value: 'token1')).to be_nil
     expect(Token.find_by(value: 'token2')).to_not be_nil
-    word.destroy
+    word.destroy(force: true)
     expect(Token.find_by(value: 'token2')).to be_nil
   end
 end

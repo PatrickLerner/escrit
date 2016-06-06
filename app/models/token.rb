@@ -37,8 +37,9 @@ class Token < ApplicationRecord
 
   def remove_old_word_references(params)
     new_lst = params[:words].map { |w| w[:value] }
-    words.each do |word|
-      entries.where(word: word).destroy_all unless word.value.in?(new_lst)
+    words.where.not(value: new_lst).each do |word|
+      entries.where(word: word).destroy_all
+      word.destroy
     end
   end
 
