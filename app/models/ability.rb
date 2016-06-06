@@ -11,8 +11,7 @@ class Ability
 
   def user_permissions(user)
     # languages can only be read by users
-    can :read, [Language, Word]
-
+    can :read, [Language, Word, Service]
     can :manage, Token
 
     # everybody may mange their own texts
