@@ -18,17 +18,17 @@ div ng-controller="TokenModalController"
           li(ng-click="addWord(current_token.value)"): i.icon.ion-plus
         .word-definition ng-if="current_token.words.length == 0"
           p
-            => "This word does not have any definitions yet. Click the plus"
-            => "icon above to add a first one. Make sure that the word entered"
-            => "above is the"
+            => 'This word does not have any definitions yet. Click the plus'
+            => 'icon above to add a first one. Make sure that the word entered'
+            => 'above is the'
             strong<> dictionary form
-            => "of the word."
+            => 'of the word.'
           small
             => "(For example enter 'Baum' for 'Bäume' or 'делать' for 'делал')"
         .word-definition ng-if="current_word"
           small
-            => "Click on the word in the tab to edit it. Delete it by deleting"
-            => "its name."
+            => 'Click on the word in the tab to edit it. Delete it by deleting'
+            => 'its name.'
           .notes
             div ng-repeat="note in current_word.notes track by $index"
               input(type="text" ng-model="current_word.notes[$index]"
@@ -38,6 +38,10 @@ div ng-controller="TokenModalController"
             a.btn.u-right ng-click="addNote()"
               i.icon.ion-plus>
               | Add note
+          .services
+            a.service-link(ng-repeat="service in services"
+                           ng-click="openService(service, current_word.value)")
+              == '{{ service.short_name }}'
         .modal-buttons
           a.btn.primary ng-click="closeModal('save')"
             i.icon.ion-checkmark>

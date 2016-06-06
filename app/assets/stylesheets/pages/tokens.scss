@@ -30,6 +30,11 @@
     margin-bottom: 2rem;
     padding: 2rem;
 
+    small {
+      display: inline-block;
+      margin-bottom: 2rem;
+    }
+
     .notes {
       @include span-columns(12);
     }
@@ -40,6 +45,17 @@
       margin-right: 0.5rem;
       padding: .5rem;
       width: calc(100% - 2rem);
+    }
+  }
+  .services {
+    @include span-columns(12);
+    margin-top: 1rem;
+
+    .service-link {
+      float: left;
+      font-size: 1.6rem;
+      margin: 0 .5rem;
+      text-decoration: none;
     }
   }
 }

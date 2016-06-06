@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   resources :languages
   resources :texts
+  resources :services
   resources :tokens, constraints: allow_all_ids
   resources :words, constraints: allow_all_ids
 

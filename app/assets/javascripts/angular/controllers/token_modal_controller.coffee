@@ -1,7 +1,17 @@
-@escrit.controller 'TokenModalController', ['$scope', 'Modal', 'TokenModal', 'Token', 'Word', '$rootScope', ($scope, Modal, TokenModal, Token, Word, $rootScope) ->
+@escrit.controller 'TokenModalController', ['$scope', 'Modal', 'TokenModal', 'Token', 'Word', 'Service', '$rootScope', '$window', ($scope, Modal, TokenModal, Token, Word, Service, $rootScope, $window) ->
   $scope.current_token = null
   $scope.current_language_id = null
   $scope.current_word = null
+
+  $scope.$watch 'current_language_id', (language_id) ->
+    return unless language_id?
+    Service(language_id).findAll().then (collection) ->
+      $scope.services = collection
+
+  $scope.openService = (service, token) ->
+    url = service.url.replace('{query}', token)
+    $window.open(url, service.short_name)
+    true
 
   $scope.closeModal = (val) ->
     if val != 'save'
