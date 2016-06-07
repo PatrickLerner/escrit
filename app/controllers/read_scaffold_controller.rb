@@ -21,15 +21,26 @@ class ReadScaffoldController < ApplicationController
   end
 
   def collection
-    @collection ||= resource.search('*', where: where_params,
-                                         page: params[:page] || 1, per_page: 20,
-                                         order: { updated_at: :desc })
+    @collection ||= resource.search(
+      query,
+      where: where_params, page: params[:page] || 1, per_page: 20,
+      order: { updated_at: :desc }
+    )
+  end
+
+  def query
+    p = JSON.parse(params[:filters])
+    if p.key?('query') && !p['query'].strip.blank?
+      p['query']
+    else
+      '*'
+    end
   end
 
   def where_params
-    JSON.parse(params[:filters]).select { |key, val|
-      not val.blank?
-    }.merge(load_collection)
+    JSON.parse(params[:filters])
+        .select { |key, val| !val.blank? && key.to_s != 'query' }
+        .merge(load_collection)
   end
 
   def load_collection

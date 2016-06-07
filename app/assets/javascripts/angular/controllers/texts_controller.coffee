@@ -6,8 +6,11 @@
   Language.findAll().then (collection) ->
     $scope.languages = collection
 
-  $scope.filters = { language_id: [] }
+  $scope.filters = { language_id: [], query: '' }
   $scope.unknownWords = {}
+
+  $scope.$watch 'filters.query', ->
+    $scope.loadIndex(1)
 
   $scope.toggleLanguageSelection = (language_id) ->
     idx = $scope.filters.language_id.indexOf(language_id)

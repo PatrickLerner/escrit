@@ -1,4 +1,5 @@
 .text-list {
+  min-height: 30rem;
   .text-listing {
     margin-bottom: 1rem;
 
@@ -27,35 +28,56 @@
 }
 
 $filter-bar-background-color: #ECEEF1;
+$filter-bar-dropdown-background-color: #E1E3E6;
 .filter-list {
   list-style-type: none;
   margin: 0;
   padding: 0;
   background-color: $filter-bar-background-color;
   border-radius: 0.2rem;
-  position: relative;
-  background-image: linear-gradient(transparent, rgba(0, 0, 0, .03) 30%,
-                                    rgba(0, 0, 0, .05));
   margin-bottom: 2rem;
+  text-transform: uppercase;
+  color: $color-black;
+  background-image: linear-gradient(transparent, rgba(0, 0, 0, .03) 30%,
+                                  rgba(0, 0, 0, .05));
+  border: 0.1rem solid $color-light-gray;
 
   .filter-element {
     padding: 1.5rem 2rem;
     display: inline-block;
+    cursor: pointer;
+    font-size: 1.6rem;
+    position: relative;
 
-    &:hover .filter-dropdown {
+    &.open .filter-dropdown {
       display: block;
+    }
+
+    .icon {
+      font-size: 1rem;
+      position: relative;
+      top: -0.1rem;
+    }
+
+    > input {
+      border-radius: 100rem;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
     }
   }
 
   .filter-dropdown {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    position: absolute;
-    top: 5.3rem;
+    background-color: $filter-bar-dropdown-background-color;
+    border: 0.1rem solid $color-light-gray;
+    border-top: 0;
     display: none;
-    background-color: $filter-bar-background-color;
+    list-style-type: none;
+    margin: 0;
     margin-left: -2rem;
+    min-width: 14rem;
+    padding: 0;
+    position: absolute;
+    top: 5.5rem;
 
     li label {
       display: block;

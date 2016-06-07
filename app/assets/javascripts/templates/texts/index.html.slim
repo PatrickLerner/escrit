@@ -3,9 +3,14 @@
     i.icon.ion-plus>
     | New
 
-ul.filter-list
+ul.filter-list ng-controller="FilterBarController"
   li.filter-element
+    input(type="text" ng-model="filters.query"
+          ng-model-options="{ debounce: 1000 }")
+  li.filter-element(ng-click="toggle('language')"
+                    ng-class="{ open: open['language'] }")
     | Language
+    i.icon.ion-chevron-down<
     ul.filter-dropdown
       li(ng-repeat="language in languages"): label
         input(type="checkbox" name="language_id[]" value="{{ language.name }}"
@@ -13,8 +18,8 @@ ul.filter-list
               ng-click="toggleLanguageSelection(language.id)")
           == '{{ language.name }}'
 
-.text-list ng-if="texts.length"
-  section.text-listing ng-repeat="text in texts"
+.text-list
+  section.text-listing ng-repeat="text in texts" ng-if="texts.length"
     h1: a ng-click="show(text)"== '{{ text.title }}'
     span.language== '{{ text.language }}'
     == ' - '
