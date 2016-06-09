@@ -1,5 +1,6 @@
 @escrit.controller 'TokenModalController', ['$scope', 'Modal', 'TokenModal', 'Token', 'Word', 'Service', '$rootScope', '$window', ($scope, Modal, TokenModal, Token, Word, Service, $rootScope, $window) ->
   $scope.current_token = null
+  $scope.capitalized = null
   $scope.current_language_id = null
   $scope.current_word = null
 
@@ -86,14 +87,15 @@
   $scope.loadData = (token) ->
     Token.find(token).then (response) ->
       $scope.current_token = response
-      $scope.current_language_id = TokenModal.current_language_id()
+      $scope.capitalized = TokenModal.capitalized
+      $scope.current_language_id = TokenModal.current_language_id
       $scope.current_word = response.words[0]
     , (error) ->
       $scope.closeModal()
       Modal.reportCommunicationError()
 
   $rootScope.$on 'token_modal:open', ->
-    $scope.loadData(TokenModal.current_token())
+    $scope.loadData(TokenModal.current_token)
 
   $rootScope.$on 'token_modal:close', ->
     $scope.current_token = null

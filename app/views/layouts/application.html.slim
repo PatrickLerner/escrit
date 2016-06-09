@@ -24,4 +24,5 @@ html(ng-app="escrit")
       a ng-click="toggleHeader()"
         i.icon.ion-search
     section.content(ng-view)
+    = render partial: 'layouts/token_modal'
     = render partial: 'layouts/modals'

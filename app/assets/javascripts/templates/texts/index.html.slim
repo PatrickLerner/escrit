@@ -15,7 +15,8 @@ ul.filter-list ng-controller="FilterBarController"
       li(ng-repeat="language in languages"): label
         input(type="checkbox" name="language_id[]" value="{{ language.name }}"
               ng-checked="filters.language_id.indexOf(language.id) > -1"
-              ng-click="toggleLanguageSelection(language.id)")
+              ng-click="toggleLanguageSelection(language.id);
+                        toggle('language')")
           == '{{ language.name }}'
 
 .text-list

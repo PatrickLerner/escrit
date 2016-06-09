@@ -22,7 +22,7 @@
 
     $scope.loadIndex(1)
 
-  $scope.showWord = (token) ->
+  $scope.showWord = (token, capitalized) ->
     $scope.unknownWords[token] = true
-    TokenModal.open(token, $scope.text.language_id)
+    TokenModal.open(token, capitalized, $scope.text.language_id)
 ]

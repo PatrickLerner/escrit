@@ -1,5 +1,6 @@
 .text-list {
   min-height: 30rem;
+
   .text-listing {
     margin-bottom: 1rem;
 
@@ -22,13 +23,13 @@
     cursor: pointer;
 
     &.unknown {
-      background-color: #F7F48F;
+      background-color: #FFF8BA;
     }
   }
 }
 
-$filter-bar-background-color: #ECEEF1;
-$filter-bar-dropdown-background-color: #E1E3E6;
+$filter-bar-background-color: rgba(236, 238, 241, 0.22);
+$filter-bar-dropdown-background-color: #F0F0F1;
 .filter-list {
   list-style-type: none;
   margin: 0;

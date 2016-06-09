@@ -1,23 +1,19 @@
 @escrit.factory 'TokenModal', ['$resource', '$q', '$rootScope', ($resource, $q, $rootScope) ->
-  current_token = null
-  current_language_id = null
   factory = {}
+  factory.capitalized = false
+  factory.current_token = null
+  factory.current_language_id = null
 
-  factory.open = (token, language_id) ->
-    current_token = token
-    current_language_id = language_id
+  factory.open = (token, is_capitalized, language_id) ->
+    factory.current_token = token
+    factory.capitalized = is_capitalized
+    factory.current_language_id = language_id
     $rootScope.$broadcast('token_modal:open')
 
   factory.close = ->
-    current_token = null
-    current_language_id = null
+    factory.current_token = null
+    factory.current_language_id = null
     $rootScope.$broadcast('token_modal:close')
-
-  factory.current_token = ->
-    current_token
-
-  factory.current_language_id = ->
-    current_language_id
 
   return factory
 ]
