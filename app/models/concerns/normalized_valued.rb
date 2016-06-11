@@ -9,8 +9,14 @@ module NormalizedValued
     ^\p{Ll}+$                     #   it is only alpha, even just one letter
   }x
 
+  URL_REGEX = %r{
+    ^@?                           # may start with an at-character
+    https?:\/\/                   # http or http start
+  }x
+
   def self.included(base)
     base.validates :value, length: { minimum: 1 }, format: { with: WORD_REGEX }
+    base.validates :value, format: { without: URL_REGEX }
 
     base.normalize_attribute :value, with: :umlaut
 

@@ -10,6 +10,7 @@ module TextsHelper
   def js_split_tokens(text)
     words = "#{text.title} #{text.content}".scan(Tokenizable::WORD_REGEX)
     words = words.uniq.sort_by(&:length).reverse
+    words = words.select { |w| !w.match NormalizedValued::URL_REGEX }
     Hash[words.collect { |w| [w, process_token_value(w)] }]
   end
 end

@@ -7,5 +7,6 @@
 #= require_tree ./templates
 #= require escrit
 #= require autosize
+#= require unicode_hack
 #= require_tree .
 #= require_tree ../../../vendor/assets/javascripts/.

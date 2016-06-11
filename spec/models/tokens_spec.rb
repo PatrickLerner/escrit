@@ -20,6 +20,8 @@ describe Token, type: :model do
   it { is_expected.to_not allow_value('слов  ').for(:value) }
   it { is_expected.to_not allow_value('Кристина').for(:value) }
   it { is_expected.to_not allow_value('something different').for(:value) }
+  it { is_expected.to_not allow_value('http://example.com').for(:value) }
+  it { is_expected.to_not allow_value('@http://example.com').for(:value) }
 
   it 'is expected to clean up umlaut messes' do
     stupid_characters = 'dümm'

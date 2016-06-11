@@ -50,6 +50,7 @@ module Tokenizable
 
   def raw_tokens_in_text
     words = raw_text.scan(WORD_REGEX)
+    words.select! { |w| !w.match NormalizedValued::URL_REGEX }
     words.map! { |v| v.gsub(/.*?\|\|(.*)$/, '\1') }
     words.map! { |v| v.utf8downcase.to_s }
     words.uniq.sort
