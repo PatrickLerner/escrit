@@ -1,4 +1,4 @@
-$nav-top-height: 5rem;
+$nav-top-height: 6rem;
 
 body.stop-scrolling {
   height: 100%;
@@ -42,9 +42,9 @@ body.stop-scrolling {
   z-index: 100;
 
   .nav-list {
-    background-color: $color-white;
     box-shadow: 0 0 3px rgba(0, 0, 0, .6);
-    height: 5rem;
+    background-color: $color-white;
+    height: $nav-top-height;
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -60,19 +60,20 @@ body.stop-scrolling {
 
   .nav-brand {
     display: block;
-    height: 5rem;
+    height: $nav-top-height;
+    text-align: center;
 
     &:after {
       font-family: 'Ionicons';
       content: '\f20e';
       position: absolute;
-      font-size: 4rem;
-      top: 1.3rem;
+      font-size: $nav-top-height - 1rem;
+      top: $nav-top-height / 3;
       right: 2rem
     }
 
     img {
-      height: 3rem;
+      height: $nav-top-height - 1rem;
       margin-top: .5rem;
       vertical-align: bottom;
     }
@@ -137,8 +138,10 @@ body.stop-scrolling {
       }
 
       img {
-        height: 3rem;
-        vertical-align: bottom;
+        height: 4rem;
+        margin-left: 1rem;
+        margin-top: 0;
+        vertical-align: middle;
       }
     }
   }

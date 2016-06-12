@@ -35,7 +35,8 @@ class Text < ApplicationRecord
   def search_data
     as_json(only: search_data_attributes).merge(
       language: language.name,
-      tokens: tokens.loaded? ? tokens.map(&:value) : tokens.pluck(:value)
+      tokens: tokens.loaded? ? tokens.map(&:value) : tokens.pluck(:value),
+      public: public || false
     )
   end
 

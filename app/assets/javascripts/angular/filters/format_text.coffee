@@ -2,18 +2,18 @@
   parseYoutube = (input) ->
     return input unless input.match(/^https?:\/\/(www\.)?youtube.com\/watch/)?
     id = input.split('v=')[1].replace(/&.*/, '')
-    return "<div class='videoWrapper'><div class='video'>" +
-           "<iframe id='ytplayer' type='text/html'" +
-           " src='https://www.youtube.com/embed/#{id}'" +
-           " frameborder='0'></iframe></div></div>"
+    "<div class='videoWrapper'><div class='video'>" +
+      "<iframe id='ytplayer' type='text/html'" +
+      " src='https://www.youtube.com/embed/#{id}'" +
+      " frameborder='0'></iframe></div></div>"
 
   parseImages = (input) ->
     return input unless input.trim().match(/^https?:\/\/.*\.(jpg|png|gif)$/)?
-    return "<img src='#{input.trim()}' />"
+    "<img src='#{input.trim()}' />"
 
   parseImagesWithBorder = (input) ->
     return input unless input.trim().match(/^@https?:\/\/.*\.(jpg|png|gif)$/)?
-    return "<img src='#{input.substr(1).trim()}' class='border' />"
+    "<img src='#{input.substr(1).trim()}' class='border' />"
 
   parseMedia = (input) ->
     input = parseYoutube(input)
@@ -21,9 +21,22 @@
     input = parseImagesWithBorder(input)
     input
 
+  parseHeaders = (input) ->
+    return input unless input.trim().match(/^#/)?
+    input.replace /^([#]+)(.*)/, (match, level, title) ->
+      level = level.length + 1
+      level = Math.min(level, 6)
+      "<h#{level}>#{title}</h#{level}>"
+
+  parseTypography = (input) ->
+    input = parseHeaders(input)
+    input
+
   parseNewLines = (input) ->
     lines = input.split("\n")
-    lines.map((input) => parseMedia(input)).join('<br />')
+    lines = lines.map((input) => parseMedia(input))
+    lines = lines.map((input) => parseTypography(input))
+    lines.join('<br />')
 
   parseParagraphs = (paragraphs) ->
     "<p>#{paragraphs.map((paragraph) ->
@@ -59,7 +72,8 @@
 
   return (input, split_tokens) ->
     return unless input?
-    res = tokenize(input, split_tokens)
+    res = input.replace("\r", '')
+    res = tokenize(res, split_tokens)
     res = parseLines(res)
     $sce.trustAsHtml(res)
 ]
