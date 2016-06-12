@@ -77,7 +77,7 @@
 
   return (input, split_tokens) ->
     return unless input?
-    res = input.replace("\r", '')
+    res = input.replace(new RegExp('\r', 'g'), '')
     res = tokenize(res, split_tokens)
     res = parseLines(res)
     $sce.trustAsHtml(res)

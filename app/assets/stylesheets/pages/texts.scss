@@ -21,6 +21,10 @@
 .text {
   line-height: 2.5rem;
 
+  h1 {
+    color: $color-strawberry;
+  }
+
   audio {
     width: 100%;
   }
@@ -55,7 +59,8 @@
 
     &.border {
       border: 0.1rem solid $color-light-gray;
-      padding: 0.1rem;
+      box-shadow: 0 2px 5px  0 rgba(0, 0, 0, .16),
+                  0 2px 10px 0 rgba(0, 0, 0, .12);
     }
   }
 
@@ -68,17 +73,18 @@
   }
 }
 
-$filter-bar-background-color: rgba(236, 238, 241, 0.22);
-$filter-bar-dropdown-background-color: #F0F0F1;
+$filter-bar-color: $color-white;
+$filter-bar-background: $color-steel;
+$filter-bar-dropdown-background: darken($filter-bar-background, 1.5%);
 .filter-list {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  background-color: $filter-bar-background-color;
+  background-color: $filter-bar-background;
+  color: $filter-bar-color;
   border-radius: 0.2rem;
   margin-bottom: 2rem;
   text-transform: uppercase;
-  color: $color-black;
   background-image: linear-gradient(transparent, rgba(0, 0, 0, .03) 30%,
                                   rgba(0, 0, 0, .05));
   border: 0.1rem solid $color-light-gray;
@@ -107,8 +113,23 @@ $filter-bar-dropdown-background-color: #F0F0F1;
     }
   }
 
+  input[type="checkbox"] {
+    display: none;
+
+    & + span:before {
+      width: 2rem;
+      display: inline-block;
+      content: ' ';
+    }
+
+    &:checked + span:before {
+      font-family: Ionicons;
+      content: "\f122";
+    }
+  }
+
   .filter-dropdown {
-    background-color: $filter-bar-dropdown-background-color;
+    background-color: $filter-bar-dropdown-background;
     border: 0.1rem solid $color-light-gray;
     border-top: 0;
     display: none;

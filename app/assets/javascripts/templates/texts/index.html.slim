@@ -17,7 +17,7 @@ ul.filter-list ng-controller="FilterBarController"
               ng-checked="filters.language_id.indexOf(language.id) > -1"
               ng-click="toggleLanguageSelection(language.id);
                         toggle('language')")
-          == '{{ language.name }}'
+          span== '{{ language.name }}'
   li.filter-element(ng-click="toggle('collection')"
                     ng-class="{ open: open == 'collection' }")
     | Collection
@@ -27,12 +27,12 @@ ul.filter-list ng-controller="FilterBarController"
         input(type="checkbox" name="collection[]" value="private"
               ng-checked="!filters.public"
               ng-click="toggleShowPublic(); toggle('collection')")
-          | Private
+          span Private
       li: label
         input(type="checkbox" name="collection[]" value="public"
               ng-checked="filters.public"
               ng-click="toggleShowPublic(); toggle('collection')")
-          | Public
+          span Public
 
 .text-list
   section.text-listing ng-repeat="text in texts" ng-if="texts.length"
