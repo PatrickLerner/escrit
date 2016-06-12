@@ -19,6 +19,12 @@
 }
 
 .text {
+  line-height: 2.5rem;
+
+  audio {
+    width: 100%;
+  }
+
   .videoWrapper {
     margin: auto;
     max-width: 500px;
@@ -57,7 +63,7 @@
     cursor: pointer;
 
     &.unknown {
-      background-color: rgba(255, 248, 186, .6);
+      background-color: rgba(255, 235, 0, 0.36);
     }
   }
 }

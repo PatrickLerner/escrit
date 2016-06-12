@@ -7,6 +7,10 @@
       " src='https://www.youtube.com/embed/#{id}'" +
       " frameborder='0'></iframe></div></div>"
 
+  parseAudio = (input) ->
+    return input unless input.trim().match(/^https?:\/\/.*\.(m4a|mp3)$/)?
+    "<audio src='#{input.trim()}' controls></audio>"
+
   parseImages = (input) ->
     return input unless input.trim().match(/^https?:\/\/.*\.(jpg|png|gif)$/)?
     "<img src='#{input.trim()}' />"
@@ -17,6 +21,7 @@
 
   parseMedia = (input) ->
     input = parseYoutube(input)
+    input = parseAudio(input)
     input = parseImages(input)
     input = parseImagesWithBorder(input)
     input

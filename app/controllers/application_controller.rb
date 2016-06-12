@@ -47,6 +47,14 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
   end
 
+  private
+
+  def process(action, *args)
+    super
+  rescue AbstractController::ActionNotFound
+    empty_html_response
+  end
+
   rescue_from CanCan::AccessDenied do |exception|
     render json: { error: exception.message }, status: :not_authorized
   end
