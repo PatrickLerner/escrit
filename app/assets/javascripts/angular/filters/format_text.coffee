@@ -8,12 +8,12 @@
            " frameborder='0'></iframe></div></div>"
 
   parseImages = (input) ->
-    return input unless input.match(/^https?:\/\/.*\.(jpg|png|gif)$/)?
-    return "<img src='#{input}' />"
+    return input unless input.trim().match(/^https?:\/\/.*\.(jpg|png|gif)$/)?
+    return "<img src='#{input.trim()}' />"
 
   parseImagesWithBorder = (input) ->
-    return input unless input.match(/^@https?:\/\/.*\.(jpg|png|gif)$/)?
-    return "<img src='#{input.substr(1)}' class='border' />"
+    return input unless input.trim().match(/^@https?:\/\/.*\.(jpg|png|gif)$/)?
+    return "<img src='#{input.substr(1).trim()}' class='border' />"
 
   parseMedia = (input) ->
     input = parseYoutube(input)
@@ -43,29 +43,19 @@
   formatWord = (str) ->
     str.replace(/^(.+?)\|\|.+?$/, "$1")
 
-  tokenize = (input, split_tokens) ->
-    # we do not want to replace partial matches again, so we replace with a
-    # placeholder first
-    #i = 0
-    #for word in Object.keys(split_tokens)
-    #  input = input.replace new RegExp(escapeRegExp(word), 'g'), "___#{i}___"
-    #  i += 1
+  regex = unicode_hack(/[\p{L}][\p{L}\-\|\.:\/\?=0-9%_]+[\p{L}0-9]|[\p{L}]+/g)
 
-    #i = 0
-    #for word in Object.keys(split_tokens)
-    regex = unicode_hack(/\p{L}[\p{L}\-\|\.:\/\?=0-9%_][\p{L}0-9]|\p{L}+/g)
+  tokenize = (input, split_tokens) ->
     input.replace regex, (word) ->
       token = split_tokens[word]
       return word unless token?
       capitalized = word.isCapitalized()
-      #input = input.replace new RegExp("___#{i}___", 'g'), (m) ->
       "<span ng-click='showWord(\"#{token}\", #{capitalized})'" +
         " class='word'" +
         " ng-class='{ unknown: unknownWords[\"#{token}\"] }'" +
         ">" +
           "#{formatWord(word)}" +
       "</span>"
-      #i += 1
 
   return (input, split_tokens) ->
     return unless input?

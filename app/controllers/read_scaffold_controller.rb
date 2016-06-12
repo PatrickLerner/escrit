@@ -28,19 +28,22 @@ class ReadScaffoldController < ApplicationController
     )
   end
 
+  def filter_params
+    @filter ||= JSON.parse(params[:filters])
+  end
+
   def query
-    p = JSON.parse(params[:filters])
-    if p.key?('query') && !p['query'].strip.blank?
-      p['query']
+    if filter_params.key?('query') && !filter_params['query'].strip.blank?
+      filter_params['query']
     else
       '*'
     end
   end
 
   def where_params
-    JSON.parse(params[:filters])
-        .select { |key, val| !val.blank? && key.to_s != 'query' }
-        .merge(load_collection)
+    filter_params.select { |key, _| key.to_s != 'query' }
+                 .select { |_, val| !(val.is_a?(Array) && val.empty?) }
+                 .merge(load_collection)
   end
 
   def load_collection

@@ -6,7 +6,7 @@
   Language.findAll().then (collection) ->
     $scope.languages = collection
 
-  $scope.filters = { language_id: [], query: '' }
+  $scope.filters = { language_id: [], public: false, query: '' }
   $scope.unknownWords = {}
 
   $scope.$watch 'filters.query', ->
@@ -21,6 +21,11 @@
       $scope.filters.language_id.push(language_id)
 
     $scope.loadIndex(1)
+
+  $scope.toggleShowPublic = ->
+    $scope.filters.public = !$scope.filters.public
+    $scope.loadIndex(1)
+
 
   $scope.showWord = (token, capitalized) ->
     $scope.unknownWords[token] = true

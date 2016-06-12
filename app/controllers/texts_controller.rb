@@ -14,6 +14,7 @@ class TextsController < ScaffoldController
   end
 
   def load_collection
+    return {} if filter_params['public']
     {
       user_id: current_user.id
     }

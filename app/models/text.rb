@@ -33,15 +33,14 @@ class Text < ApplicationRecord
   scope :not_published, -> { where.not(public: true) }
 
   def search_data
-    {
-      title: title,
+    as_json(only: search_data_attributes).merge(
       language: language.name,
-      language_id: language_id,
-      tokens: tokens.loaded? ? tokens.map(&:value) : tokens.pluck(:value),
-      user_id: user_id,
-      created_at: created_at,
-      updated_at: updated_at
-    }
+      tokens: tokens.loaded? ? tokens.map(&:value) : tokens.pluck(:value)
+    )
+  end
+
+  def search_data_attributes
+    %w(title language_id user_id created_at updated_at public)
   end
 
   def word_count

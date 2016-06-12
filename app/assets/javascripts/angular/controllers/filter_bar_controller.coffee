@@ -1,6 +1,9 @@
 @escrit.controller 'FilterBarController', ['$scope', ($scope) ->
-  $scope.open = {}
+  $scope.open = null
 
   $scope.toggle = (name) ->
-    $scope.open[name] = !($scope.open[name] || false)
+    if $scope.open == name
+      $scope.open = null
+    else
+      $scope.open = name
 ]
