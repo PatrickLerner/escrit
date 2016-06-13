@@ -64,6 +64,15 @@
     }
   }
 
+  blockquote {
+    margin: 0;
+    margin-left: 2rem;
+    border-bottom: 0.1rem solid $color-strawberry;
+    font-style: italic;
+    font-style: italic;
+    color: $color-strawberry;
+  }
+
   .word {
     cursor: pointer;
 

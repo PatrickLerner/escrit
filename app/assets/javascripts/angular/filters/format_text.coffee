@@ -42,6 +42,15 @@
   parseUnderline = (input) ->
     input.replace /_(.+?)_/, (_, text) => "<u>#{text}</u>"
 
+  replacementQuoteCharacter = '_@>'
+  parseQuotes = (input) ->
+    exp = "(^(#{replacementQuoteCharacter}.+\\n?)+)|" +
+          "(\\n(#{replacementQuoteCharacter}.+\\n?)+)"
+    input = input.replace new RegExp(exp, 'g'), (_, text) ->
+      text = text.replace(new RegExp(replacementQuoteCharacter, 'g'), '')
+      "<blockquote>#{text}</blockquote>"
+    input = input.replace(new RegExp(replacementQuoteCharacter, 'g'), '>')
+
   parseTypography = (input) ->
     input = parseHeaders(input)
     input = parseBold(input)
@@ -50,6 +59,7 @@
     input
 
   parseNewLines = (input) ->
+    input = parseQuotes(input)
     lines = input.split("\n")
     lines = lines.map((input) => parseMedia(input))
     lines = lines.map((input) => parseTypography(input))
@@ -90,6 +100,8 @@
   return (input, split_tokens) ->
     return unless input?
     res = input.replace(new RegExp('\r', 'g'), '')
+    # needed to differenciate quoted text from tags later inserted
+    res = input.replace(new RegExp('>', 'g'), replacementQuoteCharacter)
     res = tokenize(res, split_tokens)
     res = parseLines(res)
     $sce.trustAsHtml(res)
