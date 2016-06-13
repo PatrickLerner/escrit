@@ -46,7 +46,7 @@
   parseQuotes = (input) ->
     exp = "(^(#{replacementQuoteCharacter}.+\\n?)+)|" +
           "(\\n(#{replacementQuoteCharacter}.+\\n?)+)"
-    input = input.replace new RegExp(exp, 'g'), (_, text) ->
+    input = input.replace new RegExp(exp, 'g'), (text) ->
       text = text.replace(new RegExp(replacementQuoteCharacter, 'g'), '')
       "<blockquote>#{text}</blockquote>"
     input = input.replace(new RegExp(replacementQuoteCharacter, 'g'), '>')
