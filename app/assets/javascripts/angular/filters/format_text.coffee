@@ -33,8 +33,20 @@
       level = Math.min(level, 6)
       "<h#{level}>#{title}</h#{level}>"
 
+  parseBold = (input) ->
+    input.replace /\*\*(.+?)\*\*/, (_, text) => "<strong>#{text}</strong>"
+
+  parseItalic = (input) ->
+    input.replace /__(.+?)__/, (_, text) => "<em>#{text}</em>"
+
+  parseUnderline = (input) ->
+    input.replace /_(.+?)_/, (_, text) => "<u>#{text}</u>"
+
   parseTypography = (input) ->
     input = parseHeaders(input)
+    input = parseBold(input)
+    input = parseItalic(input)
+    input = parseUnderline(input)
     input
 
   parseNewLines = (input) ->
