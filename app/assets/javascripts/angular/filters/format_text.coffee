@@ -9,7 +9,7 @@
 
   parseAudio = (input) ->
     return input unless input.trim().match(/^https?:\/\/.*\.(m4a|mp3)$/)?
-    "<audio src='#{input.trim()}' controls></audio>"
+    "<audio src='#{input.trim()}' preload='none' controls></audio>"
 
   parseImages = (input) ->
     return input unless input.trim().match(/^https?:\/\/.*\.(jpg|png|gif)$/)?

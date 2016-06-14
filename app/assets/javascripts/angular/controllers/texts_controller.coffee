@@ -26,7 +26,6 @@
     $scope.filters.public = !$scope.filters.public
     $scope.loadIndex(1)
 
-
   $scope.showWord = (token, capitalized) ->
     $scope.unknownWords[token] = true
     TokenModal.open(token, capitalized, $scope.text.language_id)
