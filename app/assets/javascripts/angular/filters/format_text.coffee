@@ -101,7 +101,7 @@
     return unless input?
     res = input.replace(new RegExp('\r', 'g'), '')
     # needed to differenciate quoted text from tags later inserted
-    res = input.replace(new RegExp('>', 'g'), replacementQuoteCharacter)
+    res = res.replace(new RegExp('>', 'g'), replacementQuoteCharacter)
     res = tokenize(res, split_tokens)
     res = parseLines(res)
     $sce.trustAsHtml(res)
