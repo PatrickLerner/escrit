@@ -1,6 +1,8 @@
 class TextsController < ScaffoldController
   resource Text
 
+  after_action :mark_as_opened, only: [:show]
+
   def create
     @object = resource.new(permitted_params)
     @object.user = current_user
@@ -8,6 +10,14 @@ class TextsController < ScaffoldController
   end
 
   protected
+
+  def collection_order
+    { last_opened_at: :desc }
+  end
+
+  def mark_as_opened
+    object.mark_as_opened!
+  end
 
   def load_object
     resource.with_word_counts.find_by!(resource.param_field => params[:id])

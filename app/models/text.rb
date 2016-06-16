@@ -41,10 +41,14 @@ class Text < ApplicationRecord
   end
 
   def search_data_attributes
-    %w(title language_id user_id created_at updated_at public)
+    %w(title language_id user_id public created_at updated_at last_opened_at)
   end
 
   def word_count
     read_attribute(:word_count) || tokens.count
+  end
+
+  def mark_as_opened!
+    update_attribute(:last_opened_at, DateTime.now)
   end
 end

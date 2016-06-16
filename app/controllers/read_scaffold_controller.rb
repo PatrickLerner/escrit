@@ -24,8 +24,12 @@ class ReadScaffoldController < ApplicationController
     @collection ||= resource.search(
       query,
       where: where_params, page: params[:page] || 1, per_page: 20,
-      order: { updated_at: :desc }
+      order: collection_order
     )
+  end
+
+  def collection_order
+    { updated_at: :desc }
   end
 
   def filter_params
