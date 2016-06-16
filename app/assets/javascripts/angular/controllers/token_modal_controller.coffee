@@ -85,7 +85,8 @@
         word.to_param = word.value
 
   $scope.loadData = (token) ->
-    Token.find(token).then (response) ->
+    promise = Token.find(token)
+    promise.then (response) ->
       $scope.current_token = response
       $scope.capitalized = TokenModal.capitalized
       $scope.current_language_id = TokenModal.current_language_id
@@ -93,10 +94,13 @@
     , (error) ->
       $scope.closeModal()
       Modal.reportCommunicationError()
+    promise
 
   $rootScope.$on 'token_modal:open', ->
-    $scope.loadData(TokenModal.current_token)
+    $scope.loadData(TokenModal.current_token).then ->
+      $rootScope.$broadcast('token_modal:opened')
 
   $rootScope.$on 'token_modal:close', ->
     $scope.current_token = null
+    $rootScope.$broadcast('token_modal:closed')
 ]

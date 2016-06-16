@@ -29,4 +29,8 @@
   $scope.showWord = (token, capitalized) ->
     $scope.unknownWords[token] = true
     TokenModal.open(token, capitalized, $scope.text.language_id)
+
+  $rootScope.$on 'token_modal:open', => $scope.loading = true
+
+  $rootScope.$on 'token_modal:opened', => $scope.loading = false
 ]
