@@ -20,6 +20,8 @@ class Text < ApplicationRecord
 
   tokenized_fields :title, :content
 
+  before_create :mark_as_opened!
+
   scope :search_import, -> { includes(:language).includes(:tokens) }
   scope :in_language, -> (language) { where(language_id: language.id) }
   scope :owned_by, -> (user) { where(user_id: user.id) }
@@ -49,6 +51,7 @@ class Text < ApplicationRecord
   end
 
   def mark_as_opened!
-    update_attribute(:last_opened_at, DateTime.now)
+    self.last_opened_at = DateTime.now
+    save! unless changed?
   end
 end

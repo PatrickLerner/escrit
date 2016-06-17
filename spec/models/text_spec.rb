@@ -81,4 +81,11 @@ describe Text, type: :model do
       expect { Text.reindex }.to make_database_queries(count: 4)
     end
   end
+
+  describe 'last_opened_at' do
+    it 'is set when creating a text' do
+      expect(build(:text).last_opened_at).to be_nil
+      expect(create(:text).last_opened_at).to_not be_nil
+    end
+  end
 end

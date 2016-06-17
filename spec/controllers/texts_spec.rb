@@ -27,6 +27,17 @@ describe TextsController do
       expect(body['title']).to_not eq(other_text.title)
     end
 
+    describe 'last_opened_at' do
+      before(:each) { my_text.last_opened_at = 10.minutes.ago }
+
+      it 'should be set when looking at a text' do
+        old_date = my_text.last_opened_at
+        get :show, params: { id: my_text.id }
+        my_text.reload
+        expect(my_text.last_opened_at).to be > old_date
+      end
+    end
+
     describe 'admin' do
       it 'allows seeing all texts, including those of others' do
         user.update_attribute(:role, User::ROLE_ADMIN)
