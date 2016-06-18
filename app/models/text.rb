@@ -1,6 +1,7 @@
 class Text < ApplicationRecord
   include Tokenizable
   include TokenRelated
+  include OnCommitIndexed
 
   searchkick batch_size: 100
 
@@ -51,7 +52,8 @@ class Text < ApplicationRecord
   end
 
   def mark_as_opened!
+    no_save_after = changed? || !persisted?
     self.last_opened_at = DateTime.now
-    save! unless changed?
+    save! unless no_save_after
   end
 end

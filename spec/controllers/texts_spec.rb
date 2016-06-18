@@ -28,13 +28,25 @@ describe TextsController do
     end
 
     describe 'last_opened_at' do
-      before(:each) { my_text.last_opened_at = 10.minutes.ago }
+      before(:each) do
+        my_text.update_attributes(last_opened_at: 10.minutes.ago)
+        my_text.reload
+      end
+
+      let!(:second_text) { create(:text, user: user) }
 
       it 'should be set when looking at a text' do
         old_date = my_text.last_opened_at
         get :show, params: { id: my_text.id }
         my_text.reload
         expect(my_text.last_opened_at).to be > old_date
+      end
+
+      it 'should show the last opened text first in the listing' do
+        get :show, params: { id: my_text.id }
+        get :index
+        expect(body['data'].length).to eq(2)
+        expect(body['data'][0]['to_param']).to eq(my_text.to_param)
       end
     end
 

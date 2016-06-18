@@ -33,11 +33,12 @@ class ReadScaffoldController < ApplicationController
   end
 
   def filter_params
+    return @filter ||= {} unless params[:filters].present?
     @filter ||= JSON.parse(params[:filters])
   end
 
   def query
-    if filter_params.key?('query') && !filter_params['query'].strip.blank?
+    if !filter_params['query'].try(:strip).blank?
       filter_params['query']
     else
       '*'
