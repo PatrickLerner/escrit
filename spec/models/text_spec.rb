@@ -88,4 +88,45 @@ describe Text, type: :model do
       expect(create(:text).last_opened_at).to_not be_nil
     end
   end
+
+  describe 'uuid' do
+    describe 'generation' do
+      let(:text) { build(:text) }
+
+      it 'sets a uuid when the model is persisted' do
+        expect(text.uuid).to be_nil
+        text.save!
+        expect(text.uuid).to be_present
+      end
+
+      it 'does not change when saving the model again' do
+        text.save!
+        uuid = text.uuid
+        text.save!
+        text.title = 'test change'
+        text.save!
+        expect(text.uuid).to eq(uuid)
+      end
+    end
+
+    describe 'validation' do
+      VALID_UUIDs   = %w(000000 123456 a4F42f 8gfYYF).freeze
+      INVALID_UUIDs = (
+        %w(0 1234567 %D@#@FG !+$$$#@) +
+        ['', 'test a']
+      ).freeze
+
+      it 'allows correct values' do
+        VALID_UUIDs.each do |candidate|
+          is_expected.to allow_value(candidate).for(:uuid)
+        end
+      end
+
+      it 'disallows invalid values' do
+        INVALID_UUIDs.each do |candidate|
+          is_expected.to_not allow_value(candidate).for(:uuid)
+        end
+      end
+    end
+  end
 end

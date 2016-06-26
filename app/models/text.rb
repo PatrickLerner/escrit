@@ -1,7 +1,10 @@
 class Text < ApplicationRecord
   include Tokenizable
   include TokenRelated
+  include RandomUuid
   include OnCommitIndexed
+
+  param_field :uuid
 
   searchkick batch_size: 100
 
@@ -44,7 +47,8 @@ class Text < ApplicationRecord
   end
 
   def search_data_attributes
-    %w(title language_id user_id public created_at updated_at last_opened_at)
+    %w(title language_id user_id public created_at updated_at last_opened_at) +
+      %w(uuid)
   end
 
   def word_count

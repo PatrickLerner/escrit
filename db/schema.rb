@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160616143534) do
+ActiveRecord::Schema.define(version: 20160626085342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,8 +87,10 @@ ActiveRecord::Schema.define(version: 20160616143534) do
     t.integer  "user_id"
     t.boolean  "public"
     t.datetime "last_opened_at"
+    t.string   "uuid"
     t.index ["category_id"], name: "index_texts_on_category_id", using: :btree
     t.index ["language_id"], name: "index_texts_on_language_id", using: :btree
+    t.index ["uuid"], name: "index_texts_on_uuid", unique: true, using: :btree
   end
 
   create_table "texts_tokens", id: false, force: :cascade do |t|

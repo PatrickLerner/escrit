@@ -14,10 +14,14 @@ class ApplicationRecord < ActiveRecord::Base
   # if the param field was changed, we still return the old one once
   def to_param_field
     if method("#{self.class.param_field}_changed?") && persisted?
-      "#{self.class.param_field}_was"
+      "#{param_field}_was"
     else
-      self.class.param_field
+      param_field
     end
+  end
+
+  def param_field
+    @param_field ||= self.class.param_field
   end
 
   class << self
