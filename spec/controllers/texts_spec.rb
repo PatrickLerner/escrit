@@ -16,13 +16,13 @@ describe TextsController do
     let!(:other_text) { create(:text) }
 
     it 'should allow me to see my onw text' do
-      get :show, params: { id: my_text.id }
+      get :show, params: { id: my_text.uuid }
       expect(response).to be_success
       expect(body['title']).to eq(my_text.title)
     end
 
     it 'should not allow me to see the texts of others' do
-      get :show, params: { id: other_text.id }
+      get :show, params: { id: other_text.uuid }
       expect(response).to_not be_success
       expect(body['title']).to_not eq(other_text.title)
     end
@@ -37,13 +37,13 @@ describe TextsController do
 
       it 'should be set when looking at a text' do
         old_date = my_text.last_opened_at
-        get :show, params: { id: my_text.id }
+        get :show, params: { id: my_text.uuid }
         my_text.reload
         expect(my_text.last_opened_at).to be > old_date
       end
 
       it 'should show the last opened text first in the listing' do
-        get :show, params: { id: my_text.id }
+        get :show, params: { id: my_text.uuid }
         get :index
         expect(body['data'].length).to eq(2)
         expect(body['data'][0]['to_param']).to eq(my_text.to_param)
@@ -53,7 +53,7 @@ describe TextsController do
     describe 'admin' do
       it 'allows seeing all texts, including those of others' do
         user.update_attribute(:role, User::ROLE_ADMIN)
-        get :show, params: { id: other_text.id }
+        get :show, params: { id: other_text.uuid }
         expect(response).to be_success
         expect(body['title']).to eq(other_text.title)
       end
@@ -62,7 +62,7 @@ describe TextsController do
     describe 'moderator' do
       it 'allows seeing all texts, including those of others' do
         user.update_attribute(:role, User::ROLE_MODERATOR)
-        get :show, params: { id: other_text.id }
+        get :show, params: { id: other_text.uuid }
         expect(response).to be_success
         expect(body['title']).to eq(other_text.title)
       end
