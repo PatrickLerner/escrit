@@ -1,4 +1,4 @@
-@escrit.controller 'TokenModalController', ['$scope', 'Modal', 'TokenModal', 'Token', 'Word', 'Service', '$rootScope', '$window', ($scope, Modal, TokenModal, Token, Word, Service, $rootScope, $window) ->
+@escrit.controller 'TokenModalController', ['$scope', 'Modal', 'TokenModal', 'Token', 'Word', 'Service', '$rootScope', '$window', 'Keyboard', ($scope, Modal, TokenModal, Token, Word, Service, $rootScope, $window, Keyboard) ->
   $scope.current_token = null
   $scope.capitalized = null
   $scope.current_language_id = null
@@ -15,6 +15,7 @@
     true
 
   $scope.closeModal = (val) ->
+    Keyboard.clear('ESCAPE')
     if val != 'save'
       TokenModal.close()
     else
@@ -97,6 +98,8 @@
     promise
 
   $rootScope.$on 'token_modal:open', ->
+    Keyboard.on 'ESCAPE', ->
+      $scope.closeModal('close')
     $scope.loadData(TokenModal.current_token).then ->
       $rootScope.$broadcast('token_modal:opened')
 

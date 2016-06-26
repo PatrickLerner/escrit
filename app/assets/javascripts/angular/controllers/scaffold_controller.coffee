@@ -62,9 +62,11 @@
     "/#{resource.path}/new"
 
   $scope.edit_path = (object) ->
+    return '' unless object?
     "/#{resource.path}/#{object.to_param}/edit"
 
   $scope.show_path = (object) ->
+    return '' unless object?
     "/#{resource.path}/#{object.to_param}"
 
   $scope.index_path = ->
