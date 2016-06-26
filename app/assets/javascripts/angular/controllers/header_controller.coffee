@@ -15,12 +15,6 @@
     Auth.logout({}).then (oldUser) ->
       $location.url '/'
 
-  $scope.signIn = () ->
-    $location.url '/signin'
-
-  $scope.signUp = () ->
-    $location.url '/signup'
-
   $rootScope.$on 'modal:open', (event) ->
     $scope.noScroll = true
 

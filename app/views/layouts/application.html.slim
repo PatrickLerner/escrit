@@ -13,13 +13,13 @@ html(ng-app="escrit")
     nav.nav-top ng-class="{ open: showMenu }"
       ul.nav-list ng-if="user"
         li.nav-brand ng-click="toggleMenu()"= image_tag 'logo.svg'
-        li.nav-item: a href="texts" Read
+        li.nav-item: a href="/texts" Read
         li.nav-item.right ng-click="signOut()" Sign out
         li.nav-item.right Hello, {{ user.name }}!
       ul.nav-list ng-if="!user"
         li.nav-brand ng-click="toggleMenu()"= image_tag 'logo.svg'
-        li.nav-item ng-click="signIn()" Sign in
-        li.nav-item ng-click="signUp()" Sign up
+        li.nav-item: a href="/signin" Sign in
+        li.nav-item: a href="/signup" Sign up
     header.header-image ng-class="{ large: largeHeader }"
       a ng-click="toggleHeader()"
         i.icon.ion-search

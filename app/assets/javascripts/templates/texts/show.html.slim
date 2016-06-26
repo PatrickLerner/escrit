@@ -1,8 +1,8 @@
 .buttons
-  a.btn> ng-click="showIndex()"
+  a.btn> ng-href="{{ index_path() }}"
     i.icon.ion-chevron-left>
     | Back
-  a.btn> ng-click="edit(text)"
+  a.btn> ng-href="{{ edit_path(text) }}"
     i.icon.ion-edit>
     | Edit
 

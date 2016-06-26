@@ -3,12 +3,6 @@
   $scope.credentials = {}
   $scope.errors = {}
 
-  $scope.signin = () ->
-    $location.url "/signin"
-
-  $scope.signup = () ->
-    $location.url "/signup"
-
   $scope.submit = () ->
     if $scope.action_name == 'signup'
       Auth.register($scope.credentials, {}).then (user) ->

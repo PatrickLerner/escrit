@@ -36,7 +36,7 @@ ul.filter-list ng-controller="FilterBarController"
 
 .text-list
   section.text-listing ng-repeat="text in texts" ng-if="texts.length"
-    h1: a ng-click="show(text)"== '{{ text.title }}'
+    h1: a ng-href="{{ show_path(text) }}"== '{{ text.title }}'
     span.language== '{{ text.language }}'
     == ' - '
     span.count== '{{ text.word_count }} words'

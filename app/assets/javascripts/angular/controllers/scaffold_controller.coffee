@@ -58,20 +58,20 @@
       , (error) ->
         $scope.errors = error.data
 
-  $scope.createNew = ->
-    $location.url "/#{resource.path}/new"
+  $scope.new_path = ->
+    "/#{resource.path}/new"
 
-  $scope.edit = (object) ->
-    $location.url "/#{resource.path}/#{object.to_param}/edit"
+  $scope.edit_path = (object) ->
+    "/#{resource.path}/#{object.to_param}/edit"
 
-  $scope.show = (object) ->
-    $location.url "/#{resource.path}/#{object.to_param}"
+  $scope.show_path = (object) ->
+    "/#{resource.path}/#{object.to_param}"
 
-  $scope.showIndex = ->
-    $location.url "/#{resource.path}"
+  $scope.index_path = ->
+    "/#{resource.path}"
 
   $scope.afterSave = (object) ->
-    $scope.show(object)
+    $location.url $scope.show_path(object)
 
   switch $scope.action_name
     when 'edit'  then $scope.loadEdit()
