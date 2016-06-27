@@ -7,7 +7,7 @@
     if keyDown
       event.preventDefault()
       $timeout ->
-        keyDown.callback()
+        keyDown.callback(event)
 
   factory.on = (keyName, callback) ->
     keyCode = keyCodes[keyName];

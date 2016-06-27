@@ -16,6 +16,7 @@
 
   $scope.closeModal = (val) ->
     Keyboard.clear('ESCAPE')
+    Keyboard.clear('ENTER')
     if val != 'save'
       TokenModal.close()
     else
@@ -97,10 +98,19 @@
       Modal.reportCommunicationError()
     promise
 
+  $scope.onKeyEnter = (event) ->
+    if event.metaKey || event.shiftKey
+      $scope.closeModal('save')
+
+  $scope.onKeyEscape = => $scope.closeModal('close')
+
+  $scope.initializeKeyboard = ->
+    Keyboard.on 'ESCAPE', $scope.onKeyEscape
+    Keyboard.on 'ENTER', $scope.onKeyEnter
+
   $rootScope.$on 'token_modal:open', ->
-    Keyboard.on 'ESCAPE', ->
-      $scope.closeModal('close')
     $scope.loadData(TokenModal.current_token).then ->
+      $scope.initializeKeyboard()
       $rootScope.$broadcast('token_modal:opened')
 
   $rootScope.$on 'token_modal:close', ->
