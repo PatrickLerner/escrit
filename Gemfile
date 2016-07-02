@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'rails', '>= 5.0.0.rc1', '< 5.1'
+gem 'rails'
 gem 'pg'
-gem 'puma', '~> 3.0'
+gem 'puma'
 
 gem 'coffee-rails'
 gem 'sass-rails'
@@ -13,7 +13,7 @@ gem 'therubyracer'
 
 gem 'attribute_normalizer'
 gem 'cancancan'
-gem 'devise', github: 'plataformatec/devise', branch: 'master'
+gem 'devise'
 gem 'jbuilder'
 gem 'naturalsort', require: 'natural_sort_kernel'
 gem 'paperclip'
@@ -38,10 +38,11 @@ group :development, :test do
   gem 'byebug'
   gem 'factory_girl_rails'
   gem 'faker'
-  rs = %w(rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support)
-  rs.each do |lib|
-    gem lib, git: "https://github.com/rspec/#{lib}.git", branch: 'master'
-  end
+  gem 'rspec-core'
+  gem 'rspec-expectations'
+  gem 'rspec-mocks'
+  gem 'rspec-rails'
+  gem 'rspec-support'
   gem 'better_errors'
   gem 'binding_of_caller'
 end
