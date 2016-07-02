@@ -22,7 +22,8 @@ html(ng-app="escrit")
         li.nav-item: a href="/signup" Sign up
     header.header-image ng-class="{ large: largeHeader }"
       a ng-click="toggleHeader()"
-        i.icon.ion-search
+        i.icon(ng-class="{ 'ion-chevron-up': largeHeader,
+                           'ion-chevron-down': !largeHeader }")
     section.content(ng-view)
     = render partial: 'layouts/token_modal'
     = render partial: 'layouts/modals'
