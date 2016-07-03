@@ -28,6 +28,7 @@
     resource.find($routeParams.id).then (response) ->
       $scope[resource.name_object] = response
       $scope.loading = false
+      $scope.onLoadShow() if $scope.onLoadShow?
     , (error) ->
       $location.url "/#{resource.path}"
       $scope.loading = false

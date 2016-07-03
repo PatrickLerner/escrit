@@ -1,4 +1,4 @@
-@escrit.controller 'TextsController', ['$scope', '$controller', 'Text', '$routeParams', '$location', 'Modal', '$rootScope', 'TokenModal', 'Language', ($scope, $controller, Text, $routeParams, $location, Modal, $rootScope, TokenModal, Language) ->
+@escrit.controller 'TextsController', ['$scope', '$controller', 'Text', '$routeParams', '$location', 'Modal', '$rootScope', 'TokenModal', 'Language', 'Audio', ($scope, $controller, Text, $routeParams, $location, Modal, $rootScope, TokenModal, Language, Audio) ->
   $controller 'ScaffoldController',
     $scope: $scope,
     resource: Text
@@ -29,6 +29,9 @@
   $scope.showWord = (token, capitalized) ->
     $scope.unknownWords[token] = true
     TokenModal.open(token, capitalized, $scope.text.language_id)
+
+  $scope.onLoadShow = ->
+    Audio.init()
 
   $rootScope.$on 'token_modal:open', => $scope.loading = true
 

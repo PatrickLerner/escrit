@@ -1,0 +1,72 @@
+.audiojs {
+  width: 100%;
+  background: none;
+  box-shadow: none;
+  font-family: inherit;
+  position: relative;
+
+  .time, .time em {
+    text-shadow: none;
+    color: black;
+    border-left: 0;
+
+    &, strong {
+      font-weight: 400;
+    }
+  }
+
+  .time {
+    position: absolute;
+    right: 0;
+  }
+
+  .play-pause {
+    border-right: 0;
+  }
+
+  .play, .pause, .loading, .error {
+    background: 0;
+
+    &:before {
+      content: "\f215";
+      font-family: Ionicons;
+    }
+  }
+
+  .pause:before {
+      content: "\f210";
+  }
+
+  .loading:before {
+      content: "\f21c";
+  }
+
+  .error:before {
+      content: "\f2be";
+  }
+
+  .scrubber {
+    border-top: 0;
+    position: absolute;
+    left: 20px;
+    top: 4px;
+    right: 75px;
+    width: auto;
+
+    &, .progress, .loaded {
+      background: none;
+      height: 7px;
+    }
+
+    .loaded {
+      background-color: #e2e2e2;
+      height: 1px;
+      top: 3px;
+    }
+
+    .progress {
+      background-color: $color-strawberry;
+      border-radius: 2px;
+    }
+  }
+}
