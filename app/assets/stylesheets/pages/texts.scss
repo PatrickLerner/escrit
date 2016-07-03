@@ -90,6 +90,7 @@ $filter-bar-dropdown-background: darken($filter-bar-background, 1.5%);
   margin: 0;
   padding: 0;
   background-color: $filter-bar-background;
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
   color: $filter-bar-color;
   border-radius: 0.2rem;
   margin-bottom: 2rem;

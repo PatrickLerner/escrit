@@ -1,4 +1,8 @@
 $nav-top-height: 5rem;
+$header-size-s:  15rem;
+$header-size-m:  20rem;
+$header-size-l:  25rem;
+$header-size-xl: 30rem;
 
 body.stop-scrolling {
   height: 100%;
@@ -21,17 +25,38 @@ $header-background-sizes: 2000 1500 1000 700;
 }
 
 .header-image {
+  height: $header-size-s;
+  &.large { height: $header-size-s * 1.5; }
+}
+
+@include media($mw-m) {
+  .header-image {
+    height: $header-size-m;
+    &.large { height: $header-size-m * 1.5; }
+  }
+}
+
+@include media($mw-l) {
+  .header-image {
+    height: $header-size-l;
+    &.large { height: $header-size-l * 1.5; }
+  }
+}
+
+@include media($mw-xl) {
+  .header-image {
+    height: $header-size-xl;
+    &.large { height: $header-size-xl * 1.5; }
+  }
+}
+
+.header-image {
   @include transition(height 1s);
   background-color: #787882;
   background-position: center;
   background-size: cover;
-  height: 17rem;
   margin-top: $nav-top-height;
   position: relative;
-
-  &.large {
-    height: 30rem;
-  }
 
   .icon {
     bottom: .3rem;

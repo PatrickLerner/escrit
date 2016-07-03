@@ -1,5 +1,5 @@
 @escrit.controller 'HeaderController', ['$scope', '$location', '$route', 'Auth', '$routeParams', '$rootScope', ($scope, $location, $route, Auth, $routeParams, $rootScope) ->
-  $scope.largeHeader = true
+  $scope.largeHeader = false
   $scope.showMenu = false
   $scope.user = null
   $scope.noScroll = false
