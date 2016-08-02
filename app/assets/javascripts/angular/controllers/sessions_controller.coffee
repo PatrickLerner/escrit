@@ -42,9 +42,9 @@
       Auth.sendResetPasswordInstructions(payload).then (res) ->
         Modal.addModal
           title: 'Password reset',
-          content: 'If a user with this e-mail address exist, you will receive ' +
-                   'an e-mail containing instructions to reset the password ' +
-                   'very shortly.'
+          content: 'If a user with this e-mail address exist, you will ' +
+                   'receive an e-mail containing instructions to reset the ' +
+                   'password very shortly.'
           buttons:
             ok: ['primary', '', 'Ok']
     , (error) ->

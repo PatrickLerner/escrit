@@ -6,8 +6,9 @@
 
   $scope.$watch 'current_language_id', (language_id) ->
     return unless language_id?
-    Service(language_id).findAll().then (collection) ->
-      $scope.services = collection
+    Service.findAll().then (collection) ->
+      $scope.services = collection.filter (service) ->
+        service.language_id == language_id || service.language_id == 0
 
   $scope.openService = (service, token) ->
     url = service.url.replace('{query}', token)

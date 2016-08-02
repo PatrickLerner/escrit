@@ -48,7 +48,7 @@ class Text < ApplicationRecord
 
   def search_data_attributes
     %w(title language_id user_id public created_at updated_at last_opened_at) +
-      %w(uuid)
+      %w(uuid category)
   end
 
   def word_count

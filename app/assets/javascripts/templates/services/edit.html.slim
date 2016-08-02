@@ -1,0 +1,17 @@
+.buttons
+  a.btn> ng-href="{{ index_path() }}"
+    i.icon.ion-chevron-left>
+    | Back
+  a.btn> ng-click="delete(service)"
+    i.icon.ion-close>
+    | Delete
+  a.btn.primary> ng-click="submit()"
+    i.icon.ion-checkmark>
+    | Save
+
+form name="form" ng-submit="submit()"
+  v-language-select(label='Language' object="service" errors="errors"
+                    allow-all="true")
+  v-input label='Name' name="name" object="service" errors="errors"
+  v-input label='Short Name' name="short_name" object="service" errors="errors"
+  v-input label='URL Mask' name="url" object="service" errors="errors"

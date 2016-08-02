@@ -36,6 +36,19 @@
       templateUrl: 'sessions/resetpassword.html',
       controller: 'SessionsController',
       action_name: 'resetpassword'
+    # services
+    .when '/services',
+      templateUrl: 'services/index.html',
+      controller: 'ServicesController',
+      action_name: 'index'
+    .when '/services/new',
+      templateUrl: 'services/new.html',
+      controller: 'ServicesController',
+      action_name: 'new'
+    .when '/services/:id/edit',
+      templateUrl: 'services/edit.html',
+      controller: 'ServicesController',
+      action_name: 'edit'
     # texts
     .when '/texts',
       templateUrl: 'texts/index.html',

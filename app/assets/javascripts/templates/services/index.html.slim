@@ -1,0 +1,16 @@
+.buttons
+  a.btn.primary> ng-href="{{ new_path() }}"
+    i.icon.ion-plus>
+    | New
+
+.service-list
+  section.service-listing(ng-repeat="service in services"
+                          ng-if="services.length")
+    h1: a ng-href="{{ edit_path(service) }}"== '{{ service.name }}'
+    span.language== '{{ service.short_name }}'
+    == ' - '
+    span.language== '{{ service.language || "All" }}'
+
+will-paginate ng-model="services"
+
+loading-indicator

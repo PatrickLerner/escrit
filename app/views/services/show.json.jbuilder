@@ -1,3 +1,1 @@
-json.array! collection do |service|
-  json.extract! service, :name, :short_name, :url
-end
+json.extract! object, :to_param, :name, :short_name, :url, :language_id

@@ -23,4 +23,5 @@
     errors: '='
     object: '='
     label: '@'
+    allowAll: '@'
   templateUrl: 'inputs/vlanguage_select.html'
