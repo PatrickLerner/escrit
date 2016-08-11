@@ -1,3 +1,14 @@
-p Welcome #{@email}!
-p You can confirm your account email through the link below:
-p= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token)
+h1 Hello #{@resource.name}!
+
+p Welcome to escrit.eu! I'm glad you decided to check it out. Be aware that the website is mostly just a small personal project I've developed for my own (and my girlfriend's) usage. If you find it useful feel free to use it as well.
+
+p
+  | If you have any ideas, suggestions, feedback or criticism, feel free to email me personally at
+  =< link_to 'ptlerner@gmail.com', 'mailto:ptlerner@gmail.com'
+  |.
+
+p Oh yeah. To make sure your email actually works, please confirm it using the link below.
+
+p Patrick
+
+p= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token), class: 'btn primary'
