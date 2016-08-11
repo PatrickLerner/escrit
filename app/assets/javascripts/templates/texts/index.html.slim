@@ -34,14 +34,16 @@ ul.filter-list ng-controller="FilterBarController"
               ng-click="toggleShowPublic(); toggle('collection')")
           span Public
 
-.text-list
+.text-list ng-if="texts.length"
   section.text-listing ng-repeat="text in texts" ng-if="texts.length"
-    h1: a ng-href="{{ show_path(text) }}"== '{{ text.title }}'
-    span.language== '{{ text.language }}'
-    == ' - '
-    span.count== '{{ text.word_count }} words'
-    == ' - '
-    span.category== '{{ text.category }}'
+    a.text-listing-content ng-href="{{ show_path(text) }}"
+      h1== '{{ text.title }}'
+      span.language== '{{ text.language }}'
+      span.count== '{{ text.word_count }} words'
+      span.category== '{{ text.category }}'
+
+div ng-if="!texts.length"
+  h3 No texts found.
 
 will-paginate ng-model="texts"
 

@@ -1,3 +1,7 @@
+$btn-height: 3.5rem;
+$btn-side-padding: 1.5rem;
+$btn-border-weight: 0.1rem;
+
 .buttons {
   padding: 1rem 0;
   text-align: right;
@@ -6,14 +10,15 @@
 .btn {
   background-image: linear-gradient(transparent, rgba(0, 0, 0, .03) 30%,
                                     rgba(0, 0, 0, .05));
-  border: 0.1rem solid $color-light-gray;
+  border: $btn-border-weight solid $color-light-gray;
   border-radius: 0.2rem;
   color: $color-black;
   display: inline-block;
-  line-height: 2.2rem;
-  padding: 0.9rem 2rem 0.7rem 2rem;
+  line-height: $btn-height - 2*$btn-border-weight;
+  padding: 0 $btn-side-padding;
   text-decoration: none;
   transition: all 0.1s linear;
+  font-size: 1.6rem;
 
   &.primary {
     background-color: $color-green;

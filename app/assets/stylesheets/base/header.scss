@@ -13,14 +13,14 @@ $header-background-sizes: 2000 1500 1000 700;
 @each $header-background-size in $header-background-sizes {
   @include media(max-width "#{$header-background-size}px") {
     .header-image {
-      background-image: asset-url("dutch-#{$header-background-size}.jpg");
+      background-image: asset-url("park-#{$header-background-size}.jpg");
     }
   }
 }
 
 @media screen and (min-width: 2000px) {
   .header-image {
-    background-image: asset-url("dutch.jpg");
+    background-image: asset-url("park.jpg");
   }
 }
 

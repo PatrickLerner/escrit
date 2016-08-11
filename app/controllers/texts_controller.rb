@@ -12,7 +12,11 @@ class TextsController < ScaffoldController
   protected
 
   def collection_order
-    { last_opened_at: :desc }
+    if filter_params['public']
+      { created_at: :asc }
+    else
+      { last_opened_at: :desc }
+    end
   end
 
   def mark_as_opened
