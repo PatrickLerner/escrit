@@ -1,9 +1,18 @@
 .text-list {
   min-height: 30rem;
 
+  .text-listing { width: calc(100% - 1rem); }
+
+  @include media(500px) {
+    .text-listing { width: calc(50% - 1rem); }
+  }
+
+  @include media($mw-m) {
+    .text-listing { width: calc(25% - 1rem); }
+  }
+
   .text-listing {
     margin-bottom: 1rem;
-    width: calc(25% - 1rem);
     display: inline-block;
     overflow: hidden;
     margin: 0.5rem;
@@ -148,7 +157,7 @@
 }
 
 $filter-bar-color: $color-white;
-$filter-bar-background: $color-steel;
+$filter-bar-background: $color-skyblue;
 $filter-bar-dropdown-background: darken($filter-bar-background, 1.5%);
 .filter-list {
   list-style-type: none;

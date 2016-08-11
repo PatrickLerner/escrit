@@ -34,7 +34,7 @@ ul.filter-list ng-controller="FilterBarController"
               ng-click="toggleShowPublic(); toggle('collection')")
           span Public
 
-.text-list ng-if="texts.length"
+.text-list ng-if="texts.length && !loading"
   section.text-listing ng-repeat="text in texts" ng-if="texts.length"
     a.text-listing-content ng-href="{{ show_path(text) }}"
       h1== '{{ text.title }}'
@@ -42,8 +42,11 @@ ul.filter-list ng-controller="FilterBarController"
       span.count== '{{ text.word_count }} words'
       span.category== '{{ text.category }}'
 
-div ng-if="!texts.length"
+div ng-if="!texts.length && !loading"
   h3 No texts found.
+
+div ng-if="loading"
+  h3 Loading...
 
 will-paginate ng-model="texts"
 
