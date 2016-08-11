@@ -3,6 +3,7 @@
 #= require angular-route
 #= require angular-resource
 #= require angular-devise
+#= require angular-cookies
 #= require angular-rails-templates
 #= require_tree ./templates
 #= require escrit

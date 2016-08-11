@@ -1,5 +1,5 @@
 @escrit = angular.module 'escrit', ['ngRoute', 'ngResource', 'templates',
-  'Devise', 'ngAnimate']
+  'Devise', 'ngAnimate', 'ngCookies']
 
 @escrit.run ['$rootScope', '$location', 'Auth', ($rootScope, $location, Auth) ->
   $rootScope.$on '$routeChangeStart', (event, next, current) ->

@@ -1,0 +1,40 @@
+@keyframes pulsate {
+    0% { transform: scale(1.1, 1.1); }
+   50% { transform: scale(1.2, 1.2); }
+  100% { transform: scale(1.1, 1.1); }
+}
+
+.animated-pulse {
+  display: inline-block;
+  animation: pulsate 1.8s ease-out;
+  animation-iteration-count: infinite;
+}
+
+.compliment {
+  border: 1px solid #dccdae;
+  border-radius: 0.5rem;
+  padding: 1.3rem 2rem;
+  margin-bottom: 1rem;
+  background: #f5e8cd;
+  position: fixed;
+  bottom: 1rem;
+  right: 2rem;
+  z-index: 20;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25);
+
+  .ion-heart {
+    margin-right: 0.6rem;
+    color: #e87996;
+  }
+
+  .ion-close {
+    float: right;
+    color: darken(#dccdae, 10%);
+    cursor: pointer;
+    margin-left: 1rem;
+
+    &:hover {
+      color: darken(#dccdae, 30%);
+    }
+  }
+}
