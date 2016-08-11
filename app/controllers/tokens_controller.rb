@@ -15,12 +15,6 @@ class TokensController < ScaffoldController
     Token.find_or_initialize_by(value: params[:id])
   end
 
-  def load_collection
-    {
-      user_id: current_user.id
-    }
-  end
-
   def permitted_params
     params.require(:token).permit(:value, words: permitted_words_params)
   end

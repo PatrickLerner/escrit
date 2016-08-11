@@ -3,7 +3,7 @@ class ScaffoldController < ReadScaffoldController
   before_action :check_permission_resource!, only: [:create]
 
   def create
-    if (@object ||= resource.new(permitted_params)).save
+    if (@object ||= resource.new(try_permitted_params)).save
       render :show, formats: :json, status: :created
     else
       render json: object.errors, status: :unprocessable_entity
@@ -11,7 +11,7 @@ class ScaffoldController < ReadScaffoldController
   end
 
   def update
-    if object.update(permitted_params)
+    if object.update(try_permitted_params)
       render :show, status: :ok
     else
       render json: object.errors, status: :unprocessable_entity
@@ -33,7 +33,7 @@ class ScaffoldController < ReadScaffoldController
     authorize! action_name.to_sym, resource
   end
 
-  def permitted_params
-    {}
+  def try_permitted_params
+    methods.include?(:permitted_params) ? permitted_params : {}
   end
 end

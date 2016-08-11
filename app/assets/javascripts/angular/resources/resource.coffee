@@ -34,7 +34,10 @@
       obj.resource.get({id: id}).$promise
 
     obj.findAll = (page = 1, filters = {}) ->
-      obj.resource.query({ page: page, filters: filters }).$promise
+      params = { page: page }
+      for key, value of filters
+        params["filters[#{key}]"] = value
+      obj.resource.query(params).$promise
 
     obj.new = () ->
       new obj.resource()

@@ -10,8 +10,9 @@ if ENV['coverage']
     add_group 'Controllers', 'app/controllers'
     add_group 'Helpers', 'app/helpers'
     add_group 'Models', 'app/models'
-    add_group 'Other', ['db', 'lib']
+    add_group 'Other', 'lib'
     add_filter '/spec/'
+    add_filter '/db/'
     add_filter '/config/'
   end
 

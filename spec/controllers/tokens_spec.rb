@@ -117,6 +117,14 @@ describe TokensController do
       expect(Word.where(value: orig_word_name).count).to eq(0)
     end
 
+    describe 'error case' do
+      it 'should report an error in case the object cannot be updated' do
+        patch :update, params: { id: token.value, token: { garbage: :data } }
+        expect(response).to_not be_success
+        expect(response.status).to eq(422)
+      end
+    end
+
     describe 'merge with different word' do
       it 'merges simple existing words' do
         fi_word = token.words[0]

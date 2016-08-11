@@ -21,7 +21,7 @@ describe WordsController do
       expect(body['notes'].count).to eq(word.notes.count)
     end
 
-    it 'should be not be to retrieve a new word' do
+    it 'should return an error if the word does not exist' do
       get :show, params: { id: 'thisbeanewword' }
       expect(response).to_not be_success
     end

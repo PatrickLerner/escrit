@@ -13,6 +13,9 @@ class ReadScaffoldController < ApplicationController
   protected
 
   def check_read_permission_object!
+    if object.nil?
+      return render json: { error: 'not found' }, status: :not_found
+    end
     authorize! :read, object
   end
 
@@ -24,7 +27,8 @@ class ReadScaffoldController < ApplicationController
     @collection ||= resource.search(
       query,
       where: where_params, page: params[:page] || 1, per_page: 20,
-      order: collection_order
+      order: collection_order,
+      include: index_includes
     )
   end
 
@@ -32,9 +36,12 @@ class ReadScaffoldController < ApplicationController
     { updated_at: :desc }
   end
 
+  def index_includes
+    []
+  end
+
   def filter_params
-    return @filter ||= {} unless params[:filters].present?
-    @filter ||= JSON.parse(params[:filters])
+    params[:filters] || {}
   end
 
   def query
@@ -60,7 +67,7 @@ class ReadScaffoldController < ApplicationController
   end
 
   def load_object
-    resource.find_by!(resource.param_field => params[:id])
+    resource.find_by(resource.param_field => params[:id])
   end
 
   def resource

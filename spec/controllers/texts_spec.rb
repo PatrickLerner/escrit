@@ -11,6 +11,24 @@ describe TextsController do
   let(:user) { FactoryGirl.create(:user) }
   let(:body) { JSON.parse(response.body) }
 
+  describe '#create' do
+    let(:text) { build(:text) }
+    let(:payload) { text.as_json(only: %w(title content category language_id)) }
+
+    it 'is possible to create a new text' do
+      post :create, params: { text: payload }
+      expect(response).to be_success
+      expect(Text.last.title).to eq(text.title)
+    end
+
+    it 'returns an error if it is missing parameters' do
+      text.title = ''
+      post :create, params: { text: payload }
+      expect(response).to_not be_success
+      expect(response.status).to eq(422)
+    end
+  end
+
   describe '#get' do
     let!(:my_text) { create(:text, user: user) }
     let!(:other_text) { create(:text) }
@@ -47,6 +65,26 @@ describe TextsController do
         get :index
         expect(body['data'].length).to eq(2)
         expect(body['data'][0]['to_param']).to eq(my_text.to_param)
+      end
+
+      describe 'public text' do
+        before(:each) do
+          my_text.update_attributes(public: true, created_at: 10.minutes.ago)
+          second_text.update_attributes(public: true, created_at: 1.minute.ago)
+          Text.reindex
+        end
+
+        it 'should not list texts which are public' do
+          get :index
+          expect(body['data'].length).to eq(0)
+        end
+
+        it 'should list texts in creation order for public texts' do
+          get :index, params: { filters: { public: true } }
+          expect(body['data'].length).to eq(2)
+          expect(body['data'][0]['to_param']).to eq(second_text.to_param)
+          expect(body['data'][1]['to_param']).to eq(my_text.to_param)
+        end
       end
     end
 

@@ -1,4 +1,4 @@
-class ServicesController < ReadScaffoldController
+class ServicesController < ScaffoldController
   resource Service
 
   def show
@@ -14,6 +14,12 @@ class ServicesController < ReadScaffoldController
   end
 
   def collection
-    Service.for_user(current_user)
+    Service.for_user(current_user).includes(:language)
+  end
+
+  def permitted_params
+    params.require(:service).permit(
+      :id, :name, :short_name, :url, :language_id, :enabled
+    )
   end
 end

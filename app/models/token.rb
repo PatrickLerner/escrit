@@ -21,17 +21,24 @@ class Token < ApplicationRecord
   end
 
   def non_empty_words(params)
+    raise Token::DataParseError unless params.key?(:words)
     params[:words].reject do |data|
       data[:value].blank?
     end
   end
 
-  def parse_update(params, current_user)
+  def parse_and_save!(params, current_user)
     non_empty_words(params).each do |data|
       word_reference(data, current_user).parse_update(data, current_user)
     end
     remove_old_word_references(params)
     save!
+  end
+
+  def parse_update(params, current_user)
+    parse_and_save!(params, current_user)
+  rescue Token::DataParseError
+    return false
   end
 
   protected

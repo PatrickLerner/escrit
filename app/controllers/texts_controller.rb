@@ -13,10 +13,14 @@ class TextsController < ScaffoldController
 
   def collection_order
     if filter_params['public']
-      { created_at: :asc }
+      { created_at: :desc }
     else
       { last_opened_at: :desc }
     end
+  end
+
+  def index_includes
+    [ :language ]
   end
 
   def mark_as_opened
@@ -29,9 +33,7 @@ class TextsController < ScaffoldController
 
   def load_collection
     return {} if filter_params['public']
-    {
-      user_id: current_user.id
-    }
+    { user_id: current_user.id, public: false }
   end
 
   def permitted_params
