@@ -41,7 +41,8 @@ set :puma_init_active_record, true
 # set :keep_releases, 5
 
 set :linked_files, %w(.rbenv-vars config/database.yml config/secrets.yml) +
-                   %w(config/initializers/devise.rb)
+                   %w(config/initializers/devise.rb) +
+                   %w(config/environments/production.rb)
 
 namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
