@@ -12,7 +12,7 @@ class TextsController < ScaffoldController
   protected
 
   def collection_order
-    if filter_params['public']
+    if filter_params['public'] == 'true'
       { created_at: :desc }
     else
       { last_opened_at: :desc }
@@ -32,7 +32,7 @@ class TextsController < ScaffoldController
   end
 
   def load_collection
-    return {} if filter_params['public']
+    return {} if filter_params['public'] == 'true'
     { user_id: current_user.id, public: false }
   end
 

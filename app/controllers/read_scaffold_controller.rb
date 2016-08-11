@@ -41,13 +41,7 @@ class ReadScaffoldController < ApplicationController
   end
 
   def filter_params
-    Hash[(params[:filters] || {}).to_h.map{ |k, v| [k, parse_filter_param(v)] }]
-  end
-
-  def parse_filter_param(value)
-    return true if value == 'true'
-    return false if value == 'false'
-    value
+    params[:filters] || {}
   end
 
   def query
