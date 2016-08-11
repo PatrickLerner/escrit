@@ -20,8 +20,14 @@ class Token < ApplicationRecord
     words.owned_by(user)
   end
 
+  def non_empty_words(params)
+    params[:words].reject do |data|
+      data[:value].blank?
+    end
+  end
+
   def parse_update(params, current_user)
-    params[:words].each do |data|
+    non_empty_words(params).each do |data|
       word_reference(data, current_user).parse_update(data, current_user)
     end
     remove_old_word_references(params)
@@ -47,12 +53,13 @@ class Token < ApplicationRecord
     data = { value: params[:to_param], language_id: params[:language_id],
              user_id: current_user.id }
     word = Word.find_or_initialize_by(data)
-    entry_reference(word)
+    build_entry_reference(word)
     word
   end
 
-  def entry_reference(word)
-    return if entries.find { |e| e.word_id == word.id }.present?
+  def build_entry_reference(word)
+    ex_word = entries.find { |e| e.word_id == word.id && word.id.present? }
+    return if ex_word.present?
     entries.build(word: word)
   end
 end

@@ -2,8 +2,12 @@ require 'faker'
 
 FactoryGirl.define do
   factory :service do
-    name { Faker::Internet.user_name }
-    short_name { Faker::Internet.user_name }
+    sequence :name do |n|
+      "service #{n}"
+    end
+    sequence :short_name do |n|
+      "srv #{n}"
+    end
     url { "#{Faker::Internet.url}?q={query}" }
     association :language
     association :user

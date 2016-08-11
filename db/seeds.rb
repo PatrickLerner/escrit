@@ -1,3 +1,5 @@
+unless Rails.env.test?
+
 Language.create! [
   { name: 'English', voice: 'UK English Male', voice_rate: '0.75', code: 'en' },
   { name: 'French', voice: 'French Female', voice_rate: '0.75', code: 'fr' },
@@ -26,3 +28,5 @@ Compliment.create! [
 Replacement.create(
   value: 'ё', replacement: 'е', language: (Language.find_by name: 'Russian')
 )
+
+end

@@ -67,6 +67,27 @@ describe TokensController do
       new_word.token_ids.include?(token.id)
     end
 
+    it 'should allow adding two words at the same time' do
+      token = create(:token, value: 'fährst')
+      language = create(:language)
+      payload = {
+        value: 'fährst', to_param: 'fährst',
+        words: [
+          {
+            value: 'fährst', to_param: 'fährst', language_id: language.id,
+            notes: []
+          },
+          {
+            value: 'fahren', to_param: 'fahren', language_id: language.id,
+            notes: ['to drive']
+          },
+        ]
+      }
+      patch :update, params: { id: token.value, token: payload }
+      expect(response).to be_success
+      expect(token.words.count).to eq(2)
+    end
+
     it 'should allow renaming a word' do
       orig_word_name = data[:words][0][:value]
       orig_word_id = token.words[0].id
@@ -144,6 +165,12 @@ describe TokensController do
     it 'allows to delete a word' do
       expect(token.words.count).to eq(3)
       data[:words] = data[:words][1..-1]
+      patch :update, params: { id: token.value, token: data }
+      expect(token.words.count).to eq(2)
+    end
+
+    it 'allows deleting a word if its value is submitted empty' do
+      data[:words][0][:value] = ""
       patch :update, params: { id: token.value, token: data }
       expect(token.words.count).to eq(2)
     end
