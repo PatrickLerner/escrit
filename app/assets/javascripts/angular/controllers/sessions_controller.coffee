@@ -1,6 +1,6 @@
 @escrit.controller 'SessionsController', ['$scope', '$location', '$route', 'Auth', '$routeParams', '$rootScope', 'Modal', ($scope, $location, $route, Auth, $routeParams, $rootScope, Modal) ->
   $scope.action_name = $route.current.$$route.action_name
-  $scope.credentials = {}
+  $scope.credentials = { remember_me: true }
   $scope.errors = {}
 
   $scope.submit = () ->
