@@ -17,6 +17,11 @@
     overflow: hidden;
     margin: 0.5rem;
     height: 240px;
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+      transform: translateY(-0.5rem);
+    }
 
     .text-listing-content {
       display: inline-block;
