@@ -24,6 +24,7 @@
     overflow: hidden;
     margin: 0.5rem;
     height: 240px;
+    vertical-align: top;
 
     .text-listing-content {
       display: inline-block;
@@ -40,7 +41,7 @@
       &:hover {
         border-color: #81a9da;
         box-shadow: 0 0 40px rgba(129, 169, 218, 0.22) inset;
-        transition: all 0.3s;
+        //transition: all 0.3s;
       }
 
       &:before, &:after {

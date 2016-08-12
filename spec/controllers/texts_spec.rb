@@ -21,6 +21,12 @@ describe TextsController do
       expect(Text.last.title).to eq(text.title)
     end
 
+    it 'associates the user correctly' do
+      post :create, params: { text: payload }
+      expect(response).to be_success
+      expect(Text.last.user).to eq(user)
+    end
+
     it 'returns an error if it is missing parameters' do
       text.title = ''
       post :create, params: { text: payload }

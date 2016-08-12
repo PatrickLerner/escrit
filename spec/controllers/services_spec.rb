@@ -11,6 +11,17 @@ describe ServicesController do
   let(:user) { FactoryGirl.create(:user) }
   let(:body) { JSON.parse(response.body) }
 
+  describe '#create' do
+    let(:service) { build(:service) }
+    let(:payload) { service.as_json(only: %w(name short_name url language_id)) }
+
+    it 'associates the user correctly' do
+      post :create, params: { service: payload }
+      expect(response).to be_success
+      expect(Service.last.user).to eq(user)
+    end
+  end
+
   describe '#update' do
     let(:service) { create(:service, user: user) }
     let(:payload) { service.as_json(only: %w(name short_name url language_id)) }
