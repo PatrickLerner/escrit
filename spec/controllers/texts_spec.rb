@@ -11,6 +11,40 @@ describe TextsController do
   let(:user) { FactoryGirl.create(:user) }
   let(:body) { JSON.parse(response.body) }
 
+  describe '#index' do
+    let(:unique_word) { 'StrangWordiness' }
+    let!(:first_text) { create(:text, user: user, title: unique_word) }
+    let!(:second_text) { create(:text, user: user) }
+
+    it 'shows all the texts of a user' do
+      get :index
+      expect(body['data'].length).to eq(user.texts.count)
+    end
+
+    it 'allows to filter a users texts' do
+      get :index, params: { filters: { query: unique_word } }
+      expect(body['data'].length).to eq(1)
+      expect(body['data'][0]['title']).to eq(unique_word)
+    end
+  end
+
+  describe '#delete' do
+    let!(:my_text) { create(:text, user: user) }
+    let!(:other_text) { create(:text) }
+
+    it 'allows deleting your own texts' do
+      delete :destroy, params: { id: my_text.uuid }
+      expect(response).to be_success
+      expect(Text.find_by(id: my_text.id)).to be_nil
+    end
+
+    it 'does not allow deleting other texts' do
+      delete :destroy, params: { id: other_text.uuid }
+      expect(response).to_not be_success
+      expect(Text.find_by(id: other_text.id)).to eq(other_text)
+    end
+  end
+
   describe '#create' do
     let(:text) { build(:text) }
     let(:payload) { text.as_json(only: %w(title content category language_id)) }

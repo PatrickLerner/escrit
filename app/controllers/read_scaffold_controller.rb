@@ -4,12 +4,6 @@ class ReadScaffoldController < ApplicationController
   before_action :check_read_permission_object!, only: :show
   before_action :check_read_permission_resource!, only: :index
 
-  def index
-  end
-
-  def show
-  end
-
   protected
 
   def check_read_permission_object!
@@ -27,17 +21,18 @@ class ReadScaffoldController < ApplicationController
     @collection ||= resource.search(
       query,
       where: where_params, page: params[:page] || 1, per_page: 20,
-      order: collection_order,
-      include: index_includes
+      order: try_collection_order,
+      include: try_index_includes
     )
   end
 
-  def collection_order
-    { updated_at: :desc }
+  def try_collection_order
+    has_method = methods.include?(:collection_order)
+    has_method ? collection_order : { updated_at: :desc }
   end
 
-  def index_includes
-    []
+  def try_index_includes
+    methods.include?(:index_includes) ? index_includes : []
   end
 
   def filter_params
@@ -45,21 +40,18 @@ class ReadScaffoldController < ApplicationController
   end
 
   def query
-    if !filter_params['query'].try(:strip).blank?
-      filter_params['query']
-    else
-      '*'
-    end
+    return '*' if filter_params['query'].try(:strip).blank?
+    filter_params['query']
   end
 
   def where_params
     filter_params.select { |key, _| key.to_s != 'query' }
                  .select { |_, val| !(val.is_a?(Array) && val.empty?) }
-                 .merge(load_collection)
+                 .merge(try_load_collection)
   end
 
-  def load_collection
-    {}
+  def try_load_collection
+    methods.include?(:load_collection) ? load_collection : {}
   end
 
   def object

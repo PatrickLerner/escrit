@@ -11,6 +11,24 @@ describe ServicesController do
   let(:user) { FactoryGirl.create(:user) }
   let(:body) { JSON.parse(response.body) }
 
+  describe '#show' do
+    let!(:my_service) { create(:service, user: user) }
+    let!(:other_service) { create(:service, user: create(:user)) }
+
+    it 'allows me to see my own service' do
+      get :show, params: { id: my_service.id }
+      expect(response).to be_success
+      expect(body['name']).to eq(my_service.name)
+    end
+
+    it 'does not allow me to see other services' do
+      get :show, params: { id: other_service.id }
+      expect(response).to_not be_success
+      expect(response.status).to eq(404)
+      expect(body['error']).to_not be_blank
+    end
+  end
+
   describe '#create' do
     let(:service) { build(:service) }
     let(:payload) { service.as_json(only: %w(name short_name url language_id)) }

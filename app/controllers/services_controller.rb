@@ -7,12 +7,6 @@ class ServicesController < ScaffoldController
     super
   end
 
-  def show
-    unless object.present? && (object.user == current_user || object.user.nil?)
-      render json: { error: 'service not found' }, status: :not_found
-    end
-  end
-
   protected
 
   def load_object
