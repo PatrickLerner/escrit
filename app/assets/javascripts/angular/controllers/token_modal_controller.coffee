@@ -39,6 +39,12 @@
       $scope.current_word = word
 
   $scope.addNote = () ->
+    notes = $scope.current_word.notes
+    has_notes = notes.length > 0
+    last_elem = notes[notes.length - 1]
+    last_elem_empty = last_elem.trim() == ''
+    # don't add a new field if there still is one left to fill
+    return if has_notes && last_elem_empty
     $scope.current_word.notes.push('')
 
   $scope.deleteNote = (index) ->

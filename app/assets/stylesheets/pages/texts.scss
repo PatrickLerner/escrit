@@ -8,7 +8,14 @@
   }
 
   @include media($mw-m) {
-    .text-listing { width: calc(25% - 1rem); }
+    .text-listing {
+      width: calc(25% - 1rem);
+      transition: transform 0.3s ease-in-out;
+
+      &:hover {
+        transform: translateY(-0.5rem);
+      }
+    }
   }
 
   .text-listing {
@@ -17,11 +24,6 @@
     overflow: hidden;
     margin: 0.5rem;
     height: 240px;
-    transition: transform 0.3s ease-in-out;
-
-    &:hover {
-      transform: translateY(-0.5rem);
-    }
 
     .text-listing-content {
       display: inline-block;
