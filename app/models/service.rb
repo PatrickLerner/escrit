@@ -11,11 +11,14 @@ class Service < ApplicationRecord
   scope :published, -> { where(user_id: 0) }
   scope :for_user, ->(user) { where(user: user) }
 
+  DUP_ATTRIBUTES = %w(name short_name url language_id)
+
   def ==(other)
     other.instance_of?(self.class) &&
-      name == other.name &&
-      short_name == other.short_name &&
-      url == other.url &&
-      language == other.language
+      as_json(only: DUP_ATTRIBUTES) == other.as_json(only: DUP_ATTRIBUTES)
+  end
+
+  def dup_for(user)
+    user.services.create(as_json(only: DUP_ATTRIBUTES))
   end
 end

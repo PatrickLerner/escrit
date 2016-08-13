@@ -1,14 +1,9 @@
 require 'rails_helper'
 
 describe TokensController do
-  before :each do
-    request.env['HTTP_ACCEPT'] = 'application/json'
-  end
-
-  render_views
+  request_json
   login_user
 
-  let(:user) { FactoryGirl.create(:user) }
   let(:body) { JSON.parse(response.body) }
 
   describe '#get' do

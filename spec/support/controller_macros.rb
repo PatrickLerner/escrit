@@ -7,4 +7,12 @@ module ControllerMacros
       allow(controller).to receive(:current_user).and_return(user)
     end
   end
+
+  def request_json
+    before :each do
+      request.env['HTTP_ACCEPT'] = 'application/json'
+    end
+
+    render_views
+  end
 end

@@ -12,6 +12,7 @@ class User < ApplicationRecord
   validate :validate_role
 
   after_initialize :set_defaults
+  after_create :add_services
 
   ROLES = [
     ROLE_ADMIN     = :admin,
@@ -30,25 +31,17 @@ class User < ApplicationRecord
     true
   end
 
-  def languages
-    Text.group(:language_id).select('language_id, sum(id) as sum')
-        .where(user_id: id, public: false).includes(:language)
-        .map(&:language).sort
+  def language_ids
+    texts.group('language_id').select('language_id, sum(texts.id)')
+         .map(&:language_id)
   end
 
-  def words_by_languages(min_rating: 0)
-    Note.joins(:word).group('languages.name').order('languages.name asc')
-        .where('user_id = ? and rating < 6 and rating >= ?', id, min_rating)
-        .joins('left join languages on languages.id = words.language_id')
-        .count
+  def languages
+    Language.where(id: language_ids)
   end
 
   def compliments
-    Compliment.where(language: languages)
-  end
-
-  def ability
-    @ability ||= Ability.new(self)
+    Compliment.where(language_id: language_ids)
   end
 
   protected
@@ -62,5 +55,11 @@ class User < ApplicationRecord
   def set_defaults
     self.audio_rate ||= 100
     self.role ||= ROLE_USER
+  end
+
+  def add_services
+    Service.published.each do |service|
+      service.dup_for(self)
+    end
   end
 end

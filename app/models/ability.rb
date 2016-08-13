@@ -11,7 +11,7 @@ class Ability
 
   def user_permissions(user)
     # languages can only be read by users
-    can :read, [Language, Word, Service]
+    can :read, [Language, Word, Service, Compliment]
     can :manage, Token
 
     # everybody may mange their own texts and services
@@ -21,7 +21,7 @@ class Ability
   end
 
   def moderator_permissions(_user)
-    can :manage, Text
+    can :manage, [Text, Compliment]
   end
 
   def admin_permissions(_user)

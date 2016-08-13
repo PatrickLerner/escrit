@@ -1,9 +1,3 @@
-ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../../config/environment', __FILE__)
-if Rails.env.production?
-  abort('The Rails environment is running in production mode!')
-end
-
 if ENV['coverage']
   require 'simplecov'
   SimpleCov.start do
@@ -14,6 +8,7 @@ if ENV['coverage']
     add_filter '/spec/'
     add_filter '/db/'
     add_filter '/config/'
+    track_files '{app,lib}/**/*.rb'
   end
 
   SimpleCov.at_exit do
@@ -21,6 +16,12 @@ if ENV['coverage']
     require 'launchy'
     Launchy.open('coverage/index.html')
   end
+end
+
+ENV['RAILS_ENV'] ||= 'test'
+require File.expand_path('../../config/environment', __FILE__)
+if Rails.env.production?
+  abort('The Rails environment is running in production mode!')
 end
 
 require 'spec_helper'

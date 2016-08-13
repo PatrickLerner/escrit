@@ -19,4 +19,22 @@ describe User, type: :model do
       expect(build(:user, role: role)).to_not be_valid
     end
   end
+
+  it 'adds public services after creation' do
+    10.times { create(:service, user_id: 0) }
+    expect(create(:user).services.length).to eq(Service.published.count)
+  end
+
+  describe 'languages' do
+    let(:user) { create(:user) }
+
+    it 'has no languages if they have no texts' do
+      expect(user.languages.count).to eq(0)
+    end
+
+    it 'has all languages from their texts' do
+      2.times { create(:text, user: user) }
+      expect(user.languages.count).to eq(2)
+    end
+  end
 end

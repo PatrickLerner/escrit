@@ -1,14 +1,9 @@
 require 'rails_helper'
 
 describe TextsController do
-  before :each do
-    request.env['HTTP_ACCEPT'] = 'application/json'
-  end
-
-  render_views
+  request_json
   login_user
 
-  let(:user) { FactoryGirl.create(:user) }
   let(:body) { JSON.parse(response.body) }
 
   describe '#index' do
@@ -33,13 +28,13 @@ describe TextsController do
     let!(:other_text) { create(:text) }
 
     it 'allows deleting your own texts' do
-      delete :destroy, params: { id: my_text.uuid }
+      delete :destroy, params: { id: my_text.to_param }
       expect(response).to be_success
       expect(Text.find_by(id: my_text.id)).to be_nil
     end
 
     it 'does not allow deleting other texts' do
-      delete :destroy, params: { id: other_text.uuid }
+      delete :destroy, params: { id: other_text.to_param }
       expect(response).to_not be_success
       expect(Text.find_by(id: other_text.id)).to eq(other_text)
     end
@@ -74,13 +69,13 @@ describe TextsController do
     let!(:other_text) { create(:text) }
 
     it 'should allow me to see my onw text' do
-      get :show, params: { id: my_text.uuid }
+      get :show, params: { id: my_text.to_param }
       expect(response).to be_success
       expect(body['title']).to eq(my_text.title)
     end
 
     it 'should not allow me to see the texts of others' do
-      get :show, params: { id: other_text.uuid }
+      get :show, params: { id: other_text.to_param }
       expect(response).to_not be_success
       expect(body['title']).to_not eq(other_text.title)
     end
@@ -95,13 +90,13 @@ describe TextsController do
 
       it 'should be set when looking at a text' do
         old_date = my_text.last_opened_at
-        get :show, params: { id: my_text.uuid }
+        get :show, params: { id: my_text.to_param }
         my_text.reload
         expect(my_text.last_opened_at).to be > old_date
       end
 
       it 'should show the last opened text first in the listing' do
-        get :show, params: { id: my_text.uuid }
+        get :show, params: { id: my_text.to_param }
         get :index
         expect(body['data'].length).to eq(2)
         expect(body['data'][0]['to_param']).to eq(my_text.to_param)
