@@ -19,4 +19,8 @@
 
   $scope.$on 'user:set', (event, user) ->
     $scope.user = user
+
+  $scope.$on 'devise:logout', (event, old_user) ->
+    $scope.user = null
+    $scope.complimentVisible = true
 ]
