@@ -23,7 +23,7 @@ gem 'ionicons-rails', git: 'https://github.com/c0m3tx/ionicons-rails',
                       branch: 'master'
 
 gem 'angularjs-rails'
-gem 'angular-rails-templates'
+gem 'angular-rails-templates', github: 'pitr/angular-rails-templates'
 source 'https://rails-assets.org' do
   gem 'rails-assets-angular-devise'
 end
