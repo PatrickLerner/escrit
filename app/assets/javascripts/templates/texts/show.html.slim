@@ -1,15 +1,16 @@
-.buttons
-  a.btn> ng-href="{{ index_path() }}"
-    i.icon.ion-chevron-left>
-    | Back
-  a.btn> ng-href="{{ edit_path(text) }}"
-    i.icon.ion-edit>
-    | Edit
+div ng-if="text"
+  .buttons
+    a.btn> ng-href="{{ index_path() }}"
+      i.icon.ion-chevron-left>
+      | Back
+    a.btn> ng-href="{{ edit_path(text) }}" ng-if="can('update')"
+      i.icon.ion-edit>
+      | Edit
 
-article.text
-  h1
-    compiled-html content='text.title | formatText: text.js_split_tokens'
+  article.text
+    h1
+      compiled-html content='text.title | formatText: text.js_split_tokens'
 
-  compiled-html content='text.content | formatText: text.js_split_tokens'
+    compiled-html content='text.content | formatText: text.js_split_tokens'
 
 loading-indicator

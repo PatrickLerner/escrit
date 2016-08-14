@@ -15,7 +15,15 @@ class Ability
     can :manage, Token
 
     # everybody may mange their own texts and services
-    can %i(read update create destroy), [Text, Service] do |object|
+    can :read, Text do |object|
+      object.user_id == user.id || object.public?
+    end
+
+    can %i(update create destroy), Text do |object|
+      object.user_id == user.id
+    end
+
+    can %i(read update create destroy), Service do |object|
       object.user_id == user.id
     end
   end

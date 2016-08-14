@@ -48,6 +48,12 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def process(action, *args)
+    super
+  rescue AbstractController::ActionNotFound
+    empty_html_response
+  end
+
   rescue_from CanCan::AccessDenied do |exception|
     render json: { error: exception.message }, status: :not_authorized
   end

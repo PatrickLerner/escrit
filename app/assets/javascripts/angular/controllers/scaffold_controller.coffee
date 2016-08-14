@@ -10,6 +10,7 @@
     resource.find($routeParams.id).then (response) ->
       $scope[resource.name_object] = response
       $scope.loading = false
+      $location.url '/' unless $scope.can('update')
     , (error) ->
       $location.url "/#{resource.path}"
       $scope.loading = false
@@ -22,6 +23,7 @@
 
   $scope.loadNew = ->
     $scope[resource.name_object] = resource.new()
+    $location.url '/' unless $scope.can('create')
 
   $scope.loadShow = ->
     $scope.loading = true
@@ -29,6 +31,7 @@
       $scope[resource.name_object] = response
       $scope.loading = false
       $scope.onLoadShow() if $scope.onLoadShow?
+      $location.url '/' unless $scope.can('read')
     , (error) ->
       $location.url "/#{resource.path}"
       $scope.loading = false
@@ -58,6 +61,11 @@
         $location.url "/#{resource.path}/"
       , (error) ->
         $scope.errors = error.data
+
+  $scope.can = (action) ->
+    return true unless $scope[resource.name_object]?
+    return true unless $scope[resource.name_object].permissions?
+    $scope[resource.name_object].permissions[action]
 
   $scope.new_path = ->
     "/#{resource.path}/new"
