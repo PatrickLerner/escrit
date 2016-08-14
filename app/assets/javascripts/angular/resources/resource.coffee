@@ -36,7 +36,10 @@
     obj.findAll = (page = 1, filters = {}) ->
       params = { page: page }
       for key, value of filters
-        params["filters[#{key}]"] = value
+        key_name = "filters[#{key}]"
+        if Array.isArray(value)
+          key_name += '[]'
+        params[key_name] = value
       obj.resource.query(params).$promise
 
     obj.new = () ->

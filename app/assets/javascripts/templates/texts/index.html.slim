@@ -44,6 +44,12 @@ ul.filter-list ng-controller="FilterBarController"
 
 div ng-if="!texts.length && !loading"
   h3 No texts found.
+  div ng-if="!filters.public"
+    p It appears that you have no texts yet. You can add a new text by clicking the "New" button above. Maybe try to find a short story, or a newspaper article that interests you.
+    p Otherwise also feel free to look at the public collection of material. Maybe you can find something interesting there as well. Just switch to 'Public' using the filters above.
+  div ng-if="filters.public"
+    p It appears there are no public texts yet. If you have any good suggestions for something that would make a good addition to the public collection, feel free to contact me personally:
+    a.btn href='mailto:ptlerner@gmail.com' Contact Patrick
 
 div ng-if="loading"
   h3 Loading...
