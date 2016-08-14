@@ -38,9 +38,9 @@ ul.filter-list ng-controller="FilterBarController"
   section.text-listing ng-repeat="text in texts" ng-if="texts.length"
     a.text-listing-content ng-href="{{ show_path(text) }}"
       h1== '{{ text.title }}'
-      span.language== '{{ text.language }}'
       span.count== '{{ text.word_count }} words'
       span.category== '{{ text.category }}'
+      img.flag ng-src="assets/flags/{{ text.language_code }}.png"
 
 div ng-if="!texts.length && !loading"
   h3 No texts found.
