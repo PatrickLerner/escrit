@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '>= 5.0.0.rc1', '< 5.1'
+gem 'sprockets', '>= 4.0.0.beta2'
 gem 'pg'
 gem 'puma'
 
@@ -10,6 +11,7 @@ gem 'slim-rails'
 gem 'uglifier'
 gem 'execjs'
 gem 'therubyracer'
+gem 'babel-transpiler'
 
 gem 'attribute_normalizer'
 gem 'cancancan'
@@ -19,8 +21,8 @@ gem 'naturalsort', require: 'natural_sort_kernel'
 gem 'paperclip'
 gem 'searchkick'
 gem 'will_paginate'
-gem 'ionicons-rails', git: 'https://github.com/c0m3tx/ionicons-rails',
-                      branch: 'master'
+#gem 'ionicons-rails', git: 'https://github.com/c0m3tx/ionicons-rails',
+#                      branch: 'master'
 
 gem 'angularjs-rails'
 gem 'angular-rails-templates', github: 'pitr/angular-rails-templates'
@@ -43,6 +45,7 @@ group :development, :test do
   gem 'rspec-mocks'
   gem 'rspec-rails'
   gem 'rspec-support'
+  gem 'db-query-matchers'
   gem 'better_errors'
   gem 'binding_of_caller'
 end
@@ -52,7 +55,6 @@ group :test do
   gem 'database_cleaner'
   gem 'poltergeist'
   gem 'shoulda'
-  gem 'db-query-matchers'
   gem 'simplecov', require: false
 end
 

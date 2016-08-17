@@ -3,6 +3,7 @@ class Text < ApplicationRecord
   include TokenRelated
   include RandomUuid
   include OnCommitIndexed
+  include Categorized
 
   param_field :uuid
 
@@ -12,7 +13,6 @@ class Text < ApplicationRecord
   belongs_to :language
   belongs_to :user
 
-  validates :category, length: { minimum: 1 }
   validates :content, length: { minimum: 1, maximum: 15_000 }
   validates :title, length: { minimum: 1 }
   validates :language, presence: true
@@ -26,7 +26,7 @@ class Text < ApplicationRecord
 
   before_create :mark_as_opened!
 
-  scope :search_import, -> { includes(:language).includes(:tokens) }
+  scope :search_import, -> { includes(:language, :tokens, :__category) }
   scope :in_language, -> (language) { where(language_id: language.id) }
   scope :owned_by, -> (user) { where(user_id: user.id) }
   scope :with_word_counts, lambda {
@@ -48,7 +48,7 @@ class Text < ApplicationRecord
 
   def search_data_attributes
     %w(title language_id user_id public created_at updated_at last_opened_at) +
-      %w(uuid category)
+      %w(uuid category category_id)
   end
 
   def word_count
@@ -59,5 +59,9 @@ class Text < ApplicationRecord
     no_save_after = changed? || !persisted?
     self.last_opened_at = DateTime.now
     save! unless no_save_after
+  end
+
+  def published?
+    self.public
   end
 end

@@ -2,7 +2,7 @@ json.per_page collection.per_page
 json.num_pages collection.num_pages
 json.page params[:page] || 1
 json.data collection do |text|
-  json.extract! text, :to_param, :title, :category, :language_id
+  json.extract! text, :to_param, :title, :category, :language_id, :category_id
   json.language text.language.name
   json.language_code text.language.code
   json.url text_url(text, format: :json)

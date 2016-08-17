@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   resources :languages, only: read
   resources :compliments, only: [:index]
+  resources :categories, only: [:index]
   resources :texts
   resources :services
   resources :tokens, constraints: allow_all_ids

@@ -239,9 +239,17 @@ $filter-bar-dropdown-background: darken($filter-bar-background, 1.5%);
 
     li label {
       display: block;
-      padding: 1rem 2rem;
+      padding: 0.5rem 2rem;
       cursor: pointer;
       padding-right: 3rem;
+    }
+
+    span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
+      display: inline-block;
     }
   }
 }

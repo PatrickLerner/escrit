@@ -20,7 +20,7 @@ class TextsController < ScaffoldController
   end
 
   def index_includes
-    [ :language ]
+    %i(language __category)
   end
 
   def mark_as_opened

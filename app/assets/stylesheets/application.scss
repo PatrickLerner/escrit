@@ -20,7 +20,7 @@ $mw-xl: 1200px;
 
 @import 'bourbon';
 @import 'neat';
-@import 'ionicons';
+//@import 'ionicons';
 @import 'lightbox';
 
 @import 'base/audio';
@@ -38,3 +38,4 @@ $mw-xl: 1200px;
 @import 'pages/texts';
 @import 'pages/services';
 @import 'pages/tokens';
+@import 'ionicons/ionicons.min';

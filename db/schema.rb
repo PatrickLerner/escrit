@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160811230715) do
+ActiveRecord::Schema.define(version: 20160814182259) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "value"
+    t.integer  "user_id"
+    t.integer  "language_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["language_id"], name: "index_categories_on_language_id", using: :btree
+    t.index ["user_id"], name: "index_categories_on_user_id", using: :btree
+    t.index ["value", "user_id", "language_id"], name: "index_categories_on_value_and_user_id_and_language_id", unique: true, using: :btree
+  end
 
   create_table "compliments", force: :cascade do |t|
     t.text     "value"
@@ -75,7 +86,7 @@ ActiveRecord::Schema.define(version: 20160811230715) do
   create_table "texts", force: :cascade do |t|
     t.text     "title"
     t.text     "content"
-    t.text     "category"
+    t.text     "legacy_category"
     t.boolean  "completed"
     t.integer  "word_count"
     t.datetime "created_at"
@@ -146,9 +157,12 @@ ActiveRecord::Schema.define(version: 20160811230715) do
     t.index ["value", "language_id", "user_id"], name: "index_words_on_value_and_language_id_and_user_id", unique: true, using: :btree
   end
 
+  add_foreign_key "categories", "languages"
+  add_foreign_key "categories", "users"
   add_foreign_key "entries", "tokens"
   add_foreign_key "entries", "words"
   add_foreign_key "notes", "words"
+  add_foreign_key "texts", "categories"
   add_foreign_key "words", "languages"
   add_foreign_key "words", "users"
 end
