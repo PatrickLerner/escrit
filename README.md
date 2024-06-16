@@ -34,6 +34,7 @@ See source code for `KeyCode`, but roughly:
 - `t` open google translate for a word
 - `e` add a note/definition to a word. When editing press `enter` to save,
   and `escape` to abort
+- `q` to quit application
 
 ## Dictionary file page
 
