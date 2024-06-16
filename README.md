@@ -9,6 +9,8 @@ input in the form of texts quickly. I use it for Ukrainian language
 acquisition. No support for multiple languages is given, it assumes
 currently the user using it for only one language.
 
+![](https://raw.githubusercontent.com/PatrickLerner/escrit/main/assets/screenshot.png)
+
 ## Run
 
 `cargo run -- %file` to open a file in reading mode.
