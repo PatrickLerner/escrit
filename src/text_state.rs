@@ -99,6 +99,33 @@ impl TextState {
         &self.paragraphs[self.selected_paragraph][self.selected_token]
     }
 
+    // returns a sentence the current token is in
+    pub fn current_token_context(&self) -> String {
+        let paragraph = self.current_paragraph();
+        let mut start = self.selected_token;
+        while start > 0 && !paragraph[start - 1].content.contains(".") {
+            start -= 1;
+        }
+
+        let mut end = self.selected_token;
+        while end < paragraph.len() - 1 && !paragraph[end].content.contains(".") {
+            end += 1;
+        }
+        if end < paragraph.len() {
+            end += 1;
+        }
+
+        paragraph
+            .get(start..end)
+            .unwrap()
+            .iter()
+            .fold("".to_string(), |string, token| {
+                format!("{}{}", string, token.content.to_owned())
+            })
+            .trim()
+            .to_owned()
+    }
+
     fn any_unknown_tokens(&self) -> bool {
         self.paragraphs.iter().any(|paragraph| {
             paragraph

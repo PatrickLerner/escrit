@@ -227,6 +227,11 @@ fn run_app<B: Backend>(
                             app.text.current_token().content
                         ))
                         .unwrap(),
+                        KeyCode::Char('T') => open::that(format!(
+                            "https://translate.google.com/details?sl=uk&tl=en&text={}&op=translate",
+                            app.text.current_token_context()
+                        ))
+                        .unwrap(),
                         KeyCode::Char('1') => {
                             let token = app.text.current_token().content.to_owned();
                             app.set_level(&token, KnowledgeLevel::Unknown);
