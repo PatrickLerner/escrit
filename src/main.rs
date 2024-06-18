@@ -407,7 +407,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let args: Vec<String> = env::args().collect();
     assert!(args.len() == 2);
     let file_name = &args[1];
-    let text = fs::read_to_string(&file_name).expect("File to be readable");
+    let text = fs::read_to_string(file_name).expect("File to be readable");
 
     // setup terminal
     enable_raw_mode()?;
@@ -416,7 +416,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let backend = CrosstermBackend::new(stdout);
     let mut terminal = Terminal::new(backend)?;
 
-    let text = TextState::from_string(&text);
+    let text = TextState::from_string(text);
 
     // create app and run it
     let tick_rate = Duration::from_millis(250);

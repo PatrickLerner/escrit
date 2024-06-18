@@ -26,7 +26,7 @@ impl NoteState {
     }
 
     pub fn update_content(&mut self, content: &str) {
-        self.content = content.to_owned();
+        content.clone_into(&mut self.content)
     }
 
     pub fn move_cursor_left(&mut self) {

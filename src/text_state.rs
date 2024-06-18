@@ -49,11 +49,11 @@ pub struct TextState {
 }
 
 impl TextState {
-    pub fn from_string(content: &String) -> Self {
+    pub fn from_string(content: String) -> Self {
         let seperator =
             Regex::new(r####"([ ,.\-–!\?«»":;…“”\(\)\[\]]+|[0-9]+)"####).expect("Invalid regex");
         let paragraphs = content
-            .split("\n")
+            .split('\n')
             .map(|line| {
                 split_keep(&seperator, line)
                     .iter()
@@ -103,12 +103,12 @@ impl TextState {
     pub fn current_token_context(&self) -> String {
         let paragraph = self.current_paragraph();
         let mut start = self.selected_token;
-        while start > 0 && !paragraph[start - 1].content.contains(".") {
+        while start > 0 && !paragraph[start - 1].content.contains('.') {
             start -= 1;
         }
 
         let mut end = self.selected_token;
-        while end < paragraph.len() - 1 && !paragraph[end].content.contains(".") {
+        while end < paragraph.len() - 1 && !paragraph[end].content.contains('.') {
             end += 1;
         }
         if end < paragraph.len() {

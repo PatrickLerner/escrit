@@ -27,7 +27,7 @@ pub struct Dictionary {
 }
 
 pub fn normalize_word(word: &str) -> String {
-    word.to_lowercase().to_owned().replace("’", "'")
+    word.to_lowercase().to_owned().replace('’', "'")
 }
 
 fn dictionary_file_path() -> String {
@@ -43,7 +43,7 @@ impl Dictionary {
         let mut entries = HashMap::new();
 
         if Path::new(&dictionary_file_path()).exists() {
-            let data = fs::read_to_string(&dictionary_file_path()).unwrap();
+            let data = fs::read_to_string(dictionary_file_path()).unwrap();
             entries = serde_yaml::from_str(&data).unwrap();
         }
 
@@ -56,7 +56,7 @@ impl Dictionary {
 
     pub fn save(&self) {
         let dictionary = serde_yaml::to_string(&self.entries).unwrap();
-        fs::write(&dictionary_file_path(), dictionary).unwrap();
+        fs::write(dictionary_file_path(), dictionary).unwrap();
     }
 
     pub fn set_level(&mut self, word: &str, level: KnowledgeLevel) {
@@ -69,7 +69,7 @@ impl Dictionary {
     pub fn set_note(&mut self, word: &str, note: &str) {
         self.entries
             .entry(normalize_word(word))
-            .and_modify(|e| e.note = note.to_owned())
+            .and_modify(|e| note.clone_into(&mut e.note))
             .or_insert(DictionaryEntry {
                 note: note.to_owned(),
                 level: KnowledgeLevel::Unknown,
