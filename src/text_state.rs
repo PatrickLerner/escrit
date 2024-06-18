@@ -1,29 +1,13 @@
 use std::collections::HashSet;
 
-use super::Dictionary;
+use crate::dictionary::{Dictionary, KnowledgeLevel};
+
 use regex::Regex;
-use serde::{Deserialize, Serialize};
 
 pub struct Token {
     pub content: String,
     pub selectable: bool,
     pub level: KnowledgeLevel,
-}
-
-// TODO: move to dictionary
-#[derive(Clone, Copy, Serialize, Deserialize, PartialEq, Hash, Eq, Debug)]
-pub enum KnowledgeLevel {
-    Unknown,
-    Encountered,
-    Learning,
-    Retained,
-    Known,
-}
-
-impl Default for KnowledgeLevel {
-    fn default() -> Self {
-        Self::Unknown
-    }
 }
 
 fn split_keep<'a>(r: &Regex, text: &'a str) -> Vec<&'a str> {
