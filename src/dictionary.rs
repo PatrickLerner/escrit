@@ -5,7 +5,20 @@ use serde::{Deserialize, Serialize};
 
 use crate::APP_INFO;
 
-use super::KnowledgeLevel;
+#[derive(Clone, Copy, Serialize, Deserialize, PartialEq, Hash, Eq, Debug)]
+pub enum KnowledgeLevel {
+    Unknown,
+    Encountered,
+    Learning,
+    Retained,
+    Known,
+}
+
+impl Default for KnowledgeLevel {
+    fn default() -> Self {
+        Self::Unknown
+    }
+}
 
 #[derive(Serialize, Deserialize, Default, Clone)]
 pub struct DictionaryEntry {
