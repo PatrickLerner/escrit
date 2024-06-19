@@ -1,3 +1,4 @@
+use ::tts::Tts;
 use crossterm::event::{self, Event, KeyCode};
 use ratatui::prelude::*;
 use std::{
@@ -10,6 +11,7 @@ use crate::{
     dictionary::{normalize_word, Dictionary, KnowledgeLevel},
     note_state::NoteState,
     text_state::TextState,
+    tts,
     ui::ui,
 };
 
@@ -27,6 +29,7 @@ pub struct App {
     statistics: Vec<(KnowledgeLevel, usize)>,
     pub page_height: u16,
     pub text_lines: usize,
+    pub tts: Tts,
 }
 
 impl App {
@@ -40,6 +43,7 @@ impl App {
             statistics: vec![],
             page_height: 1,
             text_lines: 1,
+            tts: Tts::default().unwrap(),
         };
 
         app.text.rebuild_knowledge_levels(&app.dictionary);
@@ -211,6 +215,12 @@ pub fn run_app<B: Backend>(
                             app.text.current_token_context()
                         ))
                         .unwrap(),
+                        KeyCode::Char('y') => {
+                            tts::speak(&mut app.tts, &app.text.current_token().content)
+                        }
+                        KeyCode::Char('Y') => {
+                            tts::speak(&mut app.tts, &app.text.current_token_context())
+                        }
                         KeyCode::Char('1') => {
                             let token = app.text.current_token().content.to_owned();
                             app.set_level(&token, KnowledgeLevel::Unknown);

@@ -2,6 +2,7 @@ mod app;
 mod dictionary;
 mod note_state;
 mod text_state;
+mod tts;
 mod ui;
 
 use app_dirs2::AppInfo;
