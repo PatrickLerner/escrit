@@ -7,7 +7,8 @@ a description).
 The idea is to learn vocabulary in a foreign language by going through
 input in the form of texts quickly. I use it for Ukrainian language
 acquisition. No support for multiple languages is given, it assumes
-currently the user using it for only one language.
+currently the user using it for only one language (and that language being
+Ukrainian as no config options are provided currently to change this).
 
 ![](https://raw.githubusercontent.com/PatrickLerner/escrit/main/assets/screenshot.png)
 
@@ -21,9 +22,9 @@ See source code for `KeyCode`, but roughly:
 
 - Arrow keys / `awsd` / `hjkl` for navigation in texts. Up and down
   scrolls, while left and right moves the word cursor
-- Home/`g` for jumping to beginning of text
-- End/`G` for jumping to end of text
-- PageUp/PageDown for faster navigation in scroll position
+- `Home`/`g` for jumping to beginning of text
+- `End`/`G` for jumping to end of text
+- `PageUp`/`PageDown` for faster navigation in scroll position
 - `,` and `.` jump to next word that is not rated as "Known". `<` and `>`
   jump to next word that is specifically `Unknown`
 - `1` mark word as Unknown (default for new words)
@@ -31,7 +32,9 @@ See source code for `KeyCode`, but roughly:
 - `3` mark word as Learning (encountered it a few times, roughly know it)
 - `4` mark word as Retained (seen it often, think I know it well)
 - `5` mark word as Known (I don't even think about it)
-- `t` open google translate for a word
+- `t` open google translate for a word. `T` to translate a sentence.
+- `y` reads the word. `Y` reads the sentence. (TTS support will depend on
+  your system, see rust's tts crate)
 - `e` add a note/definition to a word. When editing press `enter` to save,
   and `escape` to abort
 - `q` to quit application
