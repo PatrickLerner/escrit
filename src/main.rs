@@ -1,36 +1,38 @@
+#![cfg_attr(coverage_nightly, feature(coverage_attribute))]
+
 mod app;
 mod dictionary;
+mod input;
 mod note_state;
 mod text_state;
 mod tts;
 mod ui;
 
 use app_dirs2::AppInfo;
-use clap::Parser;
 use crossterm::{
     event::{DisableMouseCapture, EnableMouseCapture},
     execute,
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
 };
 use ratatui::prelude::*;
-use std::{error::Error, fs, io, time::Duration};
+use std::{env, error::Error, io, time::Duration};
 
 const APP_INFO: AppInfo = AppInfo {
     name: "escrit",
     author: "ptlerner",
 };
 
-#[derive(Parser)]
-#[command(version, about, long_about = None)]
-struct Cli {
-    file_name: String,
-}
-
+#[cfg_attr(coverage_nightly, coverage(off))]
 fn main() -> Result<(), Box<dyn Error>> {
-    let cli = Cli::parse();
-    let text = fs::read_to_string(cli.file_name).expect("File to be readable");
+    let args = env::args().collect::<Vec<_>>();
+    let stdin = io::stdin();
+    let text = input::read_input(&args, stdin);
+    let text = text.unwrap_or_else(String::new);
+    if text.is_empty() {
+        eprintln!("Empty input. Run with a file or stdin.");
+        std::process::exit(1);
+    }
 
-    // setup terminal
     enable_raw_mode()?;
     let mut stdout = io::stdout();
     execute!(stdout, EnterAlternateScreen, EnableMouseCapture)?;
@@ -57,7 +59,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     terminal.show_cursor()?;
 
     if let Err(err) = res {
-        println!("{err:?}");
+        eprintln!("{err:?}");
     }
 
     Ok(())
