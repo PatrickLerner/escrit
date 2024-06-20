@@ -25,11 +25,7 @@ impl Read for MockStdin {
 
 #[test]
 fn no_input() {
-    let stdin = std::io::stdin();
-    let stdin = MockStdin {
-        raw_fd: stdin.as_raw_fd(),
-    };
-
+    let stdin = MockStdin::default();
     let input = read_input(&vec![], stdin);
     assert!(input.is_none());
 }

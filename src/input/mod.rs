@@ -2,6 +2,7 @@
 mod tests;
 
 use clap::Parser;
+#[cfg(not(test))]
 use crossterm::tty::IsTty;
 use std::{
     fs::{read_to_string, File},
@@ -35,7 +36,12 @@ where
     if let Some(file_name) = cli.file_name {
         Some(read_to_string(file_name).expect("File to be readable"))
     } else {
-        let input = if !stdin.is_tty() {
+        #[cfg(test)]
+        let is_tty = stdin.as_raw_fd() == 0;
+        #[cfg(not(test))]
+        let is_tty = stdin.is_tty();
+
+        let input = if !is_tty {
             // Swap stdin and TTY
             // https://github.com/tcr/rager/blob/master/src/main.rs
             // https://stackoverflow.com/a/29694013
