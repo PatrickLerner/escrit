@@ -13,11 +13,21 @@ use tts::*;
 
 pub fn speak(tts: &mut Tts, text: &str) {
     if let Ok(voices) = tts.voices() {
-        let voice = voices.iter().find(|voice| voice.name() == "Lesya");
+        let mut voices = voices
+            .iter()
+            .filter(|voice| voice.language() == "uk-UA")
+            .collect::<Vec<&Voice>>();
+
+        voices.sort_by_key(|v| !v.id().contains("enhanced"));
+        let voice = voices.iter().next();
+
         if let Some(voice) = voice {
             let _ = tts.set_voice(voice);
         }
     }
+
+    let _ = tts.set_rate(0.5);
+    let _ = tts.set_pitch(1.0);
 
     if tts.speak(text, false).is_ok() {
         loop {
