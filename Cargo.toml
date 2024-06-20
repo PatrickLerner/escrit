@@ -21,3 +21,6 @@ libc = "0.2"
 cocoa-foundation = "0.1"
 core-foundation = "0.9"
 objc = { version = "0.2", features = ["exception"] }
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(coverage_nightly)'] }
