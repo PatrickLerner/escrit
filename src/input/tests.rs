@@ -25,7 +25,11 @@ impl Read for MockStdin {
 
 #[test]
 fn no_input() {
-    let stdin = MockStdin::default();
+    let mut stdin = MockStdin::default();
+    // calling read here once for test coverage
+    let mut buf: [u8; 2] = [0, 0];
+    let _ = stdin.read(&mut buf);
+
     let input = read_input(&vec![], stdin);
     assert!(input.is_none());
 }
