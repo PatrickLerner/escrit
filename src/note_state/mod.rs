@@ -1,3 +1,6 @@
+#[cfg(test)]
+mod tests;
+
 use crossterm::event::KeyCode;
 
 #[derive(Default)]
@@ -29,17 +32,21 @@ impl NoteState {
         content.clone_into(&mut self.content)
     }
 
-    pub fn move_cursor_left(&mut self) {
+    pub fn reset_cursor(&mut self) {
+        self.character_index = self.content.len();
+    }
+
+    fn move_cursor_left(&mut self) {
         let cursor_moved_left = self.character_index.saturating_sub(1);
         self.character_index = self.clamp_cursor(cursor_moved_left);
     }
 
-    pub fn move_cursor_right(&mut self) {
+    fn move_cursor_right(&mut self) {
         let cursor_moved_right = self.character_index.saturating_add(1);
         self.character_index = self.clamp_cursor(cursor_moved_right);
     }
 
-    pub fn enter_char(&mut self, new_char: char) {
+    fn enter_char(&mut self, new_char: char) {
         let index = self.byte_index();
         self.content.insert(index, new_char);
         self.move_cursor_right();
@@ -49,7 +56,7 @@ impl NoteState {
     ///
     /// Since each character in a string can be contain multiple bytes, it's necessary to calculate
     /// the byte index based on the index of the character.
-    pub fn byte_index(&self) -> usize {
+    fn byte_index(&self) -> usize {
         self.content
             .char_indices()
             .map(|(i, _)| i)
@@ -57,7 +64,7 @@ impl NoteState {
             .unwrap_or(self.content.len())
     }
 
-    pub fn delete_char(&mut self) {
+    fn delete_char(&mut self) {
         let is_not_cursor_leftmost = self.character_index != 0;
         if is_not_cursor_leftmost {
             // Method "remove" is not used on the saved text for deleting the selected char.
@@ -79,11 +86,7 @@ impl NoteState {
         }
     }
 
-    pub fn clamp_cursor(&self, new_cursor_pos: usize) -> usize {
+    fn clamp_cursor(&self, new_cursor_pos: usize) -> usize {
         new_cursor_pos.clamp(0, self.content.chars().count())
-    }
-
-    pub fn reset_cursor(&mut self) {
-        self.character_index = self.content.len();
     }
 }
