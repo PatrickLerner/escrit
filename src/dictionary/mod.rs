@@ -92,7 +92,7 @@ impl Dictionary {
             .and_modify(|e| note.clone_into(&mut e.note))
             .or_insert(DictionaryEntry {
                 note: note.to_owned(),
-                level: KnowledgeLevel::Unknown,
+                ..Default::default()
             });
     }
 }

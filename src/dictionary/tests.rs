@@ -55,3 +55,28 @@ fn get_set_load_and_save() {
 
     cleanup();
 }
+
+#[test]
+fn updating_words() {
+    let mut dictionary = Dictionary::new(&temp_file());
+    // file does not exist, so no entries exist
+    assert_eq!(dictionary.entries.len(), 0);
+
+    dictionary.set_note("rust", "old note");
+    dictionary.set_level("rust", KnowledgeLevel::Learning);
+
+    dictionary.set_note("rust", "new note");
+    dictionary.set_level("rust", KnowledgeLevel::Known);
+
+    let word = dictionary.get("rust");
+    assert!(word.is_some());
+    let word = word.unwrap();
+    assert_eq!(word.level, KnowledgeLevel::Known);
+    assert_eq!(word.note, "new note");
+}
+
+#[test]
+fn test_dictionary_file_path() {
+    let path = dictionary_file_path();
+    assert!(path.ends_with("dictionary.yml"));
+}
