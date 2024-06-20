@@ -1,3 +1,5 @@
+#![cfg_attr(coverage_nightly, feature(coverage_attribute))]
+
 mod app;
 mod dictionary;
 mod input;
@@ -20,6 +22,7 @@ const APP_INFO: AppInfo = AppInfo {
     author: "ptlerner",
 };
 
+#[cfg_attr(coverage_nightly, coverage(off))]
 fn main() -> Result<(), Box<dyn Error>> {
     let args = env::args().collect::<Vec<_>>();
     let stdin = io::stdin();
