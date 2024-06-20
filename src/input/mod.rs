@@ -17,10 +17,12 @@ struct Cli {
 
 #[allow(unreachable_code)]
 fn tty_device() -> String {
+    /*
     #[cfg(test)]
     let temp_file = std::env::temp_dir().join("escrit_tty");
     #[cfg(test)]
     return temp_file.to_string_lossy().to_string();
+    */
 
     #[cfg(target_os = "linux")]
     return "/dev/tty".to_owned();

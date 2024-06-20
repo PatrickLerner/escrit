@@ -1,9 +1,5 @@
 use super::*;
-use std::{
-    fs::remove_file,
-    io::{Seek, SeekFrom, Write},
-    os::fd::RawFd,
-};
+use std::{fs::remove_file, io::Write, os::fd::RawFd};
 
 struct MockStdin {
     raw_fd: RawFd,
@@ -30,8 +26,11 @@ impl Read for MockStdin {
 #[test]
 fn no_input() {
     let stdin = MockStdin::default();
+
     let input = read_input(&vec![], stdin);
     assert!(input.is_none());
+
+    let _ = remove_file(tty_device());
 }
 
 #[test]
@@ -51,23 +50,25 @@ fn read_tty() {
         raw_fd: RawFd::min_value(),
     };
 
-    // write to tty
+    let temp_file = std::env::temp_dir().join("escrit_tty");
+    let tty_device = temp_file.to_string_lossy().to_string();
+
+    // create a fake tty
     {
-        let mut f = File::create(tty_device()).unwrap();
+        let mut f = File::create(&tty_device).unwrap();
         let _ = f.write(b"Hello World");
         let _ = f.sync_all();
-        let _ = f.seek(SeekFrom::Start(0));
-
-        // we map the file pointer to 0 (stdin) so the app reads from a file instead
-        // of course it's complete BS to test like this. I just did it for fun because
-        // I wanted to get 100% code coverage on the file
-        unsafe {
-            use std::os::unix::io::*;
-
-            let f = File::open(tty_device()).unwrap();
-            libc::dup2(f.as_raw_fd(), 0);
-        };
     }
+
+    // we map the file pointer to 0 (stdin) so the app reads from a file instead
+    // of course it's complete BS to test like this. I just did it for fun because
+    // I wanted to get 100% code coverage on the file
+    unsafe {
+        use std::os::unix::io::*;
+
+        let f = File::open(&tty_device).unwrap();
+        libc::dup2(f.as_raw_fd(), 0);
+    };
 
     let input = read_input(&vec![], stdin);
 
@@ -75,5 +76,5 @@ fn read_tty() {
     let text = input.unwrap();
     assert!(text.starts_with("Hello World"));
 
-    let _ = remove_file(tty_device());
+    let _ = remove_file(tty_device);
 }

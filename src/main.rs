@@ -24,7 +24,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let args = env::args().collect::<Vec<_>>();
     let stdin = io::stdin();
     let text = input::read_input(&args, stdin);
-    let text = text.unwrap_or_else(|| String::new());
+    let text = text.unwrap_or_else(String::new);
     if text.is_empty() {
         eprintln!("Empty input. Run with a file or stdin.");
         std::process::exit(1);
