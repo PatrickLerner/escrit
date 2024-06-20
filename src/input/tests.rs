@@ -29,8 +29,6 @@ fn no_input() {
 
     let input = read_input(&vec![], stdin);
     assert!(input.is_none());
-
-    let _ = remove_file(tty_device());
 }
 
 #[test]
@@ -50,7 +48,7 @@ fn read_tty() {
         raw_fd: RawFd::min_value(),
     };
 
-    let temp_file = std::env::temp_dir().join("escrit_tty");
+    let temp_file = std::env::temp_dir().join("escrit_fake_tty");
     let tty_device = temp_file.to_string_lossy().to_string();
 
     // create a fake tty

@@ -16,19 +16,15 @@ struct Cli {
 }
 
 #[allow(unreachable_code)]
-fn tty_device() -> String {
-    /*
+fn tty_device() -> &'static str {
     #[cfg(test)]
-    let temp_file = std::env::temp_dir().join("escrit_tty");
-    #[cfg(test)]
-    return temp_file.to_string_lossy().to_string();
-    */
+    return concat!(env!("CARGO_MANIFEST_DIR"), "/", file!());
 
-    #[cfg(target_os = "linux")]
-    return "/dev/tty".to_owned();
+    #[cfg(all(target_os = "linux", not(test)))]
+    return "/dev/tty";
 
-    #[cfg(target_os = "macos")]
-    return "/dev/ttys010".to_owned();
+    #[cfg(all(target_os = "macos", not(test)))]
+    return "/dev/ttys010";
 }
 
 pub fn read_input<R>(args: &[String], stdin: R) -> Option<String>
