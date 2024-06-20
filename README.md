@@ -1,3 +1,5 @@
+[![Rust](https://github.com/PatrickLerner/escrit/actions/workflows/rust.yml/badge.svg)](https://github.com/PatrickLerner/escrit/actions/workflows/rust.yml) [![codecov](https://codecov.io/github/PatrickLerner/escrit/graph/badge.svg?token=L96BAYS6N1)](https://codecov.io/github/PatrickLerner/escrit)
+
 # escrit
 
 Read texts similar to the Birkenbihl method or applications like lingq.
