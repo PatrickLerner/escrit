@@ -19,7 +19,7 @@ pub fn speak(tts: &mut Tts, text: &str) {
             .collect::<Vec<&Voice>>();
 
         voices.sort_by_key(|v| !v.id().contains("enhanced"));
-        let voice = voices.iter().next();
+        let voice = voices.first();
 
         if let Some(voice) = voice {
             let _ = tts.set_voice(voice);
