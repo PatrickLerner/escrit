@@ -35,18 +35,15 @@ where
 {
     let cli = Cli::parse_from(args);
     if let Some(file_name) = cli.file_name {
-        println!("read file");
         Some(read_to_string(file_name).expect("File to be readable"))
     } else {
         let input = if !stdin.is_tty() {
             // Swap stdin and TTY
             // https://github.com/tcr/rager/blob/master/src/main.rs
             // https://stackoverflow.com/a/29694013
-            println!("wait input");
             unsafe {
                 use std::os::unix::io::*;
 
-                println!("{:?}", tty_device());
                 let tty = File::open(tty_device()).expect("to open tty");
                 let stdin_fd = libc::dup(0);
                 let ret = std::fs::File::from_raw_fd(stdin_fd);
@@ -61,9 +58,7 @@ where
 
         input.map(|mut input| {
             let mut text = String::new();
-            println!("read baby");
             let _ = input.read_to_string(&mut text);
-            println!("read baby done");
             text
         })
     }

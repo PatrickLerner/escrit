@@ -31,7 +31,6 @@ impl Read for MockStdin {
 fn no_input() {
     let stdin = MockStdin::default();
     let input = read_input(&vec![], stdin);
-    println!("{:?}", input);
     assert!(input.is_none());
 }
 
@@ -74,7 +73,6 @@ fn read_tty() {
 
     assert!(input.is_some());
     let text = input.unwrap();
-    println!("xi: {}", text);
     assert!(text.starts_with("Hello World"));
 
     let _ = remove_file(tty_device());
