@@ -44,3 +44,7 @@ See source code for `KeyCode`, but roughly:
 Depends on the operating sysem, see
 [`app_dirs2`](https://docs.rs/app_dirs2/latest/app_dirs2/) crate. It will
 be in the `escrit` directory.
+
+## Dev Notes
+
+- Open line coverage of tests: `cargo llvm-cov --open`
