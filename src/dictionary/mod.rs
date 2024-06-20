@@ -1,3 +1,6 @@
+#[cfg(test)]
+mod tests;
+
 use std::{collections::HashMap, fs, path::Path};
 
 use app_dirs2::*;
@@ -36,6 +39,7 @@ impl DictionaryEntry {
 }
 
 pub struct Dictionary {
+    file_name: String,
     entries: HashMap<String, DictionaryEntry>,
 }
 
@@ -43,7 +47,7 @@ pub fn normalize_word(word: &str) -> String {
     word.to_lowercase().to_owned().replace('’', "'")
 }
 
-fn dictionary_file_path() -> String {
+pub fn dictionary_file_path() -> String {
     let path = app_root(AppDataType::UserData, &APP_INFO)
         .expect("create app file path")
         .join("dictionary.yml");
@@ -52,15 +56,18 @@ fn dictionary_file_path() -> String {
 }
 
 impl Dictionary {
-    pub fn new() -> Self {
+    pub fn new(file_name: &str) -> Self {
         let mut entries = HashMap::new();
 
-        if Path::new(&dictionary_file_path()).exists() {
-            let data = fs::read_to_string(dictionary_file_path()).unwrap();
+        if Path::new(&file_name).exists() {
+            let data = fs::read_to_string(file_name).unwrap();
             entries = serde_yaml::from_str(&data).unwrap();
         }
 
-        Self { entries }
+        Self {
+            entries,
+            file_name: file_name.to_owned(),
+        }
     }
 
     pub fn get(&self, word: &str) -> Option<&DictionaryEntry> {
@@ -69,7 +76,7 @@ impl Dictionary {
 
     pub fn save(&self) {
         let dictionary = serde_yaml::to_string(&self.entries).unwrap();
-        fs::write(dictionary_file_path(), dictionary).unwrap();
+        fs::write(&self.file_name, dictionary).unwrap();
     }
 
     pub fn set_level(&mut self, word: &str, level: KnowledgeLevel) {

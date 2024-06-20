@@ -42,7 +42,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     // create app and run it
     let tick_rate = Duration::from_millis(250);
 
-    let dictionary = dictionary::Dictionary::new();
+    let dictionary = dictionary::Dictionary::new(&dictionary::dictionary_file_path());
     let app = app::App::new(text, dictionary);
 
     let res = app::run_app(&mut terminal, app, tick_rate);
