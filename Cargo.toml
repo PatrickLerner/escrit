@@ -13,7 +13,7 @@ repository = "https://github.com/PatrickLerner/escrit"
 keywords = ["language-learning", "language"]
 
 [dependencies]
-ratatui = { version = "0.26", features = ["unstable-rendered-line-info"] }
+ratatui = { version = "0.27", features = ["unstable-rendered-line-info"] }
 crossterm = "0.27"
 anyhow = "1.0"
 itertools = "0.13"
