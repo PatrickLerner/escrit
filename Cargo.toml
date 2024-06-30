@@ -2,6 +2,10 @@
 name = "escrit"
 version = "0.1.0"
 edition = "2021"
+exclude = [
+  "texts/*",
+]
+license = "MIT"
 
 [dependencies]
 ratatui = { version = "0.26", features = ["unstable-rendered-line-info"] }
