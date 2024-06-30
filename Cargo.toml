@@ -7,6 +7,10 @@ exclude = [
   ".github/*",
 ]
 license = "MIT"
+description = "A tool for learning languages by reading texts"
+readme = "README.md"
+repository = "https://github.com/PatrickLerner/escrit"
+keywords = ["language learning", "language"]
 
 [dependencies]
 ratatui = { version = "0.26", features = ["unstable-rendered-line-info"] }
