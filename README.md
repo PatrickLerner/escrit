@@ -1,4 +1,5 @@
-[![Rust](https://github.com/PatrickLerner/escrit/actions/workflows/rust.yml/badge.svg)](https://github.com/PatrickLerner/escrit/actions/workflows/rust.yml) [![codecov](https://codecov.io/github/PatrickLerner/escrit/graph/badge.svg?token=L96BAYS6N1)](https://codecov.io/github/PatrickLerner/escrit)
+[![Rust](https://github.com/PatrickLerner/escrit/actions/workflows/rust.yml/badge.svg)](https://github.com/PatrickLerner/escrit/actions/workflows/rust.yml) [![codecov](https://codecov.io/github/PatrickLerner/escrit/graph/badge.svg?token=L96BAYS6N1)](https://codecov.io/github/PatrickLerner/escrit) ![Crates.io Version](https://img.shields.io/crates/v/escrit) ![GitHub License](https://img.shields.io/github/license/PatrickLerner/rustrail?style=flat&color=%235E81AC)
+
 
 # escrit
 
