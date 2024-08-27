@@ -15,9 +15,12 @@ Ukrainian as no config options are provided currently to change this).
 
 ![](https://raw.githubusercontent.com/PatrickLerner/escrit/main/assets/screenshot.png)
 
-## Run
+## Install & Usages
 
-`cargo run -- %file` to open a file in reading mode.
+You can find the package on crates.io and can install it as `cargo install escrit`. Then you can run it like so:
+
+- `escrit text.txt`
+- `pbpaste | escrit` (macos to read clipboard input)
 
 ## Keys / Usages
 
@@ -51,3 +54,4 @@ be in the `escrit` directory.
 ## Dev Notes
 
 - Open line coverage of tests: `cargo llvm-cov --open`
+- While developing you can run it as `cargo run -- %file` to open a file in reading mode.
