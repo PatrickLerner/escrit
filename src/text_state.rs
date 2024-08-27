@@ -35,7 +35,7 @@ pub struct TextState {
 impl TextState {
     pub fn from_string(content: String) -> Self {
         let seperator =
-            Regex::new(r####"([ ,.\-–!\?«»":;…“”\(\)\[\]]+|[0-9]+)"####).expect("Invalid regex");
+            Regex::new(r####"([ ,./\-–!\?«»":;…“”\(\)\[\]]+|[0-9]+)"####).expect("Invalid regex");
         let paragraphs = content
             .split('\n')
             .map(|line| {
