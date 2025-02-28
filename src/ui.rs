@@ -19,7 +19,7 @@ fn color_by_language_level(span: Span, level: KnowledgeLevel) -> Span {
 }
 
 pub fn ui(f: &mut Frame, app: &mut App) {
-    let size = f.size();
+    let size = f.area();
 
     let sidebar_size = 50;
     let text_width = 80;
@@ -117,10 +117,10 @@ pub fn ui(f: &mut Frame, app: &mut App) {
 
         InputMode::Editing => {
             #[allow(clippy::cast_possible_truncation)]
-            f.set_cursor(
+            f.set_cursor_position((
                 definition_layout.x + app.note.character_index as u16 + 1,
                 definition_layout.y + 1,
-            );
+            ));
         }
     }
 

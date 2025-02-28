@@ -1,6 +1,6 @@
 [package]
 name = "escrit"
-version = "0.2.1"
+version = "0.2.2"
 edition = "2021"
 exclude = [
   "texts/*",
@@ -13,23 +13,23 @@ repository = "https://github.com/PatrickLerner/escrit"
 keywords = ["language-learning", "language"]
 
 [dependencies]
-ratatui = { version = "0.27", features = ["unstable-rendered-line-info"] }
-crossterm = "0.27"
+ratatui = { version = "0.29", features = ["unstable-rendered-line-info"] }
+crossterm = "0.28"
 anyhow = "1.0"
-itertools = "0.13"
+itertools = "0.14"
 regex = { version = "1.10", features = ["pattern"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_yaml = "0.9"
 open = "5.1.4"
 app_dirs2 = "2.5"
-clap = { version = "4.5.8", features = ["derive"] }
+clap = { version = "4.5", features = ["derive"] }
 tts = "0.26.1"
 libc = "0.2"
 
 [target.'cfg(any(target_os = "macos", target_os = "ios"))'.dependencies]
-cocoa-foundation = "0.1"
-core-foundation = "0.9"
+cocoa-foundation = "0.2"
+core-foundation = "0.10"
 objc = { version = "0.2", features = ["exception"] }
 
 [lints.rust]
-unexpected_cfgs = { level = "warn", check-cfg = ['cfg(coverage_nightly)'] }
+unexpected_cfgs = "allow"
