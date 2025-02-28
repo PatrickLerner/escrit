@@ -1,8 +1,12 @@
 # escrit Changelog
 
+## 0.2.1
+
+- Fixed bug where TTS was buggy and repeating a stale word
+
 ## 0.2.0
 
-- Add multi language support (currently only Turkish)
+- Add multi language support (currently only Turkish and Ukrainian)
 
 ## 0.1.1
 

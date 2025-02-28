@@ -13,6 +13,8 @@ use tts::*;
 use crate::app::Language;
 
 pub fn speak(tts: &mut Tts, text: &str, language: Language) {
+    let _ = tts.stop();
+
     if let Ok(voices) = tts.voices() {
         let language_code = match language {
             Language::Ukrainian => "uk-UA",
