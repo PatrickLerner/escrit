@@ -1,3 +1,4 @@
+use crate::app::Language;
 #[cfg(target_os = "macos")]
 use cocoa_foundation::base::id;
 #[cfg(target_os = "macos")]
@@ -10,7 +11,6 @@ use objc::class;
 use objc::{msg_send, sel, sel_impl};
 use std::{thread, time};
 use tts::*;
-use crate::app::Language;
 
 pub fn speak(tts: &mut Tts, text: &str, language: Language) {
     let _ = tts.stop();

@@ -240,12 +240,16 @@ pub fn run_app<B: Backend>(
                             app.text.current_token_context()
                         ))
                         .unwrap(),
-                        KeyCode::Char('y') => {
-                            tts::speak(&mut app.tts, &app.text.current_token().content, app.language)
-                        }
-                        KeyCode::Char('Y') => {
-                            tts::speak(&mut app.tts, &app.text.current_token_context(), app.language)
-                        }
+                        KeyCode::Char('y') => tts::speak(
+                            &mut app.tts,
+                            &app.text.current_token().content,
+                            app.language,
+                        ),
+                        KeyCode::Char('Y') => tts::speak(
+                            &mut app.tts,
+                            &app.text.current_token_context(),
+                            app.language,
+                        ),
                         KeyCode::Char('1') => {
                             let token = app.text.current_token().content.to_owned();
                             app.set_level(&token, KnowledgeLevel::Unknown);
