@@ -10,12 +10,18 @@ use objc::class;
 use objc::{msg_send, sel, sel_impl};
 use std::{thread, time};
 use tts::*;
+use crate::app::Language;
 
-pub fn speak(tts: &mut Tts, text: &str) {
+pub fn speak(tts: &mut Tts, text: &str, language: Language) {
     if let Ok(voices) = tts.voices() {
+        let language_code = match language {
+            Language::Ukrainian => "uk-UA",
+            Language::Turkish => "tr-TR",
+        };
+
         let mut voices = voices
             .iter()
-            .filter(|voice| voice.language() == "uk-UA")
+            .filter(|voice| voice.language() == language_code)
             .collect::<Vec<&Voice>>();
 
         voices.sort_by_key(|v| !v.id().contains("enhanced"));

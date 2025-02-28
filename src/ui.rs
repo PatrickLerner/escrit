@@ -49,6 +49,22 @@ pub fn ui(f: &mut Frame, app: &mut App) {
     let definition_layout = right_layout[0];
     let statistic_layout = right_layout[1];
 
+    let create_block = |title| {
+        Block::bordered()
+            .style(Style::default().fg(Color::Gray))
+            .title(Span::styled(
+                title,
+                Style::default().add_modifier(Modifier::BOLD),
+            ))
+    };
+
+    let text_container = Paragraph::new("")
+        .style(Style::default().fg(Color::Gray))
+        .block(create_block("Text"))
+        .wrap(Wrap { trim: true })
+        .scroll((app.scroll, 0));
+    f.render_widget(text_container, text_layout);
+
     let text: Vec<Line> = app
         .text
         .paragraphs
@@ -79,22 +95,6 @@ pub fn ui(f: &mut Frame, app: &mut App) {
             )
         })
         .collect();
-
-    let create_block = |title| {
-        Block::bordered()
-            .style(Style::default().fg(Color::Gray))
-            .title(Span::styled(
-                title,
-                Style::default().add_modifier(Modifier::BOLD),
-            ))
-    };
-
-    let text_container = Paragraph::new("")
-        .style(Style::default().fg(Color::Gray))
-        .block(create_block("Text"))
-        .wrap(Wrap { trim: true })
-        .scroll((app.scroll, 0));
-    f.render_widget(text_container, text_layout);
 
     let paragraph = Paragraph::new(text.clone())
         .style(Style::default().fg(Color::Gray))

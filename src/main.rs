@@ -26,7 +26,7 @@ const APP_INFO: AppInfo = AppInfo {
 fn main() -> Result<(), Box<dyn Error>> {
     let args = env::args().collect::<Vec<_>>();
     let stdin = io::stdin();
-    let text = input::read_input(&args, stdin);
+    let (text, language) = input::read_input(&args, stdin);
     let text = text.unwrap_or_else(String::new);
     if text.is_empty() {
         eprintln!("Empty input. Run with a file or stdin.");
@@ -44,8 +44,9 @@ fn main() -> Result<(), Box<dyn Error>> {
     // create app and run it
     let tick_rate = Duration::from_millis(250);
 
-    let dictionary = dictionary::Dictionary::new(&dictionary::dictionary_file_path());
-    let app = app::App::new(text, dictionary);
+    let dictionary = dictionary::Dictionary::new(&dictionary::dictionary_file_path(language));
+    let mut app = app::App::new(text, dictionary);
+    app.language = language;
 
     let res = app::run_app(&mut terminal, app, tick_rate);
 

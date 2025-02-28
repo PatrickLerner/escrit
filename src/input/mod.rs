@@ -10,10 +10,23 @@ use std::{
     os::fd::AsRawFd,
 };
 
+use crate::app::Language;
+
 #[derive(Parser)]
 #[command(version, about, long_about = None)]
-struct Cli {
+pub struct Cli {
     file_name: Option<String>,
+    #[arg(short, long, default_value = "ukrainian")]
+    language: String,
+}
+
+impl Cli {
+    pub fn get_language(&self) -> Language {
+        match self.language.to_lowercase().as_str() {
+            "turkish" | "tr" => Language::Turkish,
+            _ => Language::Ukrainian,
+        }
+    }
 }
 
 #[allow(unreachable_code)]
@@ -28,12 +41,13 @@ fn tty_device() -> &'static str {
     return "/dev/ttys010";
 }
 
-pub fn read_input<R>(args: &[String], stdin: R) -> Option<String>
+pub fn read_input<R>(args: &[String], stdin: R) -> (Option<String>, Language)
 where
     R: Read + Sized + AsRawFd,
 {
     let cli = Cli::parse_from(args);
-    if let Some(file_name) = cli.file_name {
+    let language = cli.get_language();
+    let text = if let Some(file_name) = cli.file_name {
         Some(read_to_string(file_name).expect("File to be readable"))
     } else {
         #[cfg(test)]
@@ -65,5 +79,6 @@ where
             let _ = input.read_to_string(&mut text);
             text
         })
-    }
+    };
+    (text, language)
 }

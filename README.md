@@ -8,10 +8,8 @@ Read the text and add words to a dictionary file (if you want with
 a description).
 
 The idea is to learn vocabulary in a foreign language by going through
-input in the form of texts quickly. I use it for Ukrainian language
-acquisition. No support for multiple languages is given, it assumes
-currently the user using it for only one language (and that language being
-Ukrainian as no config options are provided currently to change this).
+input in the form of texts quickly. Currently supports Ukrainian and Turkish
+languages.
 
 ![](https://raw.githubusercontent.com/PatrickLerner/escrit/main/assets/screenshot.png)
 
@@ -19,7 +17,8 @@ Ukrainian as no config options are provided currently to change this).
 
 You can find the package on crates.io and can install it as `cargo install escrit`. Then you can run it like so:
 
-- `escrit text.txt`
+- `escrit text.txt` (defaults to Ukrainian)
+- `escrit --language turkish text.txt` (or `-l tr` for short)
 - `pbpaste | escrit` (macos to read clipboard input)
 
 ## Keys / Usages

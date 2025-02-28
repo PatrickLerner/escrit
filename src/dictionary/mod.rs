@@ -6,7 +6,7 @@ use std::{collections::HashMap, fs, path::Path};
 use app_dirs2::*;
 use serde::{Deserialize, Serialize};
 
-use crate::APP_INFO;
+use crate::{app::Language, APP_INFO};
 
 #[derive(Clone, Copy, Serialize, Deserialize, PartialEq, Hash, Eq, Debug)]
 pub enum KnowledgeLevel {
@@ -47,12 +47,15 @@ pub fn normalize_word(word: &str) -> String {
     word.to_lowercase().to_owned().replace('’', "'")
 }
 
-pub fn dictionary_file_path() -> String {
-    let path = app_root(AppDataType::UserData, &APP_INFO)
-        .expect("create app file path")
-        .join("dictionary.yml");
+pub fn dictionary_file_path(language: Language) -> String {
+    let base_path = app_root(AppDataType::UserData, &APP_INFO).expect("create app file path");
 
-    path.to_str().unwrap().to_owned()
+    let filename = match language {
+        Language::Ukrainian => "dictionary_uk.yml",
+        Language::Turkish => "dictionary_tr.yml",
+    };
+
+    base_path.join(filename).to_str().unwrap().to_owned()
 }
 
 impl Dictionary {

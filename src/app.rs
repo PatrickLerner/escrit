@@ -20,12 +20,34 @@ pub enum InputMode {
     Editing,
 }
 
+#[derive(Clone, Copy, PartialEq, Debug)]
+pub enum Language {
+    Ukrainian,
+    Turkish,
+}
+
+impl Default for Language {
+    fn default() -> Self {
+        Self::Ukrainian
+    }
+}
+
+impl Language {
+    fn google_translate_code(&self) -> &'static str {
+        match self {
+            Language::Ukrainian => "uk",
+            Language::Turkish => "tr",
+        }
+    }
+}
+
 pub struct App {
     pub scroll: u16,
     pub text: TextState,
     pub dictionary: Dictionary,
     pub note: NoteState,
     pub input_mode: InputMode,
+    pub language: Language,
     statistics: Vec<(KnowledgeLevel, usize)>,
     pub page_height: u16,
     pub text_lines: usize,
@@ -40,6 +62,7 @@ impl App {
             dictionary,
             note: NoteState::default(),
             input_mode: InputMode::Normal,
+            language: Language::default(),
             statistics: vec![],
             page_height: 1,
             text_lines: 1,
@@ -206,20 +229,22 @@ pub fn run_app<B: Backend>(
                             app.update_definition();
                         }
                         KeyCode::Char('t') => open::that(format!(
-                            "https://translate.google.com/details?sl=uk&tl=en&text={}&op=translate",
+                            "https://translate.google.com/details?sl={}&tl=en&text={}&op=translate",
+                            app.language.google_translate_code(),
                             app.text.current_token().content
                         ))
                         .unwrap(),
                         KeyCode::Char('T') => open::that(format!(
-                            "https://translate.google.com/details?sl=uk&tl=en&text={}&op=translate",
+                            "https://translate.google.com/details?sl={}&tl=en&text={}&op=translate",
+                            app.language.google_translate_code(),
                             app.text.current_token_context()
                         ))
                         .unwrap(),
                         KeyCode::Char('y') => {
-                            tts::speak(&mut app.tts, &app.text.current_token().content)
+                            tts::speak(&mut app.tts, &app.text.current_token().content, app.language)
                         }
                         KeyCode::Char('Y') => {
-                            tts::speak(&mut app.tts, &app.text.current_token_context())
+                            tts::speak(&mut app.tts, &app.text.current_token_context(), app.language)
                         }
                         KeyCode::Char('1') => {
                             let token = app.text.current_token().content.to_owned();
