@@ -38,11 +38,28 @@ fn no_input() {
 fn read_file() {
     let stdin = MockStdin::default();
     let args = vec!["escit".to_owned(), file!().to_owned()];
-    let (text, _) = read_input(&args, stdin);
+    let (text, language) = read_input(&args, stdin);
 
     assert!(text.is_some());
     let text = text.unwrap();
     assert!(text.contains("use super::*;"));
+
+    // default language
+    assert_eq!(language, Language::Ukrainian);
+}
+
+#[test]
+fn specify_language() {
+    let stdin = MockStdin::default();
+    let args = vec![
+        "escit".to_owned(),
+        file!().to_owned(),
+        "-l".to_owned(),
+        "tr".to_owned(),
+    ];
+    let (_, language) = read_input(&args, stdin);
+
+    assert_eq!(language, Language::Turkish);
 }
 
 #[test]
