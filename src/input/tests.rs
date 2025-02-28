@@ -30,18 +30,18 @@ fn no_input() {
     let mut buf: [u8; 2] = [0, 0];
     let _ = stdin.read(&mut buf);
 
-    let input = read_input(&vec![], stdin);
-    assert!(input.is_none());
+    let (text, _) = read_input(&vec![], stdin);
+    assert!(text.is_none());
 }
 
 #[test]
 fn read_file() {
     let stdin = MockStdin::default();
     let args = vec!["escit".to_owned(), file!().to_owned()];
-    let input = read_input(&args, stdin);
+    let (text, _) = read_input(&args, stdin);
 
-    assert!(input.is_some());
-    let text = input.unwrap();
+    assert!(text.is_some());
+    let text = text.unwrap();
     assert!(text.contains("use super::*;"));
 }
 
@@ -71,10 +71,10 @@ fn read_tty() {
         libc::dup2(f.as_raw_fd(), 0);
     };
 
-    let input = read_input(&vec![], stdin);
+    let (text, _) = read_input(&vec![], stdin);
 
-    assert!(input.is_some());
-    let text = input.unwrap();
+    assert!(text.is_some());
+    let text = text.unwrap();
     assert!(text.starts_with("Hello World"));
 
     let _ = remove_file(tty_device);

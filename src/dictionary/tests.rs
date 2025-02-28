@@ -78,6 +78,9 @@ fn updating_words() {
 
 #[test]
 fn test_dictionary_file_path() {
-    let path = dictionary_file_path();
-    assert!(path.ends_with("dictionary.yml"));
+    let path = dictionary_file_path(Language::Ukrainian);
+    assert!(path.ends_with("dictionary_uk.yml"));
+
+    let path = dictionary_file_path(Language::Turkish);
+    assert!(path.ends_with("dictionary_tr.yml"));
 }
