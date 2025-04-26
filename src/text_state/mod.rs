@@ -4,6 +4,9 @@ use crate::dictionary::{Dictionary, KnowledgeLevel};
 
 use regex::Regex;
 
+#[cfg(test)]
+mod tests;
+
 pub struct Token {
     pub content: String,
     pub selectable: bool,
