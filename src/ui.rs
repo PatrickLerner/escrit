@@ -134,8 +134,8 @@ pub fn ui(f: &mut Frame, app: &mut App) {
             }
 
             let content = vec![
-                color_by_language_level(Span::from(format!("{:?}", level)), *level),
-                Span::from(format!(" – {}", count)),
+                color_by_language_level(Span::from(format!("{level:?}")), *level),
+                Span::from(format!(" – {count}")),
                 Span::from(format!(" ({:.1} %)", *count as f32 / total as f32 * 100.0)),
             ];
 
