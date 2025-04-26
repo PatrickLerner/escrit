@@ -1,5 +1,9 @@
 # escrit Changelog
 
+## 0.3.0
+
+- Ignore emoji in texts
+
 ## 0.2.2
 
 - Updated dependencies
