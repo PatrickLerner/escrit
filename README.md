@@ -8,7 +8,7 @@ Read the text and add words to a dictionary file (if you want with
 a description).
 
 The idea is to learn vocabulary in a foreign language by going through
-input in the form of texts quickly. Currently supports Ukrainian and Turkish
+input in the form of texts quickly. Currently supports Ukrainian, Turkish, and Persian
 languages.
 
 ![](https://raw.githubusercontent.com/PatrickLerner/escrit/main/assets/screenshot.png)
@@ -19,6 +19,7 @@ You can find the package on crates.io and can install it as `cargo install escri
 
 - `escrit text.txt` (defaults to Ukrainian)
 - `escrit --language turkish text.txt` (or `-l tr` for short)
+- `escrit --language persian text.txt` (or `-l fa` for short)
 - `pbpaste | escrit` (macos to read clipboard input)
 
 ## Keys / Usages

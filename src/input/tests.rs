@@ -63,6 +63,34 @@ fn specify_language() {
 }
 
 #[test]
+fn specify_persian_language() {
+    let stdin = MockStdin::default();
+    let args = vec![
+        "escit".to_owned(),
+        file!().to_owned(),
+        "-l".to_owned(),
+        "fa".to_owned(),
+    ];
+    let (_, language) = read_input(&args, stdin);
+
+    assert_eq!(language, Language::Persian);
+}
+
+#[test]
+fn specify_persian_language_long_name() {
+    let stdin = MockStdin::default();
+    let args = vec![
+        "escit".to_owned(),
+        file!().to_owned(),
+        "-l".to_owned(),
+        "persian".to_owned(),
+    ];
+    let (_, language) = read_input(&args, stdin);
+
+    assert_eq!(language, Language::Persian);
+}
+
+#[test]
 fn read_tty() {
     let stdin = MockStdin {
         raw_fd: RawFd::min_value(),

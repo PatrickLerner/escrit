@@ -83,4 +83,7 @@ fn test_dictionary_file_path() {
 
     let path = dictionary_file_path(Language::Turkish);
     assert!(path.ends_with("dictionary_tr.yml"));
+
+    let path = dictionary_file_path(Language::Persian);
+    assert!(path.ends_with("dictionary_fa.yml"));
 }

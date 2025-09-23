@@ -1,5 +1,14 @@
 # escrit Changelog
 
+## 0.4.0
+
+- Added Persian language support
+  - Support for Persian text processing and dictionary
+  - Persian TTS voice support (fa-IR)
+  - Persian language codes for Google Translate integration
+  - CLI support with `--language persian` or `-l fa`
+  - Use underline instead of bold for Persian text highlighting (better font compatibility)
+
 ## 0.3.0
 
 - Ignore emoji in texts

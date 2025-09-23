@@ -4,6 +4,7 @@ mod app;
 mod dictionary;
 mod input;
 mod note_state;
+mod rtl;
 mod text_state;
 mod tts;
 mod ui;
