@@ -24,6 +24,7 @@ pub enum InputMode {
 pub enum Language {
     Ukrainian,
     Turkish,
+    Persian,
 }
 
 impl Default for Language {
@@ -37,6 +38,7 @@ impl Language {
         match self {
             Language::Ukrainian => "uk",
             Language::Turkish => "tr",
+            Language::Persian => "fa",
         }
     }
 }

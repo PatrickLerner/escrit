@@ -53,6 +53,7 @@ pub fn dictionary_file_path(language: Language) -> String {
     let filename = match language {
         Language::Ukrainian => "dictionary_uk.yml",
         Language::Turkish => "dictionary_tr.yml",
+        Language::Persian => "dictionary_fa.yml",
     };
 
     base_path.join(filename).to_str().unwrap().to_owned()

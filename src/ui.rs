@@ -86,7 +86,10 @@ pub fn ui(f: &mut Frame, app: &mut App) {
                         if line_id == app.text.selected_paragraph
                             && token_id == app.text.selected_token
                         {
-                            span.bold()
+                            match app.language {
+                                crate::app::Language::Persian => span.on_cyan(),
+                                _ => span.bold(),
+                            }
                         } else {
                             span
                         }

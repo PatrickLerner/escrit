@@ -24,6 +24,7 @@ impl Cli {
     pub fn get_language(&self) -> Language {
         match self.language.to_lowercase().as_str() {
             "turkish" | "tr" => Language::Turkish,
+            "persian" | "fa" => Language::Persian,
             _ => Language::Ukrainian,
         }
     }

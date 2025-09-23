@@ -19,6 +19,7 @@ pub fn speak(tts: &mut Tts, text: &str, language: Language) {
         let language_code = match language {
             Language::Ukrainian => "uk-UA",
             Language::Turkish => "tr-TR",
+            Language::Persian => "fa-IR",
         };
 
         let mut voices = voices
