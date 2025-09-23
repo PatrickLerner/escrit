@@ -4,8 +4,9 @@ use ratatui::{
 };
 
 use crate::{
-    app::{App, InputMode},
+    app::{App, InputMode, Language},
     dictionary::KnowledgeLevel,
+    rtl,
 };
 
 fn color_by_language_level(span: Span, level: KnowledgeLevel) -> Span {
@@ -71,31 +72,71 @@ pub fn ui(f: &mut Frame, app: &mut App) {
         .iter()
         .enumerate()
         .map(|(line_id, paragraph)| {
-            Line::from(
-                paragraph
+            if app.language == Language::Persian {
+                // For Persian, we need to apply RTL transformation while preserving token spans
+                // First, process each token and collect with indices
+                let mut token_spans: Vec<(usize, Span)> = paragraph
                     .iter()
                     .enumerate()
                     .map(|(token_id, token)| {
-                        let span = Span::from(&token.content);
-                        if !token.selectable {
-                            return span;
-                        }
-
-                        let span = color_by_language_level(span, token.level);
-
-                        if line_id == app.text.selected_paragraph
-                            && token_id == app.text.selected_token
-                        {
-                            match app.language {
-                                crate::app::Language::Persian => span.on_cyan(),
-                                _ => span.bold(),
-                            }
+                        // Apply RTL transformation to the token content
+                        let content = if token.selectable && token.content.chars().any(rtl::is_persian_char) {
+                            // Reverse Persian word characters
+                            rtl::reverse_persian_word(&token.content)
                         } else {
-                            span
+                            token.content.clone()
+                        };
+
+                        let mut span = Span::from(content);
+
+                        // Apply styling only if selectable
+                        if token.selectable {
+                            span = color_by_language_level(span, token.level);
+
+                            // Highlight selected token
+                            if line_id == app.text.selected_paragraph
+                                && token_id == app.text.selected_token
+                            {
+                                span = span.on_cyan();
+                            }
                         }
+
+                        (token_id, span)
                     })
-                    .collect::<Vec<Span>>(),
-            )
+                    .collect();
+
+                // Reverse the order of tokens for RTL display
+                token_spans.reverse();
+
+                // Extract just the spans
+                let spans: Vec<Span> = token_spans.into_iter().map(|(_, span)| span).collect();
+
+                Line::from(spans)
+            } else {
+                // For non-Persian languages, use the original token-based approach
+                Line::from(
+                    paragraph
+                        .iter()
+                        .enumerate()
+                        .map(|(token_id, token)| {
+                            let span = Span::from(&token.content);
+                            if !token.selectable {
+                                return span;
+                            }
+
+                            let span = color_by_language_level(span, token.level);
+
+                            if line_id == app.text.selected_paragraph
+                                && token_id == app.text.selected_token
+                            {
+                                span.bold()
+                            } else {
+                                span
+                            }
+                        })
+                        .collect::<Vec<Span>>(),
+                )
+            }
         })
         .collect();
 
